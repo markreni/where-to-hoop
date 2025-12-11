@@ -1,0 +1,17 @@
+### react ###
+.DS_*
+*.log
+logs
+**/*.backup.*
+**/*.back.*
+
+backend-whereBasket/node_modules
+backend-whereBasket/bower_components
+frontend-whereBasket/bower_components
+frontend-whereBasket/node_modules
+
+*.sublime*
+
+psd
+thumb
+sketch
