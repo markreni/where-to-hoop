@@ -1,2 +1,33 @@
+@import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dart *));
+
+.poppins-extralight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+@theme {
+  --color-first-color: #F88158ff; 
+  --color-second-color: #e38f4eff;
+  --color-third-color: #c7bfb8ff;
+  --color-fourth-color: #a19a93ff;
+}
+
+@layer components {
+  .nav-bar {
+    @apply flex items-center justify-between gap-4;
+  }
+}
+
+@layer base {
+  p {
+    @apply mb-4;
+  }
+}
+
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
 

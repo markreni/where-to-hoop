@@ -9,16 +9,21 @@ import {
   useMatch,
 } from "react-router-dom";
 import NavBar from './components/NavBar.tsx';
-import MapPage from './pages/MapPage.tsx';
+import Hoops from './pages/Hoops.tsx';
+import AddHoop from './pages/AddHoop.tsx';
+
 
 function App() {
 
   return (
-    <div>
+    <div 
+      className="poppins-extralight bg-gradient-to-t from-second-color to-first-color h-screen"
+    >
       <NavBar />
       <div className="routes-margin">
         <Routes>
-          <Route path="/map" element={<MapPage />} />
+          <Route path="/hoops" element={<Hoops />} />
+          <Route path="/addhoop" element={<AddHoop />} />
         </Routes>
       </div>
     </div>

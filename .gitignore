@@ -5,10 +5,10 @@ logs
 **/*.backup.*
 **/*.back.*
 
-backend-whereBasket/node_modules
-backend-whereBasket/bower_components
-frontend-whereBasket/bower_components
-frontend-whereBasket/node_modules
+backend-where-to-hoop/node_modules
+backend-where-to-hoop/bower_components
+frontend-where-to-hoop/bower_components
+frontend-where-to-hoop/node_modules
 
 *.sublime*
 
