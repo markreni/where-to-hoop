@@ -1,6 +1,8 @@
-const firstColor: string = "#F88158ff";
-const secondColor: string = "#e38f4eff";
-const thirdColor: string = "#c7bfb8ff";
-const fourthColor: string = "#a19a93ff";
+export const conditionColors = {
+  excellent: 'hoop-icon--excellent', 
+  good:      'hoop-icon--good',
+  fair:      'hoop-icon--fair',
+  poor:      'hoop-icon--poor',
+  unknown:   'hoop-icon--unknown'
+};
 
-export default { firstColor, secondColor, thirdColor, fourthColor };

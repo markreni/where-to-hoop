@@ -2,11 +2,37 @@
 
 @custom-variant dark (&:where(.dark, .dart *));
 
+
 .poppins-extralight {
   font-family: "Poppins", sans-serif;
   font-weight: 200;
   font-style: normal;
 }
+
+/* ------------ Hoop Marker ------------ */
+
+.hoop-emoji {
+  font-size: 20px;
+  transform: translateY(-0.5px);
+}
+
+.hoop-icon-container {
+  border: white 2px solid;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: center;
+  border-radius: 100%;
+}
+
+/* Hoop rating styles */
+.hoop-icon--excellent { background-color: #22c55e; } /* green-500 */
+.hoop-icon--good      { background-color: #3b82f6; } /* blue-500  */
+.hoop-icon--fair      { background-color: #f59e0b; } /* amber-500 */
+.hoop-icon--poor      { background-color: #ef4444; } /* red-500   */
+.hoop-icon--unknown   { background-color: #6b7280; } /* gray-500  */
+
+/* ----------------------------- */
 
 @theme {
   --color-first-color: #F88158ff; 

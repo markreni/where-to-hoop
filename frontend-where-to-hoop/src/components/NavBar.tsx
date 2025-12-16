@@ -11,7 +11,7 @@ const NavBar = () => {
   const sm = useMediaQuery('(min-width: 640px)');
 
   return (
-    <div className="top-0 bg-white p-4 shadow-md">
+    <div className="fixed z-401 left-0 right-0 top-0 bg-white p-4 shadow-md">
       {sm ? (
         <div className="nav-bar">
           <div>
@@ -45,13 +45,13 @@ const NavBar = () => {
             </Button>
             <Popover className="w-full pr-6">
               <Menu className="bg-second-color text-white rounded-md shadow-lg p-2">
-                <MenuItem className="mb-2">
+                <MenuItem className="mb-2 rounded-md hover:text-black ">
                   <Link to="/hoops" className="flex items-center gap-2">
                     <MdLocationPin size={20}/>
                     Show Hoops
                   </Link>
                 </MenuItem>
-                <MenuItem>  
+                <MenuItem className="rounded-md hover:text-black">  
                    <Link to="/addhoop" className="flex items-center gap-2">
                     <IoBasketballOutline size={20}/>
                     Add Hoop
