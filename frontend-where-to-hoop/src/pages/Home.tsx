@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocationDispatch } from "../LocationContext.tsx";
 
@@ -15,12 +15,12 @@ const Home = () => {
         },
       });
         console.log("User's current position:", position.coords);
-        setTimeout(() => navigate("/hoops"), 1000);
+        //setTimeout(() => navigate("/hoops"), 1000);
     }), error => {
       /* implement toaster or react aria*/
       console.error("Error getting user's location:", error);
     }), { enableHighAccuracy: true };
-
+    
   }, []);
 
   return (

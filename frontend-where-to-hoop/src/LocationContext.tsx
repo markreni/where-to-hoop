@@ -16,8 +16,8 @@ interface LocationProviderProps {
 }
 
 const initialState: Coordinates = {
-  latitude: 0,
-  longitude: 0,
+  latitude: null,
+  longitude: null,
 };
 
 const locationReducer = (state: Coordinates, action: LocationAction ): Coordinates => {

@@ -2,8 +2,8 @@
 type Condition = 'excellent' | 'good' | 'fair' | 'poor' | 'unknown';
 
 interface Coordinates {
-  latitude: number;
-  longitude: number;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 interface BasketballHoop {
