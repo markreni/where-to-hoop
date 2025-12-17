@@ -1,15 +1,19 @@
 
-type condition = 'excellent' | 'good' | 'fair' | 'poor' | 'unknown';
+type Condition = 'excellent' | 'good' | 'fair' | 'poor' | 'unknown';
+
+interface Coordinates {
+  latitude: number;
+  longitude: number;
+}
 
 interface BasketballHoop {
   id: string;
   name: string;
-  latitude: number;
-  longitude: number;
+  coordinates: Coordinates;
   description: string;
-  condition: condition;
+  condition: Condition;
   indoor: boolean;
   createdAt: string; // ISO date string
 };
 
-export type { BasketballHoop, condition };
+export type { BasketballHoop, Condition, Coordinates };

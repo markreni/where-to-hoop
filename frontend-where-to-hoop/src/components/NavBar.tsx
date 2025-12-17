@@ -3,7 +3,7 @@ import { FiAlignJustify } from "react-icons/fi";
 import { IoBasketballOutline } from "react-icons/io5";
 import { MdLocationPin } from "react-icons/md";
 import { useMediaQuery } from 'usehooks-ts'
-import Logo from "./Logo.tsx";
+import Logo from "./reusable/Logo.tsx";
 import {Button, Menu, MenuItem, MenuTrigger, Popover} from 'react-aria-components';
 
 
@@ -15,30 +15,34 @@ const NavBar = () => {
       {sm ? (
         <div className="nav-bar">
           <div>
-            <Logo/>
+            <Link to="/"> 
+              <Logo/>
+            </Link>
           </div>
           <div className="flex items-center justify-between gap-4">
             <Link to="/hoops"> 
               <Button 
                   className="flex items-center gap-2 bg-second-color text-white px-4 py-2 rounded-md hover:bg-first-color transition-colors"
-                >
-                  <MdLocationPin size={20}/>
-                  Show Hoops
-                </Button>
+              >
+                <MdLocationPin size={20}/>
+                Show Hoops
+              </Button>
             </Link>
             <Link to="/addhoop"> 
               <Button 
                   className="flex items-center gap-2 bg-third-color text-white px-4 py-2 rounded-md hover:bg-fourth-color transition-colors"
-                >
-                  <IoBasketballOutline size={20}/>
-                  Add Hoop
-                </Button>
+              >
+                <IoBasketballOutline size={20}/>
+                Add Hoop
+              </Button>
             </Link>
             </div>
         </div>
         ) : (
         <div className="nav-bar">
-          <Logo/>
+          <Link to="/"> 
+              <Logo/>
+          </Link>
           <MenuTrigger>
             <Button>
               <FiAlignJustify size={28} className="text-first-color"/>
