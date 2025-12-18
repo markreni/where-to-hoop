@@ -1,7 +1,7 @@
 import type { BasketballHoop } from "../../types/types";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
-import { conditionColors }from "../../assets/style";
+import { conditionColors }from "../../utils/hoopCondition.tsx";
 
 interface HoopCardProps {
   hoop: BasketballHoop;

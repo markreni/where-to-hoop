@@ -4,15 +4,15 @@ import L from "leaflet";
 import "leaflet.locatecontrol";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
 import "leaflet/dist/leaflet.css";
-import type { BasketballHoop, Coordinates } from "../types/types";
+import type { BasketballHoop, Coordinates, Condition } from "../types/types";
 import initialHoops from "../mockhoops";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocationValues } from "../LocationContext.tsx";
 import { Button } from "react-aria-components";
 import { useLocationDispatch } from "../LocationContext.tsx";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { MapLabel } from "./MapLabel.tsx";
-import { conditionClass } from "../utils/auxiliary.tsx";
+import { conditionColorSelector } from "../utils/hoopCondition.tsx";
 
 
 // Component that holds map instance reference
@@ -30,8 +30,23 @@ const Map = () => {
   const userLocationContext: Coordinates = useLocationValues();
   const dispatch = useLocationDispatch();
   const mapRef = useRef<L.Map | null>(null);
+  const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor', 'unknown']));
 
   const centerPosition: LatLngTuple = (userLocationContext.latitude && userLocationContext.longitude) ? [userLocationContext.latitude!, userLocationContext.longitude!] : [60.1695, 24.9354]; // Default to Helsinki if no location
+
+  const toggleCondition = (condition: Condition) => {
+    setSelectedConditions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(condition)) {
+        newSet.delete(condition);
+      } else {
+        newSet.add(condition);
+      }
+      return newSet;
+    });
+  };
+
+  const filteredHoops = initialHoops.filter(hoop => selectedConditions.has(hoop.condition));
 
   const locateUser = () => {
     if (userLocationContext.latitude && userLocationContext.longitude) {
@@ -62,10 +77,10 @@ const Map = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {initialHoops.map((hoop: BasketballHoop) => {
+        {filteredHoops.map((hoop: BasketballHoop) => {
           const icon = L.divIcon({
             html: '<div class="hoop-emoji">🏀</div>',
-            className: `hoop-icon-container ${conditionClass(hoop.condition)}`,
+            className: `hoop-icon-container ${conditionColorSelector(hoop.condition)}`,
             iconSize: [33, 33],
             iconAnchor: [16.5, 16.5],
             popupAnchor: [0, -22],
@@ -92,7 +107,7 @@ const Map = () => {
         <MdOutlineMyLocation />
       </Button>
       
-      <MapLabel />
+      <MapLabel selectedConditions={selectedConditions} onToggleCondition={toggleCondition} />
       
     </div>
   );
