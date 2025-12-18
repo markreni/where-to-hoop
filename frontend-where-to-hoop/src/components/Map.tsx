@@ -30,7 +30,7 @@ const Map = () => {
   const userLocationContext: Coordinates = useLocationValues();
   const dispatch = useLocationDispatch();
   const mapRef = useRef<L.Map | null>(null);
-  const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor', 'unknown']));
+  const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
 
   const centerPosition: LatLngTuple = (userLocationContext.latitude && userLocationContext.longitude) ? [userLocationContext.latitude!, userLocationContext.longitude!] : [60.1695, 24.9354]; // Default to Helsinki if no location
 

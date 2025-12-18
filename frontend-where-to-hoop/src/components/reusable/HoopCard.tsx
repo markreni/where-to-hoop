@@ -1,7 +1,7 @@
 import type { BasketballHoop } from "../../types/types";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
-import { conditionColors }from "../../utils/hoopCondition.tsx";
+import { conditionColorSelector }from "../../utils/hoopCondition.tsx";
 
 interface HoopCardProps {
   hoop: BasketballHoop;
@@ -19,7 +19,7 @@ const HoopCard = ({ hoop }: HoopCardProps) => {
             <span>{hoop.indoor ? "Indoor" : "Outdoor"}</span>
           </div>
         </div>
-        <div className={`w-3 h-3 rounded-full ${conditionColors[hoop.condition]}`} title={hoop.condition} />
+        <div className={`w-3 h-3 rounded-full ${conditionColorSelector(hoop.condition)}`} title={hoop.condition} />
       </div>
       
       <p className="text-sm text-gray-600 mb-3">{hoop.description}</p>

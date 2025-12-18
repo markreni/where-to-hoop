@@ -1,5 +1,6 @@
-import { conditionOptions } from "../utils/hoopCondition.tsx";
+import conditionOptions from "../utils/hoopCondition.tsx";
 import type { Condition } from "../types/types";
+
 
 interface MapLabelProps {
   selectedConditions: Set<Condition>;

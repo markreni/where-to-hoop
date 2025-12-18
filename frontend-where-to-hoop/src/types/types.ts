@@ -1,5 +1,5 @@
 
-type Condition = 'excellent' | 'good' | 'fair' | 'poor' | 'unknown';
+type Condition = 'excellent' | 'good' | 'fair' | 'poor';
 
 interface Coordinates {
   latitude: number | null;
