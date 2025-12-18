@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useMediaQuery } from 'usehooks-ts'
-import Logo from "./reusable/Logo.tsx";
-import {Button, Menu, MenuItem, MenuTrigger, Popover} from 'react-aria-components';
+import { Logo } from "./reusable/Logo.tsx";
+import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components';
 import { FiAlignJustify } from "react-icons/fi";
 import { IoBasketballOutline } from "react-icons/io5";
 import { MdLocationPin } from "react-icons/md";
