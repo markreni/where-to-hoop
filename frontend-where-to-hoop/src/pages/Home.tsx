@@ -1,17 +1,17 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import { useLocationDispatch } from "../LocationContext.tsx";
 
 const Home = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const dispatch = useLocationDispatch();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition((position => {
       dispatch({
         payload: {
-          latitude: position ? position.coords.latitude : 0,
-          longitude: position ? position.coords.longitude : 0,
+          latitude: position ? position.coords.latitude : null,
+          longitude: position ? position.coords.longitude : null,
         },
       });
         console.log("User's current position:", position.coords);

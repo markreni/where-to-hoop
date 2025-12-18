@@ -2,10 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dart *));
 
-.root {
-  padding-top: 60px; /* Height of the navbar */
-}
-
 /* ------------ Fonts ------------ */
 
 .poppins-extralight {
@@ -44,8 +40,6 @@
   font-style: normal;
 }
 
-/* ----------------------------- */
-
 /* ------------ Hoop Marker ------------ */
 
 .hoop-emoji {
@@ -68,18 +62,26 @@
 .hoop-icon--poor      { background-color: #ef4444; } /* red-500   */
 .hoop-icon--unknown   { background-color: #6b7280; } /* gray-500  */
 
-/* ----------------------------- */
+/* ------------ Theme Directory------------ */
 
 @theme {
-  --color-first-color: #F88158ff; 
+  --color-first-color: #F88158ff;
   --color-second-color: #e38f4eff;
   --color-third-color: #c7bfb8ff;
   --color-fourth-color: #a19a93ff;
+
+  --breakpoint-sm: 640px; /* 40rem */
+  --breakpoint-md: 768px; /* 48rem */
+  --breakpoint-lg: 1024px; /* 64rem */
+  --breakpoint-xl: 1280px; /* 80rem */
+  --breakpoint-2xl: 1536px; /* 96rem */
 }
+
+/* ------------ Other Directory------------ */
 
 @layer components {
   .nav-bar {
-    @apply flex items-center justify-between gap-4;
+    @apply flex items-center justify-between gap-4 h-9;
   }
 }
 

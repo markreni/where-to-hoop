@@ -10,9 +10,10 @@ import type { Condition } from "../types/types";
 import { conditionColors }from "../assets/style";
 import { useEffect, useRef } from "react";
 import { useLocationValues } from "../LocationContext.tsx";
-import { MdOutlineMyLocation } from "react-icons/md";
 import { Button } from "react-aria-components";
 import { useLocationDispatch } from "../LocationContext.tsx";
+import { MdOutlineMyLocation } from "react-icons/md";
+
 
 // Component that holds map instance reference
 const MapController = ({ onMapReady }: { onMapReady: (map: L.Map) => void }) => {
@@ -63,7 +64,7 @@ const Map = () => {
 
   return (
     <div>
-        <MapContainer center={centerPosition} zoom={13} zoomControl={false} scrollWheelZoom={true} style={{ height: "94.5vh", width: "100vw"}}>
+        <MapContainer className="h-[100vh] w-[100vw]" center={centerPosition} zoom={13} zoomControl={false} scrollWheelZoom={true}>
         <MapController onMapReady={(map) => { mapRef.current = map; }} />
         <ZoomControl position="bottomright" /> 
         <TileLayer
@@ -94,13 +95,14 @@ const Map = () => {
       </MapContainer>
 
       <Button 
-        className="absolute bottom-27 right-3 text-gray-700 text-3xl z-400 cursor-pointer" 
+        className="absolute bottom-27 right-[13px] text-gray-700 text-3xl z-400 cursor-pointer" 
         onPress={locateUser}
-        aria-label="Locate Me">
+        aria-label="Locate Me"
+      >
         <MdOutlineMyLocation />
       </Button>
-
-      <div className="absolute bottom-4 left-4 bg-white rounded-lg shadow-lg p-4 z-400">
+      
+      <div className="absolute bottom-6 left-3 bg-white rounded-lg shadow-lg py-2 px-4 z-400">
           <h4 className="text-sm text-gray-700 mb-2"><strong>Court Condition</strong> </h4>
           <div className="flex flex-col gap-1.5">
             {[
