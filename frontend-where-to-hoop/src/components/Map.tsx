@@ -11,8 +11,9 @@ import { useLocationValues } from "../LocationContext.tsx";
 import { Button } from "react-aria-components";
 import { useLocationDispatch } from "../LocationContext.tsx";
 import { MdOutlineMyLocation } from "react-icons/md";
+import { ImLocation2 } from "react-icons/im";
 import { MapLabel } from "./MapLabel.tsx";
-import { conditionColorSelector } from "../utils/hoopCondition.tsx";
+import { conditionColorSelector } from "../utils/courtCondition.tsx";
 
 
 // Component that holds map instance reference
