@@ -7,11 +7,10 @@ import "leaflet/dist/leaflet.css";
 import type { BasketballHoop, Coordinates, Condition } from "../types/types";
 import initialHoops from "../mockhoops";
 import { useEffect, useRef, useState } from "react";
-import { useLocationValues } from "../LocationContext.tsx";
+import { useLocationValues, useLocationDispatch } from "../contexts/LocationContext.tsx";
 import { Button } from "react-aria-components";
-import { useLocationDispatch } from "../LocationContext.tsx";
 import { MdOutlineMyLocation } from "react-icons/md";
-import { ImLocation2 } from "react-icons/im";
+//import { ImLocation2 } from "react-icons/im";
 import { MapLabel } from "./MapLabel.tsx";
 import { conditionColorSelector } from "../utils/courtCondition.tsx";
 
@@ -29,7 +28,7 @@ const MapController = ({ onMapReady }: { onMapReady: (map: L.Map) => void }) => 
 
 const Map = () => {
   const userLocationContext: Coordinates = useLocationValues();
-  const dispatch = useLocationDispatch();
+  const userLocationDispatch = useLocationDispatch();
   const mapRef = useRef<L.Map | null>(null);
   const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
 
@@ -55,7 +54,7 @@ const Map = () => {
     } else {
       console.log("Locating user...");
       navigator.geolocation.getCurrentPosition((position) => {
-        dispatch({
+        userLocationDispatch({
           payload: {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,

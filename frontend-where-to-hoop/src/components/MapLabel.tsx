@@ -1,5 +1,6 @@
 import conditionOptions from "../utils/courtCondition.tsx";
-import type { Condition } from "../types/types";
+import type { ColorMode, Condition } from "../types/types";
+import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 
 
 interface MapLabelProps {
@@ -8,9 +9,11 @@ interface MapLabelProps {
 }
 
 const MapLabel = ({ selectedConditions, onToggleCondition }: MapLabelProps) => {
+  const colorModeContext: ColorMode = useColorModeValues();
+  
   return (
-     <div className="absolute bottom-6 left-3 bg-white dark:bg-black rounded-lg shadow-lg py-2 px-4 z-400">
-          <h4 className="text-sm text-gray-800 dark:text-gray-200 mb-2"><strong>Court Condition</strong> </h4>
+     <div className={`${colorModeContext} absolute bottom-6 left-3 bg-white rounded-lg shadow-lg py-2 px-4 z-400 dark:bg-black`}>
+          <h4 className={`${colorModeContext} text-sm text-gray-800 mb-2 dark:text-gray-200`}><strong>Court Condition</strong> </h4>
           <div className="flex flex-col gap-1.5">
             {conditionOptions.map((item) => {
               const isSelected = selectedConditions.has(item.condition);
@@ -24,7 +27,7 @@ const MapLabel = ({ selectedConditions, onToggleCondition }: MapLabelProps) => {
                   }`}
                 >
                   <div 
-                    className={`w-4 h-4 rounded-full border-2 shadow ${isSelected ? `${item.color} border-white dark:border-black` : 'white border-gray-300 dark:border-gray-600'}`}
+                    className={`${colorModeContext} w-4 h-4 rounded-full border-2 shadow ${isSelected ? `${item.color} border-white dark:border-black` : 'white border-gray-300 dark:border-gray-600'}`}
                   />
                   <span className={`text-sm ${isSelected ? 'text-gray-900 font-semibold' : 'text-gray-600'}`}>
                     {item.label}

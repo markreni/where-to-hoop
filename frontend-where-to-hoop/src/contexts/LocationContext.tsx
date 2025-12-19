@@ -1,5 +1,5 @@
 import { createContext, useReducer, useContext, type Dispatch, type ReactNode} from 'react'
-import type { Coordinates } from "./types/types";
+import type { Coordinates } from "../types/types";
 
 
 interface LocationAction {

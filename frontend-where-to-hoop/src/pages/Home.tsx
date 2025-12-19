@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 //import { useNavigate } from "react-router-dom";
-import { useLocationDispatch } from "../LocationContext.tsx";
+import { useLocationDispatch } from "../contexts/LocationContext.tsx";
 
 const Home = () => {
   //const navigate = useNavigate();

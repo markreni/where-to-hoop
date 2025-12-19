@@ -1,41 +1,33 @@
 import { Link } from "react-router-dom";
 import { useMediaQuery } from 'usehooks-ts'
 import { Logo } from "./reusable/Logo.tsx";
-import { Button, Menu, MenuItem, MenuTrigger, Popover, ToggleButton } from 'react-aria-components';
+import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components';
 import { FiAlignJustify } from "react-icons/fi";
-import { IoBasketballOutline } from "react-icons/io5";
+import { GiBasketballBasket } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
-import { useEffect, useState } from "react";
 import { ToggleBasketball } from "./reusable/ToggleBasketball.tsx";
+import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import type { ColorMode } from "../types/types.ts";
 
 
 const NavBar = () => {
   const sm = useMediaQuery('(min-width: 640px)');
-  const [isDark, setIsDark] = useState(false);
-
-  // Initialize dark mode from localStorage
-  useEffect(() => {
-    const savedDarkMode = localStorage.getItem('darkMode') === 'true';
-    setIsDark(savedDarkMode);
-    if (savedDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
+  const colorModeContext: ColorMode = useColorModeValues();
 
   return (
-    <div className="fixed z-401 left-0 right-0 top-0 bg-white dark:bg-black p-4 shadow-md">
+    <div className={`${colorModeContext} fixed z-401 left-0 right-0 top-0 bg-white p-4 shadow-md dark:bg-black`}>
       {sm ? (
         <div className="nav-bar">
-          <div className="flex-center gap-4">
+          <div className="flex-center gap-1">
             <Link to="/"> 
               <Logo/>
             </Link>
-            <ToggleBasketball isSelected={isDark} toggleFunction={setIsDark} />
+            <ToggleBasketball />
           </div>
           <div className="flex-center gap-4">
             <Link to="/hoops"> 
               <Button 
-                  className="flex items-center gap-2 bg-second-color text-white dark:bg-black px-4 py-2 rounded-md hover:bg-first-color transition-colors"
+                  className={`${colorModeContext} flex items-center gap-2 bg-second-color text-white px-4 py-2 rounded-md hover:bg-first-color transition-colors dark:text-black`}
               >
                 <MdLocationPin size={20}/>
                 Show Hoops
@@ -43,9 +35,9 @@ const NavBar = () => {
             </Link>
             <Link to="/addhoop">
               <Button 
-                  className="flex items-center gap-2 bg-third-color text-white dark:bg-black px-4 py-2 rounded-md hover:bg-fourth-color transition-colors"
+                  className={`${colorModeContext} flex items-center gap-2 bg-third-color text-white px-4 py-2 rounded-md hover:bg-fourth-color transition-colors dark:text-black`}
               >
-                <IoBasketballOutline size={20}/>
+                <GiBasketballBasket size={20}/>
                 Add Hoop
               </Button>
             </Link>
@@ -53,11 +45,11 @@ const NavBar = () => {
         </div>
       ) : (
         <div className="nav-bar">
-           <div className="flex-center gap-4">
+           <div className="flex-center gap-1">
             <Link to="/"> 
               <Logo/>
             </Link>
-            <ToggleBasketball isSelected={isDark} toggleFunction={setIsDark} />
+            <ToggleBasketball />
           </div>
           <div className="flex-center gap-2">
             <MenuTrigger>
@@ -65,16 +57,16 @@ const NavBar = () => {
                 <FiAlignJustify size={28} className="text-first-color dark:text-yellow-400"/>
               </Button>
               <Popover className="w-full pr-6">
-                <Menu className="bg-second-color text-white rounded-md shadow-lg p-2 dark:bg-gray-800">
-                  <MenuItem className="mb-2 rounded-md hover:text-black dark:hover:text-yellow-400">
+                <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
+                  <MenuItem className={`${colorModeContext} mb-2 rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>
                     <Link to="/hoops" className="flex items-center gap-2">
                       <MdLocationPin size={20}/>
                       Show Hoops
                     </Link>
                   </MenuItem>
-                  <MenuItem className="rounded-md hover:text-black dark:hover:text-yellow-400">  
+                  <MenuItem className={`${colorModeContext} rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>  
                     <Link to="/addhoop" className="flex items-center gap-2">
-                      <IoBasketballOutline size={20}/>
+                      <GiBasketballBasket size={20}/>
                       Add Hoop
                     </Link>
                   </MenuItem>

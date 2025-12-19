@@ -1,4 +1,6 @@
 
+type ColorMode = 'light' | 'dark';
+
 type Condition = 'excellent' | 'good' | 'fair' | 'poor';
 
 interface Coordinates {
@@ -16,4 +18,4 @@ interface BasketballHoop {
   createdAt: string; // ISO date string
 };
 
-export type { BasketballHoop, Condition, Coordinates };
+export type { BasketballHoop, Condition, Coordinates, ColorMode };
