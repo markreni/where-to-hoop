@@ -34,7 +34,7 @@ export const ColorModeContextProvider: React.FC<ColorModeProviderProps> = (props
  
    useEffect(() => {
     try {
-      localStorage.setItem('colorMode', JSON.stringify(state));
+      localStorage.setItem('colorMode', state);
     } catch {
       localStorage.setItem('colorMode', 'light');
     }

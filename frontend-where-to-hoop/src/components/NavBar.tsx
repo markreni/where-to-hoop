@@ -27,7 +27,7 @@ const NavBar = () => {
           <div className="flex-center gap-4">
             <Link to="/hoops"> 
               <Button 
-                  className={`${colorModeContext} flex items-center gap-2 bg-second-color text-white px-4 py-2 rounded-md hover:bg-first-color transition-colors dark:text-black`}
+                  className={`${colorModeContext} flex items-center gap-2 bg-second-color text-white font-medium px-4 py-2 rounded-md hover:bg-first-color transition-colors dark:text-black`}
               >
                 <MdLocationPin size={20}/>
                 Show Hoops
@@ -35,7 +35,7 @@ const NavBar = () => {
             </Link>
             <Link to="/addhoop">
               <Button 
-                  className={`${colorModeContext} flex items-center gap-2 bg-third-color text-white px-4 py-2 rounded-md hover:bg-fourth-color transition-colors dark:text-black`}
+                  className={`${colorModeContext} flex items-center gap-2 bg-third-color text-white font-medium px-4 py-2 rounded-md hover:bg-fourth-color transition-colors dark:text-black`}
               >
                 <GiBasketballBasket size={20}/>
                 Add Hoop
