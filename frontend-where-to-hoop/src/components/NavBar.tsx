@@ -8,10 +8,11 @@ import { MdLocationPin } from "react-icons/md";
 import { ToggleBasketball } from "./reusable/ToggleBasketball.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 import type { ColorMode } from "../types/types.ts";
+import breakpoints from "../assets/style.ts";
 
 
 const NavBar = () => {
-  const sm = useMediaQuery('(min-width: 640px)');
+  const sm = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const colorModeContext: ColorMode = useColorModeValues();
 
   return (
@@ -29,7 +30,7 @@ const NavBar = () => {
               <Button 
                   className={`${colorModeContext} flex items-center gap-2 bg-second-color text-white font-medium px-4 py-2 rounded-md hover:bg-first-color transition-colors dark:text-black`}
               >
-                <MdLocationPin size={20}/>
+                <MdLocationPin size={22}/>
                 Show Hoops
               </Button>
             </Link>
@@ -37,7 +38,7 @@ const NavBar = () => {
               <Button 
                   className={`${colorModeContext} flex items-center gap-2 bg-third-color text-white font-medium px-4 py-2 rounded-md hover:bg-fourth-color transition-colors dark:text-black`}
               >
-                <GiBasketballBasket size={20}/>
+                <GiBasketballBasket size={22}/>
                 Add Hoop
               </Button>
             </Link>
@@ -60,13 +61,13 @@ const NavBar = () => {
                 <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
                   <MenuItem className={`${colorModeContext} mb-2 rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>
                     <Link to="/hoops" className="flex items-center gap-2">
-                      <MdLocationPin size={20}/>
+                      <MdLocationPin size={22}/>
                       Show Hoops
                     </Link>
                   </MenuItem>
                   <MenuItem className={`${colorModeContext} rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>  
                     <Link to="/addhoop" className="flex items-center gap-2">
-                      <GiBasketballBasket size={20}/>
+                      <GiBasketballBasket size={22}/>
                       Add Hoop
                     </Link>
                   </MenuItem>

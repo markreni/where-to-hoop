@@ -8,9 +8,16 @@ interface Coordinates {
   longitude: number | null;
 }
 
+export interface ObservationImage {
+  id: number;
+  imageName: string;
+  addedDate: string;
+}
+
 interface BasketballHoop {
   id: string;
   name: string;
+  profile_images: ObservationImage[];
   coordinates: Coordinates;
   description: string;
   condition: Condition;

@@ -71,6 +71,7 @@
   --color-third-color: #c7bfb8ff;
   --color-fourth-color: #a19a93ff;
 
+  --breakpoint-xsm: 480px; /* 30rem */
   --breakpoint-sm: 640px; /* 40rem */
   --breakpoint-md: 768px; /* 48rem */
   --breakpoint-lg: 1024px; /* 64rem */
@@ -84,11 +85,14 @@
   .nav-bar {
     @apply flex items-center justify-between gap-4 h-9;
   }
+  .hoop-card-spacer {
+    @apply flex items-center gap-2;
+  }
 }
 
 @layer base {
-  p {
-    @apply mb-4;
+  h5 {
+    @apply text-lg font-semibold;
   }
 }
 

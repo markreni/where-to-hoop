@@ -5,15 +5,18 @@ import {
   //Navigate,
   //useParams,
   //useNavigate,
-  //useMatch,
+  useMatch,
 } from "react-router-dom";
 import NavBar from './components/NavBar.tsx';
 import Hoops from './pages/Hoops.tsx';
 import AddHoop from './pages/AddHoop.tsx';
 import Home from './pages/Home.tsx';
+import Hoop from "./pages/Hoop.tsx";
 
 
 function App() {
+  const match = useMatch("/hoops/:id");
+  console.log("Matched observation ID:", match?.params.id);
 
   return (
     <div 
@@ -24,6 +27,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/hoops" element={<Hoops />} />
+          <Route path="/hoops/:id" element={<Hoop />} />
           <Route path="/addhoop" element={<AddHoop />} />
         </Routes>
       </div>

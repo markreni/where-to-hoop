@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup, ZoomControl, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, ZoomControl, useMap } from "react-leaflet";
 import type { LatLngTuple } from "leaflet";
 import L from "leaflet";
 import "leaflet.locatecontrol";
@@ -13,6 +13,7 @@ import { MdOutlineMyLocation } from "react-icons/md";
 //import { ImLocation2 } from "react-icons/im";
 import { MapLabel } from "./MapLabel.tsx";
 import { conditionColorSelector } from "../utils/courtCondition.tsx";
+import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 
 
 // Component that holds map instance reference
@@ -88,12 +89,7 @@ const Map = () => {
 
           return (
             <Marker key={hoop.id} position={[hoop.coordinates.latitude!, hoop.coordinates.longitude!]} icon={icon}>
-              <Popup>
-                <strong>{hoop.name}</strong><br />
-                {hoop.description}<br />
-                Condition: {hoop.condition}<br />
-                {hoop.indoor ? "Indoor" : "Outdoor"}
-              </Popup>
+              <MapMarkerPopup hoop={hoop} />
             </Marker>
           );
         })}
