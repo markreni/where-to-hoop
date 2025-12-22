@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext, type Dispatch, type ReactNode} from 'react'
+import { createContext, useReducer, useContext, type Dispatch, type ReactNode, useEffect} from 'react'
 import type { Coordinates } from "../types/types";
 
 
@@ -20,6 +20,16 @@ const initialState: Coordinates = {
   longitude: null,
 };
 
+// lazy initializer reads from localStorage if present
+const initState = (init: Coordinates): Coordinates => {
+  try {
+    const raw: string | null = localStorage.getItem('coordinates');
+    return raw ? JSON.parse(raw) : init;
+  } catch {
+    return init;
+  }
+}
+
 const locationReducer = (state: Coordinates, action: LocationAction ): Coordinates => {
   return {...state, ...action.payload}
 }
@@ -27,8 +37,16 @@ const locationReducer = (state: Coordinates, action: LocationAction ): Coordinat
 const LocationContext = createContext<LocationContextValue | null>(null);
 
 export const LocationContextProvider: React.FC<LocationProviderProps> = (props) => {
-  const [state, dispatch] = useReducer(locationReducer, initialState)
-  
+  const [state, dispatch] = useReducer(locationReducer, initState(initialState))
+
+  useEffect(() => {
+      try { 
+        localStorage.setItem('coordinates', JSON.stringify(state));
+      } catch {
+        localStorage.setItem('coordinates', JSON.stringify(initialState));
+      }
+    }, [state]);
+    
   return (
     <LocationContext.Provider value={{ state, dispatch }}>
       {props.children}

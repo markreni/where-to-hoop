@@ -1,7 +1,6 @@
 import { MapContainer, TileLayer, Marker, ZoomControl, useMap } from "react-leaflet";
 import type { LatLngTuple } from "leaflet";
 import L from "leaflet";
-import "leaflet.locatecontrol";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
 import "leaflet/dist/leaflet.css";
 import type { BasketballHoop, Coordinates, Condition } from "../types/types";
@@ -16,6 +15,7 @@ import { conditionColorSelector } from "../utils/courtCondition.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 
 
+
 // Component that holds map instance reference
 const MapController = ({ onMapReady }: { onMapReady: (map: L.Map) => void }) => {
   const map: L.Map = useMap();
@@ -23,7 +23,7 @@ const MapController = ({ onMapReady }: { onMapReady: (map: L.Map) => void }) => 
   useEffect(() => {
     onMapReady(map);
   }, [map, onMapReady]);
-
+  
   return null;
 };
 

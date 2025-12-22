@@ -1,7 +1,8 @@
 import breakpoints from "../assets/style";
 import initialHoops from "../mockhoops";
 import type { BasketballHoop } from "../types/types";
-import HoopCard from "./reusable/HoopCard";
+import { HoopCardLarge } from "./reusable/HoopCardLarge";
+import { HoopCardSmall } from "./reusable/HoopCardSmall";
 import { useMediaQuery } from 'usehooks-ts'
 
 const List = () => {
@@ -13,14 +14,14 @@ const List = () => {
       <div className="grid grid-cols-2 grid-rows-3 gap-6 px-8">
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
-            <HoopCard key={hoop.id} hoop={hoop} />);
+            <HoopCardLarge key={hoop.id} hoop={hoop} />);
         })}
       </div>
     ) : (
       <div className="flex flex-col items-center gap-4 px-4">
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
-            <HoopCard key={hoop.id} hoop={hoop} />);
+            <HoopCardSmall key={hoop.id} hoop={hoop} />);
         })}
     </div>
     )}

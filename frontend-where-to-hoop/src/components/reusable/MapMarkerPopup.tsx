@@ -1,9 +1,15 @@
 import type { JSX } from "react/jsx-dev-runtime";
 import { Popup } from "react-leaflet";
-import type { BasketballHoop } from "../../types/types";
+import type { BasketballHoop, Coordinates } from "../../types/types";
 import { Link } from "react-router-dom";
+import { haversineDistance } from "../../utils/functions";
+import { useLocationValues } from "../../contexts/LocationContext.tsx";
 
 const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
+  const userLocationContext: Coordinates = useLocationValues();
+
+  const distance = haversineDistance([userLocationContext.latitude!, userLocationContext.longitude!], [hoop.coordinates.latitude!, hoop.coordinates.longitude!], false);
+
   return (
     <div>
       <Popup 
@@ -12,7 +18,7 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
         >
         <div className="flex justify-between items-center mb-1">
           <strong>{hoop.name}</strong><br />
-          <Link to={`/hoops/${hoop.id}`}>View details</Link>
+          <span>{distance.toFixed(1)} km</span>
         </div>
         
         <img
@@ -21,7 +27,10 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
           style={{ width: '100%', height: 'auto', marginBottom: '8px' }}
         />
         
-        {`${hoop.indoor ? "Indoor" : "Outdoor"} court which is in a`} <strong>{hoop.condition}</strong> condition <br /> 
+        <div>
+          {`${hoop.indoor ? "Indoor" : "Outdoor"} court which is in a`} <strong>{hoop.condition}</strong> condition <br /> 
+          <Link to={`/hoops/${hoop.id}`}>View details</Link>
+        </div>
       </Popup>  
     </div>
   );

@@ -92,7 +92,7 @@
 
 @layer base {
   h5 {
-    @apply text-lg font-semibold;
+    @apply text-base font-semibold;
   }
 }
 

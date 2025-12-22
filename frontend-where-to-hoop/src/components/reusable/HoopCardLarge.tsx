@@ -1,13 +1,13 @@
-import type { BasketballHoop } from "../../types/types";
+import type { BasketballHoop } from "../../types/types.ts";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
-import { conditionColorSelector }from "../../utils/courtCondition.tsx";
+import { conditionColorSelector } from "../../utils/courtCondition.tsx";
 
 interface HoopCardProps {
   hoop: BasketballHoop;
 }
 
-const HoopCard = ({ hoop }: HoopCardProps) => {
+const HoopCardLarge = ({ hoop }: HoopCardProps) => {
 
   return (
     <div className="flex items-start justify-between bg-white rounded-lg shadow-lg p-4 w-full hover:shadow-xl hover:bg-gray-100 transition-shadow">
@@ -41,4 +41,4 @@ const HoopCard = ({ hoop }: HoopCardProps) => {
   );
 }
 
-export default HoopCard;
+export { HoopCardLarge };
