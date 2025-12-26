@@ -20,7 +20,7 @@ function App() {
 
   return (
     <div 
-      className="poppins-extralight bg-gradient-to-t from-second-color to-first-color h-screen w-screen overflow-hidden relative"
+      className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen overflow-hidden relative"
     >
       <NavBar />
       <div className="routes-margin">

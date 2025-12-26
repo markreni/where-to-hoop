@@ -2,7 +2,7 @@ import type { JSX } from "react/jsx-dev-runtime";
 import { Popup } from "react-leaflet";
 import type { BasketballHoop, Coordinates } from "../../types/types";
 import { Link } from "react-router-dom";
-import { haversineDistance } from "../../utils/functions";
+import haversineDistance from "../../utils/functions";
 import { useLocationValues } from "../../contexts/LocationContext.tsx";
 
 const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {

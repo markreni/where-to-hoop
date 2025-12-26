@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, ZoomControl, useMap } from "react-leaflet";
 import type { LatLngTuple } from "leaflet";
 import L from "leaflet";
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
+//import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
 import "leaflet/dist/leaflet.css";
 import type { BasketballHoop, Coordinates, Condition } from "../types/types";
 import initialHoops from "../mockhoops";
@@ -109,4 +109,4 @@ const Map = () => {
   );
 }
 
-export default Map;
+export { Map };

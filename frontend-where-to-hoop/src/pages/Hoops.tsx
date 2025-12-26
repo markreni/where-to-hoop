@@ -1,8 +1,8 @@
 import "leaflet/dist/leaflet.css";
 import { useState } from "react";
-import Map from "../components/Map";
-import List from "../components/List";
-import ListToggle from "../components/ListToggle";
+import { Map }from "../components/Map";
+import { List } from "../components/List";
+import { ListToggle } from "../components/ListToggle";
 //import { Link } from "react-router-dom";
 //import { useState, useEffect } from "react";
 

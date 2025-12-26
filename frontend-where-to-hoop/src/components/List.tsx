@@ -28,4 +28,4 @@ const List = () => {
   </div>);
 }
 
-export default List;
+export { List };

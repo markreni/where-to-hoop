@@ -23,4 +23,4 @@ const haversineDistance = ([lat1, lon1]: [number, number], [lat2, lon2]: [number
 
       return finalDistance;
     };
-export { haversineDistance };
+export default haversineDistance;

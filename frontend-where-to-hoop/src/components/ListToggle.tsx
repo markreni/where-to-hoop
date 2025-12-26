@@ -18,4 +18,4 @@ const ListToggle = ({ toggleFunction, mapView }: { toggleFunction: (value: boole
   );
 }
 
-export default ListToggle;
+export { ListToggle };
