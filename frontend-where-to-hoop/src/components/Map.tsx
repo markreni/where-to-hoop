@@ -6,14 +6,12 @@ import "leaflet/dist/leaflet.css";
 import type { BasketballHoop, Coordinates, Condition } from "../types/types";
 import initialHoops from "../mockhoops";
 import { useEffect, useRef, useState } from "react";
-import { useLocationValues, useLocationDispatch } from "../contexts/LocationContext.tsx";
-import { Button } from "react-aria-components";
-import { MdOutlineMyLocation } from "react-icons/md";
+import { useLocationValues } from "../contexts/LocationContext.tsx";
 //import { ImLocation2 } from "react-icons/im";
 import { MapLabel } from "./MapLabel.tsx";
 import { conditionColorSelector } from "../utils/courtCondition.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
-
+import { UserLocator } from "./UserLocator.tsx";
 
 
 // Component that holds map instance reference
@@ -29,7 +27,6 @@ const MapController = ({ onMapReady }: { onMapReady: (map: L.Map) => void }) => 
 
 const Map = () => {
   const userLocationContext: Coordinates = useLocationValues();
-  const userLocationDispatch = useLocationDispatch();
   const mapRef = useRef<L.Map | null>(null);
   const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
 
@@ -48,25 +45,6 @@ const Map = () => {
   };
 
   const filteredHoops = initialHoops.filter(hoop => selectedConditions.has(hoop.condition));
-
-  const locateUser = () => {
-    if (userLocationContext.latitude && userLocationContext.longitude) {
-      mapRef.current?.flyTo([userLocationContext.latitude, userLocationContext.longitude], 13);
-    } else {
-      console.log("Locating user...");
-      navigator.geolocation.getCurrentPosition((position) => {
-        userLocationDispatch({
-          payload: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          },
-        });
-        mapRef.current?.setView([position.coords.latitude, position.coords.longitude], 13);
-      }, (error) => {
-        console.error("Error getting user's location:", error);
-      }, { enableHighAccuracy: true });
-    }
-  };
 
   return (
     <div>
@@ -95,13 +73,7 @@ const Map = () => {
         })}
       </MapContainer>
 
-      <Button 
-        className="absolute bottom-27 right-[13px] text-gray-700 text-3xl z-400 cursor-pointer" 
-        onPress={locateUser}
-        aria-label="Locate Me"
-      >
-        <MdOutlineMyLocation />
-      </Button>
+      <UserLocator mapRef={mapRef} />
       
       <MapLabel selectedConditions={selectedConditions} onToggleCondition={toggleCondition} />
       

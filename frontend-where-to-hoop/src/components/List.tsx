@@ -1,8 +1,9 @@
 import breakpoints from "../assets/style";
 import initialHoops from "../mockhoops";
 import type { BasketballHoop } from "../types/types";
-import { HoopCard } from "./reusable/HoopCardSmall";
+import { HoopCard } from "./reusable/HoopCard";
 import { useMediaQuery } from 'usehooks-ts'
+import { Link } from "react-router-dom";
 
 const List = () => {
   const md = useMediaQuery(`(min-width: ${breakpoints.md})`);
@@ -13,14 +14,18 @@ const List = () => {
       <div className="grid grid-cols-2 grid-rows-3 gap-6 px-8">
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
-            <HoopCard key={hoop.id} hoop={hoop} />);
+              <Link to={`/hoops/${hoop.id}`}>
+                <HoopCard key={hoop.id} hoop={hoop} />
+              </Link>);
         })}
       </div>
     ) : (
       <div className="flex flex-col items-center gap-4 px-4">
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
-            <HoopCard key={hoop.id} hoop={hoop} />);
+             <Link to={`/hoops/${hoop.id}`}>
+                <HoopCard key={hoop.id} hoop={hoop} />
+              </Link>);
         })}
     </div>
     )}

@@ -5,6 +5,7 @@ import { conditionColorSelector } from "../../utils/courtCondition.tsx";
 import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 
+
 interface HoopCardProps {
   hoop: BasketballHoop;
 }
@@ -13,10 +14,8 @@ const HoopCard = ({ hoop }: HoopCardProps) => {
   const sm = useMediaQuery(`(min-width: ${breakpoints.sm})`);
 
   return (
-    <div className="h-1/3 md:h-full w-full flex flex-col justify-start gap-2 bg-white rounded-md shadow-lg p-4 hover:shadow-xl hover:bg-gray-100 transition-shadow">
-      <div>
-        <h5>{hoop.name}</h5>
-      </div>
+    <div className="h-1/3 md:h-full w-full flex flex-col justify-start gap-2 bg-white rounded-md shadow-lg p-4 hover:shadow-xl hover:bg-gray-100 transition-shadow cursor-pointer">
+      <h5>{hoop.name}</h5>
       <div className="flex justify-start gap-4">
         <div className="w-2/3">
           <img className="rounded-md w-full h-full object-cover"
