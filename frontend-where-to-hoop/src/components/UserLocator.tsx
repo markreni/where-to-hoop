@@ -2,12 +2,26 @@ import { Button } from "react-aria-components";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { useLocationValues, useLocationDispatch } from "../contexts/LocationContext.tsx";
 import type { Coordinates } from "../types/types.ts";
+import { useEffect } from "react";
 
 
 const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => {
   const userLocationDispatch = useLocationDispatch();
   const userLocationContext: Coordinates = useLocationValues();
   
+  useEffect(() => {
+    const watchId = navigator.geolocation.watchPosition((position) => {
+        userLocationDispatch({
+          payload: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          },
+        });
+    });
+
+    return () => navigator.geolocation.clearWatch(watchId);
+  }, [userLocationDispatch]);
+
   const locateUser = () => {
     if (userLocationContext.latitude && userLocationContext.longitude) {
       mapRef.current?.flyTo([userLocationContext.latitude, userLocationContext.longitude], 13);
