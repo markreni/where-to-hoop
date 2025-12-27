@@ -12,6 +12,7 @@ import { MapLabel } from "./MapLabel.tsx";
 import { conditionColorSelector } from "../utils/courtCondition.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
+import centerCoordinates from "../utils/constants.ts";
 
 
 // Component that holds map instance reference
@@ -30,7 +31,7 @@ const Map = () => {
   const mapRef = useRef<L.Map | null>(null);
   const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
 
-  const centerPosition: LatLngTuple = (userLocationContext.latitude && userLocationContext.longitude) ? [userLocationContext.latitude!, userLocationContext.longitude!] : [60.1695, 24.9354]; // Default to Helsinki if no location
+  const centerPosition: LatLngTuple = (userLocationContext.latitude && userLocationContext.longitude) ? [userLocationContext.latitude!, userLocationContext.longitude!] : centerCoordinates; 
 
   const toggleCondition = (condition: Condition) => {
     setSelectedConditions(prev => {
@@ -48,15 +49,15 @@ const Map = () => {
 
   return (
     <div>
-        <MapContainer className="h-[100vh] w-[100vw]" center={centerPosition} zoom={13} zoomControl={false} scrollWheelZoom={true}>
-        <MapController onMapReady={(map) => { mapRef.current = map; }} />
-        <ZoomControl position="bottomright" /> 
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
+      <MapContainer className="h-[100vh] w-[100vw]" center={centerPosition} zoom={13} zoomControl={false} scrollWheelZoom={true}>
+      <MapController onMapReady={(map) => { mapRef.current = map; }} />
+      <ZoomControl position="bottomright" /> 
+      <TileLayer
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+      />
 
-        {filteredHoops.map((hoop: BasketballHoop) => {
+      {filteredHoops.map((hoop: BasketballHoop) => {
           const icon = L.divIcon({
             html: '<div class="hoop-emoji">🏀</div>',
             className: `hoop-icon-container ${conditionColorSelector(hoop.condition)}`,
@@ -71,12 +72,11 @@ const Map = () => {
             </Marker>
           );
         })}
-      </MapContainer>
 
+      </MapContainer>
       <UserLocator mapRef={mapRef} />
-      
       <MapLabel selectedConditions={selectedConditions} onToggleCondition={toggleCondition} />
-      
+
     </div>
   );
 }

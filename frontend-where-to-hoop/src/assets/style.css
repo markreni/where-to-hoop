@@ -98,6 +98,9 @@
 }
 
 @layer components {
+  .padding-for-nav-bar {
+    @apply pt-20;
+  }
   .nav-bar {
     @apply flex items-center justify-between gap-4 h-9;
   }

@@ -25,7 +25,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="pt-20 h-screen flex flex-col justify-center poppins-medium text-[min(8vw,2.0rem)] text-white text-center">
+    <div className="padding-for-nav-bar h-screen flex flex-col justify-center poppins-medium text-[min(8vw,2.0rem)] text-white text-center">
       <div className="flex-grow space-y-6 px-4">
         <section>
           Welcome to <strong>WhereHoops</strong>!<br />

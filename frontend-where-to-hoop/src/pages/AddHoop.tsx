@@ -1,8 +1,13 @@
 import { MdOutlineMyLocation } from "react-icons/md";
 import { Label, TextField, TextArea, Button } from "react-aria-components";
-import { type BasketballHoop, type ColorMode, type Condition } from "../types/types";
+import { type BasketballHoop, type ColorMode, type Condition, type Coordinates } from "../types/types";
 import { useColorModeValues } from "../contexts/DarkModeContext";
 import { useState } from "react";
+import { IoArrowBackSharp } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
+import { MiniMap } from "../components/MiniMap";
+import { useLocationDispatch, useLocationValues } from "../contexts/LocationContext";
+
 
 const AddHoop = () => {
   const [formData, setFormData] = useState<BasketballHoop>({
@@ -15,19 +20,53 @@ const AddHoop = () => {
     indoor: false,
     createdAt: new Date().toISOString(),
   });
+  const userLocationDispatch = useLocationDispatch();
+  const userLocationContext: Coordinates = useLocationValues();
+  const navigate = useNavigate();
   const colorModeContext: ColorMode = useColorModeValues();
-  
+
+  const locateUser = () => {
+    if (userLocationContext.latitude && userLocationContext.longitude) {
+     setFormData({
+      ...formData,
+      coordinates: {
+        latitude: userLocationContext.latitude,
+        longitude: userLocationContext.longitude,
+      },
+     });
+    } else {
+      console.log("Locating user...");
+      navigator.geolocation.getCurrentPosition((position) => {
+        userLocationDispatch({
+          payload: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+          },
+        });
+      setFormData({
+      ...formData,
+      coordinates: {
+        latitude: userLocationContext.latitude,
+        longitude: userLocationContext.longitude,
+      },
+     });
+        
+      }, (error) => {
+        console.error("Error getting user's location:", error);
+      }, { enableHighAccuracy: true });
+    }
+  };
 
   return (
-    <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div className="padding-for-nav-bar bg-opacity-50 flex items-center justify-center z-50 mb-4">
       <div className={`${colorModeContext} bg-background rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto`}>
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
           <h2 className={`${colorModeContext} text-gray-900 text-lg font-semibold dark:text-gray-100`}>Add Basketball Hoop</h2>
           <Button
-            onPress={() => {}}
-            className={"text-gray-400 hover:text-gray-600 transition-colors"}
-          >
+            onPress={() => navigate(-1)}
+            className={`${colorModeContext} text-gray-400 hover:text-gray-700 transition-colors dark:hover:text-gray-200`}
+          > <IoArrowBackSharp size={24} />
           </Button>
         </div>
 
@@ -51,27 +90,27 @@ const AddHoop = () => {
             {/* Location */}
             <div>
               <Label className={`${colorModeContext} block text-sm text-gray-700 mb-1 dark:text-gray-100`}>Location *</Label>
+              <MiniMap formData={formData} setFormData={setFormData} />
               <Button
                 type="button"
-                onPress={() => {}}
+                onPress={locateUser}
                 isDisabled={false}
                 className={`${colorModeContext} w-full mb-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`}
               >
                 <MdOutlineMyLocation size={24} />
                 Use Current Location
               </Button>
-              
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <input
-                    type="text"
+                    type="number"
                     required
                     value={formData.coordinates.latitude ?? ""}
                     onChange={(e) => setFormData({
                       ...formData,
                       coordinates: {
                         ...formData.coordinates,
-                        latitude: e.target.value === "" ? null : parseFloat(e.target.value),
+                        latitude: Number(e.target.value) ?? null,
                       },
                     })}
                     className={`${colorModeContext} form-input`}
@@ -80,14 +119,14 @@ const AddHoop = () => {
                 </div>
                 <div>
                   <input
-                    type="text"
+                    type="number"
                     required
                     value={formData.coordinates.longitude ?? ""}
                     onChange={(e) => setFormData({
                       ...formData,
                       coordinates: {
                         ...formData.coordinates,
-                        longitude: e.target.value === "" ? null : parseFloat(e.target.value),
+                        longitude: Number(e.target.value) ?? null,
                       },
                     })}
                     className={`${colorModeContext} form-input`}
