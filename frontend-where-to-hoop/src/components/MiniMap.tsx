@@ -38,7 +38,8 @@ const MiniMap = ({ formData, setFormData }: { formData: BasketballHoop; setFormD
       <MapContainer
         center={centerCoordinates}
         zoom={10}
-        style={{ height: "100%", width: "100%", borderRadius: 8 }}
+        className="h-full w-full rounded-lg"
+        
       >
         <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

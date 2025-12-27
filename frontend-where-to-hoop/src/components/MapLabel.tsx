@@ -23,7 +23,7 @@ const MapLabel = ({ selectedConditions, onToggleCondition }: MapLabelProps) => {
                   type="button"
                   onClick={() => onToggleCondition(item.condition)}
                   className={`flex items-center gap-2 px-2 py-1 rounded transition-colors cursor-pointer ${
-                    isSelected ? 'bg-gray-100' : 'bg-white'
+                    isSelected ? 'bg-gray-100 hover:bg-gray-200' : 'bg-white'
                   }`}
                 >
                   <div 
