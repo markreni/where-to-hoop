@@ -12,7 +12,7 @@ const MapLabel = ({ selectedConditions, onToggleCondition }: MapLabelProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
   
   return (
-     <div className={`${colorModeContext} absolute bottom-6 left-3 bg-white rounded-lg shadow-lg py-2 px-4 z-400 dark:bg-black`}>
+     <div className={`${colorModeContext} absolute bottom-6 left-3 bg-background rounded-lg shadow-lg py-2 px-4 z-400`}>
           <h4 className={`${colorModeContext} text-sm text-gray-800 font-normal mb-2 dark:text-gray-200`}><strong>Court Condition</strong> </h4>
           <div className="flex flex-col gap-1.5">
             {conditionOptions.map((item) => {

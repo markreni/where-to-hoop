@@ -12,7 +12,7 @@ const ToggleBasketball = (): JSX.Element => {
     <ToggleButton 
       isSelected={colorModeContext === 'dark'} 
       onChange={() => colorModeDispatch(colorModeContext === 'dark' ? 'light' : 'dark')}
-      className="ml-4 rounded-full transition-colors bg-first-color dark:bg-gray-800 text-gray-800 dark:text-yellow-400 hover:bg-second-color dark:hover:bg-gray-700 cursor-pointer"
+      className="ml-4 rounded-full transition-colors bg-first-color text-gray-800 hover:bg-second-color cursor-pointer"
     >
       {colorModeContext === 'dark' ? <IoBasketballOutline size={35} /> : <IoBasketballSharp size={35} />}
     </ToggleButton>

@@ -14,8 +14,8 @@ const List = () => {
       <div className="grid grid-cols-2 grid-rows-3 gap-6 px-8">
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
-              <Link to={`/hoops/${hoop.id}`}>
-                <HoopCard key={hoop.id} hoop={hoop} />
+              <Link key={hoop.id} to={`/hoops/${hoop.id}`}>
+                <HoopCard hoop={hoop} />
               </Link>);
         })}
       </div>
@@ -23,8 +23,8 @@ const List = () => {
       <div className="flex flex-col items-center gap-4 px-4">
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
-             <Link to={`/hoops/${hoop.id}`}>
-                <HoopCard key={hoop.id} hoop={hoop} />
+             <Link key={hoop.id} to={`/hoops/${hoop.id}`}>
+                <HoopCard hoop={hoop} />
               </Link>);
         })}
     </div>

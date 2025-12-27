@@ -21,7 +21,7 @@ const HoopCard = ({ hoop }: HoopCardProps) => {
   const distance = haversineDistance([userLocationContext.latitude!, userLocationContext.longitude!], [hoop.coordinates.latitude!, hoop.coordinates.longitude!], false);
 
   return (
-    <div className={`${colorModeContext} h-1/3 md:h-full w-full flex flex-col justify-start gap-2 bg-white rounded-md shadow-lg p-4 hover:shadow-xl hover:bg-gray-100 transition-shadow cursor-pointer dark:bg-black dark:text-white dark:hover:bg-gray-800`}>
+    <div className={`${colorModeContext} h-1/3 md:h-full w-full flex flex-col justify-start gap-2 bg-background rounded-md shadow-lg p-4 hover:shadow-xl hover:bg-gray-100/95 transition-shadow cursor-pointer dark:text-white dark:hover:bg-gray-800/95`}>
       <div className="flex justify-start gap-1">
           <strong>{hoop.name}</strong><br />
           <span>{distance.toFixed(1)} km</span>

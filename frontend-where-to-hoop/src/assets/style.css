@@ -71,6 +71,8 @@
   --color-third-color: #c7bfb8ff;
   --color-fourth-color: #a19a93ff;
 
+  --color-background: #ffffff;
+
   --breakpoint-xsm: 480px; /* 30rem */
   --breakpoint-sm: 640px; /* 40rem */
   --breakpoint-md: 768px; /* 48rem */
@@ -79,16 +81,11 @@
   --breakpoint-2xl: 1536px; /* 96rem */
 }
 
-/* ------------ Other Directory------------ */
-
-@layer components {
-  .nav-bar {
-    @apply flex items-center justify-between gap-4 h-9;
-  }
-  .hoop-card-spacer {
-    @apply flex items-center gap-2;
-  }
+.dark {
+  --color-background: #121212;
 }
+
+/* ------------ Other Directory (Layers) ------------ */
 
 @layer base {
   h5 {
@@ -98,5 +95,17 @@
 
 @utility flex-center {
   @apply flex justify-center items-center;
+}
+
+@layer components {
+  .nav-bar {
+    @apply flex items-center justify-between gap-4 h-9;
+  }
+  .hoop-card-spacer {
+    @apply flex items-center gap-2;
+  }
+  .form-input {
+    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-first-color dark:text-white;
+  }
 }
 
