@@ -34,7 +34,7 @@ const MiniMap = ({ formData, setFormData }: { formData: BasketballHoop; setFormD
     };
 
   return (
-    <div className="mt-2 mb-2 h-50">
+    <div className="h-50">
       <MapContainer
         center={centerCoordinates}
         zoom={10}

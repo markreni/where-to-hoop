@@ -58,18 +58,18 @@ const AddHoop = () => {
   return (
     <div className="padding-for-back-arrow margin-b-for-page flex items-center justify-center padding-x-for-page">
       <BackArrow />
-      <div className={`${colorModeContext} bg-background rounded-lg shadow-xl max-w-xl w-full max-h-[80vh] overflow-y-auto`}>
+      <div className={`${colorModeContext} flex flex-col bg-background rounded-lg shadow-xl max-w-xl w-full max-h-[80vh] overflow-y-auto`}>
         {/* Header */}
         <div className={`${colorModeContext} sticky top-0 flex items-center justify-start p-6 border-b border-gray-200 bg-background`}>
-          <h2 className={`${colorModeContext} text-gray-900 text-lg font-semibold dark:text-gray-100`}>Add Basketball Hoop</h2>   
+          <h2 className={`${colorModeContext} text-gray-600 text-lg font-semibold dark:text-gray-300`}>Add Basketball Hoop</h2>   
         </div>  
 
         {/* Form */}
-        <form onSubmit={() => {}} className="p-6">
-          <div className="space-y-4">
+        <form onSubmit={() => {}} className="flex flex-col p-6 gap-6">
+          <div className="flex flex-col gap-4">
             {/* Name */}
-            <TextField isRequired className="flex flex-col">
-              <Label className={`${colorModeContext} block text-sm text-gray-700 mb-1 dark:text-gray-100`}>
+            <TextField isRequired className={"flex flex-col gap-2"}>
+              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>
                 Name *
               </Label>
               <input
@@ -82,18 +82,19 @@ const AddHoop = () => {
             </TextField>
 
             {/* Location */}
-            <div>
-              <Label className={`${colorModeContext} block text-sm text-gray-700 mb-1 dark:text-gray-100`}>Location *</Label>
+            <div className="flex flex-col gap-2">
+              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>Location *</Label>
               <MiniMap formData={formData} setFormData={setFormData} />
               <Button
                 type="button"
                 onPress={locateUser}
                 isDisabled={false}
-                className={`${colorModeContext} w-full mb-2 px-3 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`}
+                className={`${colorModeContext} w-full py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`}
               >
                 <MdOutlineMyLocation size={24} />
                 Use Current Location
               </Button>
+              { /*  
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <input
@@ -128,11 +129,12 @@ const AddHoop = () => {
                   />
                 </div>
               </div>
+              */}
             </div>
 
             {/* Description */}
-            <TextField className="flex flex-col">
-              <Label className={`${colorModeContext} block text-sm text-gray-700 mb-1 dark:text-gray-100`}>
+            <TextField className={"flex flex-col gap-2"}>
+              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>
                 Description
               </Label>
               <TextArea
@@ -145,8 +147,8 @@ const AddHoop = () => {
             </TextField>
 
             {/* Condition */}
-            <div>
-              <Label className={`${colorModeContext} block text-sm text-gray-700 mb-1 dark:text-gray-100`}>
+            <div className="flex flex-col gap-2">
+              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>
                 Condition
               </Label>
               <select
@@ -174,7 +176,7 @@ const AddHoop = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 mt-6">
+          <div className="flex gap-3">
             <Button
               type="button"
               onPress={() => {console.log("Cancel")}}
