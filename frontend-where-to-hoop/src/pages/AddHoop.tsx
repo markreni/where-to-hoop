@@ -3,10 +3,9 @@ import { Label, TextField, TextArea, Button } from "react-aria-components";
 import { type BasketballHoop, type ColorMode, type Condition, type Coordinates } from "../types/types";
 import { useColorModeValues } from "../contexts/DarkModeContext";
 import { useState } from "react";
-import { IoArrowBackSharp } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 import { MiniMap } from "../components/MiniMap";
 import { useLocationDispatch, useLocationValues } from "../contexts/LocationContext";
+import { BackArrow } from "../components/reusable/BackArrow";
 
 
 const AddHoop = () => {
@@ -22,7 +21,6 @@ const AddHoop = () => {
   });
   const userLocationDispatch = useLocationDispatch();
   const userLocationContext: Coordinates = useLocationValues();
-  const navigate = useNavigate();
   const colorModeContext: ColorMode = useColorModeValues();
 
   const locateUser = () => {
@@ -58,17 +56,13 @@ const AddHoop = () => {
   };
 
   return (
-    <div className="padding-for-nav-bar flex-center mb-4">
-      <div className={`${colorModeContext} bg-background rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto`}>
+    <div className="padding-for-back-arrow margin-b-for-page flex items-center justify-center padding-x-for-page">
+      <BackArrow />
+      <div className={`${colorModeContext} bg-background rounded-lg shadow-xl max-w-xl w-full max-h-[80vh] overflow-y-auto`}>
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className={`${colorModeContext} text-gray-900 text-lg font-semibold dark:text-gray-100`}>Add Basketball Hoop</h2>
-          <Button
-            onPress={() => navigate(-1)}
-            className={`${colorModeContext} text-gray-400 hover:text-gray-700 transition-colors dark:hover:text-gray-200`}
-          > <IoArrowBackSharp size={24} />
-          </Button>
-        </div>
+        <div className={`${colorModeContext} sticky top-0 flex items-center justify-start p-6 border-b border-gray-200 bg-background`}>
+          <h2 className={`${colorModeContext} text-gray-900 text-lg font-semibold dark:text-gray-100`}>Add Basketball Hoop</h2>   
+        </div>  
 
         {/* Form */}
         <form onSubmit={() => {}} className="p-6">

@@ -76,7 +76,6 @@ const Map = () => {
       </MapContainer>
       <UserLocator mapRef={mapRef} />
       <MapLabel selectedConditions={selectedConditions} onToggleCondition={toggleCondition} />
-
     </div>
   );
 }
