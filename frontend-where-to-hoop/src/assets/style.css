@@ -113,8 +113,8 @@
   .nav-bar {
     @apply flex items-center justify-between gap-4 h-9;
   }
-  .hoop-card-spacer {
-    @apply flex items-center gap-2;
+  .hoop-card-icon {
+    @apply flex items-center justify-center px-2 py-0.5 gap-2 text-sm rounded;
   }
   .form-input {
     @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-first-color dark:text-white;
