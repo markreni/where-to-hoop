@@ -49,7 +49,7 @@ const Map = () => {
 
   return (
     <div>
-      <MapContainer className="h-[100vh] w-[100vw]" center={centerPosition} zoom={13} zoomControl={false} scrollWheelZoom={true}>
+      <MapContainer className="h-[100vh] w-[100vw]" center={centerPosition} zoom={11} zoomControl={false} scrollWheelZoom={true}>
       <MapController onMapReady={(map) => { mapRef.current = map; }} />
       <ZoomControl position="bottomright" /> 
       <TileLayer

@@ -13,7 +13,7 @@ const Hoops = () => {
   return (
     <div className="relative">
       <ListToggle toggleFunction={toggleView} mapView={mapView} />
-      { mapView ? (<Map />) : (<List /> ) }
+      { mapView ? (<Map />) : (<List toggleFunction={toggleView} mapView={mapView} /> ) }
     </div>
   );
 };

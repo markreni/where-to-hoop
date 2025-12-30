@@ -5,7 +5,7 @@ import { HoopCard } from "./reusable/HoopCard";
 import { useMediaQuery } from 'usehooks-ts'
 import { Link } from "react-router-dom";
 
-const List = () => {
+const List = ({ toggleFunction, mapView }: { toggleFunction: (value: boolean) => void, mapView: boolean }) => {
   const xmd = useMediaQuery(`(min-width: ${breakpoints.xmd})`);
 
   return (
@@ -15,7 +15,7 @@ const List = () => {
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
               <Link key={hoop.id} to={`/hoops/${hoop.id}`}>
-                <HoopCard hoop={hoop} />
+                <HoopCard hoop={hoop} toggleFunction={toggleFunction} mapView={mapView} />
               </Link>);
         })}
       </div>
@@ -24,7 +24,7 @@ const List = () => {
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
              <Link key={hoop.id} to={`/hoops/${hoop.id}`}>
-                <HoopCard hoop={hoop} />
+                <HoopCard hoop={hoop} toggleFunction={toggleFunction} mapView={mapView} />
               </Link>);
         })}
     </div>
