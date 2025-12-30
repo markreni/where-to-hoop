@@ -76,6 +76,7 @@
   --breakpoint-xsm: 480px; /* 30rem */
   --breakpoint-sm: 640px; /* 40rem */
   --breakpoint-md: 768px; /* 48rem */
+  --breakpoint-xmd: 896px; /* 56rem */
   --breakpoint-lg: 1024px; /* 64rem */
   --breakpoint-xl: 1280px; /* 80rem */
   --breakpoint-2xl: 1536px; /* 96rem */
@@ -118,6 +119,12 @@
   }
   .form-input {
     @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-first-color dark:text-white;
+  }
+  .border-light {
+    @apply border-1 border-black/40 shadow-md dark:border-white/40;
+  }
+  .border-medium {
+    @apply border-2 border-black/20 shadow-md dark:border-white/50;
   }
 }
 
