@@ -1,10 +1,14 @@
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
-import type { LeafletEvent } from "leaflet";
-import type { BasketballHoop } from "../types/types";
+import type { LatLngTuple, LeafletEvent } from "leaflet";
+import type { BasketballHoop, Coordinates } from "../types/types";
 import centerCoordinates from "../utils/constants";
+import { useLocationValues } from "../contexts/LocationContext";
 
 
 const MiniMap = ({ formData, setFormData }: { formData: BasketballHoop; setFormData: React.Dispatch<React.SetStateAction<BasketballHoop>> }) => {
+    const userLocationContext: Coordinates = useLocationValues();
+    
+    const centerPosition: LatLngTuple = (userLocationContext.latitude && userLocationContext.longitude) ? [userLocationContext.latitude!, userLocationContext.longitude!] : centerCoordinates; 
 
    // Mini map marker component for draggable marker
     const DraggableMarker = ({
@@ -36,7 +40,7 @@ const MiniMap = ({ formData, setFormData }: { formData: BasketballHoop; setFormD
   return (
     <div className="h-50">
       <MapContainer
-        center={centerCoordinates}
+        center={centerPosition}
         zoom={10}
         className="h-full w-full rounded-lg"
         

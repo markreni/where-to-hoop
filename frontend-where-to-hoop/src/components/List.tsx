@@ -8,10 +8,12 @@ import { Link } from "react-router-dom";
 const List = ({ toggleFunction, mapView }: { toggleFunction: (value: boolean) => void, mapView: boolean }) => {
   const xmd = useMediaQuery(`(min-width: ${breakpoints.xmd})`);
 
+  initialHoops.sort
+
   return (
     <div className="pt-40 h-[100vh] w-[100vw] overflow-y-auto">
     {xmd ? (
-      <div className="grid grid-cols-2 grid-rows-3 gap-6 px-8">
+      <div className="grid grid-cols-2 2xl:grid-cols-3 grid-rows-2 gap-6 px-8">
         {initialHoops.map((hoop: BasketballHoop) => {
             return(
               <Link key={hoop.id} to={`/hoops/${hoop.id}`}>

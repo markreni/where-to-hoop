@@ -3,6 +3,8 @@ type ColorMode = 'light' | 'dark';
 
 type Condition = 'excellent' | 'good' | 'fair' | 'poor';
 
+type Popularity = 'popular' | 'average' | 'quiet';
+
 interface Coordinates {
   latitude: number | null;
   longitude: number | null;

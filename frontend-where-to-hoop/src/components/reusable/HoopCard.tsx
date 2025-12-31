@@ -6,7 +6,7 @@ import { conditionColorSelector } from "../../utils/courtCondition.tsx";
 import { useLocationDispatch, useLocationValues } from "../../contexts/LocationContext.tsx";
 import haversineDistance from "../../utils/functions.ts";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
-import { IoMapOutline } from "react-icons/io5";
+//import { IoMapOutline } from "react-icons/io5";
 import { Button } from "react-aria-components";
 import type { FocusableElement } from "@react-types/shared";
 import type { MouseEvent } from "react";
