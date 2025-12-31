@@ -2,13 +2,14 @@ import { MdOutlineMyLocation } from "react-icons/md";
 import { Label, TextField, TextArea, Button } from "react-aria-components";
 import { type BasketballHoop, type ColorMode, type Condition } from "../types/types";
 import { useColorModeValues } from "../contexts/DarkModeContext";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { MiniMap } from "../components/MiniMap";
 import { useLocationDispatch } from "../contexts/LocationContext";
 import { BackArrow } from "../components/reusable/BackArrow";
 
 
 const AddHoop = () => {
+  const mapRef = useRef<L.Map | null>(null);
   const [formData, setFormData] = useState<BasketballHoop>({
     id: '',
     name: '',
@@ -38,6 +39,7 @@ const AddHoop = () => {
           longitude: position.coords.longitude,
           },
         });
+        mapRef.current?.setView([position.coords.latitude, position.coords.longitude], 10);
       }, (error) => {
         console.error("Error getting user's location:", error);
       }, { enableHighAccuracy: true });
@@ -72,7 +74,7 @@ const AddHoop = () => {
             {/* Location */}
             <div className="flex flex-col gap-2">
               <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>Location *</Label>
-              <MiniMap formData={formData} setFormData={setFormData} />
+              <MiniMap formData={formData} setFormData={setFormData} mapRef={mapRef} />
               <Button
                 type="button"
                 onPress={locateUser}

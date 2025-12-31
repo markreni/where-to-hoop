@@ -1,11 +1,11 @@
-import { MapContainer, TileLayer, Marker, ZoomControl, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, ZoomControl } from "react-leaflet";
 import type { LatLngTuple } from "leaflet";
 import L from "leaflet";
 //import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
 import "leaflet/dist/leaflet.css";
 import type { BasketballHoop, Coordinates, Condition } from "../types/types";
 import initialHoops from "../mockhoops";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
 //import { ImLocation2 } from "react-icons/im";
 import { MapLabel } from "./MapLabel.tsx";
@@ -13,18 +13,8 @@ import { conditionColorSelector } from "../utils/courtCondition.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
 import centerCoordinates from "../utils/constants.ts";
+import { MapController } from "./MapController.tsx";
 
-
-// Component that holds map instance reference
-const MapController = ({ onMapReady }: { onMapReady: (map: L.Map) => void }) => {
-  const map: L.Map = useMap();
-  
-  useEffect(() => {
-    onMapReady(map);
-  }, [map, onMapReady]);
-  
-  return null;
-};
 
 const Map = () => {
   const userLocationContext: Coordinates = useLocationValues();

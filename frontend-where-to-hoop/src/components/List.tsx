@@ -5,7 +5,12 @@ import { HoopCard } from "./reusable/HoopCard";
 import { useMediaQuery } from 'usehooks-ts'
 import { Link } from "react-router-dom";
 
-const List = ({ toggleFunction, mapView }: { toggleFunction: (value: boolean) => void, mapView: boolean }) => {
+interface ListProps {
+  toggleFunction: (value: boolean) => void;
+  mapView: boolean;
+}
+
+const List = ({ toggleFunction, mapView }: ListProps) => {
   const xmd = useMediaQuery(`(min-width: ${breakpoints.xmd})`);
 
   initialHoops.sort
