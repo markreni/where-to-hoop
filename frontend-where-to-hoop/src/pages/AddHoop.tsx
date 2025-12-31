@@ -1,10 +1,10 @@
 import { MdOutlineMyLocation } from "react-icons/md";
 import { Label, TextField, TextArea, Button } from "react-aria-components";
-import { type BasketballHoop, type ColorMode, type Condition, type Coordinates } from "../types/types";
+import { type BasketballHoop, type ColorMode, type Condition } from "../types/types";
 import { useColorModeValues } from "../contexts/DarkModeContext";
 import { useState } from "react";
 import { MiniMap } from "../components/MiniMap";
-import { useLocationDispatch, useLocationValues } from "../contexts/LocationContext";
+import { useLocationDispatch } from "../contexts/LocationContext";
 import { BackArrow } from "../components/reusable/BackArrow";
 
 
@@ -20,7 +20,6 @@ const AddHoop = () => {
     createdAt: new Date().toISOString(),
   });
   const userLocationDispatch = useLocationDispatch();
-  const userLocationContext: Coordinates = useLocationValues();
   const colorModeContext: ColorMode = useColorModeValues();
 
   const locateUser = () => {
@@ -35,8 +34,8 @@ const AddHoop = () => {
       setFormData({
         ...formData,
         coordinates: {
-          latitude: userLocationContext.latitude,
-          longitude: userLocationContext.longitude,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
           },
         });
       }, (error) => {
