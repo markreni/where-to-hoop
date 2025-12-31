@@ -24,35 +24,24 @@ const AddHoop = () => {
   const colorModeContext: ColorMode = useColorModeValues();
 
   const locateUser = () => {
-    if (userLocationContext.latitude && userLocationContext.longitude) {
-     setFormData({
-      ...formData,
-      coordinates: {
-        latitude: userLocationContext.latitude,
-        longitude: userLocationContext.longitude,
-      },
-     });
-    } else {
-      console.log("Locating user...");
-      navigator.geolocation.getCurrentPosition((position) => {
-        userLocationDispatch({
-          payload: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+    console.log("Locating user...");
+    navigator.geolocation.getCurrentPosition((position) => {
+      userLocationDispatch({
+        payload: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
           },
         });
       setFormData({
-      ...formData,
-      coordinates: {
-        latitude: userLocationContext.latitude,
-        longitude: userLocationContext.longitude,
-      },
-     });
-        
+        ...formData,
+        coordinates: {
+          latitude: userLocationContext.latitude,
+          longitude: userLocationContext.longitude,
+          },
+        });
       }, (error) => {
         console.error("Error getting user's location:", error);
       }, { enableHighAccuracy: true });
-    }
   };
 
   return (

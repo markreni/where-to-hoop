@@ -10,6 +10,7 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
   const userLocationContext: Coordinates = useLocationValues();
   
   useEffect(() => {
+    {/* Automatically watch user's location and update context 
     const watchId = navigator.geolocation.watchPosition((position) => {
         userLocationDispatch({
           payload: {
@@ -20,12 +21,10 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
     });
 
     return () => navigator.geolocation.clearWatch(watchId);
+    */}
   }, [userLocationDispatch]);
 
   const locateUser = () => {
-    if (userLocationContext.latitude && userLocationContext.longitude) {
-      mapRef.current?.flyTo([userLocationContext.latitude, userLocationContext.longitude], 13);
-    } else {
       console.log("Locating user...");
       navigator.geolocation.getCurrentPosition((position) => {
         userLocationDispatch({
@@ -35,10 +34,10 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
           },
         });
         mapRef.current?.setView([position.coords.latitude, position.coords.longitude], 13);
+        // mapRef.current?.flyTo([userLocationContext.latitude, userLocationContext.longitude], 13);
       }, (error) => {
         console.error("Error getting user's location:", error);
       }, { enableHighAccuracy: true });
-    }
   };
 
   return (
