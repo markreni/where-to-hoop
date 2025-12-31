@@ -1,10 +1,9 @@
-import type { BasketballHoop, ColorMode, Coordinates } from "../../types/types.ts";
+import type { BasketballHoop, ColorMode } from "../../types/types.ts";
 import { IoSunnyOutline } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
 import { conditionColorSelector } from "../../utils/courtCondition.tsx";
-import { useLocationDispatch, useLocationValues } from "../../contexts/LocationContext.tsx";
-import haversineDistance from "../../utils/functions.ts";
+import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 //import { IoMapOutline } from "react-icons/io5";
 import { Button } from "react-aria-components";
@@ -18,15 +17,13 @@ interface HoopCardProps {
   hoop: BasketballHoop;
   toggleFunction: (value: boolean) => void;
   mapView: boolean;
+  distance: number;
 }
 
-const HoopCard = ({ hoop, toggleFunction, mapView }: HoopCardProps) => {
+const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) => {
   //const sm = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const colorModeContext: ColorMode = useColorModeValues();
   const userLocationDispatch = useLocationDispatch();
-  const userLocationContext: Coordinates = useLocationValues();
-
-  const distance = haversineDistance([userLocationContext.latitude!, userLocationContext.longitude!], [hoop.coordinates.latitude!, hoop.coordinates.longitude!], false);
 
   const locateHoop = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();

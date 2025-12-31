@@ -8,23 +8,24 @@ import { useLocationDispatch } from "../contexts/LocationContext";
 import { BackArrow } from "../components/reusable/BackArrow";
 
 
+const emptyHoop: BasketballHoop = {
+  id: '',
+  name: '',
+  profile_images: [],
+  coordinates: { latitude: null, longitude: null },
+  description: '',
+  condition: 'good',
+  indoor: false,
+  createdAt: new Date().toISOString(),
+};
+
 const AddHoop = () => {
   const mapRef = useRef<L.Map | null>(null);
-  const [formData, setFormData] = useState<BasketballHoop>({
-    id: '',
-    name: '',
-    profile_images: [],
-    coordinates: { latitude: null, longitude: null },
-    description: '',
-    condition: 'good',
-    indoor: false,
-    createdAt: new Date().toISOString(),
-  });
+  const [formData, setFormData] = useState<BasketballHoop>(emptyHoop);
   const userLocationDispatch = useLocationDispatch();
   const colorModeContext: ColorMode = useColorModeValues();
 
   const locateUser = () => {
-    console.log("Locating user...");
     navigator.geolocation.getCurrentPosition((position) => {
       userLocationDispatch({
         payload: {
@@ -45,6 +46,12 @@ const AddHoop = () => {
       }, { enableHighAccuracy: true });
   };
 
+  const addHoop = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    setFormData(emptyHoop);
+  };
+
   return (
     <div className="padding-for-back-arrow margin-b-for-page flex items-center justify-center padding-x-for-page">
       <BackArrow />
@@ -55,7 +62,7 @@ const AddHoop = () => {
         </div>  
 
         {/* Form */}
-        <form onSubmit={() => {}} className="flex flex-col p-6 gap-6">
+        <form onSubmit={addHoop} className="flex flex-col p-6 gap-6">
           <div className="flex flex-col gap-4">
             {/* Name */}
             <TextField isRequired className={"flex flex-col gap-2"}>
@@ -169,10 +176,10 @@ const AddHoop = () => {
           <div className="flex gap-3">
             <Button
               type="button"
-              onPress={() => {console.log("Cancel")}}
+              onPress={() => { setFormData(emptyHoop); }}
               className={`${colorModeContext} flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors dark:border-gray-100 dark:text-gray-100 dark:hover:bg-gray-700`}
             >
-              Cancel
+              Reset
             </Button>
             <Button
               type="submit"

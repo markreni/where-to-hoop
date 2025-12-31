@@ -3,7 +3,7 @@ import type { LatLngTuple, LeafletEvent } from "leaflet";
 import type { BasketballHoop, Coordinates } from "../types/types";
 import centerCoordinates from "../utils/constants";
 import { useLocationValues } from "../contexts/LocationContext";
-import { MapController } from "./MapController";
+import { MapController } from "./reusable/MapController";
 
 
 interface MiniMapProps {

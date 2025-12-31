@@ -13,7 +13,7 @@ import { conditionColorSelector } from "../utils/courtCondition.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
 import centerCoordinates from "../utils/constants.ts";
-import { MapController } from "./MapController.tsx";
+import { MapController } from "./reusable/MapController.tsx";
 
 
 const Map = () => {
