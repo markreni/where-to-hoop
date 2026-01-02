@@ -25,6 +25,7 @@ const List = ({ toggleFunction, mapView }: ListProps) => {
 
   // Sort hoops by distance from user
   const sortedHoopsWithDistance: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
+  
   if (!mapCenterValues.latitude || !mapCenterValues.longitude) {
     return initialHoops.map(hoop => ({ hoop, distance: 0 }));
   }
@@ -35,7 +36,7 @@ const List = ({ toggleFunction, mapView }: ListProps) => {
       distance: haversineDistance(
         [mapCenterValues.latitude!, mapCenterValues.longitude!],
         [hoop.coordinates.latitude!, hoop.coordinates.longitude!]
-      )
+      ),
     }))
     .sort((a, b) => a.distance - b.distance);
 }, [mapCenterValues.latitude, mapCenterValues.longitude]);
