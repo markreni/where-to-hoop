@@ -6,9 +6,9 @@ import { conditionColorSelector } from "../../utils/courtCondition.tsx";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 //import { IoMapOutline } from "react-icons/io5";
-import { Button } from "react-aria-components";
 import type { FocusableElement } from "@react-types/shared";
 import type { MouseEvent } from "react";
+import { HoopCardButton } from "./HoopCardButton.tsx";
 //import { useMediaQuery } from 'usehooks-ts'
 //import breakpoints from "../../assets/style.ts";
 
@@ -35,6 +35,14 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
     });
     toggleFunction(!mapView);
   };
+
+  const readyToPlay = (e: MouseEvent<FocusableElement>) => {
+    e.preventDefault();
+    console.log(
+      `Ready to play at hoop ${hoop.name} today at ${new Date().toISOString().split('T')[1]}`
+    );
+  };
+
   return (
     <div className={`${colorModeContext} h-1/3 xmd:h-full w-full flex flex-col justify-start gap-2 bg-background rounded-md shadow-lg p-4 transition-shadow cursor-default dark:text-white`}>
       <div className="flex justify-between items-start gap-2">
@@ -42,13 +50,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           <strong>{hoop.name}</strong>
           <span>{distance.toFixed(1)} km</span>
         </div>
-        <Button 
-          className={`${colorModeContext} flex items-center gap-2 px-5 py-1.5 border-1 border-black/20 shadow-md bg-blue-500/80 text-white rounded-xl hover:bg-blue-600 transition-colors text-sm cursor-pointer dark:border-white/50`}
-          onClick={(e) => locateHoop(e)}
-        >
-          {/*<IoMapOutline size={16} /> --- IGNORE ---*/}
-          On Map
-        </Button>
+        <HoopCardButton actionFunction={locateHoop} title="On Map" bgColor="bg-blue-500/80 hover:bg-blue-600"></HoopCardButton>
       </div>
       <div className="flex justify-between gap-3">
         <div className="w-2/3">
@@ -78,7 +80,10 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
             </div>
           </div>
       </div>
-      <p className="w-full">{hoop.description}</p> 
+      <div className="flex justify-between items-center gap-2">
+        <p className="w-1/2">{hoop.description}</p> 
+        <HoopCardButton actionFunction={readyToPlay} title="Ready to play" bgColor="bg-green-500/80 hover:bg-green-600" ></HoopCardButton>
+      </div>
     </div>                        
   );
 }
