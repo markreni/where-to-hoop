@@ -46,7 +46,7 @@ const List = ({ toggleFunction, mapView }: ListProps) => {
     {xmd ? (
       <div className="grid grid-cols-2 2xl:grid-cols-3 grid-rows-2 gap-6 px-8">
         {sortedHoopsWithDistance.map(({ hoop, distance }) => (
-        <Link key={hoop.id} to={`/hoops/${hoop.id}`}>
+        <Link key={hoop.id} to={`#`}> {/* Temporary link to prevent navigation on small screens -> /hoops/${hoop.id}*/}
           <HoopCard hoop={hoop} distance={distance} toggleFunction={toggleFunction} mapView={mapView} />
         </Link>
       ))}
@@ -54,7 +54,7 @@ const List = ({ toggleFunction, mapView }: ListProps) => {
     ) : (
       <div className="flex flex-col items-center gap-4 px-4">
         {sortedHoopsWithDistance.map(({ hoop, distance }) => (
-        <Link key={hoop.id} to={`/hoops/${hoop.id}`}>
+        <Link key={hoop.id} to={`#`}> {/* Temporary link to prevent navigation on small screens -> /hoops/${hoop.id}*/}
           <HoopCard hoop={hoop} distance={distance} toggleFunction={toggleFunction} mapView={mapView} />
         </Link>
       ))}

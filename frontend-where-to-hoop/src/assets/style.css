@@ -41,6 +41,11 @@
   font-style: normal;
 }
 
+.leaflet-top.leaflet-right {
+  top: 100px;  /* Adjust to clear navbar */
+  right: -1px;
+}
+
 /* ------------ Hoop Marker ------------ */
 
 .hoop-emoji {

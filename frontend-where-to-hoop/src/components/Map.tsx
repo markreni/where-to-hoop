@@ -8,22 +8,25 @@ import initialHoops from "../mockhoops";
 import { useRef, useState } from "react";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
 //import { ImLocation2 } from "react-icons/im";
-import { MapLabel } from "./MapLabel.tsx";
+import { MapLabel } from "./reusable/MapLabel.tsx";
 import { conditionColorSelector } from "../utils/courtCondition.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
 import centerCoordinates from "../utils/constants.ts";
 import { MapController } from "./reusable/MapController.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import conditionOptions from "../utils/courtCondition.tsx";
 
 
 const Map = () => {
   const mapCenterValues: Coordinates = useLocationValues();
   const mapRef = useRef<L.Map | null>(null);
   const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
+  const [selectedDoors, setSelectedDoors] = useState<Set<'indoor' | 'outdoor'>>(new Set(['indoor', 'outdoor']));
   const colorModeContext: ColorMode = useColorModeValues();
 
   const centerPosition: LatLngTuple = (mapCenterValues.latitude && mapCenterValues.longitude) ? [mapCenterValues.latitude!, mapCenterValues.longitude!] : centerCoordinates; 
+
   const toggleCondition = (condition: Condition) => {
     setSelectedConditions(prev => {
       const newSet = new Set(prev);
@@ -36,13 +39,25 @@ const Map = () => {
     });
   };
 
-  const filteredHoops = initialHoops.filter(hoop => selectedConditions.has(hoop.condition));
+  const toggleDoor = (door: 'indoor' | 'outdoor') => {
+    setSelectedDoors(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(door)) {
+        newSet.delete(door);
+      } else {
+        newSet.add(door);
+      }
+      return newSet;
+    });
+  };
+
+  const filteredHoops: BasketballHoop[] = initialHoops.filter(hoop => selectedConditions.has(hoop.condition) && (hoop.indoor ? selectedDoors.has('indoor') : selectedDoors.has('outdoor')));
 
   return (
     <div>
       <MapContainer className="h-[100vh] w-[100vw]" center={centerPosition} zoom={11} zoomControl={false} scrollWheelZoom={true}>
       <MapController onMapReady={(map) => { mapRef.current = map; }} />
-      <ZoomControl position="bottomright" /> 
+      <ZoomControl position="topright" /> 
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -66,7 +81,13 @@ const Map = () => {
 
       </MapContainer>
       <UserLocator mapRef={mapRef} />
-      <MapLabel selectedConditions={selectedConditions} onToggleCondition={toggleCondition} />
+      <div className="absolute bottom-2 right-[10px] z-1000">
+        <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={toggleDoor} options={[{ label: 'Indoor', condition: 'indoor', color: 'bg-blue-500' }, { label: 'Outdoor', condition: 'outdoor', color: 'bg-green-500' }]} />
+      </div>
+      <div className="absolute bottom-2 left-[10px] z-400">
+        <MapLabel title={"Court Condition"} selectedItems={selectedConditions} onToggleItems={toggleCondition} options={conditionOptions} />
+      </div>
+      
     </div>
   );
 }
