@@ -13,9 +13,9 @@ interface MiniMapProps {
 }
 
 const MiniMap = ({ formData, setFormData, mapRef }: MiniMapProps) => {
-    const userLocationContext: Coordinates = useLocationValues();
+    const mapCenterValues: Coordinates = useLocationValues();
     
-    const centerPosition: LatLngTuple = (userLocationContext.latitude && userLocationContext.longitude) ? [userLocationContext.latitude!, userLocationContext.longitude!] : centerCoordinates; 
+    const centerPosition: LatLngTuple = (mapCenterValues.latitude && mapCenterValues.longitude) ? [mapCenterValues.latitude!, mapCenterValues.longitude!] : centerCoordinates; 
 
    // Mini map marker component for draggable marker
     const DraggableMarker = ({

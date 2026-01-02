@@ -6,7 +6,8 @@ import { useMediaQuery } from 'usehooks-ts'
 import { Link } from "react-router-dom";
 import haversineDistance from "../utils/functions";
 import { useLocationValues } from "../contexts/LocationContext";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import useLocateUser from "../hooks/useLocateUser";
 
 interface ListProps {
   toggleFunction: (value: boolean) => void;
@@ -15,11 +16,16 @@ interface ListProps {
 
 const List = ({ toggleFunction, mapView }: ListProps) => {
   const xmd = useMediaQuery(`(min-width: ${breakpoints.xmd})`);
-  const userLocation = useLocationValues();
+  const mapCenterValues = useLocationValues();
+  const locateUser = useLocateUser();
+
+  useEffect(() => {
+    locateUser();
+  }, [locateUser]);
 
   // Sort hoops by distance from user
   const sortedHoopsWithDistance: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
-  if (!userLocation.latitude || !userLocation.longitude) {
+  if (!mapCenterValues.latitude || !mapCenterValues.longitude) {
     return initialHoops.map(hoop => ({ hoop, distance: 0 }));
   }
 
@@ -27,12 +33,12 @@ const List = ({ toggleFunction, mapView }: ListProps) => {
     .map(hoop => ({
       hoop,
       distance: haversineDistance(
-        [userLocation.latitude!, userLocation.longitude!],
+        [mapCenterValues.latitude!, mapCenterValues.longitude!],
         [hoop.coordinates.latitude!, hoop.coordinates.longitude!]
       )
     }))
     .sort((a, b) => a.distance - b.distance);
-}, [userLocation.latitude, userLocation.longitude]);
+}, [mapCenterValues.latitude, mapCenterValues.longitude]);
 
   return (
     <div className="pt-40 h-[100vh] w-[100vw] overflow-y-auto">

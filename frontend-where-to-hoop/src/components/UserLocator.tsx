@@ -1,14 +1,14 @@
 import { Button } from "react-aria-components";
 import { MdOutlineMyLocation } from "react-icons/md";
-import { useLocationValues, useLocationDispatch } from "../contexts/LocationContext.tsx";
-import type { Coordinates } from "../types/types.ts";
+import useLocateUser from "../hooks/useLocateUser.ts";
 import { useEffect } from "react";
+import { useLocationDispatch } from "../contexts/LocationContext.tsx";
 
 
 const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => {
+  const locateUser = useLocateUser();
   const userLocationDispatch = useLocationDispatch();
-  const userLocationContext: Coordinates = useLocationValues();
-  
+
   useEffect(() => {
     {/* Automatically watch user's location and update context 
     const watchId = navigator.geolocation.watchPosition((position) => {
@@ -24,29 +24,17 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
     */}
   }, [userLocationDispatch]);
 
-  const locateUser = () => {
-      console.log("Locating user...");
-      navigator.geolocation.getCurrentPosition((position) => {
-        userLocationDispatch({
-          payload: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          },
-        });
-        mapRef.current?.setView([position.coords.latitude, position.coords.longitude], 13);
-        // mapRef.current?.flyTo([userLocationContext.latitude, userLocationContext.longitude], 13);
-      }, (error) => {
-        console.error("Error getting user's location:", error);
-      }, { enableHighAccuracy: true });
+  const handleLocateUser = () => {
+    locateUser({ mapRef, zoom: 13 });
   };
 
   return (
     <Button 
-        className="absolute bottom-27 right-[13px] text-gray-700 text-3xl z-400 cursor-pointer" 
-            onPress={locateUser}
-            aria-label="Locate Me"
-          >
-            <MdOutlineMyLocation />
+      className="absolute bottom-27 right-[13px] text-gray-700 text-3xl z-400 cursor-pointer" 
+        onPress={handleLocateUser}
+        aria-label="Locate Me"
+      >
+      <MdOutlineMyLocation />
     </Button>
   );
 }

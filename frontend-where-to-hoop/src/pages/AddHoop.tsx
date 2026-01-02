@@ -4,7 +4,7 @@ import { type BasketballHoop, type ColorMode, type Condition } from "../types/ty
 import { useColorModeValues } from "../contexts/DarkModeContext";
 import { useState, useRef } from "react";
 import { MiniMap } from "../components/MiniMap";
-import { useLocationDispatch } from "../contexts/LocationContext";
+import useLocateUser from "../hooks/useLocateUser";
 import { BackArrow } from "../components/reusable/BackArrow";
 
 
@@ -22,28 +22,22 @@ const emptyHoop: BasketballHoop = {
 const AddHoop = () => {
   const mapRef = useRef<L.Map | null>(null);
   const [formData, setFormData] = useState<BasketballHoop>(emptyHoop);
-  const userLocationDispatch = useLocationDispatch();
+  const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
 
-  const locateUser = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      userLocationDispatch({
-        payload: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
+  const handleLocateUser = () => {
+    locateUser({
+      mapRef,
+      zoom: 10,
+      onAdditionForm: ({ latitude, longitude }) =>
+        setFormData((prev) => ({
+          ...prev,
+          coordinates: {
+            latitude,
+            longitude,
           },
-        });
-      setFormData({
-        ...formData,
-        coordinates: {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          },
-        });
-        mapRef.current?.setView([position.coords.latitude, position.coords.longitude], 10);
-      }, (error) => {
-        console.error("Error getting user's location:", error);
-      }, { enableHighAccuracy: true });
+        })),
+    });
   };
 
   const addHoop = (e: React.FormEvent<HTMLFormElement>) => {
@@ -84,7 +78,7 @@ const AddHoop = () => {
               <MiniMap formData={formData} setFormData={setFormData} mapRef={mapRef} />
               <Button
                 type="button"
-                onPress={locateUser}
+                onPress={handleLocateUser}
                 isDisabled={false}
                 className={`${colorModeContext} w-full py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`}
               >

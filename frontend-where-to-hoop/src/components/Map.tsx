@@ -17,12 +17,11 @@ import { MapController } from "./reusable/MapController.tsx";
 
 
 const Map = () => {
-  const userLocationContext: Coordinates = useLocationValues();
+  const mapCenterValues: Coordinates = useLocationValues();
   const mapRef = useRef<L.Map | null>(null);
   const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
 
-  const centerPosition: LatLngTuple = (userLocationContext.latitude && userLocationContext.longitude) ? [userLocationContext.latitude!, userLocationContext.longitude!] : centerCoordinates; 
-
+  const centerPosition: LatLngTuple = (mapCenterValues.latitude && mapCenterValues.longitude) ? [mapCenterValues.latitude!, mapCenterValues.longitude!] : centerCoordinates; 
   const toggleCondition = (condition: Condition) => {
     setSelectedConditions(prev => {
       const newSet = new Set(prev);

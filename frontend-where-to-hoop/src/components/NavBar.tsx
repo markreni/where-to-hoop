@@ -9,12 +9,14 @@ import { ToggleBasketball } from "./reusable/ToggleBasketball.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 import type { ColorMode } from "../types/types.ts";
 import breakpoints from "../assets/style.ts";
+import useLocateUser from "../hooks/useLocateUser.ts";
 
 
 const NavBar = () => {
+  const locateUser = useLocateUser();
   const sm = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const colorModeContext: ColorMode = useColorModeValues();
-
+  
   return (
     <div className={`${colorModeContext} fixed z-401 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
       {sm ? (
@@ -28,7 +30,8 @@ const NavBar = () => {
           <div className="flex-center gap-4">
             <Link to="/hoops"> 
               <Button 
-                  className={`${colorModeContext} flex items-center gap-2 bg-first-color text-white font-medium px-4 py-2 rounded-md hover:bg-second-color transition-colors dark:text-black`}
+                className={`${colorModeContext} flex items-center gap-2 bg-first-color text-white font-medium px-4 py-2 rounded-md hover:bg-second-color transition-colors dark:text-black`}
+                onClick={() => locateUser()}
               >
                 <MdLocationPin size={22}/>
                 Show Hoops
@@ -61,7 +64,9 @@ const NavBar = () => {
                 <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
                   <MenuItem className={`${colorModeContext} mb-2 rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>
                     <Link to="/hoops" className="flex items-center gap-2">
-                      <MdLocationPin size={22}/>
+                      <Button onClick={() => locateUser()}>
+                        <MdLocationPin size={22}/>
+                      </Button>
                       Show Hoops
                     </Link>
                   </MenuItem>
