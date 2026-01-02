@@ -1,7 +1,7 @@
 import type { JSX } from "react/jsx-dev-runtime";
 import { Popup } from "react-leaflet";
 import type { BasketballHoop, Coordinates } from "../../types/types";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import haversineDistance from "../../utils/functions";
 import { useLocationValues } from "../../contexts/LocationContext.tsx";
 
@@ -26,11 +26,15 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
           alt={hoop.name}
           style={{ width: '100%', height: 'auto', marginBottom: '8px' }}
         />
+  
         
         <div>
-          {`${hoop.indoor ? "Indoor" : "Outdoor"} court which is in a`} <strong>{hoop.condition}</strong> condition <br /> 
+          {`${hoop.indoor ? "Indoor" : "Outdoor"} court in a`} <strong>{hoop.condition}</strong> condition <br /> 
+          {/* Add later when court details page is ready
           <Link to={`/hoops/${hoop.id}`}>View details</Link>
+          */}
         </div>
+        
       </Popup>  
     </div>
   );

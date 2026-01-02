@@ -3,7 +3,7 @@ import type { LatLngTuple } from "leaflet";
 import L from "leaflet";
 //import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
 import "leaflet/dist/leaflet.css";
-import type { BasketballHoop, Coordinates, Condition } from "../types/types";
+import type { BasketballHoop, Coordinates, Condition, ColorMode } from "../types/types";
 import initialHoops from "../mockhoops";
 import { useRef, useState } from "react";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
@@ -14,12 +14,14 @@ import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
 import centerCoordinates from "../utils/constants.ts";
 import { MapController } from "./reusable/MapController.tsx";
+import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 
 
 const Map = () => {
   const mapCenterValues: Coordinates = useLocationValues();
   const mapRef = useRef<L.Map | null>(null);
   const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
+  const colorModeContext: ColorMode = useColorModeValues();
 
   const centerPosition: LatLngTuple = (mapCenterValues.latitude && mapCenterValues.longitude) ? [mapCenterValues.latitude!, mapCenterValues.longitude!] : centerCoordinates; 
   const toggleCondition = (condition: Condition) => {
@@ -49,7 +51,7 @@ const Map = () => {
       {filteredHoops.map((hoop: BasketballHoop) => {
           const icon = L.divIcon({
             html: '<div class="hoop-emoji">🏀</div>',
-            className: `hoop-icon-container ${conditionColorSelector(hoop.condition)}`,
+            className: `hoop-icon-container-${colorModeContext} ${conditionColorSelector(hoop.condition)}`,
             iconSize: [33, 33],
             iconAnchor: [16.5, 16.5],
             popupAnchor: [0, -22],

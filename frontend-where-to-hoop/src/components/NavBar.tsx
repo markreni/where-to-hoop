@@ -18,7 +18,7 @@ const NavBar = () => {
   const colorModeContext: ColorMode = useColorModeValues();
   
   return (
-    <div className={`${colorModeContext} fixed z-401 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
+    <div className={`${colorModeContext} fixed z-402 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
       {sm ? (
         <div className="nav-bar">
           <div className="flex-center gap-1">

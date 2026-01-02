@@ -42,7 +42,7 @@ const List = ({ toggleFunction, mapView }: ListProps) => {
 }, [mapCenterValues.latitude, mapCenterValues.longitude]);
 
   return (
-    <div className="pt-40 h-[100vh] w-[100vw] overflow-y-auto">
+    <div className="pt-40 h-[100vh] w-[100vw] overflow-y-auto padding-b-for-page">
     {xmd ? (
       <div className="grid grid-cols-2 2xl:grid-cols-3 grid-rows-2 gap-6 px-8">
         {sortedHoopsWithDistance.map(({ hoop, distance }) => (

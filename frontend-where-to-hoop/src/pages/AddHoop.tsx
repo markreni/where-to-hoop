@@ -47,9 +47,9 @@ const AddHoop = () => {
   };
 
   return (
-    <div className="padding-for-back-arrow margin-b-for-page flex items-center justify-center padding-x-for-page">
+    <div className="padding-for-back-arrow flex items-center justify-center padding-x-for-page">
       <BackArrow />
-      <div className={`${colorModeContext} flex flex-col bg-background rounded-lg shadow-xl max-w-xl w-full max-h-[80vh] overflow-y-auto`}>
+      <div className={`${colorModeContext} flex flex-col bg-background rounded-lg shadow-xl max-w-xl w-full max-h-[85vh] overflow-y-auto`}>
         {/* Header */}
         <div className={`${colorModeContext} sticky top-0 flex items-center justify-start p-6 border-b border-gray-200 bg-background`}>
           <h2 className={`${colorModeContext} text-gray-600 text-lg font-semibold dark:text-gray-300`}>Add Basketball Hoop</h2>   
