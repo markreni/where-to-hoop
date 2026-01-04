@@ -1,9 +1,6 @@
-
 type ColorMode = 'light' | 'dark';
 
 type Condition = 'excellent' | 'good' | 'fair' | 'poor';
-
-type Popularity = 'popular' | 'average' | 'quiet';
 
 interface Coordinates {
   latitude: number | null;
@@ -17,14 +14,20 @@ export interface ObservationImage {
 }
 
 interface BasketballHoop {
-  id: string;
+  readonly id: string;
+  readonly createdAt: string; // ISO date string
   name: string;
   profile_images: ObservationImage[];
   coordinates: Coordinates;
   description: string;
   condition: Condition;
-  indoor: boolean;
-  createdAt: string; // ISO date string
+  isIndoor: boolean;
 };
 
 export type { BasketballHoop, Condition, Coordinates, ColorMode };
+
+// type Popularity = 'popular' | 'average' | 'quiet';
+
+// type Role = 'admin' | 'user' | 'moderator';
+
+// type T = Record<string, BasketballHoop>;

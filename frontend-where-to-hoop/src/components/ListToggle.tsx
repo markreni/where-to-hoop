@@ -9,12 +9,12 @@ const ListToggle = ({ toggleFunction, mapView }: { toggleFunction: (value: boole
 
   return (
     <Button 
-        className={`${colorModeContext} absolute flex-center gap-3 top-19 left-[10px] bg-background hover:bg-gray-100 border-maplabel transition-colors rounded-lg shadow-lg py-2 px-3 z-401 text-sm text-gray-700 font-normal cursor-pointer dark:text-white dark:hover:bg-gray-700`}
-        onClick={() => toggleFunction(!mapView)}
-        >
-        <TfiViewList size={15}/>
-        <strong>{mapView ? "Show List" : "Show Map"}</strong>
-      </Button>
+      className={`${colorModeContext} absolute flex-center gap-3 top-19 left-[10px] bg-background hover:bg-gray-100 border-maplabel transition-colors rounded-lg shadow-lg py-2 px-3 z-401 text-sm text-gray-700 font-normal cursor-pointer dark:text-white dark:hover:bg-gray-700`}
+      onClick={() => toggleFunction(!mapView)}
+      >
+      <TfiViewList size={15}/>
+      <strong>{mapView ? "Show List" : "Show Map"}</strong>
+    </Button>
   );
 }
 

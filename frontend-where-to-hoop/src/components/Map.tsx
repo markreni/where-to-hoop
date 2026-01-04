@@ -51,7 +51,7 @@ const Map = () => {
     });
   };
 
-  const filteredHoops: BasketballHoop[] = initialHoops.filter(hoop => selectedConditions.has(hoop.condition) && (hoop.indoor ? selectedDoors.has('indoor') : selectedDoors.has('outdoor')));
+  const filteredHoops: BasketballHoop[] = initialHoops.filter(hoop => selectedConditions.has(hoop.condition) && (hoop.isIndoor ? selectedDoors.has('indoor') : selectedDoors.has('outdoor')));
 
   return (
     <div>

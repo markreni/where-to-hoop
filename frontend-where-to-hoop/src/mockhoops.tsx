@@ -18,7 +18,7 @@ const initialHoops: BasketballHoop[] = [
     ],
     description: 'Great outdoor court with two hoops',
     condition: 'good',
-    indoor: false,
+    isIndoor: false,
     createdAt: new Date().toISOString(),
   },
   {
@@ -37,7 +37,7 @@ const initialHoops: BasketballHoop[] = [
     ],
     description: 'Indoor court, well maintained',
     condition: 'excellent',
-    indoor: true,
+    isIndoor: true,
     createdAt: new Date().toISOString(),
   },
   {
@@ -56,7 +56,7 @@ const initialHoops: BasketballHoop[] = [
     ],
     description: 'Single hoop near the river',
     condition: 'fair',
-    indoor: false,
+    isIndoor: false,
     createdAt: new Date().toISOString(),
   },
 ];

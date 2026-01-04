@@ -8,20 +8,19 @@ import useLocateUser from "../hooks/useLocateUser";
 import { BackArrow } from "../components/reusable/BackArrow";
 
 
-const emptyHoop: BasketballHoop = {
-  id: '',
+const emptyHoop: Omit<BasketballHoop, "id"> = {
   name: '',
   profile_images: [],
   coordinates: { latitude: null, longitude: null },
   description: '',
   condition: 'good',
-  indoor: false,
+  isIndoor: false,
   createdAt: new Date().toISOString(),
 };
 
 const AddHoop = () => {
   const mapRef = useRef<L.Map | null>(null);
-  const [formData, setFormData] = useState<BasketballHoop>(emptyHoop);
+  const [formData, setFormData] = useState<Omit<BasketballHoop, "id">>(emptyHoop);
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
 
@@ -158,8 +157,8 @@ const AddHoop = () => {
             {/* Indoor/Outdoor */}
             <div className="flex items-center gap-2">
               <input 
-                onChange={(e) => setFormData({ ...formData, indoor: e.target.checked })}
-                checked={formData.indoor}
+                onChange={(e) => setFormData({ ...formData, isIndoor: e.target.checked })}
+                checked={formData.isIndoor}
                 type="checkbox" 
                 className="w-4 h-4 appearance-none border border-gray-300 rounded-sm checked:bg-first-color checked:border-first-color checked:ring-2 checked:ring-first-color/40 transition cursor-pointer" />
               <span className={`${colorModeContext} text-sm text-gray-700 dark:text-gray-100`}>Indoor court</span>

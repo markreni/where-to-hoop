@@ -14,7 +14,7 @@ import { HoopCardButton } from "./HoopCardButton.tsx";
 
 
 interface HoopCardProps {
-  hoop: BasketballHoop;
+  hoop: Omit<BasketballHoop, "id">;
   toggleFunction: (value: boolean) => void;
   mapView: boolean;
   distance: number;
@@ -60,7 +60,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           />
         </div>
         <div className="w-1/4 flex flex-col justify-around">
-            {hoop.indoor ? (
+            {hoop.isIndoor ? (
               <span className="hoop-card-icon bg-blue-100 text-blue-700">
                 <IoHomeOutline size={14} />
                 Indoor´

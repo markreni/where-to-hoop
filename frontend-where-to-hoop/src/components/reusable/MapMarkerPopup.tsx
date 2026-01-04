@@ -29,7 +29,7 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
   
         
         <div>
-          {`${hoop.indoor ? "Indoor" : "Outdoor"} court in a`} <strong>{hoop.condition}</strong> condition <br /> 
+          {`${hoop.isIndoor ? "Indoor" : "Outdoor"} court in a`} <strong>{hoop.condition}</strong> condition <br /> 
           {/* Add later when court details page is ready
           <Link to={`/hoops/${hoop.id}`}>View details</Link>
           */}

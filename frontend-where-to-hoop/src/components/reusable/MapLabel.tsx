@@ -1,6 +1,7 @@
 
 import type { ColorMode, Condition } from "../../types/types.ts";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { Button } from "react-aria-components";
 
 
 interface MapLabelProps {
@@ -25,7 +26,7 @@ const MapLabel = ({ title, selectedItems, onToggleItems, options }: MapLabelProp
             {options.map((item) => {
               const isSelected = selectedItems.has(item.condition);
               return (
-                <button
+                <Button
                   key={item.label}
                   type="button"
                   onClick={() => onToggleItems(item.condition)}
@@ -41,7 +42,7 @@ const MapLabel = ({ title, selectedItems, onToggleItems, options }: MapLabelProp
                   <span className={`text-sm ${isSelected ? 'text-gray-600 font-medium' : 'text-gray-600'}`}>
                     {item.label}
                   </span>
-                </button>
+                </Button>
               );
             })}
           </div>

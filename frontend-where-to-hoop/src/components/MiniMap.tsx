@@ -7,8 +7,8 @@ import { MapController } from "./reusable/MapController";
 
 
 interface MiniMapProps {
-  formData: BasketballHoop;
-  setFormData: React.Dispatch<React.SetStateAction<BasketballHoop>>;
+  formData: Omit<BasketballHoop, "id">;
+  setFormData: React.Dispatch<React.SetStateAction<Omit<BasketballHoop, "id">>>;
   mapRef: React.RefObject<L.Map | null>;
 }
 
