@@ -3,55 +3,25 @@ import type { LatLngTuple } from "leaflet";
 import L from "leaflet";
 //import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
 import "leaflet/dist/leaflet.css";
-import type { BasketballHoop, Coordinates, Condition, ColorMode } from "../types/types";
-import initialHoops from "../mockhoops";
-import { useRef, useState } from "react";
+import type { BasketballHoop, Coordinates, ColorMode } from "../types/types";
+import { useRef } from "react";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
 //import { ImLocation2 } from "react-icons/im";
-import { MapLabel } from "./reusable/MapLabel.tsx";
 import { conditionColorSelector } from "../utils/courtCondition.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
 import centerCoordinates from "../utils/constants.ts";
 import { MapController } from "./reusable/MapController.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
-import conditionOptions from "../utils/courtCondition.tsx";
 
 
-const Map = () => {
+
+const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[] }) => {
   const mapCenterValues: Coordinates = useLocationValues();
   const mapRef = useRef<L.Map | null>(null);
-  const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
-  const [selectedDoors, setSelectedDoors] = useState<Set<'indoor' | 'outdoor'>>(new Set(['indoor', 'outdoor']));
   const colorModeContext: ColorMode = useColorModeValues();
 
   const centerPosition: LatLngTuple = (mapCenterValues.latitude && mapCenterValues.longitude) ? [mapCenterValues.latitude!, mapCenterValues.longitude!] : centerCoordinates; 
-
-  const toggleCondition = (condition: Condition) => {
-    setSelectedConditions(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(condition)) {
-        newSet.delete(condition);
-      } else {
-        newSet.add(condition);
-      }
-      return newSet;
-    });
-  };
-
-  const toggleDoor = (door: 'indoor' | 'outdoor') => {
-    setSelectedDoors(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(door)) {
-        newSet.delete(door);
-      } else {
-        newSet.add(door);
-      }
-      return newSet;
-    });
-  };
-
-  const filteredHoops: BasketballHoop[] = initialHoops.filter(hoop => selectedConditions.has(hoop.condition) && (hoop.isIndoor ? selectedDoors.has('indoor') : selectedDoors.has('outdoor')));
 
   return (
     <div>
@@ -63,7 +33,7 @@ const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {filteredHoops.map((hoop: BasketballHoop) => {
+      {filteredAndSortedHoops.map(({ hoop }) => {
           const icon = L.divIcon({
             html: '<div class="hoop-emoji">🏀</div>',
             className: `hoop-icon-container-${colorModeContext} ${conditionColorSelector(hoop.condition)}`,
@@ -81,12 +51,7 @@ const Map = () => {
 
       </MapContainer>
       <UserLocator mapRef={mapRef} />
-      <div className="absolute bottom-2 right-[10px] z-1000">
-        <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={toggleDoor} options={[{ label: 'Indoor', condition: 'indoor', color: 'bg-blue-500' }, { label: 'Outdoor', condition: 'outdoor', color: 'bg-green-500' }]} />
-      </div>
-      <div className="absolute bottom-2 left-[10px] z-400">
-        <MapLabel title={"Court Condition"} selectedItems={selectedConditions} onToggleItems={toggleCondition} options={conditionOptions} />
-      </div>
+      
       
     </div>
   );
