@@ -1,0 +1,51 @@
+import {
+  SearchField as AriaSearchField,
+  Input, FieldError, Label, Group, Button,
+  type SearchFieldProps as AriaSearchFieldProps,
+  type ValidationResult,
+} from 'react-aria-components';
+import { FaSearch } from "react-icons/fa";
+//import { MdCancel } from "react-icons/md";
+import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import type { ColorMode } from "../../types/types.ts";
+
+
+interface SearchFieldProps extends AriaSearchFieldProps {
+  label?: string;
+  errorMessage?: string | ((validation: ValidationResult) => string);
+  placeholder?: string;
+}
+
+const SearchField = ({ label, errorMessage, placeholder }: SearchFieldProps) => {
+  const colorModeContext: ColorMode = useColorModeValues();
+  
+  return (
+    <AriaSearchField aria-label='search' className="w-full flex flex-col">
+      {label && (
+        <Label className={`${colorModeContext} text-sm text-gray-700 dark:text-gray-100`}>
+          {label}
+        </Label>
+      )}
+      <Group className={`${colorModeContext} w-full flex items-center gap-2 pl-3 py-1.5 border-maplabel rounded-lg bg-background focus-within:ring-2 focus-within:ring-gray-500 transition-shadow dark:border-gray-600`}>
+        <FaSearch aria-hidden className={`${colorModeContext} flex-none w-4 h-4 text-gray-500 hover:text-black transition-colors dark:text-white cursor-pointer dark:hover:text-gray-300`} />
+        <Input 
+          placeholder={placeholder} 
+          className={`${colorModeContext} min-w-2 flex-1 px-2 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 dark:text-white  dark:placeholder:text-gray-500`} 
+        />
+        {/*Clear button - functionality to be added later 
+        <Button className={`${colorModeContext} flex-none w-5 h-5 text-gray-500 hover:text-gray-700 transition-colors dark:text-white dark:hover:text-gray-300`}>
+          <MdCancel aria-hidden className="w-5 h-5" />
+        </Button>
+        */}
+      </Group>
+
+      {errorMessage && (
+        <FieldError className={`${colorModeContext} text-xs text-red-600 dark:text-red-400`}>
+          {errorMessage}
+        </FieldError>
+      )}
+    </AriaSearchField>
+  );
+}
+
+export { SearchField };

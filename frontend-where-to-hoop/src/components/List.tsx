@@ -8,6 +8,7 @@ import haversineDistance from "../utils/functions";
 import { useLocationValues } from "../contexts/LocationContext";
 import { useEffect, useMemo } from "react";
 import useLocateUser from "../hooks/useLocateUser";
+import { SearchField } from "./reusable/SearchField";
 
 interface ListProps {
   toggleFunction: (value: boolean) => void;
@@ -43,6 +44,9 @@ const List = ({ toggleFunction, mapView }: ListProps) => {
 
   return (
     <div className="pt-40 h-[100vh] w-[100vw] overflow-y-auto padding-b-for-page">
+      <div className="absolute w-1/2 top-19 right-[10px]">
+        <SearchField placeholder="Find hoops"/>
+      </div>
     {xmd ? (
       <div className="grid grid-cols-2 2xl:grid-cols-3 grid-rows-2 gap-6 px-8">
         {sortedHoopsWithDistance.map(({ hoop, distance }) => (
