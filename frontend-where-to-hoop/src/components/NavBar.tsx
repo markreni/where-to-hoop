@@ -60,7 +60,7 @@ const NavBar = () => {
               <Button>
                 <FiAlignJustify size={28} className="text-first-color dark:text-yellow-400"/>
               </Button>
-              <Popover className="w-full pr-6">
+              <Popover className="w-19/20 xsm:w-full pr-6">
                 <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
                   <MenuItem className={`${colorModeContext} mb-2 rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>
                     <Link to="/hoops" className="flex items-center gap-2">

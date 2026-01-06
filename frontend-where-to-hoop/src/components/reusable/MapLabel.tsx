@@ -2,6 +2,7 @@
 import type { ColorMode, Condition } from "../../types/types.ts";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { Button } from "react-aria-components";
+import { TbFilterX } from "react-icons/tb";
 
 
 type MapLabelGroup = {
@@ -28,9 +29,12 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
      <div className={`${colorModeContext} bg-background border-maplabel rounded-lg shadow-lg p-3 ${className ?? ""}`}>
       {groups.map((group) => (
         <div key={group.title} className="flex flex-col gap-1.5 pb-3 last:pb-0">
-          <h4 className={`${colorModeContext} text-sm text-gray-800 font-normal mb-1 dark:text-gray-200`}>
-            <strong>{group.title}</strong>
-          </h4>
+          <div className="flex items-center justify-between gap-3">
+            <h4 className={`${colorModeContext} text-sm text-gray-800 font-normal mb-1 dark:text-gray-200`}>
+              <strong>{group.title}</strong>
+            </h4>
+            <TbFilterX className={`${colorModeContext} mb-1 text-black dark:text-white cursor-pointer`}/>
+          </div>
           {group.options.map((item) => {
             const isSelected = group.selectedItems.has(item.condition);
             return (
