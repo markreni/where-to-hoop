@@ -3,20 +3,34 @@ import type { BasketballHoop, ColorMode } from "../types/types";
 import { HoopCard } from "./reusable/HoopCard";
 import { useMediaQuery } from 'usehooks-ts'
 import { Link } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useLocateUser from "../hooks/useLocateUser";
 import { SearchField } from "./reusable/SearchField";
 import { CiFilter } from "react-icons/ci";
 import { useColorModeValues } from "../contexts/DarkModeContext";
+import { MapLabel } from "./reusable/MapLabel";
+import { conditionOptions, doorOptions } from "../utils/options";
 
-interface ListProps {
-  toggleFunction: (value: boolean) => void;
-  mapView: boolean;
-  filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[];
+interface FilterState {
+  selectedConditions: Set<string>;
+  selectedDoors: Set<string>;
+  onToggleCondition: (condition: any) => void;
+  onToggleDoor: (door: any) => void;
 }
 
-const List = ({ filteredAndSortedHoops, toggleFunction, mapView }: ListProps) => {
+interface ListProps {
+  filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[];
+  toggleFunction: (value: boolean) => void;
+  mapView: boolean;
+  filters: FilterState;
+}
+
+const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: ListProps) => {
+  const { selectedConditions, selectedDoors, onToggleCondition, onToggleDoor } = filters;
   const [searchTerm, setSearchTerm] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
+  const filterButtonRef = useRef<HTMLButtonElement>(null);
   const xmd = useMediaQuery(`(min-width: ${breakpoints.xmd})`);
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
@@ -24,7 +38,27 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView }: ListProps) =>
   useEffect(() => {
     locateUser();
   }, [locateUser]);
+  
+  // Close filters when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {   
+      const target: Node = event.target as Node;
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(target) &&
+        filterButtonRef.current &&
+        !filterButtonRef.current.contains(target)
+      ) {
+        setShowFilters(false);
+      }
+    };
 
+    if (showFilters) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [showFilters]);
+  
   const filteredWithSearchHoops = useMemo(() => {
     return filteredAndSortedHoops.filter(({ hoop }) =>
       hoop.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -43,14 +77,30 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView }: ListProps) =>
               onChange={setSearchTerm}
             />
           </div>
-          <button 
-            className={`${colorModeContext} rounded-lg p-1 bg-background hover:bg-gray-100 border-maplabel transition-colors dark:hover:bg-gray-700`}
-            aria-label="Filter hoops"
-          >
-            <CiFilter size={25} className={`${colorModeContext} text-black dark:text-white`} />
-          </button>
+          <div className="relative">
+            <button 
+              ref={filterButtonRef} 
+              onClick={() => setShowFilters(!showFilters)}
+              className={`${colorModeContext} rounded-lg p-1 bg-background hover:bg-gray-100 border-maplabel transition-colors dark:hover:bg-gray-700`}
+              aria-label="Filter hoops"
+              aria-pressed={showFilters}
+            >
+              <CiFilter 
+                size={25} 
+                className={`${colorModeContext} text-black dark:text-white`} 
+              />
+            </button>
+          
+            {/* Filters - Show below the filter button */}
+            {showFilters && (
+              <div ref={filterRef} className="absolute top-full right-0 mt-1 flex flex-col min-w-[200px]">
+                <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={onToggleDoor} options={doorOptions} />
+                <MapLabel title={"Court Condition"} selectedItems={selectedConditions} onToggleItems={onToggleCondition} options={conditionOptions} />
+              </div>
+            )}
         </div>
       </div>
+    </div>
 
       {/* Hoop Cards Grid/List */}
       <div className="flex-1 pb-4 px-4 sm:px-6 md:px-8 ">

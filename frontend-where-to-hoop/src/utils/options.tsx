@@ -11,13 +11,17 @@ const conditionColorSelector = (condition?: Condition) => {
   }
 };
 
-const conditionOptions = [
+export const conditionOptions = [
   { label: 'Excellent', condition: 'excellent' as Condition, color: conditionColorSelector ('excellent') },
   { label: 'Good', condition: 'good' as Condition, color: conditionColorSelector ('good') },
   { label: 'Fair', condition: 'fair' as Condition, color: conditionColorSelector ('fair') },
   { label: 'Poor', condition: 'poor' as Condition, color: conditionColorSelector ('poor') },
 ];
 
-export default conditionOptions;
+export const doorOptions = [
+  { label: 'Indoor', condition: 'indoor', color: 'bg-blue-500' }, 
+  { label: 'Outdoor', condition: 'outdoor', color: 'bg-green-500' }
+]
+
 
 export { conditionColorSelector };

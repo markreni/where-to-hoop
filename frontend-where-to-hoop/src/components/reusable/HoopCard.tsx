@@ -2,7 +2,7 @@ import type { BasketballHoop, ColorMode } from "../../types/types.ts";
 import { IoSunnyOutline } from "react-icons/io5";
 import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
-import { conditionColorSelector } from "../../utils/courtCondition.tsx";
+import { conditionColorSelector } from "../../utils/options.tsx";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 //import { IoMapOutline } from "react-icons/io5";

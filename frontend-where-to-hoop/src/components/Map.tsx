@@ -7,7 +7,7 @@ import type { BasketballHoop, Coordinates, ColorMode } from "../types/types";
 import { useRef } from "react";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
 //import { ImLocation2 } from "react-icons/im";
-import { conditionColorSelector } from "../utils/courtCondition.tsx";
+import { conditionColorSelector } from "../utils/options.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
 import centerCoordinates from "../utils/constants.ts";

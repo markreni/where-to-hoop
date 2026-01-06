@@ -5,7 +5,7 @@ import { List } from "../components/List";
 import { ListToggle } from "../components/ListToggle";
 import { MapLabel } from "../components/reusable/MapLabel";
 import type { BasketballHoop, Condition } from "../types/types";
-import conditionOptions from "../utils/courtCondition.tsx";
+import { doorOptions, conditionOptions } from "../utils/options.tsx";
 import initialHoops from "../mockhoops";
 import haversineDistance from "../utils/functions";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
@@ -79,14 +79,28 @@ const Hoops = () => {
       { mapView ? (
       <div>
         <div className="absolute bottom-2 right-[10px] z-401">
-          <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={toggleDoor} options={[{ label: 'Indoor', condition: 'indoor', color: 'bg-blue-500' }, { label: 'Outdoor', condition: 'outdoor', color: 'bg-green-500' }]} />
+          <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={toggleDoor} options={doorOptions} />
         </div>
         <div className="absolute bottom-2 left-[10px] z-401">
           <MapLabel title={"Court Condition"} selectedItems={selectedConditions} onToggleItems={toggleCondition} options={conditionOptions} />
         </div>
       </div>
       ) : null }
-      { mapView ? (<Map filteredAndSortedHoops={filteredAndSortedHoops} />) : (<List filteredAndSortedHoops={filteredAndSortedHoops} toggleFunction={toggleView} mapView={mapView} /> ) }
+      { mapView ? (
+          <Map filteredAndSortedHoops={filteredAndSortedHoops} />
+        ) : (
+          <List 
+            filteredAndSortedHoops={filteredAndSortedHoops} 
+            toggleFunction={toggleView} 
+            mapView={mapView} 
+            filters={{
+              selectedConditions,
+              selectedDoors,
+              onToggleCondition: toggleCondition,
+              onToggleDoor: toggleDoor,
+            }}
+            /> 
+        )}
     </div>
   );
 };
