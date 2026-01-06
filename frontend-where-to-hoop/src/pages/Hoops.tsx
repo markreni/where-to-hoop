@@ -76,12 +76,16 @@ const Hoops = () => {
       <div className="absolute top-19 left-[10px] z-401">
         <ListToggle toggleFunction={toggleView} mapView={mapView} />
       </div>
-      <div className="absolute bottom-2 right-[10px] z-401">
-        <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={toggleDoor} options={[{ label: 'Indoor', condition: 'indoor', color: 'bg-blue-500' }, { label: 'Outdoor', condition: 'outdoor', color: 'bg-green-500' }]} />
+      { mapView ? (
+      <div>
+        <div className="absolute bottom-2 right-[10px] z-401">
+          <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={toggleDoor} options={[{ label: 'Indoor', condition: 'indoor', color: 'bg-blue-500' }, { label: 'Outdoor', condition: 'outdoor', color: 'bg-green-500' }]} />
+        </div>
+        <div className="absolute bottom-2 left-[10px] z-401">
+          <MapLabel title={"Court Condition"} selectedItems={selectedConditions} onToggleItems={toggleCondition} options={conditionOptions} />
+        </div>
       </div>
-      <div className="absolute bottom-2 left-[10px] z-401">
-        <MapLabel title={"Court Condition"} selectedItems={selectedConditions} onToggleItems={toggleCondition} options={conditionOptions} />
-      </div>
+      ) : null }
       { mapView ? (<Map filteredAndSortedHoops={filteredAndSortedHoops} />) : (<List filteredAndSortedHoops={filteredAndSortedHoops} toggleFunction={toggleView} mapView={mapView} /> ) }
     </div>
   );
