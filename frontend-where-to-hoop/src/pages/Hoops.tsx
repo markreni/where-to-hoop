@@ -79,10 +79,10 @@ const Hoops = () => {
       { mapView ? (
       <div>
         <div className="absolute bottom-2 right-[10px] z-401">
-          <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={toggleDoor} options={doorOptions} />
+          <MapLabel groups={[{ title: "Door Type", selectedItems: selectedDoors, onToggleItems: toggleDoor, options: doorOptions }]} />
         </div>
         <div className="absolute bottom-2 left-[10px] z-401">
-          <MapLabel title={"Court Condition"} selectedItems={selectedConditions} onToggleItems={toggleCondition} options={conditionOptions} />
+          <MapLabel groups={[{ title: "Court Condition", selectedItems: selectedConditions, onToggleItems: toggleCondition, options: conditionOptions }]} />
         </div>
       </div>
       ) : null }

@@ -19,8 +19,8 @@ export const conditionOptions = [
 ];
 
 export const doorOptions = [
-  { label: 'Indoor', condition: 'indoor', color: 'bg-blue-500' }, 
-  { label: 'Outdoor', condition: 'outdoor', color: 'bg-green-500' }
+  { label: 'Indoor', condition: 'indoor' as "indoor" | "outdoor", color: 'bg-blue-500' }, 
+  { label: 'Outdoor', condition: 'outdoor' as "indoor" | "outdoor", color: 'bg-green-500' }
 ]
 
 

@@ -1,5 +1,5 @@
 import breakpoints from "../assets/style";
-import type { BasketballHoop, ColorMode } from "../types/types";
+import type { BasketballHoop, ColorMode, Condition } from "../types/types";
 import { HoopCard } from "./reusable/HoopCard";
 import { useMediaQuery } from 'usehooks-ts'
 import { Link } from "react-router-dom";
@@ -10,12 +10,13 @@ import { CiFilter } from "react-icons/ci";
 import { useColorModeValues } from "../contexts/DarkModeContext";
 import { MapLabel } from "./reusable/MapLabel";
 import { conditionOptions, doorOptions } from "../utils/options";
+import { Button } from "react-aria-components";
 
 interface FilterState {
-  selectedConditions: Set<string>;
-  selectedDoors: Set<string>;
-  onToggleCondition: (condition: any) => void;
-  onToggleDoor: (door: any) => void;
+  selectedConditions: Set<Condition>;
+  selectedDoors: Set<"indoor" | "outdoor">;
+  onToggleCondition: (condition: Condition) => void;
+  onToggleDoor: (door: "indoor" | "outdoor") => void;
 }
 
 interface ListProps {
@@ -78,7 +79,7 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
             />
           </div>
           <div className="relative">
-            <button 
+            <Button 
               ref={filterButtonRef} 
               onClick={() => setShowFilters(!showFilters)}
               className={`${colorModeContext} rounded-lg p-1 bg-background hover:bg-gray-100 border-maplabel transition-colors dark:hover:bg-gray-700`}
@@ -89,13 +90,12 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
                 size={25} 
                 className={`${colorModeContext} text-black dark:text-white`} 
               />
-            </button>
+            </Button>
           
             {/* Filters - Show below the filter button */}
             {showFilters && (
               <div ref={filterRef} className="absolute top-full right-0 mt-1 flex flex-col min-w-[200px]">
-                <MapLabel title={"Door Type"} selectedItems={selectedDoors} onToggleItems={onToggleDoor} options={doorOptions} />
-                <MapLabel title={"Court Condition"} selectedItems={selectedConditions} onToggleItems={onToggleCondition} options={conditionOptions} />
+                <MapLabel groups={[{ title: "Door Type", selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions },{ title: "Court Condition", selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions }]} />
               </div>
             )}
         </div>
