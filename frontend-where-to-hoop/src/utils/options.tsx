@@ -12,15 +12,15 @@ const conditionColorSelector = (condition?: Condition) => {
 };
 
 export const conditionOptions = [
-  { label: 'Excellent', condition: 'excellent' as Condition, color: conditionColorSelector ('excellent') },
-  { label: 'Good', condition: 'good' as Condition, color: conditionColorSelector ('good') },
-  { label: 'Fair', condition: 'fair' as Condition, color: conditionColorSelector ('fair') },
-  { label: 'Poor', condition: 'poor' as Condition, color: conditionColorSelector ('poor') },
+  { label: 'Excellent', name: 'excellent' as Condition, color: conditionColorSelector ('excellent') },
+  { label: 'Good', name: 'good' as Condition, color: conditionColorSelector ('good') },
+  { label: 'Fair', name: 'fair' as Condition, color: conditionColorSelector ('fair') },
+  { label: 'Poor', name: 'poor' as Condition, color: conditionColorSelector ('poor') },
 ];
 
 export const doorOptions = [
-  { label: 'Indoor', condition: 'indoor' as "indoor" | "outdoor", color: 'bg-blue-500' }, 
-  { label: 'Outdoor', condition: 'outdoor' as "indoor" | "outdoor", color: 'bg-green-500' }
+  { label: 'Indoor', name: 'indoor' as "indoor" | "outdoor", color: 'bg-blue-500' }, 
+  { label: 'Outdoor', name: 'outdoor' as "indoor" | "outdoor", color: 'bg-green-500' }
 ]
 
 

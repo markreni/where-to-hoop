@@ -9,7 +9,8 @@ type MapLabelGroup = {
   title: string;
   selectedItems: Set<any>;
   onToggleItems: (value: any) => void;
-  options: { label: string; condition: any; color: string }[];
+  options: { label: string; name: any; color: string }[];
+  clearFilter: () => void;
 };
 
 interface MapLabelProps {
@@ -20,6 +21,10 @@ interface MapLabelProps {
 // Type guard function
 const isCondition = (value: Condition | string): value is Condition => {
   return ['excellent', 'good', 'fair', 'poor'].includes(value as Condition);
+};
+
+const hasAllValues = <T,>(set: Set<T>, allValues: readonly T[]): boolean => {
+  return allValues.every(value => set.has(value));
 };
 
 const MapLabel = ({ groups, className }: MapLabelProps) => {
@@ -33,20 +38,24 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
             <h4 className={`${colorModeContext} text-sm text-gray-800 font-normal mb-1 dark:text-gray-200`}>
               <strong>{group.title}</strong>
             </h4>
-            <TbFilterX className={`${colorModeContext} mb-1 text-black dark:text-white cursor-pointer`}/>
+            {!hasAllValues(group.selectedItems, group.options.map(option => option.name)) && (
+              <Button onClick={group.clearFilter}>
+                <TbFilterX className={`${colorModeContext} mb-1 text-black dark:text-white cursor-pointer`}/>
+              </Button>
+            )}
           </div>
           {group.options.map((item) => {
-            const isSelected = group.selectedItems.has(item.condition);
+            const isSelected = group.selectedItems.has(item.name);
             return (
               <Button
                 key={item.label}
                 type="button"
-                onClick={() => group.onToggleItems(item.condition)}
+                onClick={() => group.onToggleItems(item.name)}
                 className={`flex items-center gap-2 px-2 py-1 rounded transition-colors cursor-pointer ${
                   isSelected ? "bg-gray-100 hover:bg-gray-200" : "bg-white"
                 }`}
               >
-                {isCondition(item.condition) ? (
+                {isCondition(item.name) ? (
                   <div
                     className={`${colorModeContext} w-4 h-4 rounded-full border-2 shadow ${
                       isSelected ? `${item.color} border-white dark:border-black` : "white border-gray-300 dark:border-gray-600"

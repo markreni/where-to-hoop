@@ -70,6 +70,14 @@ const Hoops = () => {
 
   // Filter hoops based on selected conditions and door types
   const filteredAndSortedHoops: ReturnType<typeof sortedHoopsWithDistance.filter> = sortedHoopsWithDistance.filter(({ hoop })=> selectedConditions.has(hoop.condition) && (hoop.isIndoor ? selectedDoors.has('indoor') : selectedDoors.has('outdoor')));
+
+  const clearConditionFilters = () => {
+    setSelectedConditions(new Set(['excellent', 'good', 'fair', 'poor']));
+  };
+
+  const clearDoorFilters = () => {
+    setSelectedDoors(new Set(['indoor', 'outdoor']));
+  };
   
   return (
     <div className="relative h-screen">
@@ -79,10 +87,10 @@ const Hoops = () => {
       { mapView ? (
       <div>
         <div className="absolute bottom-2 right-[10px] z-401">
-          <MapLabel groups={[{ title: "Door Type", selectedItems: selectedDoors, onToggleItems: toggleDoor, options: doorOptions }]} />
+          <MapLabel groups={[{ title: "Door Type", selectedItems: selectedDoors, onToggleItems: toggleDoor, options: doorOptions, clearFilter: clearDoorFilters }]} />
         </div>
         <div className="absolute bottom-2 left-[10px] z-401">
-          <MapLabel groups={[{ title: "Court Condition", selectedItems: selectedConditions, onToggleItems: toggleCondition, options: conditionOptions }]} />
+          <MapLabel groups={[{ title: "Court Condition", selectedItems: selectedConditions, onToggleItems: toggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
         </div>
       </div>
       ) : null }
@@ -98,6 +106,8 @@ const Hoops = () => {
               selectedDoors,
               onToggleCondition: toggleCondition,
               onToggleDoor: toggleDoor,
+              clearConditionFilters,
+              clearDoorFilters,
             }}
             /> 
         )}

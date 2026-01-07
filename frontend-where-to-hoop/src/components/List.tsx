@@ -17,6 +17,8 @@ interface FilterState {
   selectedDoors: Set<"indoor" | "outdoor">;
   onToggleCondition: (condition: Condition) => void;
   onToggleDoor: (door: "indoor" | "outdoor") => void;
+  clearConditionFilters: () => void;
+  clearDoorFilters: () => void;
 }
 
 interface ListProps {
@@ -27,7 +29,7 @@ interface ListProps {
 }
 
 const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: ListProps) => {
-  const { selectedConditions, selectedDoors, onToggleCondition, onToggleDoor } = filters;
+  const { selectedConditions, selectedDoors, onToggleCondition, onToggleDoor, clearConditionFilters, clearDoorFilters } = filters;
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
@@ -95,7 +97,7 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
             {/* Filters - Show below the filter button */}
             {showFilters && (
               <div ref={filterRef} className="absolute top-full right-0 mt-1 flex flex-col min-w-[200px]">
-                <MapLabel groups={[{ title: "Door Type", selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions },{ title: "Court Condition", selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions }]} />
+                <MapLabel groups={[{ title: "Door Type", selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions, clearFilter:  clearDoorFilters},{ title: "Court Condition", selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
               </div>
             )}
         </div>
