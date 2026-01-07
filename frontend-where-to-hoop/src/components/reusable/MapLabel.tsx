@@ -39,8 +39,8 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
               <strong>{group.title}</strong>
             </h4>
             {!hasAllValues(group.selectedItems, group.options.map(option => option.name)) && (
-              <Button onClick={group.clearFilter}>
-                <TbFilterX className={`${colorModeContext} mb-1 text-black dark:text-white cursor-pointer`}/>
+              <Button onClick={group.clearFilter} aria-label="Clear filter">
+                <TbFilterX className={`${colorModeContext} mb-1 text-black dark:text-white cursor-pointer`} />
               </Button>
             )}
           </div>

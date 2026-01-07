@@ -12,6 +12,8 @@ import Hoops from './pages/Hoops.tsx';
 import AddHoop from './pages/AddHoop.tsx';
 import Home from './pages/Home.tsx';
 import Hoop from "./pages/Hoop.tsx";
+import About from "./pages/About.tsx";
+import Privacy from "./pages/Privacy.tsx";
 
 
 function App() {
@@ -29,6 +31,8 @@ function App() {
           <Route path="/hoops" element={<Hoops />} />
           <Route path="/hoops/:id" element={<Hoop />} />
           <Route path="/addhoop" element={<AddHoop />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
       </div>
     </div>

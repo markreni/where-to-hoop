@@ -1,6 +1,4 @@
 import type { BasketballHoop, ColorMode } from "../../types/types.ts";
-import { IoSunnyOutline } from "react-icons/io5";
-import { IoHomeOutline } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
 import { conditionColorSelector } from "../../utils/options.tsx";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
@@ -9,6 +7,9 @@ import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import type { FocusableElement } from "@react-types/shared";
 import type { MouseEvent } from "react";
 import { HoopCardButton } from "./HoopCardButton.tsx";
+import { IoSunnyOutline } from "react-icons/io5";
+import { IoHomeOutline } from "react-icons/io5";
+import { MdOutlineFavoriteBorder } from "react-icons/md";
 //import { useMediaQuery } from 'usehooks-ts'
 //import breakpoints from "../../assets/style.ts";
 
@@ -47,7 +48,10 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
     <div className={`${colorModeContext} h-1/3 xmd:h-full w-full flex flex-col justify-start gap-2 bg-background rounded-md shadow-lg p-4 transition-shadow cursor-default dark:text-white`}>
       <div className="flex justify-between items-start gap-2">
         <div className="flex flex-col">
-          <strong>{hoop.name}</strong>
+          <div className="flex items-start justify-start gap-2">
+            <strong>{hoop.name}</strong>
+            <MdOutlineFavoriteBorder size={23} aria-label="Add to favorites"/>
+          </div>
           <span>{distance.toFixed(1)} km</span>
         </div>
         <HoopCardButton actionFunction={locateHoop} title="On Map" bgColor="bg-blue-500/80 hover:bg-blue-600"></HoopCardButton>
