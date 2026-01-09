@@ -24,15 +24,15 @@ const SearchField = ({ label, errorMessage, placeholder, value, onChange }: Sear
   return (
     <AriaSearchField aria-label='search' className="w-full flex flex-col">
       {label && (
-        <Label className={`${colorModeContext} text-sm text-gray-700 dark:text-gray-100`}>
+        <Label className={`${colorModeContext} text-sm background-text`}>
           {label}
         </Label>
       )}
-      <Group className={`${colorModeContext} w-full flex items-center gap-2 pl-3 py-1.5 border-maplabel rounded-lg bg-background focus-within:ring-2 focus-within:ring-gray-500 transition-shadow dark:border-gray-600`}>
-        <FaSearch aria-hidden className={`${colorModeContext} flex-none w-4 h-4 text-black transition-colors cursor-pointer dark:text-white `} />
+      <Group className={`${colorModeContext} w-full flex items-center gap-2 pl-3 py-1.5 rounded-lg bg-background border-maplabel focus-within:ring-2 focus-within:ring-gray-500 transition-shadow`}>
+        <FaSearch aria-hidden className={`${colorModeContext} flex-none w-4 h-4 background-text transition-colors`} />
         <Input 
           placeholder={placeholder} 
-          className={`${colorModeContext} min-w-2 flex-1 px-2 bg-transparent outline-none text-gray-900 placeholder:text-gray-400 dark:text-white  dark:placeholder:text-gray-500`} 
+          className={`${colorModeContext} min-w-2 flex-1 px-2 bg-transparent outline-none background-text placeholder:text-gray-400 dark:placeholder:text-gray-500`} 
           value={value}
           onChange={(e) => onChange(e.currentTarget.value)}
         />

@@ -30,7 +30,7 @@ const NavBar = () => {
           <div className="flex-center gap-4">
             <Link to="/hoops"> 
               <Button 
-                className={`${colorModeContext} flex items-center gap-2 bg-first-color text-white font-medium px-4 py-2 rounded-md hover:bg-second-color transition-colors dark:text-black`}
+                className={`${colorModeContext} flex items-center gap-2 px-4 py-2 rounded-md bg-first-color main-color-hover first-color-text font-medium transition-colors`}
                 onClick={() => locateUser()}
               >
                 <MdLocationPin size={22}/>

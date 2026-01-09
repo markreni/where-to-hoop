@@ -77,7 +77,31 @@
 .hoop-icon--poor      { background-color: #ef4444; } /* red-500   */
 .hoop-icon--unknown   { background-color: #6b7280; } /* gray-500  */
 
-/* ------------ Theme Directory------------ */
+/* ------------ Styles that go along main color ------------ */
+
+.main-color-hover {
+  @apply hover:bg-second-color;
+}
+
+.first-color-text {
+  @apply text-white dark:text-black;
+}
+
+/* ------------ Styles that go along basic background ------------ */
+
+.background-hover {
+  @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+}
+
+.background-text {
+  @apply text-gray-700 dark:text-white;
+}
+
+.background-border {
+  @apply border-black dark:border-white;
+}
+
+/* ------------ Theme Directory ------------ */
 
 @theme {
   --color-first-color: #F88158ff;
@@ -138,4 +162,5 @@
     @apply border-2 border-black/30 shadow-md dark:border-white/50;
   }
 }
+
 

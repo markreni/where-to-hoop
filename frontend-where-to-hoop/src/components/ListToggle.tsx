@@ -10,7 +10,7 @@ const ListToggle = ({ toggleFunction, mapView }: { toggleFunction: (value: boole
 
   return (
     <Button 
-      className={`${colorModeContext} flex-center gap-3 bg-background hover:bg-gray-100 border-maplabel transition-colors rounded-lg shadow-lg py-2 px-3 text-sm text-gray-700 font-normal cursor-pointer dark:text-white dark:hover:bg-gray-700`}
+      className={`${colorModeContext} flex-center gap-3 py-2 px-3 rounded-lg bg-background background-hover background-text border-maplabel text-sm font-normal transition-colors cursor-pointer`}
       onClick={() => toggleFunction(!mapView)}
       >
       {mapView ? <PiListBold size={15}/> : <FaMap size={15}/>}

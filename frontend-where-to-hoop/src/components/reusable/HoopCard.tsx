@@ -45,7 +45,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
   };
 
   return (
-    <div className={`${colorModeContext} h-1/3 xmd:h-full w-full flex flex-col justify-start gap-2 bg-background rounded-md shadow-lg p-4 transition-shadow cursor-default dark:text-white`}>
+    <div className={`${colorModeContext} h-1/3 xmd:h-full w-full flex flex-col justify-start gap-2 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
       <div className="flex justify-between items-start gap-2">
         <div className="flex flex-col">
           <div className="flex items-start justify-start gap-2">

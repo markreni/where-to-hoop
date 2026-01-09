@@ -103,11 +103,11 @@ const AddHoop = () => {
         </div>  
 
         {/* Form */}
-        <form onSubmit={addHoop} className="flex flex-col p-6 gap-6">
+        <form onSubmit={addHoop} className="flex flex-col p-6 gap-8">
           <div className="flex flex-col gap-4">
             {/* Name */}
             <TextField isRequired className={"flex flex-col gap-2"}>
-              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>
+              <Label className={`${colorModeContext} block text-sm background-text`}>
                 Name *
               </Label>
               <input
@@ -116,18 +116,19 @@ const AddHoop = () => {
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className={`${colorModeContext} form-input`}
                 placeholder="e.g., Central Park Court"
+                maxLength={40}
               />
             </TextField>
 
             {/* Location */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>Location *</Label>
+              <Label className={`${colorModeContext} block text-sm background-text`}>Location *</Label>
               <MiniMap formData={formData} setFormData={setFormData} mapRef={mapRef} />
               <Button
                 type="button"
                 onPress={handleLocateUser}
                 isDisabled={false}
-                className={`${colorModeContext} w-full py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`}
+                className={`${colorModeContext} w-full py-1.5 rounded-lg flex-center gap-2 bg-gray-100 hover:bg-gray-200 background-text disabled:opacity-50 transition-colors dark:bg-gray-800 dark:hover:bg-gray-700`}
               >
                 <MdOutlineMyLocation size={24} />
                 Use Current Location
@@ -172,7 +173,7 @@ const AddHoop = () => {
 
             {/* Description */}
             <TextField className={"flex flex-col gap-2"}>
-              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>
+              <Label className={`${colorModeContext} block text-sm background-text`}>
                 Description
               </Label>
               <TextArea
@@ -181,12 +182,13 @@ const AddHoop = () => {
                 className={`${colorModeContext} form-input resize-none`}
                 rows={3}
                 placeholder="Add details about the court..."
+                maxLength={100}
               />
             </TextField>
 
             {/* Condition */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>
+              <Label className={`${colorModeContext} block text-sm background-text`}>
                 Condition
               </Label>
               <select
@@ -211,11 +213,10 @@ const AddHoop = () => {
                 className="w-4 h-4 appearance-none border border-gray-300 rounded-sm checked:bg-first-color checked:border-first-color checked:ring-2 checked:ring-first-color/40 transition cursor-pointer" />
               <span className={`${colorModeContext} text-sm text-gray-700 dark:text-gray-100`}>Indoor court</span>
             </div>
-          </div>
 
           {/* Image Upload */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-sm text-gray-700 dark:text-gray-100`}>
+              <Label className={`${colorModeContext} block text-sm background-text`}>
                 Images
               </Label>
               
@@ -284,19 +285,20 @@ const AddHoop = () => {
                 </div>
               )}
             </div>
+           </div>
 
           {/* Actions */}
           <div className="flex gap-3">
             <Button
               type="submit"
-              className="flex-1 px-4 py-2 bg-first-color text-white rounded-lg hover:bg-second-color transition-colors"
+              className={`${colorModeContext} flex-1 px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors`}
             >
               Add Hoop
             </Button>
             <Button
               type="button"
               onPress={resetForm}
-              className={`${colorModeContext} flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors dark:border-gray-100 dark:text-gray-100 dark:hover:bg-gray-700`}
+              className={`${colorModeContext} flex-1 px-4 py-2 background-hover background-text border border-gray-300 rounded-lg transition-colors dark:border-gray-100`}
             >
               Reset
             </Button>

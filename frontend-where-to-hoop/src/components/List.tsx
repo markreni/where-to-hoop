@@ -84,13 +84,13 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
             <Button 
               ref={filterButtonRef} 
               onClick={() => setShowFilters(!showFilters)}
-              className={`${colorModeContext} rounded-lg p-1 bg-background hover:bg-gray-100 border-maplabel transition-colors dark:hover:bg-gray-700`}
+              className={`${colorModeContext} rounded-lg p-1 bg-background background-hover border-maplabel transition-colors`}
               aria-label="Filter hoops"
               aria-pressed={showFilters}
             >
               <CiFilter 
                 size={25} 
-                className={`${colorModeContext} text-black dark:text-white`} 
+                className={`${colorModeContext} background-text`} 
               />
             </Button>
           
