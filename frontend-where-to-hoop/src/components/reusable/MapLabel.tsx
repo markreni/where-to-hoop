@@ -31,11 +31,11 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
   
   return (
-     <div className={`${colorModeContext} bg-background border-maplabel rounded-lg shadow-lg p-3 ${className ?? ""}`}>
+     <div className={`${colorModeContext} bg-background border-label-component rounded-lg shadow-lg p-3 ${className ?? ""}`}>
       {groups.map((group) => (
         <div key={group.title} className="flex flex-col gap-1.5 pb-3 last:pb-0">
           <div className="flex items-center justify-between gap-3">
-            <h4 className={`${colorModeContext} text-sm text-gray-800 font-normal mb-1 dark:text-gray-200`}>
+            <h4 className={`${colorModeContext} text-sm background-text font-normal mb-1`}>
               <strong>{group.title}</strong>
             </h4>
             {!hasAllValues(group.selectedItems, group.options.map(option => option.name)) && (
@@ -58,7 +58,7 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
                 {isCondition(item.name) ? (
                   <div
                     className={`${colorModeContext} w-4 h-4 rounded-full border-2 shadow ${
-                      isSelected ? `${item.color} border-white dark:border-black` : "white border-gray-300 dark:border-gray-600"
+                      isSelected ? `${item.color} background-border-reverse` : "white border-gray-300 dark:border-gray-600"
                     }`}
                   />
                 ) : null}

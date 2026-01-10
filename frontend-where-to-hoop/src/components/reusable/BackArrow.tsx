@@ -10,7 +10,7 @@ const BackArrow = () => {
   return (
     <Button
       onPress={() => navigate(-1)}
-      className={`${colorModeContext} fixed z-1002 top-20 left-2 p-1 rounded-full bg-background background-hover border-2 border-maplabel transition-colors shadow-md`}
+      className={`${colorModeContext} fixed z-1002 top-20 left-2 p-1 rounded-full bg-background background-hover border-2 border-label-component transition-colors shadow-md`}
       aria-label="Go back"
     > 
     {colorModeContext === "dark" ? 

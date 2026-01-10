@@ -84,7 +84,7 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
             <Button 
               ref={filterButtonRef} 
               onClick={() => setShowFilters(!showFilters)}
-              className={`${colorModeContext} rounded-lg p-1 bg-background background-hover border-maplabel transition-colors`}
+              className={`${colorModeContext} rounded-lg p-1 bg-background background-hover border-label-component transition-colors`}
               aria-label="Filter hoops"
               aria-pressed={showFilters}
             >

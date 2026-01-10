@@ -28,7 +28,7 @@ const SearchField = ({ label, errorMessage, placeholder, value, onChange }: Sear
           {label}
         </Label>
       )}
-      <Group className={`${colorModeContext} w-full flex items-center gap-2 pl-3 py-1.5 rounded-lg bg-background border-maplabel focus-within:ring-2 focus-within:ring-gray-500 transition-shadow`}>
+      <Group className={`${colorModeContext} w-full flex items-center gap-2 pl-3 py-1.5 rounded-lg bg-background border-label-component focus-within:ring-2 focus-within:ring-gray-500 transition-shadow`}>
         <FaSearch aria-hidden className={`${colorModeContext} flex-none w-4 h-4 background-text transition-colors`} />
         <Input 
           placeholder={placeholder} 
