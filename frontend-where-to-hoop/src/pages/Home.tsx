@@ -38,7 +38,7 @@ const Home = () => {
   return (
     <div className={`${colorModeContext} padding-for-nav-bar min-h-screen flex flex-col from-second-color to-first-color transition-colors`}>
       <div className="flex-grow flex flex-col justify-center px-4 sm:px-16 py-8 max-w-4xl mx-auto w-full">
-        <h1 className={`${colorModeContext} poppins-bold text-3xl sm:text-4xl md:text-5xl background-text-reverse mb-8 text-center`}>
+        <h1 className={`${colorModeContext} poppins-bold text-3xl sm:text-4xl md:text-5xl background-text-reverse-black mb-8 text-center`}>
           Nearest Courts
         </h1>
 

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback, type ReactNode } from "react";
 import { IoArrowBackSharp, IoArrowForwardSharp } from "react-icons/io5";
+import { useColorModeValues } from "../../contexts/DarkModeContext";
 
 interface CarouselProps {
   children: ReactNode[];
@@ -11,6 +12,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const colorModeContext = useColorModeValues();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartRef = useRef<{ x: number; time: number } | null>(null);
@@ -212,10 +214,10 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             onClick={goPrev}
             disabled={currentIndex === 0}
             aria-label="Previous slide"
-            className={`hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-first-color text-white transition-all z-10 ${
+            className={`${colorModeContext} hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-background background-text transition-all z-10 ${
               currentIndex === 0
                 ? 'opacity-40 cursor-not-allowed'
-                : 'hover:bg-second-color hover:scale-110'
+                : 'background-hover hover:scale-110'
             }`}
           >
             <IoArrowBackSharp size={24} />
@@ -224,10 +226,10 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             onClick={goNext}
             disabled={currentIndex === itemCount - 1}
             aria-label="Next slide"
-            className={`hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-first-color text-white transition-all z-10 ${
+            className={`${colorModeContext} hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-background background-text transition-all z-10 ${
               currentIndex === itemCount - 1
                 ? 'opacity-40 cursor-not-allowed'
-                : 'hover:bg-second-color hover:scale-110'
+                : 'background-hover hover:scale-110'
             }`}
           >
             <IoArrowForwardSharp size={24} />
@@ -261,10 +263,10 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
                 role="tab"
                 aria-selected={index === currentIndex}
                 aria-label={`Go to slide ${index + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${
+                className={`${colorModeContext} h-2 rounded-full transition-all duration-300 ${
                   index === currentIndex
-                    ? "bg-first-color w-6"
-                    : "bg-gray-400 dark:bg-gray-600 w-2 hover:bg-gray-500"
+                    ? `bg-background w-6`
+                    : `bg-fourth-color dark:bg-third-color w-2 hover:bg-gray-500`
                 }`}
               />
             ))}

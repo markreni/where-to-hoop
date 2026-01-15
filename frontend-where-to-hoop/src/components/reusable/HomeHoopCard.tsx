@@ -26,7 +26,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
       <div className="p-2 flex flex-col gap-2">
         <div className="flex items-start justify-between gap-2">
           <strong className="text-sm sm:text-sm line-clamp-1">{hoop.name}</strong>
-          <span className="text-xs text-gray-600 dark:text-gray-300">{distance.toFixed(1)} km</span>
+          <span className={`${colorModeContext} text-xs background-text`}>{distance.toFixed(1)} km</span>
         </div>
         <div className="flex items-center gap-2">
           {hoop.isIndoor ? (
