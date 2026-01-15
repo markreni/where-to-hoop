@@ -1,4 +1,3 @@
-import { MdOutlineMyLocation } from "react-icons/md";
 import { Label, TextField, TextArea, Button } from "react-aria-components";
 import { type BasketballHoop, type ColorMode, type Condition, type ObservationImage } from "../types/types";
 import { useColorModeValues } from "../contexts/DarkModeContext";
@@ -6,8 +5,10 @@ import { useState, useRef } from "react";
 import { MiniMap } from "../components/MiniMap";
 import useLocateUser from "../hooks/useLocateUser";
 import { BackArrow } from "../components/reusable/BackArrow";
+import { MdOutlineMyLocation } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import { FaInfoCircle } from "react-icons/fa";
 
 
 const emptyHoop: Omit<BasketballHoop, "id"> = {
@@ -94,11 +95,12 @@ const AddHoop = () => {
   };
 
   return (
-    <div className="padding-for-back-arrow flex items-center justify-center padding-x-for-page padding-b-for-page min-h-screen">
+    <div className="padding-for-back-arrow flex-center padding-x-for-page padding-b-for-page min-h-screen">
       <BackArrow />
       <div className={`${colorModeContext} flex flex-col bg-background rounded-lg shadow-xl max-w-xl w-full max-h-[85vh] overflow-y-auto`}>
         {/* Header */}
         <div className={`${colorModeContext} sticky top-0 z-1001 flex items-center justify-start p-6 border-b border-gray-200 bg-background`}>
+          <FaInfoCircle className="absolute top-4 right-4 text-gray-400" />
           <h2 className={`${colorModeContext} text-gray-600 text-lg font-semibold dark:text-gray-300`}>Add Basketball Hoop</h2>   
         </div>  
 

@@ -8,7 +8,7 @@ import { useLocationValues } from "../../contexts/LocationContext.tsx";
 const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
   const mapCenterValues: Coordinates = useLocationValues();
 
-  const distance = haversineDistance([mapCenterValues.latitude!, mapCenterValues.longitude!], [hoop.coordinates.latitude!, hoop.coordinates.longitude!], false);
+  const distance: number = haversineDistance([mapCenterValues.latitude!, mapCenterValues.longitude!], [hoop.coordinates.latitude!, hoop.coordinates.longitude!], false);
 
   return (
     <div>

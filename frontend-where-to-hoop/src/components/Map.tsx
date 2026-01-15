@@ -34,7 +34,7 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
       />
 
       {filteredAndSortedHoops.map(({ hoop }) => {
-          const icon = L.divIcon({
+          const hoopIcon = L.divIcon({
             html: '<div class="hoop-emoji">🏀</div>',
             className: `hoop-icon-container-${colorModeContext} ${conditionColorSelector(hoop.condition)}`,
             iconSize: [33, 33],
@@ -43,7 +43,7 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
           });
 
           return (
-            <Marker key={hoop.id} position={[hoop.coordinates.latitude!, hoop.coordinates.longitude!]} icon={icon}>
+            <Marker key={hoop.id} position={[hoop.coordinates.latitude!, hoop.coordinates.longitude!]} icon={hoopIcon}>
               <MapMarkerPopup hoop={hoop} />
             </Marker>
           );
