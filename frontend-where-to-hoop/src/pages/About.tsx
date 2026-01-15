@@ -18,6 +18,16 @@ const About = () => {
           accurate reporting, respectful collaboration, and privacy — you
           control which observations are public.
         </p>
+        <section>
+          Welcome to <strong>Let's Hoop!</strong>!<br />
+          From a basketball lover to a basketball lover.<br />
+          - Find basketball hoops near you.<br />
+          - Let other hoopers know that you are going to that particular hoop to play.<br />
+          - Find new hooping buddies!<br />
+        </section>
+        <section> 
+          Please enable location services for better experience with the web service.
+        </section>
     </div>
   );
 };

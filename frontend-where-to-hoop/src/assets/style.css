@@ -97,6 +97,10 @@
   @apply text-gray-700 dark:text-white;
 }
 
+.background-text-reverse {
+  @apply text-white dark:text-gray-700;
+}
+
 .background-border {
   @apply border-black dark:border-white;
 }
