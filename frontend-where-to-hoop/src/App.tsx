@@ -14,6 +14,7 @@ import Home from './pages/Home.tsx';
 import Hoop from "./pages/Hoop.tsx";
 import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
+import Contact from "./pages/Contact.tsx";
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
           <Route path="/addhoop" element={<AddHoop />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
     </div>

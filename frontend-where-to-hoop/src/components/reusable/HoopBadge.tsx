@@ -6,7 +6,6 @@ import { MdOutlineDateRange } from "react-icons/md";
 
 type BadgeVariant = 'indoor' | 'outdoor' | 'condition' | 'date';
 
-
 interface HoopBadgeProps {
   variant: BadgeVariant;
   condition?: Condition;
