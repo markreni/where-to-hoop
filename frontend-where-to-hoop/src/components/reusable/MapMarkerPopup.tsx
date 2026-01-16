@@ -17,8 +17,8 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
         maxWidth={500}
         >
         <div className="flex justify-between items-center mb-1">
-          <strong>{hoop.name}</strong><br />
-          <span>{distance.toFixed(1)} km</span>
+          <strong className="text-fluid-base">{hoop.name}</strong><br />
+          <span className="text-fluid-sm">{distance.toFixed(1)} km</span>
         </div>
         
         <img
@@ -28,7 +28,7 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
         />
   
         
-        <div>
+        <div className="text-fluid-sm">
           {`${hoop.isIndoor ? "Indoor" : "Outdoor"} court in a`} <strong>{hoop.condition}</strong> condition <br /> 
           {/* Add later when court details page is ready
           <Link to={`/hoops/${hoop.id}`}>View details</Link>

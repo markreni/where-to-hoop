@@ -101,7 +101,7 @@ const AddHoop = () => {
         {/* Header */}
         <div className={`${colorModeContext} sticky top-0 z-1001 flex items-center justify-start p-6 border-b border-gray-200 bg-background`}>
           <FaInfoCircle className="absolute top-4 right-4 text-gray-400" />
-          <h2 className={`${colorModeContext} text-gray-600 text-lg font-semibold dark:text-gray-300`}>Add Basketball Hoop</h2>   
+          <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>Add Basketball Hoop</h2>   
         </div>  
 
         {/* Form */}
@@ -109,7 +109,7 @@ const AddHoop = () => {
           <div className="flex flex-col gap-4">
             {/* Name */}
             <TextField isRequired className={"flex flex-col gap-2"}>
-              <Label className={`${colorModeContext} block text-sm background-text`}>
+              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
                 Name *
               </Label>
               <input
@@ -124,7 +124,7 @@ const AddHoop = () => {
 
             {/* Location */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-sm background-text`}>Location *</Label>
+              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>Location *</Label>
               <MiniMap formData={formData} setFormData={setFormData} mapRef={mapRef} />
               <Button
                 type="button"
@@ -175,7 +175,7 @@ const AddHoop = () => {
 
             {/* Description */}
             <TextField className={"flex flex-col gap-2"}>
-              <Label className={`${colorModeContext} block text-sm background-text`}>
+              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
                 Description
               </Label>
               <TextArea
@@ -190,7 +190,7 @@ const AddHoop = () => {
 
             {/* Condition */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-sm background-text`}>
+              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
                 Condition
               </Label>
               <select
@@ -218,7 +218,7 @@ const AddHoop = () => {
 
           {/* Image Upload */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-sm background-text`}>
+              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
                 Images
               </Label>
               
@@ -233,7 +233,7 @@ const AddHoop = () => {
               {imageFiles.length > 0 && (
                 <div className="flex flex-col gap-2 mt-2">
                   {imageFiles.length > 1 && (
-                  <p className={`${colorModeContext} text-xs text-gray-600 dark:text-gray-400`}>
+                  <p className={`${colorModeContext} text-fluid-xs text-gray-600 dark:text-gray-400`}>
                     Click the star to set profile picture
                   </p>
                   )}
@@ -277,7 +277,7 @@ const AddHoop = () => {
 
                         {/* Profile badge */}
                         {profileImageIndex === index && (
-                          <div className="absolute bottom-0 left-0 right-0 bg-first-color/90 text-white text-xs py-1 text-center font-medium">
+                          <div className="absolute bottom-0 left-0 right-0 bg-first-color/90 text-white text-fluid-xs py-1 text-center font-medium">
                             Profile Picture
                           </div>
                         )}

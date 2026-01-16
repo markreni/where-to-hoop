@@ -47,7 +47,7 @@ const Home = () => {
       />
       <div className="flex-grow flex flex-col justify-center px-4 sm:px-16 py-8 max-w-4xl mx-auto w-full relative z-10">
         <div className="space-y-10">
-          <h1 className={`${colorModeContext} poppins-bold text-3xl sm:text-4xl md:text-5xl background-text-reverse-black mb-8 text-center`}>
+          <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-8 text-center`}>
             Nearest Courts
           </h1>
 
@@ -58,12 +58,12 @@ const Home = () => {
               ))}
             </Carousel>
           ) : (
-            <div className="text-center background-text text-lg">
+            <div className="text-center background-text text-fluid-base">
               <p>Enable location access to see the nearest courts</p>
             </div>
           )}
 
-          <h1 className={`${colorModeContext} poppins-bold text-3xl sm:text-4xl md:text-5xl background-text-reverse-black mb-8 text-center`}>
+          <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-8 text-center`}>
             Most Active Courts
           </h1>
           <Carousel>

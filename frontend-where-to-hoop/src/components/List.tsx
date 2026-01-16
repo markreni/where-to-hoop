@@ -34,7 +34,7 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
   const [showFilters, setShowFilters] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
-  const xmd = useMediaQuery(`(min-width: ${breakpoints.xmd})`);
+  const md: boolean = useMediaQuery(`(min-width: ${breakpoints.md})`);
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
 
@@ -106,7 +106,7 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
 
       {/* Hoop Cards Grid/List */}
       <div className="flex-1 pb-4 px-4 sm:px-6 md:px-8 ">
-        {xmd ? (
+        {md ? (
           <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6 max-w-screen-2xl mx-auto">
             {filteredWithSearchHoops.map(({ hoop, distance }) => (
               <Link key={hoop.id} to={`#`}>

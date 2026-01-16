@@ -35,7 +35,7 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
       {groups.map((group) => (
         <div key={group.title} className="flex flex-col gap-1.5 pb-3 last:pb-0">
           <div className="flex items-center justify-between gap-3">
-            <h4 className={`${colorModeContext} text-sm background-text font-normal mb-1`}>
+            <h4 className={`${colorModeContext} text-fluid-sm background-text font-normal mb-1`}>
               <strong>{group.title}</strong>
             </h4>
             {!hasAllValues(group.selectedItems, group.options.map(option => option.name)) && (
@@ -62,7 +62,7 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
                     }`}
                   />
                 ) : null}
-                <span className={`text-sm ${isSelected ? "text-gray-600 font-medium" : "text-gray-600"}`}>{item.label}</span>
+                <span className={`text-fluid-sm ${isSelected ? "text-gray-600 font-medium" : "text-gray-600"}`}>{item.label}</span>
               </Button>
             );
           })}
