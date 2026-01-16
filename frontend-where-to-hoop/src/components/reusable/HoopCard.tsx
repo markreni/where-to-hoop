@@ -1,14 +1,10 @@
 import type { BasketballHoop, ColorMode } from "../../types/types.ts";
-import { MdOutlineDateRange } from "react-icons/md";
-import { conditionColorSelector } from "../../utils/options.tsx";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
-//import { IoMapOutline } from "react-icons/io5";
 import type { FocusableElement } from "@react-types/shared";
 import type { MouseEvent } from "react";
 import { HoopCardButton } from "./HoopCardButton.tsx";
-import { IoSunnyOutline } from "react-icons/io5";
-import { IoHomeOutline } from "react-icons/io5";
+import { HoopBadge } from "./HoopBadge.tsx";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
@@ -64,24 +60,23 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           />
         </div>
         <div className="w-1/4 flex flex-col justify-around">
-          {hoop.isIndoor ? (
-            <span className="hoop-card-icon bg-blue-100 text-blue-700">
-              {xsm && <IoHomeOutline size={14} />}
-              <span className="responsive-hoopcard-elements-text">Indoor</span>
-            </span>
-            ) : (
-            <span className="hoop-card-icon bg-amber-100 text-amber-700">
-              {xsm && <IoSunnyOutline size={14} />}
-              <span className="responsive-hoopcard-elements-text">Outdoor</span>
-            </span>
-            )}
-          <div className={`hoop-card-icon text-white ${conditionColorSelector(hoop.condition)}`}>
-            <span className="responsive-hoopcard-elements-text capitalize">{`${hoop.condition}`}</span> 
-          </div>
-          <div className="hoop-card-icon bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200">
-            {xsm && <MdOutlineDateRange size={14} />}
-            <span className="text-fluid-xs">{`${new Date(hoop.createdAt).toLocaleDateString(undefined, { year: "2-digit", month: "2-digit", day: "2-digit" })}`}</span>
-          </div>
+          <HoopBadge
+            variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
+            text={hoop.isIndoor ? 'Indoor' : 'Outdoor'}
+            showIcon={xsm}
+            textClassName="responsive-hoopcard-elements-text"
+          />
+          <HoopBadge
+            variant="condition"
+            condition={hoop.condition}
+            text={hoop.condition}
+            textClassName="responsive-hoopcard-elements-text"
+          />
+          <HoopBadge
+            variant="date"
+            text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: "2-digit", month: "2-digit", day: "2-digit" })}
+            showIcon={xsm}
+          />
         </div>
       </div>
       <div className="flex justify-between items-center gap-2">

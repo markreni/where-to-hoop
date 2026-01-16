@@ -1,7 +1,6 @@
 import type { BasketballHoop, ColorMode } from "../../types/types.ts";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
-import { conditionColorSelector } from "../../utils/options.tsx";
-import { IoSunnyOutline, IoHomeOutline } from "react-icons/io5";
+import { HoopBadge } from "./HoopBadge.tsx";
 
 interface HomeHoopCardProps {
   hoop: BasketballHoop;
@@ -29,18 +28,16 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
           <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
         </div>
         <div className="flex items-center gap-2">
-          {hoop.isIndoor ? (
-            <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-fluid-xs">
-              <IoHomeOutline size={12} /> Indoor
-            </span>
-          ) : (
-            <span className="flex items-center gap-1 px-2 py-0.5 rounded bg-amber-100 text-amber-700 text-fluid-xs">
-              <IoSunnyOutline size={12} /> Outdoor
-            </span>
-          )}
-          <span className={`text-white text-fluid-xs px-2 py-0.5 rounded ${conditionColorSelector(hoop.condition)}`}>
-            <span className="capitalize">{hoop.condition}</span>
-          </span>
+          <HoopBadge
+            variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
+            text={hoop.isIndoor ? 'Indoor' : 'Outdoor'}
+            iconSize={12}
+          />
+          <HoopBadge
+            variant="condition"
+            condition={hoop.condition}
+            text={hoop.condition}
+          />
         </div>
       </div>
     </div>
