@@ -245,7 +245,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             onClick={goPrev}
             disabled={currentIndex === 0}
             aria-label="Previous slide"
-            className={`sm:hidden p-2 rounded-full bg-first-color text-white transition-all ${
+            className={`${colorModeContext} sm:hidden p-2 rounded-full bg-background background-text transition-all ${
               currentIndex === 0
                 ? 'opacity-40 cursor-not-allowed'
                 : 'hover:bg-second-color active:scale-95'
@@ -277,7 +277,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             onClick={goNext}
             disabled={currentIndex === itemCount - 1}
             aria-label="Next slide"
-            className={`sm:hidden p-2 rounded-full bg-first-color text-white transition-all ${
+            className={`${colorModeContext} sm:hidden p-2 rounded-full bg-background background-text transition-all ${
               currentIndex === itemCount - 1
                 ? 'opacity-40 cursor-not-allowed'
                 : 'hover:bg-second-color active:scale-95'

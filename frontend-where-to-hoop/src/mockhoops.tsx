@@ -23,7 +23,7 @@ const initialHoops: BasketballHoop[] = [
   },
   {
     id: '2',
-    name: 'Downtown Recreation Center',
+    name: 'Downtown Center',
     coordinates: {
       latitude: 60.771550741939996,
       longitude: 24.947467801354446,

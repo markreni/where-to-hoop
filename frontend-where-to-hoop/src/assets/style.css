@@ -156,11 +156,11 @@
 }
 
 @utility text-fluid-sm {
-  font-size: clamp(0.675rem, 0.7rem + 0.35vw, 1rem);       /* 14px → 16px */
+  font-size: clamp(0.65rem, 0.7rem + 0.35vw, 1rem);       /* 14px → 16px */
 }
 
 @utility text-fluid-base {
-  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);         /* 16px → 20px */
+  font-size: clamp(0.80rem, 0.8rem + 0.45vw, 1.125rem);         /* 16px → 20px */
 }
 
 @utility text-fluid-lg {
@@ -218,6 +218,9 @@
   }
   .border-label-component {
     @apply border-2 border-black/30 shadow-md dark:border-white/50;
+  }
+  .responsive-hoopcard-elements-text {
+    @apply text-fluid-xs xsm:text-fluid-sm md:text-fluid-xs lg:text-fluid-sm;
   }
 }
 

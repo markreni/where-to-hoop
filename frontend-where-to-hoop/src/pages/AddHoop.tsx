@@ -118,7 +118,7 @@ const AddHoop = () => {
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className={`${colorModeContext} form-input`}
                 placeholder="e.g., Central Park Court"
-                maxLength={40}
+                maxLength={20}
               />
             </TextField>
 
