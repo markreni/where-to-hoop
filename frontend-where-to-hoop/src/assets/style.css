@@ -148,6 +148,41 @@
   @apply flex justify-center items-center;
 }
 
+/* ------------ Fluid Responsive Text ------------ */
+/* Smooth scaling between 320px and 1280px viewport widths */
+
+@utility text-fluid-xs {
+  font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);    /* 12px → 14px */
+}
+
+@utility text-fluid-sm {
+  font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);       /* 14px → 16px */
+}
+
+@utility text-fluid-base {
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);         /* 16px → 20px */
+}
+
+@utility text-fluid-lg {
+  font-size: clamp(1.125rem, 1rem + 0.65vw, 1.5rem);       /* 18px → 24px */
+}
+
+@utility text-fluid-xl {
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.875rem);         /* 20px → 30px */
+}
+
+@utility text-fluid-2xl {
+  font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);       /* 24px → 36px */
+}
+
+@utility text-fluid-3xl {
+  font-size: clamp(1.875rem, 1.3rem + 2vw, 3rem);          /* 30px → 48px */
+}
+
+@utility text-fluid-4xl {
+  font-size: clamp(2.25rem, 1.5rem + 2.5vw, 3.75rem);      /* 36px → 60px */
+}
+
 @layer components {
   .padding-x-for-page {
     @apply px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20;
