@@ -8,6 +8,7 @@ import {
   useMatch,
 } from "react-router-dom";
 import NavBar from './components/NavBar.tsx';
+import { ToastContainer } from './components/reusable/ToastContainer.tsx';
 import Hoops from './pages/Hoops.tsx';
 import AddHoop from './pages/AddHoop.tsx';
 import Home from './pages/Home.tsx';
@@ -22,10 +23,11 @@ function App() {
   console.log("Matched observation ID:", match?.params.id);
 
   return (
-    <div 
+    <div
       className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen overflow-hidden relative"
     >
       <NavBar />
+      <ToastContainer />
       <div className="routes-margin">
         <Routes>
           <Route path="/" element={<Home />} />

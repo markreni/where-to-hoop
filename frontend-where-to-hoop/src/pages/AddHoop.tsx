@@ -1,33 +1,63 @@
 import { Label, TextField, TextArea, Button } from "react-aria-components";
 import { type BasketballHoop, type ColorMode, type Condition, type ObservationImage } from "../types/types";
 import { useColorModeValues } from "../contexts/DarkModeContext";
+import { useToast } from "../contexts/ToastContext";
 import { useState, useRef } from "react";
 import { MiniMap } from "../components/MiniMap";
 import useLocateUser from "../hooks/useLocateUser";
 import { BackArrow } from "../components/reusable/BackArrow";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
-import { FaStar, FaRegStar } from "react-icons/fa";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaStar, FaRegStar, FaInfoCircle, FaCheckCircle } from "react-icons/fa";
+import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES } from "../utils/constants";
 
 
-const emptyHoop: Omit<BasketballHoop, "id"> = {
+const conditionConfig: Record<Condition, { color: string; label: string }> = {
+  excellent: { color: 'bg-green-500', label: 'Excellent' },
+  good: { color: 'bg-blue-500', label: 'Good' },
+  fair: { color: 'bg-amber-500', label: 'Fair' },
+  poor: { color: 'bg-red-500', label: 'Poor' },
+};
+
+
+type FormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor"> & {
+  condition: Condition | null;
+  isIndoor: boolean | null;
+};
+
+const emptyHoop: FormData = {
   name: '',
   profile_images: [],
   coordinates: { latitude: null, longitude: null },
   description: '',
-  condition: 'good',
-  isIndoor: false,
+  condition: null,
+  isIndoor: null,
   createdAt: new Date().toISOString(),
+};
+
+const formatFileSize = (bytes: number): string => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
 const AddHoop = () => {
   const mapRef = useRef<L.Map | null>(null);
-  const [formData, setFormData] = useState<Omit<BasketballHoop, "id">>(emptyHoop);
+  const [formData, setFormData] = useState<FormData>(emptyHoop);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [profileImageIndex, setProfileImageIndex] = useState<number>(0);
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
+  const { success, error, warning } = useToast();
+
+  const isLocationSelected = formData.coordinates.latitude !== null && formData.coordinates.longitude !== null;
+  const isNameFilled = formData.name.trim().length > 0;
+  const isConditionSelected = formData.condition !== null;
+  const isCourtTypeSelected = formData.isIndoor !== null;
+  const hasProfileImage = imageFiles.length > 0;
+  const isFormValid = isNameFilled && isLocationSelected && isConditionSelected && isCourtTypeSelected && hasProfileImage;
+  const completedRequiredFields = (isNameFilled ? 1 : 0) + (isLocationSelected ? 1 : 0) + (isConditionSelected ? 1 : 0) + (isCourtTypeSelected ? 1 : 0) + (hasProfileImage ? 1 : 0);
+  const totalRequiredFields = 5;
 
   const handleLocateUser = () => {
     locateUser({
@@ -47,7 +77,30 @@ const AddHoop = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const newFiles = Array.from(e.target.files);
-      setImageFiles((prev) => [...prev, ...newFiles]);
+
+      // Check max images limit
+      const remainingSlots = MAX_IMAGES - imageFiles.length;
+      if (remainingSlots <= 0) {
+        warning(`Maximum ${MAX_IMAGES} images allowed`);
+        return;
+      }
+
+      // Filter oversized files
+      const oversizedFiles = newFiles.filter(file => file.size > MAX_IMAGE_SIZE_BYTES);
+      if (oversizedFiles.length > 0) {
+        const fileNames = oversizedFiles.map(f => `${f.name} (${formatFileSize(f.size)})`).join(', ');
+        warning(`Some images exceed ${MAX_IMAGE_SIZE_MB}MB limit: ${fileNames}`);
+      }
+
+      let validFiles = newFiles.filter(file => file.size <= MAX_IMAGE_SIZE_BYTES);
+
+      // Limit to remaining slots
+      if (validFiles.length > remainingSlots) {
+        warning(`Only ${remainingSlots} more image${remainingSlots === 1 ? '' : 's'} can be added`);
+        validFiles = validFiles.slice(0, remainingSlots);
+      }
+
+      setImageFiles((prev) => [...prev, ...validFiles]);
     }
   };
 
@@ -62,7 +115,17 @@ const AddHoop = () => {
 
   const addHoop = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
+    // Validate all required fields
+    if (!isFormValid) {
+      if (!isNameFilled) error("Please enter a name for the hoop");
+      else if (!isLocationSelected) error("Please select a location on the map");
+      else if (!isConditionSelected) error("Please select the court condition");
+      else if (!isCourtTypeSelected) error("Please select indoor or outdoor");
+      else if (!hasProfileImage) error("Please add at least one image");
+      return;
+    }
+
     // Convert images to ObservationImage format
     const observationImages: ObservationImage[] = imageFiles.map((file, index) => ({
       id: Date.now() + index,
@@ -77,14 +140,20 @@ const AddHoop = () => {
       observationImages.unshift(profileImage);
     }
 
-    const hoopData = {
-      ...formData,
+    const hoopData: Omit<BasketballHoop, "id"> = {
+      name: formData.name,
+      coordinates: formData.coordinates,
+      description: formData.description,
+      condition: formData.condition!,
+      isIndoor: formData.isIndoor!,
+      createdAt: formData.createdAt,
       profile_images: observationImages,
     };
 
     console.log("Form submitted:", hoopData);
     console.log("Image files:", imageFiles);
 
+    success("Basketball hoop added successfully!");
     resetForm();
   };
 
@@ -99,9 +168,23 @@ const AddHoop = () => {
       <BackArrow />
       <div className={`${colorModeContext} flex flex-col bg-background rounded-lg shadow-xl max-w-xl w-full max-h-[85vh] overflow-y-auto`}>
         {/* Header */}
-        <div className={`${colorModeContext} sticky top-0 z-1001 flex items-center justify-start p-6 border-b border-gray-200 bg-background`}>
-          <FaInfoCircle className="absolute top-4 right-4 text-gray-400" />
-          <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>Add Basketball Hoop</h2>   
+        <div className={`${colorModeContext} sticky top-0 z-1001 flex flex-col p-6 border-b border-gray-200 bg-background`}>
+          <div className="flex items-center justify-between">
+            <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>Add Basketball Hoop</h2>
+            <FaInfoCircle className="text-gray-400" />
+          </div>
+          {/* Progress indicator */}
+          <div className="flex items-center gap-3 mt-3">
+            <div className="flex-1 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-first-color transition-all duration-300"
+                style={{ width: `${(completedRequiredFields / totalRequiredFields) * 100}%` }}
+              />
+            </div>
+            <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 whitespace-nowrap`}>
+              {completedRequiredFields}/{totalRequiredFields} required
+            </span>
+          </div>
         </div>  
 
         {/* Form */}
@@ -109,22 +192,35 @@ const AddHoop = () => {
           <div className="flex flex-col gap-4">
             {/* Name */}
             <TextField isRequired className={"flex flex-col gap-2"}>
-              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
-                Name *
-              </Label>
+              <div className="flex items-center gap-2">
+                <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
+                  Name *
+                </Label>
+                {isNameFilled && (
+                  <FaCheckCircle className="text-green-500" size={16} />
+                )}
+              </div>
               <input
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className={`${colorModeContext} form-input`}
                 placeholder="e.g., Central Park Court"
-                maxLength={20}
+                maxLength={MAX_NAME_LENGTH}
               />
+              <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 text-right`}>
+                {formData.name.length}/{MAX_NAME_LENGTH}
+              </span>
             </TextField>
 
             {/* Location */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>Location *</Label>
+              <div className="flex items-center gap-2">
+                <Label className={`${colorModeContext} block text-fluid-sm background-text`}>Location *</Label>
+                {isLocationSelected && (
+                  <FaCheckCircle className="text-green-500" size={16} />
+                )}
+              </div>
               <MiniMap formData={formData} setFormData={setFormData} mapRef={mapRef} />
               <Button
                 type="button"
@@ -184,43 +280,93 @@ const AddHoop = () => {
                 className={`${colorModeContext} form-input resize-none`}
                 rows={3}
                 placeholder="Add details about the court..."
-                maxLength={100}
+                maxLength={MAX_DESCRIPTION_LENGTH}
               />
+              <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 text-right`}>
+                {formData.description.length}/{MAX_DESCRIPTION_LENGTH}
+              </span>
             </TextField>
 
             {/* Condition */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
-                Condition
-              </Label>
-              <select
-                id="condition"
-                value={formData.condition}
-                onChange={(e) => setFormData({ ...formData, condition: e.target.value as Condition })}
-                className={`${colorModeContext} form-input`}
-              >
-                <option value="excellent">Excellent</option>
-                <option value="good">Good</option>
-                <option value="fair">Fair</option>
-                <option value="poor">Poor</option>
-              </select>
+              <div className="flex items-center gap-2">
+                <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
+                  Condition *
+                </Label>
+                {isConditionSelected && (
+                  <FaCheckCircle className="text-green-500" size={16} />
+                )}
+              </div>
+              <div className="grid grid-cols-4 gap-2">
+                {(Object.keys(conditionConfig) as Condition[]).map((condition) => (
+                  <button
+                    key={condition}
+                    type="button"
+                    onClick={() => setFormData({ ...formData, condition })}
+                    className={`py-2 px-2 rounded-lg text-fluid-xs font-medium transition-all cursor-pointer flex flex-col items-center gap-1 ${
+                      formData.condition === condition
+                        ? 'ring-2 ring-first-color ring-offset-2 dark:ring-offset-gray-900'
+                        : ''
+                    } ${colorModeContext} bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700`}
+                  >
+                    <span className={`w-3 h-3 rounded-full ${conditionConfig[condition].color}`} />
+                    <span className="background-text">{conditionConfig[condition].label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Indoor/Outdoor */}
-            <div className="flex items-center gap-2">
-              <input 
-                onChange={(e) => setFormData({ ...formData, isIndoor: e.target.checked })}
-                checked={formData.isIndoor}
-                type="checkbox" 
-                className="w-4 h-4 appearance-none border border-gray-300 rounded-sm checked:bg-first-color checked:border-first-color checked:ring-2 checked:ring-first-color/40 transition cursor-pointer" />
-              <span className={`${colorModeContext} text-sm text-gray-700 dark:text-gray-100`}>Indoor court</span>
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
+                  Court Type *
+                </Label>
+                {isCourtTypeSelected && (
+                  <FaCheckCircle className="text-green-500" size={16} />
+                )}
+              </div>
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, isIndoor: false })}
+                  className={`flex-1 py-2 px-4 rounded-lg text-fluid-sm font-medium transition-colors cursor-pointer ${
+                    formData.isIndoor === false
+                      ? 'bg-first-color text-white dark:text-black'
+                      : `${colorModeContext} bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`
+                  }`}
+                >
+                  🌳 Outdoor
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, isIndoor: true })}
+                  className={`flex-1 py-2 px-4 rounded-lg text-fluid-sm font-medium transition-colors cursor-pointer ${
+                    formData.isIndoor === true
+                      ? 'bg-first-color text-white dark:text-black'
+                      : `${colorModeContext} bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`
+                  }`}
+                >
+                  🏠 Indoor
+                </button>
+              </div>
             </div>
 
           {/* Image Upload */}
             <div className="flex flex-col gap-2">
-              <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
-                Images
-              </Label>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
+                    Images *
+                  </Label>
+                  {hasProfileImage && (
+                    <FaCheckCircle className="text-green-500" size={16} />
+                  )}
+                </div>
+                <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+                  {imageFiles.length}/{MAX_IMAGES}
+                </span>
+              </div>
               
               <input
                 type="file"
@@ -275,12 +421,14 @@ const AddHoop = () => {
                           <IoMdClose size={16} />
                         </button>
 
-                        {/* Profile badge */}
-                        {profileImageIndex === index && (
-                          <div className="absolute bottom-0 left-0 right-0 bg-first-color/90 text-white text-fluid-xs py-1 text-center font-medium">
-                            Profile Picture
-                          </div>
-                        )}
+                        {/* File size badge */}
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-fluid-xs py-1 text-center">
+                          {profileImageIndex === index ? (
+                            <span className="font-medium">Profile • {formatFileSize(file.size)}</span>
+                          ) : (
+                            formatFileSize(file.size)
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
@@ -293,7 +441,8 @@ const AddHoop = () => {
           <div className="flex gap-3">
             <Button
               type="submit"
-              className={`${colorModeContext} flex-1 px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors`}
+              isDisabled={!isFormValid}
+              className={`${colorModeContext} flex-1 px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               Add Hoop
             </Button>

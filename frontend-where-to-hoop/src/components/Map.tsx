@@ -10,7 +10,7 @@ import { useLocationValues } from "../contexts/LocationContext.tsx";
 import { conditionColorSelector } from "../utils/options.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
-import centerCoordinates from "../utils/constants.ts";
+import { centerCoordinates }from "../utils/constants.ts";
 import { MapController } from "./reusable/MapController.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 

@@ -1,14 +1,19 @@
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import type { LatLngTuple, LeafletEvent } from "leaflet";
-import type { BasketballHoop, Coordinates } from "../types/types";
-import centerCoordinates from "../utils/constants";
+import type { BasketballHoop, Coordinates, Condition } from "../types/types";
+import { centerCoordinates } from "../utils/constants";
 import { useLocationValues } from "../contexts/LocationContext";
 import { MapController } from "./reusable/MapController";
 
+// Flexible form data type that allows null values during form input
+type MiniMapFormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor"> & {
+  condition: Condition | null;
+  isIndoor: boolean | null;
+};
 
 interface MiniMapProps {
-  formData: Omit<BasketballHoop, "id">;
-  setFormData: React.Dispatch<React.SetStateAction<Omit<BasketballHoop, "id">>>;
+  formData: MiniMapFormData;
+  setFormData: React.Dispatch<React.SetStateAction<MiniMapFormData>>;
   mapRef: React.RefObject<L.Map | null>;
 }
 

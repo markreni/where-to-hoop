@@ -4,6 +4,7 @@ import App from './App.tsx'
 import './assets/style.css'
 import { LocationContextProvider } from './contexts/LocationContext.tsx'
 import { ColorModeContextProvider } from './contexts/DarkModeContext.tsx'
+import { ToastProvider } from './contexts/ToastContext.tsx'
 import { BrowserRouter as RouterContext } from "react-router-dom"
 
 createRoot(document.getElementById('root')!).render(
@@ -11,7 +12,9 @@ createRoot(document.getElementById('root')!).render(
     <RouterContext>
       <LocationContextProvider>
         <ColorModeContextProvider>
-          <App />
+          <ToastProvider>
+            <App />
+          </ToastProvider>
         </ColorModeContextProvider>
       </LocationContextProvider>
     </RouterContext>
