@@ -1,4 +1,3 @@
-type ColorMode = 'light' | 'dark';
 
 type Condition = 'excellent' | 'good' | 'fair' | 'poor';
 
@@ -24,7 +23,17 @@ interface BasketballHoop {
   isIndoor: boolean;
 };
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode };
+// Toast types
+type ToastType = 'success' | 'error' | 'info' | 'warning';
+
+// Color mode type
+type ColorMode = 'light' | 'dark';
+
+// Language type
+type Language = 'en' | 'fi';
+
+
+export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 

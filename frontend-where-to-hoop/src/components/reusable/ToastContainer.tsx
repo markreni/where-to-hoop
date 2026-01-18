@@ -1,4 +1,5 @@
-import { useToast, type Toast, type ToastType } from '../../contexts/ToastContext';
+import { useToast, type Toast } from '../../contexts/ToastContext';
+import type { ToastType } from '../../types/types';
 import { IoMdClose } from 'react-icons/io';
 import { FaCheckCircle, FaExclamationCircle, FaInfoCircle, FaExclamationTriangle } from 'react-icons/fa';
 

@@ -1,7 +1,5 @@
 import { createContext, useContext, useReducer, useCallback, type ReactNode } from 'react';
-
-// Toast types
-type ToastType = 'success' | 'error' | 'info' | 'warning';
+import type { ToastType } from '../types/types';
 
 interface Toast {
   id: string;
@@ -146,4 +144,4 @@ export const useToast = (): ToastContextType => {
   return context;
 };
 
-export type { Toast, ToastType };
+export type { Toast };

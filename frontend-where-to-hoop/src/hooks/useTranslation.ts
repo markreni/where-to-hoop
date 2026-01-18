@@ -1,4 +1,5 @@
-import { useLanguage, type Language } from '../contexts/LanguageContext';
+import { useLanguage } from '../contexts/LanguageContext';
+import type { Language } from '../types/types';
 import en from '../locales/en.json';
 import fi from '../locales/fi.json';
 
@@ -10,15 +11,16 @@ const translations: Record<Language, typeof en> = {
 };
 
 export const useTranslation = () => {
-  const language = useLanguage();
+  const language: Language = useLanguage();
 
   const t = (key: string, params?: TranslationParams): string => {
-    const keys = key.split('.');
+    const keys: string[] = key.split('.');
     let value: unknown = translations[language];
 
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
         value = (value as Record<string, unknown>)[k];
+        console.log(value);
       } else {
         return key; // Return the key if translation not found
       }
@@ -30,7 +32,7 @@ export const useTranslation = () => {
 
     // Handle interpolation {{param}}
     if (params) {
-      return value.replace(/\{\{(\w+)\}\}/g, (_, paramKey) => {
+      return value.replace(/\{\{(\w+)\}\}/g, (_, paramKey: string) => {
         return params[paramKey]?.toString() ?? `{{${paramKey}}}`;
       });
     }

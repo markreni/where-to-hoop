@@ -1,6 +1,5 @@
 import { createContext, useReducer, useContext, type Dispatch, type ReactNode, useEffect } from 'react';
-
-type Language = 'en' | 'fi';
+import type { Language } from '../types/types';
 
 interface LanguageContextValue {
   state: Language;
@@ -62,5 +61,4 @@ export const useSetLanguage = (): Dispatch<Language> => {
   return ctx.dispatch;
 };
 
-export type { Language };
 export default LanguageContext;

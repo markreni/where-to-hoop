@@ -24,7 +24,7 @@ const initState = (init: ColorMode): ColorMode => {
 }
 
 const colorModeReducer = (_: ColorMode, action: ColorMode ): ColorMode=> {
-  return action
+  return action;
 }
 
 const ColorModeContext = createContext<ColorModeContextValue | null>(null);
@@ -50,11 +50,17 @@ export const ColorModeContextProvider: React.FC<ColorModeProviderProps> = (props
 
 export const useColorModeValues = () => {
   const ctx = useContext(ColorModeContext)!;
+  if (!ctx) {
+    throw new Error('useColorModeValues must be used within a ColorModeContextProvider');
+  }
   return ctx.state
 }
 
 export const useColorModeDispatch = () => {
   const ctx = useContext(ColorModeContext)!;
+  if (!ctx) {
+    throw new Error('useColorModeDispatch must be used within a ColorModeContextProvider');
+  }
   return ctx.dispatch
 }
 
