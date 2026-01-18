@@ -26,10 +26,6 @@
     "submit": "Add Hoop",
     "reset": "Reset",
     "required": "required",
-    "excellent": "Excellent",
-    "good": "Good",
-    "fair": "Fair",
-    "poor": "Poor",
     "errors": {
       "enterName": "Please enter a name for the hoop",
       "selectLocation": "Please select a location on the map",
@@ -47,7 +43,8 @@
     "courtCondition": "Court Condition",
     "searchPlaceholder": "Find hoops",
     "hoopcardMapButton": "On Map",
-    "hoopcardReadyToPlayButton": "Ready to play"
+    "hoopcardReadyToPlayButton": "Ready to play",
+    "players": "{{count}} players"
   },
   "footer": {
     "about": "About",
@@ -102,6 +99,10 @@
     "indoor": "Indoor",
     "outdoor": "Outdoor",
     "showlist": "Show List",
-    "showmap": "Show Map"
+    "showmap": "Show Map",
+    "excellent": "Excellent",
+    "good": "Good",
+    "fair": "Fair",
+    "poor": "Poor"
   }
 }

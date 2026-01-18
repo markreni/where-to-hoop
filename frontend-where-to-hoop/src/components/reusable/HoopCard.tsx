@@ -54,17 +54,15 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
         </div>
         <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} bgColor="bg-blue-500/80 hover:bg-blue-600"></HoopCardButton>
       </div>
-      <div className="flex justify-between gap-3">
-        <div className="w-2/3">
-          <img className="rounded-md w-full h-full object-cover"
-            src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/150'}
-            alt={hoop.name}
-          />
-        </div>
-        <div className="w-1/4 flex flex-col justify-around">
+      <div className="flex flex-col gap-3">
+        <img className="rounded-md w-full h-40 object-cover"
+          src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/150'}
+          alt={hoop.name}
+        />
+        <div className="flex justify-between gap-2">
           <HoopBadge
             variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
-            text={hoop.isIndoor ? 'Indoor' : 'Outdoor'}
+            text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
             showIcon={xsm}
             textClassName="responsive-hoopcard-elements-text"
           />
@@ -78,6 +76,12 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
             variant="date"
             text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: "2-digit", month: "2-digit", day: "2-digit" })}
             showIcon={xsm}
+          />
+          <HoopBadge
+            variant="players"
+            text={t('hoops.players', { count: hoop.currentPlayers })}
+            showIcon={xsm}
+            textClassName="responsive-hoopcard-elements-text"
           />
         </div>
       </div>

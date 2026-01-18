@@ -20,7 +20,6 @@ export const useTranslation = () => {
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
         value = (value as Record<string, unknown>)[k];
-        console.log(value);
       } else {
         return key; // Return the key if translation not found
       }

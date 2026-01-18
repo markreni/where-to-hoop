@@ -21,6 +21,7 @@ interface BasketballHoop {
   description: string;
   condition: Condition;
   isIndoor: boolean;
+  currentPlayers: number; // Number of players currently at the court
 };
 
 // Toast types

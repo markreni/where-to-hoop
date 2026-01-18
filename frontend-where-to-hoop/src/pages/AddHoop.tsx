@@ -34,6 +34,7 @@ const emptyHoop: FormData = {
   condition: null,
   isIndoor: null,
   createdAt: new Date().toISOString(),
+  currentPlayers: 0,
 };
 
 const formatFileSize = (bytes: number): string => {
@@ -150,6 +151,7 @@ const AddHoop = () => {
       isIndoor: formData.isIndoor!,
       createdAt: formData.createdAt,
       profile_images: observationImages,
+      currentPlayers: 0,
     };
 
     console.log("Form submitted:", hoopData);

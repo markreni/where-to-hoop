@@ -12,10 +12,10 @@ const conditionColorSelector = (condition?: Condition) => {
 };
 
 export const conditionOptions = [
-  { labelKey: 'addHoop.excellent', name: 'excellent' as Condition, color: conditionColorSelector ('excellent') },
-  { labelKey: 'addHoop.good', name: 'good' as Condition, color: conditionColorSelector ('good') },
-  { labelKey: 'addHoop.fair', name: 'fair' as Condition, color: conditionColorSelector ('fair') },
-  { labelKey: 'addHoop.poor', name: 'poor' as Condition, color: conditionColorSelector ('poor') },
+  { labelKey: 'common.excellent', name: 'excellent' as Condition, color: conditionColorSelector ('excellent') },
+  { labelKey: 'common.good', name: 'good' as Condition, color: conditionColorSelector ('good') },
+  { labelKey: 'common.fair', name: 'fair' as Condition, color: conditionColorSelector ('fair') },
+  { labelKey: 'common.poor', name: 'poor' as Condition, color: conditionColorSelector ('poor') },
 ];
 
 export const doorOptions = [

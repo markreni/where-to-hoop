@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import type { Condition } from "../../types/types.ts";
 import { conditionColorSelector } from "../../utils/options.tsx";
-import { IoSunnyOutline, IoHomeOutline } from "react-icons/io5";
+import { IoSunnyOutline, IoHomeOutline, IoPeopleOutline } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
 
-type BadgeVariant = 'indoor' | 'outdoor' | 'condition' | 'date';
+type BadgeVariant = 'indoor' | 'outdoor' | 'condition' | 'date' | 'players';
 
 interface HoopBadgeProps {
   variant: BadgeVariant;
@@ -21,12 +21,14 @@ const variantStyles: Record<BadgeVariant, string> = {
   outdoor: 'bg-amber-100 text-amber-700',
   condition: 'text-white',
   date: 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
+  players: 'bg-purple-100 text-purple-700',
 };
 
 const defaultIcons: Record<Exclude<BadgeVariant, 'condition'>, (size: number) => ReactNode> = {
   indoor: (size) => <IoHomeOutline size={size} />,
   outdoor: (size) => <IoSunnyOutline size={size} />,
   date: (size) => <MdOutlineDateRange size={size} />,
+  players: (size) => <IoPeopleOutline size={size} />,
 };
 
 const HoopBadge = ({

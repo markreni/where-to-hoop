@@ -26,10 +26,6 @@
     "submit": "Lisää kori",
     "reset": "Tyhjennä",
     "required": "pakollinen",
-    "excellent": "Erinomainen",
-    "good": "Hyvä",
-    "fair": "Tyydyttävä",
-    "poor": "Huono",
     "errors": {
       "enterName": "Anna korille nimi",
       "selectLocation": "Valitse sijainti kartalta",
@@ -47,7 +43,8 @@
     "courtCondition": "Kentän kunto",
     "searchPlaceholder": "Etsi kenttiä",
     "hoopcardMapButton": "Kartalla",
-    "hoopcardReadyToPlayButton": "Valmis pelaamaan"
+    "hoopcardReadyToPlayButton": "Valmis pelaamaan",
+    "players": "{{count}} pelaajaa"
   },
   "footer": {
     "about": "Tietoja",
@@ -102,6 +99,10 @@
     "indoor": "Sisäkenttä",
     "outdoor": "Ulkokenttä",
     "showlist": "Näytä lista",
-    "showmap": "Näytä kartta"
+    "showmap": "Näytä kartta",
+    "excellent": "Erinomainen",
+    "good": "Hyvä",
+    "fair": "Tyydyttävä",
+    "poor": "Huono"
   }
 }
