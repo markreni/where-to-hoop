@@ -6,7 +6,9 @@ import { FiAlignJustify } from "react-icons/fi";
 import { GiBasketballBasket } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
 import { ToggleBasketball } from "./reusable/ToggleBasketball.tsx";
+import { LanguageToggle } from "./reusable/LanguageToggle.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import { useTranslation } from "../hooks/useTranslation.ts";
 import type { ColorMode } from "../types/types.ts";
 import breakpoints from "../assets/style.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
@@ -16,33 +18,35 @@ const NavBar = () => {
   const locateUser = useLocateUser();
   const sm = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const colorModeContext: ColorMode = useColorModeValues();
+  const { t } = useTranslation();
   
   return (
     <div className={`${colorModeContext} fixed z-402 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
       {sm ? (
         <div className="nav-bar">
-          <div className="flex-center gap-1">
-            <Link to="/"> 
+          <div className="flex-center gap-2">
+            <Link to="/">
               <Logo/>
             </Link>
             <ToggleBasketball />
           </div>
           <div className="flex-center gap-4">
-            <Link to="/hoops"> 
-              <Button 
+            <LanguageToggle />
+            <Link to="/hoops">
+              <Button
                 className={`${colorModeContext} flex items-center gap-2 px-4 py-2 rounded-md bg-first-color main-color-hover first-color-text font-medium transition-colors`}
                 onClick={() => locateUser()}
               >
                 <MdLocationPin size={22}/>
-                Show Hoops
+                {t('nav.showHoops')}
               </Button>
             </Link>
             <Link to="/addhoop">
-              <Button 
+              <Button
                   className={`${colorModeContext} flex items-center gap-2 bg-third-color text-white font-medium px-4 py-2 rounded-md hover:bg-fourth-color transition-colors dark:text-black`}
               >
                 <GiBasketballBasket size={22}/>
-                Add Hoop
+                {t('nav.addHoop')}
               </Button>
             </Link>
           </div>
@@ -50,10 +54,13 @@ const NavBar = () => {
       ) : (
         <div className="nav-bar">
            <div className="flex-center gap-1">
-            <Link to="/"> 
+            <Link to="/">
               <Logo/>
             </Link>
-            <ToggleBasketball />
+            <div className="flex-center gap-3">
+              <ToggleBasketball />
+              <LanguageToggle />
+            </div>
           </div>
           <div className="flex-center gap-2">
             <MenuTrigger>
@@ -67,19 +74,18 @@ const NavBar = () => {
                       <Button onClick={() => locateUser()}>
                         <MdLocationPin size={22}/>
                       </Button>
-                      Show Hoops
+                      {t('nav.showHoops')}
                     </Link>
                   </MenuItem>
-                  <MenuItem className={`${colorModeContext} rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>  
+                  <MenuItem className={`${colorModeContext} rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>
                     <Link to="/addhoop" className="flex items-center gap-2">
                       <GiBasketballBasket size={22}/>
-                      Add Hoop
+                      {t('nav.addHoop')}
                     </Link>
                   </MenuItem>
                 </Menu>
               </Popover>
             </MenuTrigger>
-         
           </div>
         </div>
       )}

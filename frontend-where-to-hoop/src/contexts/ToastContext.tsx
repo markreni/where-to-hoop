@@ -66,7 +66,7 @@ interface ToastProviderProps {
   children: ReactNode;
 }
 
-const DEFAULT_DURATION = 4000;
+const DEFAULT_DURATION = 2800;
 
 export const ToastProvider = ({ children }: ToastProviderProps) => {
   const [state, dispatch] = useReducer(toastReducer, initialState);
@@ -77,7 +77,7 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
 
   const addToast = useCallback(
     (type: ToastType, message: string, duration: number = DEFAULT_DURATION) => {
-      const id = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+      const id = `${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
 
       dispatch({
         type: 'ADD_TOAST',
