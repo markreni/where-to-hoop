@@ -1,4 +1,5 @@
 import { useColorModeValues } from "../contexts/DarkModeContext";
+import { useTranslation } from "../hooks/useTranslation";
 import type { ColorMode } from "../types/types";
 import { BackArrow } from "../components/reusable/BackArrow";
 import Footer from "../components/Footer";
@@ -7,6 +8,7 @@ import { FaMapMarkerAlt, FaUsers, FaHandshake } from "react-icons/fa";
 
 const About = () => {
   const colorModeContext: ColorMode = useColorModeValues();
+  const { t } = useTranslation();
 
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
@@ -16,28 +18,25 @@ const About = () => {
           <div className="flex items-center gap-3 mb-6">
             <GiBasketballBall size={40} className="text-first-color" />
             <h1 className={`${colorModeContext} text-fluid-2xl poppins-bold background-text`}>
-              About WhereHoops
+              {t('about.title')}
             </h1>
           </div>
 
           <p className={`${colorModeContext} text-fluid-base background-text mb-6`}>
-            From basketball lovers, for basketball lovers. WhereHoops is a community-driven
-            platform that helps you discover basketball courts near you and connect with
-            fellow hoopers in your area.
+            {t('about.intro')}
           </p>
 
           <h2 className={`${colorModeContext} text-fluid-lg poppins-semibold background-text mb-4`}>
-            What You Can Do
+            {t('about.whatYouCanDo')}
           </h2>
 
           <div className="flex flex-col gap-4 mb-8">
             <div className={`${colorModeContext} flex items-start gap-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800`}>
               <FaMapMarkerAlt size={24} className="text-first-color flex-shrink-0 mt-1" />
               <div>
-                <p className={`${colorModeContext} font-medium background-text`}>Find Courts Near You</p>
+                <p className={`${colorModeContext} font-medium background-text`}>{t('about.findCourts')}</p>
                 <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
-                  Discover basketball hoops in your neighborhood with our interactive map.
-                  See court conditions, photos, and details before you go.
+                  {t('about.findCourtsDesc')}
                 </p>
               </div>
             </div>
@@ -45,10 +44,9 @@ const About = () => {
             <div className={`${colorModeContext} flex items-start gap-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800`}>
               <FaUsers size={24} className="text-first-color flex-shrink-0 mt-1" />
               <div>
-                <p className={`${colorModeContext} font-medium background-text`}>Let Others Know You're Playing</p>
+                <p className={`${colorModeContext} font-medium background-text`}>{t('about.letOthersKnow')}</p>
                 <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
-                  Heading to a court? Let other hoopers know you'll be there.
-                  Find pickup games and never shoot alone again.
+                  {t('about.letOthersKnowDesc')}
                 </p>
               </div>
             </div>
@@ -56,10 +54,9 @@ const About = () => {
             <div className={`${colorModeContext} flex items-start gap-4 p-4 rounded-lg bg-gray-100 dark:bg-gray-800`}>
               <FaHandshake size={24} className="text-first-color flex-shrink-0 mt-1" />
               <div>
-                <p className={`${colorModeContext} font-medium background-text`}>Connect with Hoopers</p>
+                <p className={`${colorModeContext} font-medium background-text`}>{t('about.connectHoopers')}</p>
                 <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
-                  Meet new basketball buddies in your area. Build your local hooping
-                  community and find regular playing partners.
+                  {t('about.connectHoopersDesc')}
                 </p>
               </div>
             </div>
@@ -67,8 +64,7 @@ const About = () => {
 
           <div className={`${colorModeContext} p-4 rounded-lg border border-gray-200 dark:border-gray-700`}>
             <p className={`${colorModeContext} text-fluid-sm background-text`}>
-              <strong>Tip:</strong> Enable location services for the best experience.
-              This helps us show you the nearest courts and calculate distances accurately.
+              <strong>{t('about.tip')}</strong> {t('about.tipText')}
             </p>
           </div>
         </div>

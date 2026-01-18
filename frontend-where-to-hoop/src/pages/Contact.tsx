@@ -1,4 +1,5 @@
 import { useColorModeValues } from "../contexts/DarkModeContext";
+import { useTranslation } from "../hooks/useTranslation";
 import type { ColorMode } from "../types/types";
 import { BackArrow } from "../components/reusable/BackArrow";
 import Footer from "../components/Footer";
@@ -7,6 +8,7 @@ import { FaGithub } from "react-icons/fa";
 
 const Contact = () => {
   const colorModeContext: ColorMode = useColorModeValues();
+  const { t } = useTranslation();
 
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
@@ -14,11 +16,11 @@ const Contact = () => {
       <div className="flex-grow padding-x-for-page padding-b-for-page">
         <div className={`${colorModeContext} max-w-2xl mx-auto bg-background rounded-lg shadow-lg p-6 sm:p-8`}>
           <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text mb-6`}>
-            Contact Us
+            {t('contact.title')}
           </h1>
 
           <p className={`${colorModeContext} text-fluid-base background-text mb-8`}>
-            Have questions, feedback, or found a bug? We'd love to hear from you!
+            {t('contact.intro')}
           </p>
 
           <div className="flex flex-col gap-4">
@@ -28,7 +30,7 @@ const Contact = () => {
             >
               <MdEmail size={24} className="text-first-color" />
               <div>
-                <p className="font-medium">Email</p>
+                <p className="font-medium">{t('contact.email')}</p>
                 <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>contact@wherehoops.com</p>
               </div>
             </a>
@@ -41,20 +43,20 @@ const Contact = () => {
             >
               <FaGithub size={24} className="text-first-color" />
               <div>
-                <p className="font-medium">GitHub</p>
-                <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>Report issues or contribute</p>
+                <p className="font-medium">{t('contact.github')}</p>
+                <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>{t('contact.githubDesc')}</p>
               </div>
             </a>
           </div>
 
           <div className={`${colorModeContext} mt-8 p-4 rounded-lg border border-gray-200 dark:border-gray-700`}>
             <h2 className={`${colorModeContext} text-fluid-lg poppins-medium background-text mb-2`}>
-              Suggest a Court
+              {t('contact.suggestCourt')}
             </h2>
             <p className={`${colorModeContext} text-fluid-sm background-text`}>
-              Know a basketball court that's not on our map? Use the{" "}
-              <a href="/addhoop" className="text-first-color hover:underline">Add Hoop</a>{" "}
-              feature to add it!
+              {t('contact.suggestCourtText')}{" "}
+              <a href="/addhoop" className="text-first-color hover:underline">{t('contact.addHoopFeature')}</a>{" "}
+              {t('contact.toAddIt')}
             </p>
           </div>
         </div>

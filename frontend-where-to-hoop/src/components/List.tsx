@@ -8,6 +8,7 @@ import useLocateUser from "../hooks/useLocateUser";
 import { SearchField } from "./reusable/SearchField";
 import { CiFilter } from "react-icons/ci";
 import { useColorModeValues } from "../contexts/DarkModeContext";
+import { useTranslation } from "../hooks/useTranslation";
 import { MapLabel } from "./reusable/MapLabel";
 import { conditionOptions, doorOptions } from "../utils/options";
 import { Button } from "react-aria-components";
@@ -37,6 +38,7 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
   const md: boolean = useMediaQuery(`(min-width: ${breakpoints.md})`);
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
+  const { t } = useTranslation();
 
   useEffect(() => {
     locateUser();
@@ -74,8 +76,8 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
       <div className="sticky top-0 px-3">
         <div className="flex items-center justify-end gap-1 xsm:gap-2 sm:gap-4 max-w-screen-2xl mx-auto">
           <div className="w-1/2 xsm:w-3/5 sm:w-2/3">
-            <SearchField  
-              placeholder="Find hoops"
+            <SearchField
+              placeholder={t('hoops.searchPlaceholder')}
               value={searchTerm}
               onChange={setSearchTerm}
             />
@@ -97,7 +99,7 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
             {/* Filters - Show below the filter button */}
             {showFilters && (
               <div ref={filterRef} className="absolute top-full right-0 mt-1 flex flex-col min-w-[200px]">
-                <MapLabel groups={[{ title: "Door Type", selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions, clearFilter:  clearDoorFilters},{ title: "Court Condition", selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
+                <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions, clearFilter:  clearDoorFilters},{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
               </div>
             )}
         </div>

@@ -1,6 +1,7 @@
 
 import type { ColorMode, Condition } from "../../types/types.ts";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { useTranslation } from "../../hooks/useTranslation.ts";
 import { Button } from "react-aria-components";
 import { TbFilterX } from "react-icons/tb";
 
@@ -9,7 +10,7 @@ type MapLabelGroup = {
   title: string;
   selectedItems: Set<any>;
   onToggleItems: (value: any) => void;
-  options: { label: string; name: any; color: string }[];
+  options: { labelKey: string; name: any; color: string }[];
   clearFilter: () => void;
 };
 
@@ -29,7 +30,8 @@ const hasAllValues = <T,>(set: Set<T>, allValues: readonly T[]): boolean => {
 
 const MapLabel = ({ groups, className }: MapLabelProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
-  
+  const { t } = useTranslation();
+
   return (
      <div className={`${colorModeContext} bg-background border-label-component rounded-lg shadow-lg p-3 ${className ?? ""}`}>
       {groups.map((group) => (
@@ -48,7 +50,7 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
             const isSelected = group.selectedItems.has(item.name);
             return (
               <Button
-                key={item.label}
+                key={item.labelKey}
                 type="button"
                 onClick={() => group.onToggleItems(item.name)}
                 className={`flex items-center gap-2 px-2 py-1 rounded transition-colors cursor-pointer ${
@@ -62,7 +64,7 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
                     }`}
                   />
                 ) : null}
-                <span className={`text-fluid-sm ${isSelected ? "text-gray-600 font-medium" : "text-gray-600"}`}>{item.label}</span>
+                <span className={`text-fluid-sm ${isSelected ? "text-gray-600 font-medium" : "text-gray-600"}`}>{t(item.labelKey)}</span>
               </Button>
             );
           })}

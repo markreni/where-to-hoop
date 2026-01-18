@@ -8,6 +8,7 @@ import { HoopBadge } from "./HoopBadge.tsx";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
+import { useTranslation } from "../../hooks/useTranslation.ts";
 
 
 interface HoopCardProps {
@@ -21,6 +22,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
   const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
   const colorModeContext: ColorMode = useColorModeValues();
   const userLocationDispatch = useLocationDispatch();
+  const { t } = useTranslation();
 
   const locateHoop = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
@@ -50,7 +52,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           </div>
           <span className="text-fluid-sm">{distance.toFixed(1)} km</span>
         </div>
-        <HoopCardButton actionFunction={locateHoop} title="On Map" bgColor="bg-blue-500/80 hover:bg-blue-600"></HoopCardButton>
+        <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} bgColor="bg-blue-500/80 hover:bg-blue-600"></HoopCardButton>
       </div>
       <div className="flex justify-between gap-3">
         <div className="w-2/3">
@@ -81,7 +83,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
       </div>
       <div className="flex justify-between items-center gap-2">
         <p className="w-1/2 responsive-hoopcard-elements-text">{hoop.description}</p> 
-        <HoopCardButton actionFunction={readyToPlay} title="Ready to play" bgColor="bg-green-500/80 hover:bg-green-600" ></HoopCardButton>
+        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} bgColor="bg-green-500/80 hover:bg-green-600" ></HoopCardButton>
       </div>
     </div>                        
   );

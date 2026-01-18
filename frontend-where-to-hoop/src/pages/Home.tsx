@@ -5,6 +5,7 @@ import { Carousel } from "../components/reusable/Carousel.tsx";
 import initialHoops from "../mockhoops.tsx";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import { useTranslation } from "../hooks/useTranslation.ts";
 import type { BasketballHoop, ColorMode } from "../types/types.ts";
 import haversineDistance from "../utils/functions.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
@@ -14,6 +15,7 @@ const Home = () => {
   const colorModeContext: ColorMode = useColorModeValues();
   const mapCenterValues = useLocationValues();
   const locateUser = useLocateUser();
+  const { t } = useTranslation();
 
   useEffect(() => {
       locateUser();
@@ -48,7 +50,7 @@ const Home = () => {
       <div className="flex-grow flex flex-col justify-center px-4 sm:px-16 py-8 max-w-4xl mx-auto w-full relative z-10">
         <div className="space-y-10">
           <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-8 text-center`}>
-            Nearest Courts
+            {t('home.nearestCourts')}
           </h1>
 
           {(mapCenterValues.latitude && mapCenterValues.longitude) ? (
@@ -59,12 +61,12 @@ const Home = () => {
             </Carousel>
           ) : (
             <div className="text-center background-text text-fluid-base">
-              <p>Enable location access to see the nearest courts</p>
+              <p>{t('home.enableLocation')}</p>
             </div>
           )}
 
           <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-8 text-center`}>
-            Most Active Courts
+            {t('home.mostActiveCourts')}
           </h1>
           <Carousel>
             {sortedHoopsWithDistance.map(({ hoop, distance }) => (

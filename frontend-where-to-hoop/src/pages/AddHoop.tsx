@@ -1,6 +1,7 @@
 import { Label, TextField, TextArea, Button } from "react-aria-components";
 import { type BasketballHoop, type ColorMode, type Condition, type ObservationImage } from "../types/types";
 import { useColorModeValues } from "../contexts/DarkModeContext";
+import { useTranslation } from "../hooks/useTranslation";
 import { useToast } from "../contexts/ToastContext";
 import { useState, useRef } from "react";
 import { MiniMap } from "../components/MiniMap";
@@ -12,11 +13,11 @@ import { FaStar, FaRegStar, FaInfoCircle, FaCheckCircle } from "react-icons/fa";
 import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES } from "../utils/constants";
 
 
-const conditionConfig: Record<Condition, { color: string; label: string }> = {
-  excellent: { color: 'bg-green-500', label: 'Excellent' },
-  good: { color: 'bg-blue-500', label: 'Good' },
-  fair: { color: 'bg-amber-500', label: 'Fair' },
-  poor: { color: 'bg-red-500', label: 'Poor' },
+const conditionConfig: Record<Condition, { color: string; labelKey: string }> = {
+  excellent: { color: 'bg-green-500', labelKey: 'addHoop.excellent' },
+  good: { color: 'bg-blue-500', labelKey: 'addHoop.good' },
+  fair: { color: 'bg-amber-500', labelKey: 'addHoop.fair' },
+  poor: { color: 'bg-red-500', labelKey: 'addHoop.poor' },
 };
 
 
@@ -48,6 +49,7 @@ const AddHoop = () => {
   const [profileImageIndex, setProfileImageIndex] = useState<number>(0);
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
+  const { t } = useTranslation();
   const { success, error, warning } = useToast();
 
   const isLocationSelected = formData.coordinates.latitude !== null && formData.coordinates.longitude !== null;
@@ -81,7 +83,7 @@ const AddHoop = () => {
       // Check max images limit
       const remainingSlots = MAX_IMAGES - imageFiles.length;
       if (remainingSlots <= 0) {
-        warning(`Maximum ${MAX_IMAGES} images allowed`);
+        warning(t('addHoop.errors.maxImages', { count: MAX_IMAGES }));
         return;
       }
 
@@ -89,14 +91,14 @@ const AddHoop = () => {
       const oversizedFiles = newFiles.filter(file => file.size > MAX_IMAGE_SIZE_BYTES);
       if (oversizedFiles.length > 0) {
         const fileNames = oversizedFiles.map(f => `${f.name} (${formatFileSize(f.size)})`).join(', ');
-        warning(`Some images exceed ${MAX_IMAGE_SIZE_MB}MB limit: ${fileNames}`);
+        warning(t('addHoop.errors.imageTooLarge', { size: MAX_IMAGE_SIZE_MB, files: fileNames }));
       }
 
       let validFiles = newFiles.filter(file => file.size <= MAX_IMAGE_SIZE_BYTES);
 
       // Limit to remaining slots
       if (validFiles.length > remainingSlots) {
-        warning(`Only ${remainingSlots} more image${remainingSlots === 1 ? '' : 's'} can be added`);
+        warning(t('addHoop.errors.remainingImages', { count: remainingSlots }));
         validFiles = validFiles.slice(0, remainingSlots);
       }
 
@@ -118,11 +120,11 @@ const AddHoop = () => {
 
     // Validate all required fields
     if (!isFormValid) {
-      if (!isNameFilled) error("Please enter a name for the hoop");
-      else if (!isLocationSelected) error("Please select a location on the map");
-      else if (!isConditionSelected) error("Please select the court condition");
-      else if (!isCourtTypeSelected) error("Please select indoor or outdoor");
-      else if (!hasProfileImage) error("Please add at least one image");
+      if (!isNameFilled) error(t('addHoop.errors.enterName'));
+      else if (!isLocationSelected) error(t('addHoop.errors.selectLocation'));
+      else if (!isConditionSelected) error(t('addHoop.errors.selectCondition'));
+      else if (!isCourtTypeSelected) error(t('addHoop.errors.selectCourtType'));
+      else if (!hasProfileImage) error(t('addHoop.errors.addImage'));
       return;
     }
 
@@ -153,7 +155,7 @@ const AddHoop = () => {
     console.log("Form submitted:", hoopData);
     console.log("Image files:", imageFiles);
 
-    success("Basketball hoop added successfully!");
+    success(t('addHoop.success'));
     resetForm();
   };
 
@@ -170,7 +172,7 @@ const AddHoop = () => {
         {/* Header */}
         <div className={`${colorModeContext} sticky top-0 z-1001 flex flex-col p-6 border-b border-gray-200 bg-background`}>
           <div className="flex items-center justify-between">
-            <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>Add Basketball Hoop</h2>
+            <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>{t('addHoop.title')}</h2>
             <FaInfoCircle className="text-gray-400" />
           </div>
           {/* Progress indicator */}
@@ -182,7 +184,7 @@ const AddHoop = () => {
               />
             </div>
             <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 whitespace-nowrap`}>
-              {completedRequiredFields}/{totalRequiredFields} required
+              {completedRequiredFields}/{totalRequiredFields} {t('addHoop.required')}
             </span>
           </div>
         </div>  
@@ -194,7 +196,7 @@ const AddHoop = () => {
             <TextField isRequired className={"flex flex-col gap-2"}>
               <div className="flex items-center gap-2">
                 <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
-                  Name *
+                  {t('addHoop.name')} *
                 </Label>
                 {isNameFilled && (
                   <FaCheckCircle className="text-green-500" size={16} />
@@ -205,7 +207,7 @@ const AddHoop = () => {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className={`${colorModeContext} form-input`}
-                placeholder="e.g., Central Park Court"
+                placeholder={t('addHoop.namePlaceholder')}
                 maxLength={MAX_NAME_LENGTH}
               />
               <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 text-right`}>
@@ -216,7 +218,7 @@ const AddHoop = () => {
             {/* Location */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
-                <Label className={`${colorModeContext} block text-fluid-sm background-text`}>Location *</Label>
+                <Label className={`${colorModeContext} block text-fluid-sm background-text`}>{t('addHoop.location')} *</Label>
                 {isLocationSelected && (
                   <FaCheckCircle className="text-green-500" size={16} />
                 )}
@@ -229,7 +231,7 @@ const AddHoop = () => {
                 className={`${colorModeContext} w-full py-1.5 rounded-lg flex-center gap-2 bg-gray-100 hover:bg-gray-200 background-text disabled:opacity-50 transition-colors dark:bg-gray-800 dark:hover:bg-gray-700`}
               >
                 <MdOutlineMyLocation size={24} />
-                Use Current Location
+                {t('addHoop.useCurrentLocation')}
               </Button>
               { /*  
               <div className="grid grid-cols-2 gap-2">
@@ -272,14 +274,14 @@ const AddHoop = () => {
             {/* Description */}
             <TextField className={"flex flex-col gap-2"}>
               <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
-                Description
+                {t('addHoop.description')}
               </Label>
               <TextArea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 className={`${colorModeContext} form-input resize-none`}
                 rows={3}
-                placeholder="Add details about the court..."
+                placeholder={t('addHoop.descriptionPlaceholder')}
                 maxLength={MAX_DESCRIPTION_LENGTH}
               />
               <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 text-right`}>
@@ -291,7 +293,7 @@ const AddHoop = () => {
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
-                  Condition *
+                  {t('addHoop.condition')} *
                 </Label>
                 {isConditionSelected && (
                   <FaCheckCircle className="text-green-500" size={16} />
@@ -310,7 +312,7 @@ const AddHoop = () => {
                     } ${colorModeContext} bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700`}
                   >
                     <span className={`w-3 h-3 rounded-full ${conditionConfig[condition].color}`} />
-                    <span className="background-text">{conditionConfig[condition].label}</span>
+                    <span className="background-text">{t(conditionConfig[condition].labelKey)}</span>
                   </button>
                 ))}
               </div>
@@ -320,7 +322,7 @@ const AddHoop = () => {
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-2">
                 <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
-                  Court Type *
+                  {t('addHoop.courtType')} *
                 </Label>
                 {isCourtTypeSelected && (
                   <FaCheckCircle className="text-green-500" size={16} />
@@ -336,7 +338,7 @@ const AddHoop = () => {
                       : `${colorModeContext} bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`
                   }`}
                 >
-                  🌳 Outdoor
+                  🌳 {t('addHoop.outdoor')}
                 </button>
                 <button
                   type="button"
@@ -347,7 +349,7 @@ const AddHoop = () => {
                       : `${colorModeContext} bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`
                   }`}
                 >
-                  🏠 Indoor
+                  🏠 {t('addHoop.indoor')}
                 </button>
               </div>
             </div>
@@ -357,7 +359,7 @@ const AddHoop = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
-                    Images *
+                    {t('addHoop.images')} *
                   </Label>
                   {hasProfileImage && (
                     <FaCheckCircle className="text-green-500" size={16} />
@@ -367,7 +369,7 @@ const AddHoop = () => {
                   {imageFiles.length}/{MAX_IMAGES}
                 </span>
               </div>
-              
+
               <input
                 type="file"
                 accept="image/*"
@@ -380,7 +382,7 @@ const AddHoop = () => {
                 <div className="flex flex-col gap-2 mt-2">
                   {imageFiles.length > 1 && (
                   <p className={`${colorModeContext} text-fluid-xs text-gray-600 dark:text-gray-400`}>
-                    Click the star to set profile picture
+                    {t('addHoop.setProfilePicture')}
                   </p>
                   )}
                   <div className="grid grid-cols-2 gap-3">
@@ -424,7 +426,7 @@ const AddHoop = () => {
                         {/* File size badge */}
                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-fluid-xs py-1 text-center">
                           {profileImageIndex === index ? (
-                            <span className="font-medium">Profile • {formatFileSize(file.size)}</span>
+                            <span className="font-medium">{t('addHoop.profile')} • {formatFileSize(file.size)}</span>
                           ) : (
                             formatFileSize(file.size)
                           )}
@@ -444,14 +446,14 @@ const AddHoop = () => {
               isDisabled={!isFormValid}
               className={`${colorModeContext} flex-1 px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
             >
-              Add Hoop
+              {t('addHoop.submit')}
             </Button>
             <Button
               type="button"
               onPress={resetForm}
               className={`${colorModeContext} flex-1 px-4 py-2 background-hover background-text border border-gray-300 rounded-lg transition-colors dark:border-gray-100`}
             >
-              Reset
+              {t('addHoop.reset')}
             </Button>
           </div>
         </form>

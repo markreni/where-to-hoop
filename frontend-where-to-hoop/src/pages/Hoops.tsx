@@ -9,11 +9,13 @@ import { doorOptions, conditionOptions } from "../utils/options.tsx";
 import initialHoops from "../mockhoops";
 import haversineDistance from "../utils/functions";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
+import { useTranslation } from "../hooks/useTranslation";
 //import { Link } from "react-router-dom";
 //import { useState, useEffect } from "react";
 
 
 const Hoops = () => {
+  const { t } = useTranslation();
   const [mapView, toggleView] = useState<boolean>(() => {
     const stored = localStorage.getItem("hoopsMapView");
     return stored ? JSON.parse(stored) : true;
@@ -87,10 +89,10 @@ const Hoops = () => {
       { mapView ? (
       <div>
         <div className="absolute bottom-2 right-[10px] z-401">
-          <MapLabel groups={[{ title: "Door Type", selectedItems: selectedDoors, onToggleItems: toggleDoor, options: doorOptions, clearFilter: clearDoorFilters }]} />
+          <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: toggleDoor, options: doorOptions, clearFilter: clearDoorFilters }]} />
         </div>
         <div className="absolute bottom-2 left-[10px] z-401">
-          <MapLabel groups={[{ title: "Court Condition", selectedItems: selectedConditions, onToggleItems: toggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
+          <MapLabel groups={[{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: toggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
         </div>
       </div>
       ) : null }

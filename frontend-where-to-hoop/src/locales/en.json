@@ -2,5 +2,106 @@
   "nav": {
     "showHoops": "Show Hoops",
     "addHoop": "Add Hoop"
+  },
+  "home": {
+    "nearestCourts": "Nearest Courts",
+    "mostActiveCourts": "Most Active Courts",
+    "enableLocation": "Enable location access to see the nearest courts"
+  },
+  "addHoop": {
+    "title": "Add Basketball Hoop",
+    "name": "Name",
+    "namePlaceholder": "e.g., Central Park Court",
+    "location": "Location",
+    "useCurrentLocation": "Use Current Location",
+    "description": "Description",
+    "descriptionPlaceholder": "Add details about the court...",
+    "condition": "Condition",
+    "courtType": "Court Type",
+    "outdoor": "Outdoor",
+    "indoor": "Indoor",
+    "images": "Images",
+    "setProfilePicture": "Click the star to set profile picture",
+    "profile": "Profile",
+    "submit": "Add Hoop",
+    "reset": "Reset",
+    "required": "required",
+    "excellent": "Excellent",
+    "good": "Good",
+    "fair": "Fair",
+    "poor": "Poor",
+    "errors": {
+      "enterName": "Please enter a name for the hoop",
+      "selectLocation": "Please select a location on the map",
+      "selectCondition": "Please select the court condition",
+      "selectCourtType": "Please select indoor or outdoor",
+      "addImage": "Please add at least one image",
+      "maxImages": "Maximum {{count}} images allowed",
+      "imageTooLarge": "Some images exceed {{size}}MB limit: {{files}}",
+      "remainingImages": "Only {{count}} more image(s) can be added"
+    },
+    "success": "Basketball hoop added successfully!"
+  },
+  "hoops": {
+    "doorType": "Door Type",
+    "courtCondition": "Court Condition",
+    "searchPlaceholder": "Find hoops",
+    "hoopcardMapButton": "On Map",
+    "hoopcardReadyToPlayButton": "Ready to play"
+  },
+  "footer": {
+    "about": "About",
+    "privacy": "Privacy",
+    "contact": "Contact",
+    "copyright": "WhereHoops. All rights reserved."
+  },
+  "about": {
+    "title": "About WhereHoops",
+    "intro": "From basketball lovers, for basketball lovers. WhereHoops is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
+    "whatYouCanDo": "What You Can Do",
+    "findCourts": "Find Courts Near You",
+    "findCourtsDesc": "Discover basketball hoops in your neighborhood with our interactive map. See court conditions, photos, and details before you go.",
+    "letOthersKnow": "Let Others Know You're Playing",
+    "letOthersKnowDesc": "Heading to a court? Let other hoopers know you'll be there. Find pickup games and never shoot alone again.",
+    "connectHoopers": "Connect with Hoopers",
+    "connectHoopersDesc": "Meet new basketball buddies in your area. Build your local hooping community and find regular playing partners.",
+    "tip": "Tip:",
+    "tipText": "Enable location services for the best experience. This helps us show you the nearest courts and calculate distances accurately."
+  },
+  "privacy": {
+    "title": "Privacy & Data Policy",
+    "intro": "We take your privacy seriously. This page explains what data we collect, how we use it, and the choices you have about your information.",
+    "whatWeCollect": "What We Collect",
+    "whatWeCollectText": "When you add a basketball court, we collect the details you submit including photos, description, location coordinates, and court condition. We also store metadata such as the submission date. If you enable location services, we temporarily access your location to show nearby courts and calculate distances — this data is not stored on our servers.",
+    "howWeUse": "How We Use Your Data",
+    "howWeUseText": "Court information you submit is visible to all users to help the community find places to play. We may use aggregated, anonymized data to improve the service and understand usage patterns. We do not sell your personal information to third parties.",
+    "imagesLicensing": "Images & Licensing",
+    "imagesLicensingText": "By uploading photos of basketball courts, you confirm you have the right to share them. Images are displayed publicly on the site to help other users identify courts. If you need an image removed, contact us and we will handle your request promptly.",
+    "locationData": "Location Data",
+    "locationDataText": "WhereHoops uses your device location (with your permission) to show nearby courts and calculate distances. This location data is processed locally in your browser and is not stored on our servers. You can disable location access at any time through your browser settings.",
+    "dataRetention": "Data Retention & Deletion",
+    "dataRetentionText": "You can request deletion of any court data you've submitted by contacting us. Requests are processed within a reasonable timeframe. Some aggregated statistics may remain in anonymized form.",
+    "contact": "Contact",
+    "contactText": "For privacy requests or questions, please visit our",
+    "contactPage": "Contact page",
+    "orEmail": "or email us at"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "intro": "Have questions, feedback, or found a bug? We'd love to hear from you!",
+    "email": "Email",
+    "github": "GitHub",
+    "githubDesc": "Report issues or contribute",
+    "suggestCourt": "Suggest a Court",
+    "suggestCourtText": "Know a basketball court that's not on our map? Use the",
+    "addHoopFeature": "Add Hoop",
+    "toAddIt": "feature to add it!"
+  },
+  "common": {
+    "all": "All",
+    "indoor": "Indoor",
+    "outdoor": "Outdoor",
+    "showlist": "Show List",
+    "showmap": "Show Map"
   }
 }

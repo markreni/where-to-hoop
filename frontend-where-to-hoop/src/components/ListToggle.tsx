@@ -4,9 +4,11 @@ import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 import type { ColorMode } from "../types/types";
 import { FaMap } from "react-icons/fa";
 import { PiListBold } from "react-icons/pi";
+import { useTranslation } from "../hooks/useTranslation.ts";
 
 const ListToggle = ({ toggleFunction, mapView }: { toggleFunction: (value: boolean) => void; mapView: boolean }): JSX.Element => {
   const colorModeContext: ColorMode = useColorModeValues();
+  const { t } = useTranslation();
 
   return (
     <Button 
@@ -14,7 +16,7 @@ const ListToggle = ({ toggleFunction, mapView }: { toggleFunction: (value: boole
       onClick={() => toggleFunction(!mapView)}
       >
       {mapView ? <PiListBold size={15}/> : <FaMap size={15}/>}
-      <strong>{mapView ? "Show List" : "Show Map"}</strong>
+      <strong>{mapView ? t('common.showlist') : t('common.showmap')}</strong>
     </Button>
   );
 }

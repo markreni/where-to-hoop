@@ -2,5 +2,106 @@
   "nav": {
     "showHoops": "Näytä korit",
     "addHoop": "Lisää kori"
+  },
+  "home": {
+    "nearestCourts": "Lähimmät kentät",
+    "mostActiveCourts": "Aktiivisimmat kentät",
+    "enableLocation": "Salli sijainti nähdäksesi lähimmät kentät"
+  },
+  "addHoop": {
+    "title": "Lisää koripallokori",
+    "name": "Nimi",
+    "namePlaceholder": "esim. Keskuspuiston kenttä",
+    "location": "Sijainti",
+    "useCurrentLocation": "Käytä nykyistä sijaintia",
+    "description": "Kuvaus",
+    "descriptionPlaceholder": "Lisää tietoja kentästä...",
+    "condition": "Kunto",
+    "courtType": "Kenttätyyppi",
+    "outdoor": "Ulkona",
+    "indoor": "Sisällä",
+    "images": "Kuvat",
+    "setProfilePicture": "Klikkaa tähteä asettaaksesi profiilikuvan",
+    "profile": "Profiili",
+    "submit": "Lisää kori",
+    "reset": "Tyhjennä",
+    "required": "pakollinen",
+    "excellent": "Erinomainen",
+    "good": "Hyvä",
+    "fair": "Tyydyttävä",
+    "poor": "Huono",
+    "errors": {
+      "enterName": "Anna korille nimi",
+      "selectLocation": "Valitse sijainti kartalta",
+      "selectCondition": "Valitse kentän kunto",
+      "selectCourtType": "Valitse sisä- tai ulkokenttä",
+      "addImage": "Lisää vähintään yksi kuva",
+      "maxImages": "Enintään {{count}} kuvaa sallittu",
+      "imageTooLarge": "Jotkin kuvat ylittävät {{size}}MB rajan: {{files}}",
+      "remainingImages": "Voit lisätä vielä {{count}} kuva(a)"
+    },
+    "success": "Koripallokori lisätty onnistuneesti!"
+  },
+  "hoops": {
+    "doorType": "Tyyppi",
+    "courtCondition": "Kentän kunto",
+    "searchPlaceholder": "Etsi kenttiä",
+    "hoopcardMapButton": "Kartalla",
+    "hoopcardReadyToPlayButton": "Valmis pelaamaan"
+  },
+  "footer": {
+    "about": "Tietoja",
+    "privacy": "Tietosuoja",
+    "contact": "Yhteystiedot",
+    "copyright": "WhereHoops. Kaikki oikeudet pidätetään."
+  },
+  "about": {
+    "title": "Tietoja WhereHoopsista",
+    "intro": "Koripallon ystäviltä, koripallon ystäville. WhereHoops on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja yhdistymään muiden pelaajien kanssa alueellasi.",
+    "whatYouCanDo": "Mitä voit tehdä",
+    "findCourts": "Löydä kenttiä läheltäsi",
+    "findCourtsDesc": "Löydä koripallokenttiä naapurustostasi interaktiivisen kartan avulla. Näe kenttien kunto, kuvat ja tiedot ennen kuin lähdet.",
+    "letOthersKnow": "Kerro muille että pelaat",
+    "letOthersKnowDesc": "Menossa kentälle? Kerro muille pelaajille, että olet tulossa. Löydä pickup-pelejä äläkä heitä yksin enää koskaan.",
+    "connectHoopers": "Yhdisty muihin pelaajiin",
+    "connectHoopersDesc": "Tapaa uusia koripallokavereita alueeltasi. Rakenna paikallinen peliyhteisösi ja löydä säännöllisiä pelikavereita.",
+    "tip": "Vinkki:",
+    "tipText": "Ota sijaintipalvelut käyttöön parasta kokemusta varten. Tämä auttaa meitä näyttämään lähimmät kentät ja laskemaan etäisyydet tarkasti."
+  },
+  "privacy": {
+    "title": "Tietosuoja- ja datakäytäntö",
+    "intro": "Otamme yksityisyytesi vakavasti. Tällä sivulla kerromme, mitä tietoja keräämme, miten käytämme niitä ja mitä vaihtoehtoja sinulla on tietojesi suhteen.",
+    "whatWeCollect": "Mitä keräämme",
+    "whatWeCollectText": "Kun lisäät koripallokentän, keräämme antamasi tiedot kuten kuvat, kuvauksen, sijaintikoordinaatit ja kentän kunnon. Tallennamme myös metatietoja kuten lisäyspäivämäärän. Jos otat sijaintipalvelut käyttöön, käytämme sijaintiasi väliaikaisesti näyttääksemme lähellä olevia kenttiä ja laskeaksemme etäisyyksiä — näitä tietoja ei tallenneta palvelimillemme.",
+    "howWeUse": "Miten käytämme tietojasi",
+    "howWeUseText": "Lisäämäsi kenttätiedot näkyvät kaikille käyttäjille auttaakseen yhteisöä löytämään pelipaikkoja. Saatamme käyttää koottuja, anonymisoituja tietoja palvelun parantamiseen ja käyttötapojen ymmärtämiseen. Emme myy henkilötietojasi kolmansille osapuolille.",
+    "imagesLicensing": "Kuvat ja lisensointi",
+    "imagesLicensingText": "Lataamalla kuvia koripallokentistä vahvistat, että sinulla on oikeus jakaa ne. Kuvat näytetään julkisesti sivustolla auttaakseen muita käyttäjiä tunnistamaan kenttiä. Jos haluat kuvan poistettavan, ota meihin yhteyttä ja käsittelemme pyyntösi viipymättä.",
+    "locationData": "Sijaintitiedot",
+    "locationDataText": "WhereHoops käyttää laitteesi sijaintia (luvallasi) näyttääkseen lähellä olevia kenttiä ja laskeakseen etäisyyksiä. Nämä sijaintitiedot käsitellään paikallisesti selaimessasi eikä niitä tallenneta palvelimillemme. Voit poistaa sijaintipalvelut käytöstä milloin tahansa selaimen asetuksista.",
+    "dataRetention": "Tietojen säilytys ja poisto",
+    "dataRetentionText": "Voit pyytää lisäämiesi kenttätietojen poistamista ottamalla meihin yhteyttä. Pyynnöt käsitellään kohtuullisessa ajassa. Joitakin koottuja tilastoja voi säilyä anonymisoidussa muodossa.",
+    "contact": "Yhteystiedot",
+    "contactText": "Tietosuojapyyntöjä tai kysymyksiä varten käy",
+    "contactPage": "Yhteystiedot-sivulla",
+    "orEmail": "tai lähetä sähköpostia osoitteeseen"
+  },
+  "contact": {
+    "title": "Ota yhteyttä",
+    "intro": "Onko sinulla kysyttävää, palautetta tai löysitkö bugin? Kuulisimme mielellämme sinusta!",
+    "email": "Sähköposti",
+    "github": "GitHub",
+    "githubDesc": "Ilmoita ongelmista tai osallistu kehitykseen",
+    "suggestCourt": "Ehdota kenttää",
+    "suggestCourtText": "Tiedätkö koripallokentän, jota ei ole kartalla? Käytä",
+    "addHoopFeature": "Lisää kori",
+    "toAddIt": "-toimintoa lisätäksesi sen!"
+  },
+  "common": {
+    "all": "Kaikki",
+    "indoor": "Sisäkenttä",
+    "outdoor": "Ulkokenttä",
+    "showlist": "Näytä lista",
+    "showmap": "Näytä kartta"
   }
 }
