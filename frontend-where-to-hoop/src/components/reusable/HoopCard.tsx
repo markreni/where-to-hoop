@@ -37,6 +37,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
 
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
+    e.stopPropagation();
     console.log(
       `Ready to play at hoop ${hoop.name} today at ${new Date().toISOString().split('T')[1]}`
     );
@@ -69,7 +70,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           <HoopBadge
             variant="condition"
             condition={hoop.condition}
-            text={hoop.condition}
+            text={t(`common.${hoop.condition}`)}
             textClassName="responsive-hoopcard-elements-text"
           />
           <HoopBadge
@@ -79,7 +80,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           />
           <HoopBadge
             variant="players"
-            text={t('hoops.players', { count: hoop.currentPlayers })}
+            text={t('hoops.players', { count: hoop.currentPlayers > 99 ? '>99' : hoop.currentPlayers })}
             showIcon={xsm}
             textClassName="responsive-hoopcard-elements-text"
           />
