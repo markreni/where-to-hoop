@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, Marker, ZoomControl } from "react-leaflet";
-import type { LatLngTuple } from "leaflet";
+import type { LatLngBoundsExpression, LatLngTuple } from "leaflet";
 import L from "leaflet";
 //import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
 import "leaflet/dist/leaflet.css";
@@ -14,7 +14,11 @@ import { centerCoordinates }from "../utils/constants.ts";
 import { MapController } from "./reusable/MapController.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 
-
+// Helsinki greater area bounds: SW corner to NE corner
+const helsinkiBounds: LatLngBoundsExpression = [
+  [59.9, 24.5],  // Southwest corner (Kirkkonummi area)
+  [60.5, 25.5],  // Northeast corner (Sipoo/Porvoo area)
+];
 
 const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[] }) => {
   const mapCenterValues: Coordinates = useLocationValues();
@@ -26,7 +30,16 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
 
   return (
     <div>
-      <MapContainer className="h-[100vh] w-[100vw]" center={centerPosition} zoom={11} zoomControl={false} scrollWheelZoom={true}>
+      <MapContainer
+        className="h-[100vh] w-[100vw]"
+        center={centerPosition}
+        zoom={11}
+        zoomControl={false}
+        scrollWheelZoom={true}
+        maxBounds={helsinkiBounds}
+        maxBoundsViscosity={1.0}
+        minZoom={10}
+      >
       <MapController onMapReady={(map) => { mapRef.current = map; }} />
       <ZoomControl position="topright" /> 
       <TileLayer

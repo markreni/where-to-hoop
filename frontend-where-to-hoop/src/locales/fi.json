@@ -44,7 +44,7 @@
     "searchPlaceholder": "Etsi kenttiä",
     "hoopcardMapButton": "Kartalla",
     "hoopcardReadyToPlayButton": "Valmis pelaamaan",
-    "players": "{{count}} pelaa"
+    "players": "{{count}}"
   },
   "footer": {
     "about": "Tietoja",

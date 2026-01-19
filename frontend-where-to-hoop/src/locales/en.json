@@ -44,7 +44,7 @@
     "searchPlaceholder": "Find hoops",
     "hoopcardMapButton": "On Map",
     "hoopcardReadyToPlayButton": "Ready to play",
-    "players": "{{count}} players"
+    "players": "{{count}}"
   },
   "footer": {
     "about": "About",
