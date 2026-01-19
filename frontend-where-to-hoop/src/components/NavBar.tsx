@@ -5,7 +5,7 @@ import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-compone
 import { FiAlignJustify } from "react-icons/fi";
 import { GiBasketballBasket } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
-import { ToggleBasketball } from "./reusable/ToggleBasketball.tsx";
+import { ColorModeToggle } from "./reusable/colormodeToggle.tsx";
 import { LanguageToggle } from "./reusable/LanguageToggle.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 import { useTranslation } from "../hooks/useTranslation.ts";
@@ -28,7 +28,7 @@ const NavBar = () => {
             <Link to="/">
               <Logo/>
             </Link>
-            <ToggleBasketball />
+            <ColorModeToggle />
           </div>
           <div className="flex-center gap-4">
             <LanguageToggle />

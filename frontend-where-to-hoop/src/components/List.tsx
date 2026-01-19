@@ -117,9 +117,9 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-4 w-full max-w-xl mx-auto">
             {filteredWithSearchHoops.map(({ hoop, distance }) => (
-              <Link key={hoop.id} to={`#`}>
+              <Link key={hoop.id} to={`#`} className="w-full">
                 <HoopCard hoop={hoop} distance={distance} toggleFunction={toggleFunction} mapView={mapView} />
               </Link>
             ))}

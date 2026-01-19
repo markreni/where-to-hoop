@@ -4,7 +4,7 @@ import { useColorModeValues, useColorModeDispatch } from "../../contexts/DarkMod
 import type { ColorMode } from "../../types/types.ts";
 import type { JSX } from "react";
 
-const ToggleBasketball = (): JSX.Element => {
+const ColorModeToggle = (): JSX.Element => {
   const colorModeContext: ColorMode = useColorModeValues();
   const colorModeDispatch = useColorModeDispatch();
 
@@ -19,4 +19,4 @@ const ToggleBasketball = (): JSX.Element => {
   );
 }
 
-export { ToggleBasketball };
+export { ColorModeToggle };

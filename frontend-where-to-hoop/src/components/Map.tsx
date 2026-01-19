@@ -49,6 +49,18 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
           );
         })}
 
+      {mapCenterValues.latitude && mapCenterValues.longitude && (
+        <Marker
+          position={[mapCenterValues.latitude, mapCenterValues.longitude]}
+          icon={L.divIcon({
+            html: `<div class="user-location-dot-${colorModeContext}"></div>`,
+            className: '',
+            iconSize: [20, 20],
+            iconAnchor: [10, 10],
+          })}
+        />
+      )}
+
       </MapContainer>
       <UserLocator mapRef={mapRef} />
       
