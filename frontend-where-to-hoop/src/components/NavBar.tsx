@@ -58,7 +58,7 @@ const NavBar = () => {
               <Logo/>
             </Link>
             <div className="flex-center gap-3">
-              <ToggleBasketball />
+              <ColorModeToggle />
               <LanguageToggle />
             </div>
           </div>

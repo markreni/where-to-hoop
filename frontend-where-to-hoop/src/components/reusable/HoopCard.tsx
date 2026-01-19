@@ -9,8 +9,7 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
-
-
+ 
 interface HoopCardProps {
   hoop: Omit<BasketballHoop, "id">;
   toggleFunction: (value: boolean) => void;
@@ -27,9 +26,13 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
   const locateHoop = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
     userLocationDispatch({
+      type: 'SET_MAP_CENTER',
       payload: {
-        latitude: hoop.coordinates.latitude,
-        longitude: hoop.coordinates.longitude,
+        coordinates: {
+          latitude: hoop.coordinates.latitude,
+          longitude: hoop.coordinates.longitude,
+        },
+        source: 'hoop',
       },
     });
     toggleFunction(!mapView);

@@ -19,6 +19,7 @@ export const useLocateUser = (): ((options?: LocateOptions) => void) => {
           const { latitude, longitude } = position.coords;
 
           dispatch({
+            type: 'SET_USER_LOCATION',
             payload: {
               latitude,
               longitude,

@@ -5,7 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { BasketballHoop, Coordinates, ColorMode } from "../types/types";
 import { useRef } from "react";
-import { useLocationValues } from "../contexts/LocationContext.tsx";
+import { useLocationValues, useUserLocation } from "../contexts/LocationContext.tsx";
 //import { ImLocation2 } from "react-icons/im";
 import { conditionColorSelector } from "../utils/options.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
@@ -18,6 +18,7 @@ import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 
 const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[] }) => {
   const mapCenterValues: Coordinates = useLocationValues();
+  const userLocation: Coordinates = useUserLocation();
   const mapRef = useRef<L.Map | null>(null);
   const colorModeContext: ColorMode = useColorModeValues();
 
@@ -49,9 +50,9 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
           );
         })}
 
-      {mapCenterValues.latitude && mapCenterValues.longitude && (
+      {userLocation.latitude && userLocation.longitude && (
         <Marker
-          position={[mapCenterValues.latitude, mapCenterValues.longitude]}
+          position={[userLocation.latitude, userLocation.longitude]}
           icon={L.divIcon({
             html: `<div class="user-location-dot-${colorModeContext}"></div>`,
             className: '',

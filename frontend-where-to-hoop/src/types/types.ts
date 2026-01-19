@@ -30,11 +30,14 @@ type ToastType = 'success' | 'error' | 'info' | 'warning';
 // Color mode type
 type ColorMode = 'light' | 'dark';
 
+// Location source type - indicates whether coordinates are from user geolocation or hoop selection
+type LocationSource = 'user' | 'hoop';
+
 // Language type
 type Language = 'en' | 'fi';
 
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language, LocationSource };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 
