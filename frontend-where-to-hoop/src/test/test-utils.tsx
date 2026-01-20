@@ -3,6 +3,7 @@ import type { ReactElement, ReactNode } from 'react';
 import { ColorModeContextProvider } from '../contexts/DarkModeContext';
 import { LocationContextProvider } from '../contexts/LocationContext';
 import { LanguageContextProvider } from '../contexts/LanguageContext';
+import { ToastProvider } from '../contexts/ToastContext';
 import { BrowserRouter } from 'react-router-dom';
 
 interface AllProvidersProps {
@@ -15,7 +16,9 @@ const AllProviders = ({ children }: AllProvidersProps) => {
       <ColorModeContextProvider>
         <LocationContextProvider>
           <LanguageContextProvider>
-            {children}
+            <ToastProvider>
+              {children}
+            </ToastProvider>
           </LanguageContextProvider>
         </LocationContextProvider>
       </ColorModeContextProvider>
