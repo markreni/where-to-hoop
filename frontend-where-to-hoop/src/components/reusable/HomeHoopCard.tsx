@@ -46,11 +46,13 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
               text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
               iconSize={12}
+              textClassName="responsive-hoopcard-elements-text"
             />
             <HoopBadge
               variant="condition"
               condition={hoop.condition}
               text={t(`common.${hoop.condition}`)}
+              textClassName="responsive-hoopcard-elements-text"
             />
             <HoopBadge
               variant="players"

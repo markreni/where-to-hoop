@@ -9,6 +9,11 @@ export default defineConfig([
   globalIgnores(['dist']),
   {
     files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.vitest
+      }
+    },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,

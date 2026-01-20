@@ -56,7 +56,7 @@ const HoopBadge = ({
   return (
     <div className={`hoop-card-icon ${variantStyles[variant]} ${conditionClass}`}>
       {renderIcon()}
-      <span className={`${textClassName} ${variant === 'condition' ? 'capitalize' : ''}`}>
+      <span className={`${textClassName} capitalize`}>
         {text}
       </span>
     </div>
