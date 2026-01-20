@@ -6,7 +6,18 @@
   "home": {
     "nearestCourts": "Nearest Courts",
     "mostActiveCourts": "Most Active Courts",
-    "enableLocation": "Enable location access to see the nearest courts"
+    "enableLocation": "Enable location access to see the nearest courts",
+    "hero": {
+      "tagline": "Game On",
+      "subtitle": "Find courts. See who's playing. Join the game.",
+      "ctaButton": "Explore Courts",
+      "weather": {
+        "feelsLike": "Feels like",
+        "loading": "Loading...",
+        "error": "Weather unavailable",
+        "noLocation": "Enable location for weather"
+      }
+    }
   },
   "addHoop": {
     "title": "Add Basketball Hoop",

@@ -1,17 +1,17 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
-import { ColorModeToggle } from '../../components/reusable/DarkModeToggle';
+import { DarkModeToggle } from '../../components/reusable/DarkModeToggle';
 
 describe('ColorModeToggle', () => {
   it('renders toggle button', () => {
-    render(<ColorModeToggle />);
+    render(<DarkModeToggle />);
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
   it('toggles color mode when clicked', async () => {
     const user = userEvent.setup();
-    render(<ColorModeToggle />);
+    render(<DarkModeToggle />);
 
     const toggleButton = screen.getByRole('button');
 
@@ -26,14 +26,14 @@ describe('ColorModeToggle', () => {
   });
 
   it('renders basketball icon', () => {
-    const { container } = render(<ColorModeToggle />);
+    const { container } = render(<DarkModeToggle />);
     const icon = container.querySelector('svg');
     expect(icon).toBeInTheDocument();
   });
 
   it('can be toggled multiple times', async () => {
     const user = userEvent.setup();
-    render(<ColorModeToggle />);
+    render(<DarkModeToggle />);
 
     const toggleButton = screen.getByRole('button');
 

@@ -6,7 +6,18 @@
   "home": {
     "nearestCourts": "Lähimmät kentät",
     "mostActiveCourts": "Aktiivisimmat kentät",
-    "enableLocation": "Salli sijainti nähdäksesi lähimmät kentät"
+    "enableLocation": "Salli sijainti nähdäksesi lähimmät kentät",
+    "hero": {
+      "tagline": "Peli Alkaa",
+      "subtitle": "Löydä kentät. Katso kuka pelaa. Liity peliin.",
+      "ctaButton": "Tutustu kenttiin",
+      "weather": {
+        "feelsLike": "Tuntuu kuin",
+        "loading": "Ladataan...",
+        "error": "Sää ei saatavilla",
+        "noLocation": "Salli sijainti säätietoja varten"
+      }
+    }
   },
   "addHoop": {
     "title": "Lisää koripallokori",
