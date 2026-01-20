@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
-import { ColorModeToggle } from '../../components/reusable/ColormodeToggle';
+import { ColorModeToggle } from '../../components/reusable/DarkModeToggle';
 
 describe('ColorModeToggle', () => {
   it('renders toggle button', () => {

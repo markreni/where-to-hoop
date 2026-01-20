@@ -16,7 +16,6 @@ interface HoopCardProps {
   mapView: boolean;
   distance: number;
 }
-
 const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) => {
   const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
   const colorModeContext: ColorMode = useColorModeValues();
@@ -52,7 +51,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
         <div className="flex flex-col">
           <div className="flex items-center justify-start gap-2">
             <strong className="text-fluid-base">{hoop.name}</strong>
-            <MdOutlineFavoriteBorder size={23} aria-label="Add to favorites"/>
+            <MdOutlineFavoriteBorder size={23} aria-label="Add to favorites" title={t('hoops.tooltips.addToFavorites')}/>
           </div>
           <span className="text-fluid-sm">{distance.toFixed(1)} km</span>
         </div>
@@ -69,23 +68,27 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
             text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
             showIcon={xsm}
             textClassName="responsive-hoopcard-elements-text"
+            tooltip={t('hoops.tooltips.courtType')}
           />
           <HoopBadge
             variant="condition"
             condition={hoop.condition}
             text={t(`common.${hoop.condition}`)}
             textClassName="responsive-hoopcard-elements-text"
+            tooltip={t('hoops.tooltips.condition')}
           />
           <HoopBadge
             variant="date"
             text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: "2-digit", month: "2-digit", day: "2-digit" })}
             showIcon={xsm}
+            tooltip={t('hoops.tooltips.dateAdded')}
           />
           <HoopBadge
             variant="players"
             text={t('hoops.players', { count: hoop.currentPlayers > 99 ? '>99' : hoop.currentPlayers })}
             showIcon={xsm}
             textClassName="responsive-hoopcard-elements-text"
+            tooltip={t('hoops.tooltips.currentPlayers')}
           />
         </div>
       </div>

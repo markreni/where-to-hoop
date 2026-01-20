@@ -4,7 +4,7 @@ import { useColorModeValues, useColorModeDispatch } from "../../contexts/DarkMod
 import type { ColorMode } from "../../types/types.ts";
 import type { JSX } from "react";
 
-const ColorModeToggle = (): JSX.Element => {
+const DarkModeToggle = (): JSX.Element => {
   const colorModeContext: ColorMode = useColorModeValues();
   const colorModeDispatch = useColorModeDispatch();
 
@@ -14,9 +14,9 @@ const ColorModeToggle = (): JSX.Element => {
       onChange={() => colorModeDispatch(colorModeContext === 'dark' ? 'light' : 'dark')}
       className="ml-4 rounded-full bg-first-color text-gray-800 main-color-hover hover:scale-110 transition-colors transition-transform cursor-pointer"
     >
-      {colorModeContext === 'dark' ? <IoBasketballOutline size={35} /> : <IoBasketballSharp size={35} />}
+      {colorModeContext === 'light' ? <IoBasketballOutline size={35} /> : <IoBasketballSharp size={35} />}
     </ToggleButton>
   );
 }
 
-export { ColorModeToggle };
+export { DarkModeToggle };

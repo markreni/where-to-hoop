@@ -44,7 +44,14 @@
     "searchPlaceholder": "Etsi kenttiä",
     "hoopcardMapButton": "Kartalla",
     "hoopcardReadyToPlayButton": "Valmis pelaamaan",
-    "players": "{{count}}"
+    "players": "{{count}}",
+    "tooltips": {
+      "courtType": "Kenttätyyppi",
+      "condition": "Kentän kunto",
+      "dateAdded": "Lisäyspäivä",
+      "currentPlayers": "Pelaajia kentällä",
+      "addToFavorites": "Lisää suosikkeihin"
+    }
   },
   "footer": {
     "about": "Tietoja",
