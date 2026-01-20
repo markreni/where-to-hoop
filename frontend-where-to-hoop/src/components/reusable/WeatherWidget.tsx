@@ -130,7 +130,7 @@ const WeatherWidget = () => {
   if (weather.status === 'idle') {
     return (
       <div className={`${colorModeContext} p-3 rounded-lg bg-gray-100 dark:bg-gray-800 min-w-[140px]`}>
-        <p className="text-fluid-xs text-gray-500 dark:text-gray-400 text-center">
+        <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 text-center`}>
           {t('home.hero.weather.noLocation')}
         </p>
       </div>
@@ -141,7 +141,7 @@ const WeatherWidget = () => {
   if (weather.status === 'loading') {
     return (
       <div className={`${colorModeContext} p-3 rounded-lg bg-gray-100 dark:bg-gray-800 min-w-[140px]`}>
-        <p className="text-fluid-xs text-gray-500 dark:text-gray-400 text-center">
+        <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 text-center`}>
           {t('home.hero.weather.loading')}
         </p>
       </div>
@@ -152,7 +152,7 @@ const WeatherWidget = () => {
   if (weather.status === 'error') {
     return (
       <div className={`${colorModeContext} p-3 rounded-lg bg-gray-100 dark:bg-gray-800 min-w-[140px]`}>
-        <p className="text-fluid-xs text-gray-500 dark:text-gray-400 text-center">
+        <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 text-center`}>
           {t('home.hero.weather.error')}
         </p>
       </div>
@@ -163,14 +163,14 @@ const WeatherWidget = () => {
   return (
     <div className={`${colorModeContext} p-3 rounded-lg bg-gray-100 dark:bg-gray-800 min-w-[140px]`}>
       <div className="flex items-center gap-2">
-        <div className="background-text">
+        <div className={`${colorModeContext} background-text`}>
           {getWeatherIcon(weather.data!.weatherCode)}
         </div>
         <div>
-          <p className="text-fluid-lg poppins-bold background-text">
+          <p className={`${colorModeContext} text-fluid-lg poppins-bold background-text`}>
             {weather.data!.temperature}°C
           </p>
-          <p className="text-fluid-xs text-gray-500 dark:text-gray-400">
+          <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
             {t('home.hero.weather.feelsLike')} {weather.data!.feelsLike}°C
           </p>
         </div>
