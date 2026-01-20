@@ -68,6 +68,19 @@ const Home = () => {
       .sort((a, b) => a.distance - b.distance);
   }, [mapCenterValues.latitude, mapCenterValues.longitude]);
 
+  const sortedHoopsWithPlayers: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
+    return initialHoops
+      .map(hoop => ({
+        hoop,
+        distance: haversineDistance(
+          [mapCenterValues.latitude!, mapCenterValues.longitude!],
+          [hoop.coordinates.latitude!, hoop.coordinates.longitude!]
+        ),
+        players: hoop.currentPlayers,
+      }))
+      .sort((a, b) => b.players - a.players);
+  }, []);
+
   return (
     <div className={`${colorModeContext} padding-for-nav-bar min-h-screen flex flex-col from-second-color to-first-color transition-colors relative overflow-hidden`}>
       {/* Background hoop image */}
@@ -121,7 +134,7 @@ const Home = () => {
             {t('home.mostActiveCourts')}
           </h1>
           <Carousel>
-            {sortedHoopsWithDistance.map(({ hoop, distance }) => (
+            {sortedHoopsWithPlayers.map(({ hoop, distance}) => (
               <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} />
             ))}
           </Carousel>
