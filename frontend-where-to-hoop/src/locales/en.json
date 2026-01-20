@@ -17,6 +17,18 @@
         "error": "Weather unavailable",
         "noLocation": "Enable location for weather"
       }
+    },
+    "encouragement": {
+      "title": "Ready to Play?",
+      "warm": "It's warm outside! Perfect weather to shoot some hoops with friends.",
+      "nice": "Great weather for basketball! Head to a court and get some shots in.",
+      "cold": "Bundle up and hit the court! Cold weather basketball builds character.",
+      "rainy": "Rainy day? Time to be a basketball hero and hit the court anyway.",
+      "snowy": "Snow on the ground? Time for some winter ball or find an indoor spot.",
+      "default": "Every day is a good day for basketball!",
+      "callToAction": "Let others know you're heading to play by tapping",
+      "readyToPlayButton": "Ready to play",
+      "onAnyCourtCard": "on any court card."
     }
   },
   "addHoop": {

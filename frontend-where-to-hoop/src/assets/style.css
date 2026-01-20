@@ -248,6 +248,12 @@
   .hoop-card-icon {
     @apply flex items-center justify-center px-2 py-0.5 gap-2 text-sm rounded;
   }
+  .hoop-card-button-green {
+    @apply bg-green-500/80 hover:bg-green-500/90 dark:hover:bg-green-500/70 text-green-200 border-green-200/70;
+  }
+  .hoop-card-button-blue {
+    @apply bg-blue-500/80 hover:bg-blue-500/90 dark:hover:bg-blue-500/70 text-blue-200 border-blue-200/70;
+  }
   .form-input {
     @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-first-color dark:text-white;
   }

@@ -66,7 +66,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
           <HoopCardButton
             actionFunction={readyToPlay}
             title={t('hoops.hoopcardReadyToPlayButton')}
-            bgColor="bg-green-500/80 hover:bg-green-600"
+            colors="hoop-card-button-green"
           />
         </div>
       </div>

@@ -6,9 +6,9 @@
   "home": {
     "nearestCourts": "Lähimmät kentät",
     "mostActiveCourts": "Aktiivisimmat kentät",
-    "enableLocation": "Salli sijainti nähdäksesi lähimmät kentät",
+    "enableLocation": "Salli sijainnin käyttö nähdäksesi lähimmät kentät",
     "hero": {
-      "tagline": "Peli Alkaa",
+      "tagline": "Aloitetaan pelit",
       "subtitle": "Löydä kentät. Katso kuka pelaa. Liity peliin.",
       "ctaButton": "Tutustu kenttiin",
       "weather": {
@@ -17,6 +17,18 @@
         "error": "Sää ei saatavilla",
         "noLocation": "Salli sijainti säätietoja varten"
       }
+    },
+    "encouragement": {
+      "title": "Valmis pelaamaan?",
+      "warm": "Ulkona on lämmintä! Täydellinen sää heittää koreja kavereiden kanssa.",
+      "nice": "Loistava sää koripalloon! Suuntaa kentälle ja heitä muutama kori.",
+      "cold": "Pukeudu lämpimästi ja kentälle! Kylmässä pelaaminen kasvattaa luonnetta.",
+      "rainy": "Sateinen päivä? Etsi sisäkenttä tai harjoittele pallon käsittelyä kotona.",
+      "snowy": "Lunta maassa? Aika talvikoripalloon tai etsi sisäkenttä.",
+      "default": "Jokainen päivä on hyvä päivä koripalloon!",
+      "callToAction": "Kerro muille, että olet menossa pelaamaan painamalla",
+      "readyToPlayButton": "Valmis pelaamaan",
+      "onAnyCourtCard": "minkä tahansa kentän kortilla."
     }
   },
   "addHoop": {
