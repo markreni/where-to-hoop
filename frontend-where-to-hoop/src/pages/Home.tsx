@@ -90,9 +90,9 @@ const Home = () => {
         aria-hidden="true"
         className="absolute top-1/6 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-2xl opacity-6 pointer-events-none select-none"
       />
-      <div className="flex-grow flex flex-col justify-center px-4 sm:px-16 py-8 max-w-4xl mx-auto w-full relative z-10">
+      <div className="flex-grow flex flex-col gap-10 justify-center px-4 sm:px-16 py-8 max-w-4xl mx-auto w-full relative z-10">
         {/* Hero Section */}
-        <section className="relative text-center py-8 sm:py-12 mb-8">
+        <section className="relative text-center py-8 sm:py-12">
           <div className="sm:absolute sm:-top-8 sm:-right-12 mb-4 sm:mb-0 flex justify-center sm:justify-end">
             <WeatherWidget />
           </div>
@@ -138,8 +138,9 @@ const Home = () => {
               <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} />
             ))}
           </Carousel>
+        </div>
 
-          {/* Encouragement Section */}
+        {/* Encouragement Section */}
           <section className={`${colorModeContext} mt-12 p-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-center`}>
             <div className="flex justify-center mb-4">
               <GiBasketballBall size={40} className="text-first-color" />
@@ -158,7 +159,6 @@ const Home = () => {
               {t('home.encouragement.onAnyCourtCard')}
             </p>
           </section>
-        </div>
       </div>
       <Footer />
     </div>

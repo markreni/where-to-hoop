@@ -71,7 +71,9 @@ const Hoops = () => {
 }, [mapCenterValues.latitude, mapCenterValues.longitude]);
 
   // Filter hoops based on selected conditions and door types
-  const filteredAndSortedHoops: ReturnType<typeof sortedHoopsWithDistance.filter> = sortedHoopsWithDistance.filter(({ hoop })=> selectedConditions.has(hoop.condition) && (hoop.isIndoor ? selectedDoors.has('indoor') : selectedDoors.has('outdoor')));
+  const filteredAndSortedHoops: ReturnType<typeof sortedHoopsWithDistance.filter> = useMemo(() => {
+  return sortedHoopsWithDistance.filter(({ hoop })=> selectedConditions.has(hoop.condition) && (hoop.isIndoor ? selectedDoors.has('indoor') : selectedDoors.has('outdoor')));
+}, [sortedHoopsWithDistance, selectedConditions, selectedDoors]);
 
   const clearConditionFilters = () => {
     setSelectedConditions(new Set(['excellent', 'good', 'fair', 'poor']));
