@@ -16,6 +16,7 @@ import Hoop from "./pages/Hoop.tsx";
 import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Contact from "./pages/Contact.tsx";
+import Info from "./pages/Info.tsx";
 
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<Info/>} />
         </Routes>
       </div>
     </div>

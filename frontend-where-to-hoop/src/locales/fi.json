@@ -80,6 +80,7 @@
     "about": "Tietoja",
     "privacy": "Tietosuoja",
     "contact": "Yhteystiedot",
+    "faq": "Käyttöohjeet",
     "copyright": "WhereHoops. Kaikki oikeudet pidätetään."
   },
   "about": {
@@ -123,6 +124,44 @@
     "suggestCourtText": "Tiedätkö koripallokentän, jota ei ole kartalla? Käytä",
     "addHoopFeature": "Lisää kori",
     "toAddIt": "-toimintoa lisätäksesi sen!"
+  },
+  "faq": {
+    "title": "WhereHoopsin käyttöohjeet",
+    "intro": "Löydä vastauksia yleisimpiin kysymyksiin WhereHoopsin käytöstä.",
+    "readyToPlay": {
+      "question": "Miten kerron muille, että olen menossa pelaamaan?",
+      "answer": "Paina minkä tahansa kentän kortilla (etusivulla tai kenttälistassa) vihreää \"Valmis pelaamaan\" -nappia. Tämä kertoo muille käyttäjille, että olet matkalla kentälle, mikä auttaa löytämään pelikavereita ja pickup-pelejä."
+    },
+    "addCourt": {
+      "question": "Miten lisään uuden koripallokentän?",
+      "answer": "Paina navigaatiossa \"Lisää kori\". Täytä kentän nimi, napauta karttaa asettaaksesi sijainnin (tai käytä nykyistä sijaintiasi), lisää kuvaus, valitse kunto ja kenttätyyppi (sisä/ulko), ja lataa vähintään yksi kuva. Tähtikuvakkeella voit valita, mikä kuva näkyy pääkuvana."
+    },
+    "takePhoto": {
+      "question": "Miten otan hyvän kuvan kentästä?",
+      "answer": "Parhaan tuloksen saat: 1) Sisällytä kori ja taustalevy selkeästi kuvaan. 2) Näytä kentän pinta, jotta muut näkevät kunnon. 3) Ota kuvia päivänvalossa paremman näkyvyyden vuoksi. 4) Kuvaa erityispiirteet kuten valaistus, penkit tai useammat korit. 5) Vältä kuvia, joissa näkyy ihmisten kasvoja yksityisyyden vuoksi."
+    },
+    "conditionTitle": "Miten arvioin kentän kunnon?",
+    "conditionIntro": "Kun lisäät kentän, valitse kunto, joka vastaa parhaiten näkemääsi:",
+    "conditions": {
+      "excellent": {
+        "title": "Erinomainen",
+        "description": "Kuin uusi tai äskettäin kunnostettu. Sileä, halkeamaton pinta. Verkko täydellisessä kunnossa. Selkeät kentän merkinnät. Hyvin hoidettu taustalevy ja rengas."
+      },
+      "good": {
+        "title": "Hyvä",
+        "description": "Hyvin hoidettu, pientä kulumaa. Pinnassa minimaalisia halkeamia tai epätasaisuuksia. Verkossa voi olla lievää kulumaa, mutta toimii hyvin. Kentän merkinnät näkyvissä. Taustalevy ja rengas täysin toimivat."
+      },
+      "fair": {
+        "title": "Tyydyttävä",
+        "description": "Pelattavissa, mutta ikääntynyt. Pinnassa halkeamia tai epätasaisia kohtia. Verkko voi olla kulunut tai puuttua. Haalistuneet kentän merkinnät. Varusteet toimivat, mutta kaipaavat huoltoa."
+      },
+      "poor": {
+        "title": "Huono",
+        "description": "Tarvitsee merkittäviä korjauksia. Pinnassa suuria halkeamia, reikiä tai roskia. Verkko puuttuu tai pahasti vaurioitunut. Ei näkyviä merkintöjä. Taipunut rengas tai vaurioitunut taustalevy. Silti pelattavissa varoen."
+      }
+    },
+    "moreQuestions": "Lisää kysyttävää?",
+    "contactUs": "Ota meihin yhteyttä"
   },
   "common": {
     "all": "Kaikki",

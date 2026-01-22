@@ -7,7 +7,7 @@ describe('HoopCardButton', () => {
   const defaultProps = {
     actionFunction: vi.fn(),
     title: 'Test Button',
-    bgColor: 'bg-blue-500',
+    colors: 'bg-blue-500',
   };
 
   it('renders button with title', () => {
@@ -33,7 +33,7 @@ describe('HoopCardButton', () => {
   });
 
   it('applies background color class', () => {
-    render(<HoopCardButton {...defaultProps} bgColor="bg-red-500" />);
+    render(<HoopCardButton {...defaultProps} colors="bg-red-500" />);
     const button = screen.getByRole('button');
     expect(button).toHaveClass('bg-red-500');
   });

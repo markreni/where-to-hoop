@@ -80,6 +80,7 @@
     "about": "About",
     "privacy": "Privacy",
     "contact": "Contact",
+    "faq": "FAQ",
     "copyright": "WhereHoops. All rights reserved."
   },
   "about": {
@@ -123,6 +124,44 @@
     "suggestCourtText": "Know a basketball court that's not on our map? Use the",
     "addHoopFeature": "Add Hoop",
     "toAddIt": "feature to add it!"
+  },
+  "faq": {
+    "title": "How to Use WhereHoops",
+    "intro": "Find answers to common questions about using WhereHoops.",
+    "readyToPlay": {
+      "question": "How do I let others know I'm going to play?",
+      "answer": "On any court card (on the home page or courts list), tap the green \"Ready to play\" button. This signals to other users that you're heading to that court, helping you find pickup games and connect with fellow hoopers."
+    },
+    "addCourt": {
+      "question": "How do I add a new basketball court?",
+      "answer": "Tap \"Add Hoop\" in the navigation. Fill in the court name, tap the map to set the location (or use your current location), add a description, select the condition and court type (indoor/outdoor), and upload at least one photo. The star icon lets you choose which photo appears as the main profile image."
+    },
+    "takePhoto": {
+      "question": "How do I take a good court photo?",
+      "answer": "For the best results: 1) Include the hoop and backboard clearly in the shot. 2) Show the court surface so others can see the condition. 3) Take photos during daylight for better visibility. 4) Capture any unique features like lighting, benches, or multiple hoops. 5) Avoid photos with people's faces for privacy."
+    },
+    "conditionTitle": "How do I rate a court's condition?",
+    "conditionIntro": "When adding a court, select the condition that best matches what you see:",
+    "conditions": {
+      "excellent": {
+        "title": "Excellent",
+        "description": "Like new or recently renovated. Smooth, crack-free surface. Net in perfect condition. Clear court markings. Well-maintained backboard and rim."
+      },
+      "good": {
+        "title": "Good",
+        "description": "Well-maintained with minor wear. Surface has minimal cracks or rough spots. Net may have slight wear but works fine. Court markings visible. Backboard and rim fully functional."
+      },
+      "fair": {
+        "title": "Fair",
+        "description": "Playable but showing age. Some cracks or uneven spots on the surface. Net may be worn or missing. Faded court markings. Equipment works but could use maintenance."
+      },
+      "poor": {
+        "title": "Poor",
+        "description": "Needs significant repairs. Major cracks, holes, or debris on surface. Net missing or badly damaged. No visible markings. Bent rim or damaged backboard. Still playable but with caution."
+      }
+    },
+    "moreQuestions": "Have more questions?",
+    "contactUs": "Contact us"
   },
   "common": {
     "all": "All",
