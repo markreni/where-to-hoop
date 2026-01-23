@@ -16,6 +16,8 @@ const Footer = () => {
         <span>·</span>
         <Link to="/faq" className="hover:text-third-color transition-colors">{t('footer.faq')}</Link>
         <span>·</span>
+        {
+        /* GitHub Link 
         <a
           href="https://github.com"
           target="_blank"
@@ -25,6 +27,7 @@ const Footer = () => {
         >
           <FaGithub size={18} />
         </a>
+        */}
       </nav>
       <p>&copy; 2026 {t('footer.copyright')}</p>
     </footer>

@@ -86,7 +86,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           <HoopBadge
             variant="players"
             text={t('hoops.players', { count: hoop.currentPlayers > 99 ? '>99' : hoop.currentPlayers })}
-            showIcon={xsm}
+            showIcon={true}
             textClassName="responsive-hoopcard-elements-text"
             tooltip={t('hoops.tooltips.currentPlayers')}
           />

@@ -75,7 +75,7 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
       {/* Filter and Search Bar - Fixed at top */}
       <div className="sticky top-0 px-3">
         <div className="flex items-center justify-end gap-1 xsm:gap-2 sm:gap-4 max-w-screen-2xl mx-auto">
-          <div className="w-1/2 xsm:w-3/5 sm:w-2/3">
+          <div className="w-4/9 xsm:w-1/2 sm:w-2/3">
             <SearchField
               placeholder={t('hoops.searchPlaceholder')}
               value={searchTerm}
