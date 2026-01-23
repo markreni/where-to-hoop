@@ -1,6 +1,7 @@
 import type { BasketballHoop, ColorMode } from "../../types/types.ts";
 import type { FocusableElement } from "@react-types/shared";
 import type { MouseEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
@@ -14,6 +15,7 @@ interface HomeHoopCardProps {
 export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const imageSrc = hoop.profile_images.length > 0
     ? hoop.profile_images[0].imageName
     : "https://via.placeholder.com/300x200";
@@ -21,9 +23,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(
-      `Ready to play at hoop ${hoop.name} today at ${new Date().toISOString().split('T')[1]}`
-    );
+    navigate(`/hoops/${hoop.id}`);
   };
 
   return (

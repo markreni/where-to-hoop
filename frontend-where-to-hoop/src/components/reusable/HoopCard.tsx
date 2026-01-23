@@ -1,6 +1,7 @@
 import type { BasketballHoop, ColorMode } from "../../types/types.ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { useNavigate } from "react-router-dom";
 import type { FocusableElement } from "@react-types/shared";
 import type { MouseEvent } from "react";
 import { HoopCardButton } from "./HoopCardButton.tsx";
@@ -9,9 +10,9 @@ import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
- 
+
 interface HoopCardProps {
-  hoop: Omit<BasketballHoop, "id">;
+  hoop: BasketballHoop;
   toggleFunction: (value: boolean) => void;
   mapView: boolean;
   distance: number;
@@ -21,6 +22,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
   const colorModeContext: ColorMode = useColorModeValues();
   const userLocationDispatch = useLocationDispatch();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const locateHoop = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
@@ -40,9 +42,8 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log(
-      `Ready to play at hoop ${hoop.name} today at ${new Date().toISOString().split('T')[1]}`
-    );
+    {/* `Ready to play at hoop ${hoop.name} today at ${new Date().toISOString().split('T')[1]}` */}
+    navigate(`/hoops/${hoop.id}`);
   };
 
   return (

@@ -12,6 +12,7 @@ import { useTranslation } from "../hooks/useTranslation";
 import { MapLabel } from "./reusable/MapLabel";
 import { conditionOptions, doorOptions } from "../utils/options";
 import { Button } from "react-aria-components";
+import Footer from "./Footer";
 
 interface FilterState {
   selectedConditions: Set<Condition>;
@@ -119,13 +120,12 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
         ) : (
           <div className="flex flex-col items-center gap-4 w-full max-w-xl mx-auto">
             {filteredWithSearchHoops.map(({ hoop, distance }) => (
-              <Link key={hoop.id} to={`#`} className="w-full">
-                <HoopCard hoop={hoop} distance={distance} toggleFunction={toggleFunction} mapView={mapView} />
-              </Link>
+              <HoopCard key={hoop.id} hoop={hoop} distance={distance} toggleFunction={toggleFunction} mapView={mapView} />
             ))}
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };
