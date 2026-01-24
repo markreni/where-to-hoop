@@ -163,6 +163,29 @@
     "moreQuestions": "Have more questions?",
     "contactUs": "Contact us"
   },
+  "hoop": {
+    "playersPanel": {
+      "title": "Who's Playing",
+      "playingNow": "Playing Now",
+      "comingSoon": "Coming Soon",
+      "comingLater": "Coming Later",
+      "noPlayers": "No one here yet. Be the first!",
+      "untilText": "until",
+      "inText": "in",
+      "minutesShort": "min"
+    },
+    "enrollment": {
+      "title": "Join the Game",
+      "arriveIn": "I'll arrive in",
+      "playFor": "I'll play for",
+      "now": "Now",
+      "hours": "h",
+      "minutes": "min",
+      "enroll": "Let them know I'm coming",
+      "cancel": "Cancel my session",
+      "success": "You're all set! Others can now see you're coming."
+    }
+  },
   "common": {
     "all": "All",
     "indoor": "Indoor",

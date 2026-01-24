@@ -52,7 +52,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
         <div className="flex flex-col">
           <div className="flex items-center justify-start gap-2">
             <strong className="text-fluid-base">{hoop.name}</strong>
-            <MdOutlineFavoriteBorder size={23} aria-label="Add to favorites" title={t('hoops.tooltips.addToFavorites')}/>
+            <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={23} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
           </div>
           <span className="text-fluid-sm">{distance.toFixed(1)} km</span>
         </div>

@@ -163,6 +163,29 @@
     "moreQuestions": "Lisää kysyttävää?",
     "contactUs": "Ota meihin yhteyttä"
   },
+  "hoop": {
+    "playersPanel": {
+      "title": "Kuka pelaa",
+      "playingNow": "Pelaa nyt",
+      "comingSoon": "Tulossa pian",
+      "comingLater": "Tulossa myöhemmin",
+      "noPlayers": "Ei vielä ketään. Ole ensimmäinen!",
+      "untilText": "asti",
+      "inText": "tulee",
+      "minutesShort": "min"
+    },
+    "enrollment": {
+      "title": "Liity peliin",
+      "arriveIn": "Saavun",
+      "playFor": "Pelaan",
+      "now": "Nyt",
+      "hours": "t",
+      "minutes": "min",
+      "enroll": "Ilmoita muille tulostani",
+      "cancel": "Peruuta osallistumiseni",
+      "success": "Hienoa! Muut näkevät nyt että olet tulossa."
+    }
+  },
   "common": {
     "all": "Kaikki",
     "indoor": "Sisäkenttä",
