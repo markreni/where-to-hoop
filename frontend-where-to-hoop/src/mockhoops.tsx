@@ -43,8 +43,8 @@ const initialHoops: BasketballHoop[] = [
     id: '2',
     name: 'Downtown Center',
     coordinates: {
-      latitude: 60.771550741939996,
-      longitude: 24.947467801354446,
+      latitude: 60.271550741939996,
+      longitude: 24.977467801354446,
     },
     profile_images: [
       {
@@ -88,8 +88,8 @@ const initialHoops: BasketballHoop[] = [
     id: '3',
     name: 'Riverside Court',
     coordinates: {
-      latitude: 60.571550741939996,
-      longitude: 24.947467801354446,
+      latitude: 60.41550741939996,
+      longitude: 25.147467801354446,
     },
     profile_images: [
       {

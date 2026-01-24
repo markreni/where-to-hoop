@@ -1,5 +1,5 @@
 import { MapContainer, TileLayer, Marker, ZoomControl } from "react-leaflet";
-import type { LatLngBoundsExpression, LatLngTuple } from "leaflet";
+import type { LatLngTuple } from "leaflet";
 import L from "leaflet";
 //import "leaflet.locatecontrol/dist/L.Control.Locate.min.css"; // Import styles
 import "leaflet/dist/leaflet.css";
@@ -13,12 +13,8 @@ import { UserLocator } from "./UserLocator.tsx";
 import { centerCoordinates }from "../utils/constants.ts";
 import { MapController } from "./reusable/MapController.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import { helsinkiBounds } from "../utils/constants.ts";
 
-// Helsinki greater area bounds: SW corner to NE corner
-const helsinkiBounds: LatLngBoundsExpression = [
-  [59.9, 24.5],  // Southwest corner (Kirkkonummi area)
-  [60.5, 25.5],  // Northeast corner (Sipoo/Porvoo area)
-];
 
 const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[] }) => {
   const mapCenterValues: Coordinates = useLocationValues();

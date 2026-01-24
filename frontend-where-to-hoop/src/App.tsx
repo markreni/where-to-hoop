@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import {
   Routes,
   Route,
@@ -18,11 +19,24 @@ import Privacy from "./pages/Privacy.tsx";
 import Contact from "./pages/Contact.tsx";
 import Info from "./pages/Info.tsx";
 import initialHoops from "./mockhoops.tsx";
+import { helsinkiBounds } from "./utils/constants.ts";
+import type { BasketballHoop } from "./types/types.ts";
 
 
 function App() {
   const match = useMatch("/hoops/:id");
-  const hoop = match?.params.id ? initialHoops.find(h => h.id === match.params.id) : undefined
+
+  // Filter hoops to only include those within Helsinki greater area
+  const hoops: BasketballHoop[] = useMemo(() => {
+    const [[swLat, swLng], [neLat, neLng]] = helsinkiBounds as [[number, number], [number, number]];
+    return initialHoops.filter(hoop => {
+      const { latitude, longitude } = hoop.coordinates;
+      if (latitude === undefined || longitude === undefined || latitude === null || longitude === null) return false;
+      return latitude >= swLat && latitude <= neLat && longitude >= swLng && longitude <= neLng;
+    });
+  }, []);
+
+  const hoop = match?.params.id ? hoops.find(h => h.id === match.params.id) : undefined
 
   return (
     <div
@@ -32,8 +46,8 @@ function App() {
       <ToastContainer />
       <div className="routes-margin">
         <Routes>
-          <Route path="/" element={<Home hoops={initialHoops} />} />
-          <Route path="/hoops" element={<Hoops hoops={initialHoops} />} />
+          <Route path="/" element={<Home hoops={hoops} />} />
+          <Route path="/hoops" element={<Hoops hoops={hoops} />} />
           <Route path="/hoops/:id" element={<Hoop hoop={hoop} />} />
           <Route path="/addhoop" element={<AddHoop />} />
           <Route path="/about" element={<About />} />
