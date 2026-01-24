@@ -4,7 +4,6 @@ import Footer from "../components/Footer.tsx";
 import { HomeHoopCard } from "../components/reusable/HomeHoopCard.tsx";
 import { Carousel } from "../components/reusable/Carousel.tsx";
 import { WeatherWidget } from "../components/reusable/WeatherWidget.tsx";
-import initialHoops from "../mockhoops.tsx";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 import { useTranslation } from "../hooks/useTranslation.ts";
@@ -16,7 +15,7 @@ import baskethoopImg from "../images/baskethoop.png";
 import { MdLocationPin } from "react-icons/md";
 import { GiBasketballBall } from "react-icons/gi";
 
-const Home = () => {
+const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const colorModeContext: ColorMode = useColorModeValues();
   const mapCenterValues = useLocationValues();
   const locateUser = useLocateUser();
@@ -54,10 +53,10 @@ const Home = () => {
   // Sort hoops by distance from user
   const sortedHoopsWithDistance: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
     if (!mapCenterValues.latitude || !mapCenterValues.longitude) {
-      return initialHoops.map(hoop => ({ hoop, distance: 0 }));
+      return hoops.map(hoop => ({ hoop, distance: 0 }));
     }
 
-    return initialHoops
+    return hoops
       .map(hoop => ({
         hoop,
         distance: haversineDistance(
@@ -69,14 +68,14 @@ const Home = () => {
   }, [mapCenterValues.latitude, mapCenterValues.longitude]);
 
   const sortedHoopsWithPlayers: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
-    return initialHoops
+    return hoops
       .map(hoop => ({
         hoop,
         distance: haversineDistance(
           [mapCenterValues.latitude!, mapCenterValues.longitude!],
           [hoop.coordinates.latitude!, hoop.coordinates.longitude!]
         ),
-        players: hoop.currentPlayers,
+        players: hoop.playerEnrollments.length,
       }))
       .sort((a, b) => b.players - a.players);
   }, []);

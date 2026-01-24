@@ -12,6 +12,16 @@ export interface ObservationImage {
   addedDate: string;
 }
 
+// Player enrollment types
+interface PlayerEnrollment {
+  id: string;
+  playerName: string;
+  hoopId: string;
+  arrivalTime: Date; // When they plan to arrive
+  duration: number; // How long they plan to play (in minutes)
+  createdAt: Date;
+}
+
 interface BasketballHoop {
   readonly id: string;
   readonly createdAt: string; // ISO date string
@@ -21,7 +31,7 @@ interface BasketballHoop {
   description: string;
   condition: Condition;
   isIndoor: boolean;
-  currentPlayers: number; // Number of players currently at the court
+  playerEnrollments: PlayerEnrollment[]; // Number of players currently at the court
 };
 
 // Toast types
@@ -36,8 +46,7 @@ type LocationSource = 'user' | 'hoop';
 // Language type
 type Language = 'en' | 'fi';
 
-
-export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language, LocationSource };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language, LocationSource, PlayerEnrollment };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 

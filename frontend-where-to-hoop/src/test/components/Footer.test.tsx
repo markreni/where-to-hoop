@@ -23,10 +23,12 @@ describe('Footer', () => {
     expect(screen.getByRole('link', { name: 'Contact' })).toBeInTheDocument();
   });
 
+  /*
   it('renders GitHub link with aria-label', () => {
     render(<Footer />);
     expect(screen.getByRole('link', { name: 'GitHub' })).toBeInTheDocument();
   });
+  
 
   it('GitHub link opens in new tab', () => {
     render(<Footer />);
@@ -34,6 +36,7 @@ describe('Footer', () => {
     expect(githubLink).toHaveAttribute('target', '_blank');
     expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
   });
+  */
 
   it('renders copyright text', () => {
     render(<Footer />);

@@ -17,11 +17,12 @@ import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Contact from "./pages/Contact.tsx";
 import Info from "./pages/Info.tsx";
+import initialHoops from "./mockhoops.tsx";
 
 
 function App() {
   const match = useMatch("/hoops/:id");
-  console.log("Matched observation ID:", match?.params.id);
+  const hoop = match?.params.id ? initialHoops.find(h => h.id === match.params.id) : undefined
 
   return (
     <div
@@ -31,9 +32,9 @@ function App() {
       <ToastContainer />
       <div className="routes-margin">
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/hoops" element={<Hoops />} />
-          <Route path="/hoops/:id" element={<Hoop />} />
+          <Route path="/" element={<Home hoops={initialHoops} />} />
+          <Route path="/hoops" element={<Hoops hoops={initialHoops} />} />
+          <Route path="/hoops/:id" element={<Hoop hoop={hoop} />} />
           <Route path="/addhoop" element={<AddHoop />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />

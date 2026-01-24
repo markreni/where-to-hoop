@@ -20,7 +20,7 @@ const initialHoops: BasketballHoop[] = [
     condition: 'good',
     isIndoor: false,
     createdAt: new Date().toISOString(),
-    currentPlayers: 2,
+    playerEnrollments: [],
   },
   {
     id: '2',
@@ -40,7 +40,7 @@ const initialHoops: BasketballHoop[] = [
     condition: 'excellent',
     isIndoor: true,
     createdAt: new Date().toISOString(),
-    currentPlayers: 6,
+    playerEnrollments: [],
   },
   {
     id: '3',
@@ -60,7 +60,7 @@ const initialHoops: BasketballHoop[] = [
     condition: 'fair',
     isIndoor: false,
     createdAt: new Date().toISOString(),
-    currentPlayers: 1,
+    playerEnrollments: [],
   },
 ];
 

@@ -6,15 +6,13 @@ import { ListToggle } from "../components/ListToggle";
 import { MapLabel } from "../components/reusable/MapLabel";
 import type { BasketballHoop, Condition } from "../types/types";
 import { doorOptions, conditionOptions } from "../utils/options.tsx";
-import initialHoops from "../mockhoops";
 import haversineDistance from "../utils/functions";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
 import { useTranslation } from "../hooks/useTranslation";
 //import { Link } from "react-router-dom";
 //import { useState, useEffect } from "react";
 
-
-const Hoops = () => {
+const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const { t } = useTranslation();
   const [mapView, toggleView] = useState<boolean>(() => {
     const stored = localStorage.getItem("hoopsMapView");
@@ -55,11 +53,11 @@ const Hoops = () => {
   // Sort hoops by distance from user
   const sortedHoopsWithDistance: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
   
-  if (!mapCenterValues.latitude || !mapCenterValues.longitude) {
-    return initialHoops.map(hoop => ({ hoop, distance: 0 }));
+  if (!hoops || !mapCenterValues.latitude || !mapCenterValues.longitude) {
+    return hoops.map(hoop => ({ hoop, distance: 0 }));
   }
 
-  return initialHoops
+  return hoops
     .map(hoop => ({
       hoop,
       distance: haversineDistance(
