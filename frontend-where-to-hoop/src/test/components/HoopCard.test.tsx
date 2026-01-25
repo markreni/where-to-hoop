@@ -14,11 +14,11 @@ const mockHoop: BasketballHoop = {
   condition: 'excellent',
   isIndoor: false,
   playerEnrollments: [
-    { id: 'e1', playerName: 'Alice', hoopId: '11', arrivalTime: new Date(), duration: 60, createdAt: new Date() },
-    { id: 'e2', playerName: 'Bob', hoopId: '11', arrivalTime: new Date(), duration: 30, createdAt: new Date() },
-    { id: 'e3', playerName: 'Charlie', hoopId: '11', arrivalTime: new Date(), duration: 45, createdAt: new Date() },
-    { id: 'e4', playerName: 'David', hoopId: '11', arrivalTime: new Date(), duration: 90, createdAt: new Date() },
-    { id: 'e5', playerName: 'Eve', hoopId: '11', arrivalTime: new Date(), duration: 120, createdAt: new Date() },
+    { id: 'e1', playerName: 'Alice', hoopId: '11', arrivalTime: new Date(), duration: 60, playMode: 'open', createdAt: new Date() },
+    { id: 'e2', playerName: 'Bob', hoopId: '11', arrivalTime: new Date(), duration: 30, playMode: 'solo', createdAt: new Date() },
+    { id: 'e3', playerName: 'Charlie', hoopId: '11', arrivalTime: new Date(), duration: 45, playMode: 'open', createdAt: new Date() },
+    { id: 'e4', playerName: 'David', hoopId: '11', arrivalTime: new Date(), duration: 90, playMode: 'open', createdAt: new Date() },
+    { id: 'e5', playerName: 'Eve', hoopId: '11', arrivalTime: new Date(), duration: 120, playMode: 'solo', createdAt: new Date() },
   ],
 };
 

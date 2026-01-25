@@ -33,6 +33,7 @@ describe('Hoop Page', () => {
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(fixedNow.getTime() - 10 * 60000),
         duration: 60,
+        playMode: 'open',
         createdAt: new Date(fixedNow.getTime() - 15 * 60000),
       },
       {
@@ -41,6 +42,7 @@ describe('Hoop Page', () => {
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(fixedNow.getTime() + 20 * 60000),
         duration: 90,
+        playMode: 'solo',
         createdAt: new Date(fixedNow.getTime() - 5 * 60000),
       },
     ],

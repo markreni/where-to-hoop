@@ -181,6 +181,9 @@
       "now": "Nyt",
       "hours": "t",
       "minutes": "min",
+      "playModeLabel": "Aion",
+      "openToPlay": "Pelata muiden kanssa",
+      "soloHooping": "Heitellä yksin",
       "enroll": "Ilmoita muille tulostani",
       "cancel": "Peruuta osallistumiseni",
       "success": "Hienoa! Muut näkevät nyt että olet tulossa."

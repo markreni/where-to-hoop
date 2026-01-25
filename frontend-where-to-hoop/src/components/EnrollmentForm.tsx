@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from 'react-aria-components'
-import { FaClock } from 'react-icons/fa'
-import type { ColorMode, PlayerEnrollment } from '../types/types'
+import { FaClock, FaUsers, FaUser } from 'react-icons/fa'
+import type { ColorMode, PlayerEnrollment, PlayMode } from '../types/types'
 import { useColorModeValues } from '../contexts/DarkModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 
@@ -12,6 +12,7 @@ interface EnrollmentFormProps {
 const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   const [arrivalMinutes, setArrivalMinutes] = useState(0) // 0-180 in 15 min increments
   const [durationMinutes, setDurationMinutes] = useState(60) // 30-180 in 30 min increments
+  const [playMode, setPlayMode] = useState<PlayMode>('open')
   const [userEnrollment, setUserEnrollment] = useState<PlayerEnrollment | null>(null)
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
@@ -38,6 +39,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
       hoopId,
       arrivalTime: new Date(now.getTime() + arrivalMinutes * 60 * 1000),
       duration: durationMinutes,
+      playMode,
       createdAt: now,
     }
     console.log('Enrolled with:', enrollment)
@@ -120,6 +122,39 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
         <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
           <span>30{t('hoop.enrollment.minutes')}</span>
           <span>3{t('hoop.enrollment.hours')}</span>
+        </div>
+      </div>
+
+      {/* Play mode selector */}
+      <div className="mb-6">
+        <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+          {t('hoop.enrollment.playModeLabel')}
+        </label>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setPlayMode('open')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
+              playMode === 'open'
+                ? 'border-first-color bg-first-color/10 text-first-color'
+                : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-400'
+            }`}
+          >
+            <FaUsers size={16} />
+            <span className="text-fluid-sm font-medium">{t('hoop.enrollment.openToPlay')}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setPlayMode('solo')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
+              playMode === 'solo'
+                ? 'border-first-color bg-first-color/10 text-first-color'
+                : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-400'
+            }`}
+          >
+            <FaUser size={14} />
+            <span className="text-fluid-sm font-medium">{t('hoop.enrollment.soloHooping')}</span>
+          </button>
         </div>
       </div>
 

@@ -181,6 +181,9 @@
       "now": "Now",
       "hours": "h",
       "minutes": "min",
+      "playModeLabel": "I'm going to",
+      "openToPlay": "Play with others",
+      "soloHooping": "Shoot alone",
       "enroll": "Let them know I'm coming",
       "cancel": "Cancel my session",
       "success": "You're all set! Others can now see you're coming."

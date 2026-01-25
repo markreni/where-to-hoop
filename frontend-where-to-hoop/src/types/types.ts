@@ -12,6 +12,9 @@ export interface ObservationImage {
   addedDate: string;
 }
 
+// Play mode type - whether player is open to play with others or solo
+type PlayMode = 'open' | 'solo';
+
 // Player enrollment types
 interface PlayerEnrollment {
   id: string;
@@ -19,6 +22,7 @@ interface PlayerEnrollment {
   hoopId: string;
   arrivalTime: Date; // When they plan to arrive
   duration: number; // How long they plan to play (in minutes)
+  playMode: PlayMode; // Whether open to play or solo hooping
   createdAt: Date;
 }
 
@@ -46,7 +50,7 @@ type LocationSource = 'user' | 'hoop';
 // Language type
 type Language = 'en' | 'fi';
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language, LocationSource, PlayerEnrollment };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language, LocationSource, PlayerEnrollment, PlayMode };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 

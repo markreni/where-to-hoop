@@ -11,9 +11,9 @@ const initialHoops: BasketballHoop[] = [
     },
     profile_images: [
       {
-        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp', 
-        id: 1, 
-        addedDate: new Date().toISOString() 
+        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        id: 1,
+        addedDate: new Date().toISOString()
       }
     ],
     description: 'Great outdoor court with two hoops',
@@ -27,6 +27,7 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '1',
         arrivalTime: new Date(new Date().getTime() - 10 * 60000), // 10 mins ago
         duration: 60,
+        playMode: 'open',
         createdAt: new Date(new Date().getTime() - 15 * 60000), // 15 mins ago
       },
       {
@@ -35,6 +36,7 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '1',
         arrivalTime: new Date(new Date().getTime() + 20 * 60000), // in 20 mins
         duration: 90,
+        playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago
       },
     ],
@@ -48,9 +50,9 @@ const initialHoops: BasketballHoop[] = [
     },
     profile_images: [
       {
-        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp', 
-        id: 2, 
-        addedDate: new Date().toISOString() 
+        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        id: 2,
+        addedDate: new Date().toISOString()
       }
     ],
     description: 'Indoor court, well maintained',
@@ -64,6 +66,7 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() - 30 * 60000), // 30 mins ago
         duration: 120,
+        playMode: 'open',
         createdAt: new Date(new Date().getTime() - 40 * 60000), // 40 mins ago
       },
       {
@@ -72,7 +75,8 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() + 10 * 60000), // in 10 mins
         duration: 60,
-        createdAt: new Date(new Date().getTime() - 2 * 60000), // 2 mins ago  
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 2 * 60000), // 2 mins ago
       },
       {
         id: 'enroll-5',
@@ -80,7 +84,8 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() + 50 * 60000), // in 50 mins
         duration: 90,
-        createdAt: new Date(new Date().getTime() - 1 * 60000), // 1 min ago 
+        playMode: 'solo',
+        createdAt: new Date(new Date().getTime() - 1 * 60000), // 1 min ago
       }
     ],
   },
@@ -93,9 +98,9 @@ const initialHoops: BasketballHoop[] = [
     },
     profile_images: [
       {
-        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp', 
-        id: 3, 
-        addedDate: new Date().toISOString() 
+        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        id: 3,
+        addedDate: new Date().toISOString()
       }
     ],
     description: 'Single hoop near the river',
@@ -109,6 +114,7 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 5 * 60000), // in 5 mins
         duration: 45,
+        playMode: 'open',
         createdAt: new Date(new Date().getTime() - 3 * 60000), // 3 mins ago
       },
       {
@@ -117,7 +123,8 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 120 * 60000), // in 120 mins
         duration: 60,
-        createdAt: new Date(new Date().getTime() - 10 * 60000), // 10 mins ago  
+        playMode: 'solo',
+        createdAt: new Date(new Date().getTime() - 10 * 60000), // 10 mins ago
       },
       {
         id: 'enroll-8',
@@ -125,7 +132,8 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() - 20 * 60000), // 20 mins ago
         duration: 30,
-        createdAt: new Date(new Date().getTime() - 25 * 60000), // 25 mins ago  
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 25 * 60000), // 25 mins ago
       },
       {
         id: 'enroll-9',
@@ -133,6 +141,7 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 200 * 60000), // in 200 mins
         duration: 90,
+        playMode: 'open',
         createdAt: new Date(new Date().getTime() - 15 * 60000), // 15 mins ago
       },
       {
@@ -141,7 +150,8 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 15 * 60000), // in 15 mins
         duration: 60,
-        createdAt: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago  
+        playMode: 'solo',
+        createdAt: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago
       },
       {
         id: 'enroll-11',
@@ -149,7 +159,8 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago
         duration: 60,
-        createdAt: new Date(new Date().getTime() - 8 * 60000), // 8 mins ago  
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 8 * 60000), // 8 mins ago
       },
       {
         id: 'enroll-12',
@@ -157,7 +168,8 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 300 * 60000), // in 300 mins
         duration: 120,
-        createdAt: new Date(new Date().getTime() - 20 * 60000), // 20 mins ago  
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 20 * 60000), // 20 mins ago
       }
     ],
   },
