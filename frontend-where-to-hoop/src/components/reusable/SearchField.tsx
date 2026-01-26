@@ -53,3 +53,4 @@ const SearchField = ({ label, errorMessage, placeholder, value, onChange }: Sear
 }
 
 export { SearchField };
+export type { SearchFieldProps };

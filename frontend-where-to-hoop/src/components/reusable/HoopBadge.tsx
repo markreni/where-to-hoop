@@ -66,3 +66,4 @@ const HoopBadge = ({
 };
 
 export { HoopBadge };
+export type { HoopBadgeProps };

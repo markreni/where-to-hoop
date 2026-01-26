@@ -24,3 +24,4 @@ const HoopCardButton = ({ actionFunction, title, colors }: HoopCardButtonProps) 
 }
 
 export { HoopCardButton };
+export type { HoopCardButtonProps };

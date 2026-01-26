@@ -114,3 +114,4 @@ const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments }: Player
 }
 
 export { PlayersPanel }
+export type { PlayersPanelProps };
