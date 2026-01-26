@@ -1,18 +1,28 @@
 import { useState } from 'react'
 import { Button } from 'react-aria-components'
-import { FaClock, FaUsers, FaUser } from 'react-icons/fa'
-import type { ColorMode, PlayerEnrollment, PlayMode } from '../types/types'
+import { FaClock, FaUsers, FaUser, FaCalendarAlt, FaCalendarDay } from 'react-icons/fa'
+import type { ColorMode, PlayerEnrollment, PlayMode, TimeSlot } from '../types/types'
+import type { DateValue } from 'react-aria-components'
 import { useColorModeValues } from '../contexts/DarkModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { MAX_NOTE_LENGTH } from '../utils/constants'
+import { EnrollmentCalendar } from './reusable/EnrollmentCalendar'
+import { TimeSlotPicker } from './reusable/TimeSlotPicker'
+import { getLocalTimeZone } from '@internationalized/date'
+import { getTimeSlotStartHour } from '../utils/functions'
+
+type WhenMode = 'today' | 'later'
 
 interface EnrollmentFormProps {
   hoopId: string
 }
 
 const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
-  const [arrivalMinutes, setArrivalMinutes] = useState(0) // 0-180 in 15 min increments
-  const [durationMinutes, setDurationMinutes] = useState(60) // 30-180 in 30 min increments
+  const [whenMode, setWhenMode] = useState<WhenMode>('today')
+  const [arrivalMinutes, setArrivalMinutes] = useState(0) // 0-720 in 30 min increments
+  const [selectedDate, setSelectedDate] = useState<DateValue | null>(null)
+  const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null)
+  const [durationMinutes, setDurationMinutes] = useState(60) // 30-300 in 30 min increments
   const [playMode, setPlayMode] = useState<PlayMode>('open')
   const [note, setNote] = useState('')
   const [userEnrollment, setUserEnrollment] = useState<PlayerEnrollment | null>(null)
@@ -33,13 +43,31 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
     return `${hours}${t('hoop.enrollment.hours')} ${mins}${t('hoop.enrollment.minutes')}`
   }
 
+  const calculateArrivalTime = (): Date => {
+    const now = new Date()
+
+    if (whenMode === 'today') {
+      return new Date(now.getTime() + arrivalMinutes * 60 * 1000)
+    } else {
+      // "Later" mode - use selected date and time slot
+      if (!selectedDate || !selectedTimeSlot) {
+        return now // Fallback, shouldn't happen if form validation works
+      }
+
+      const arrivalDate = selectedDate.toDate(getLocalTimeZone())
+      const startHour = getTimeSlotStartHour(selectedTimeSlot)
+      arrivalDate.setHours(startHour, 0, 0, 0)
+      return arrivalDate
+    }
+  }
+
   const handleEnroll = () => {
     const now = new Date()
     const enrollment: PlayerEnrollment = {
       id: `user-${Date.now()}`,
       playerName: 'You',
       hoopId,
-      arrivalTime: new Date(now.getTime() + arrivalMinutes * 60 * 1000),
+      arrivalTime: calculateArrivalTime(),
       duration: durationMinutes,
       playMode,
       ...(note.trim() && { note: note.trim() }),
@@ -48,6 +76,8 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
     console.log('Enrolled with:', enrollment)
     setUserEnrollment(enrollment)
   }
+
+  const isLaterModeValid = whenMode === 'later' ? (selectedDate !== null && selectedTimeSlot !== null) : true
 
   const onCancel = () => {
     setUserEnrollment(null)
@@ -88,25 +118,83 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
         </h3>
       </div>
 
-      {/* Arrival time slider */}
+      {/* When mode toggle */}
       <div className="mb-6">
         <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-          {t('hoop.enrollment.arriveIn')}: <span className="text-first-color">{formatSliderValue(arrivalMinutes, true)}</span>
+          {t('hoop.enrollment.whenLabel')}
         </label>
-        <input
-          type="range"
-          min="0"
-          max="720"
-          step="30"
-          value={arrivalMinutes}
-          onChange={(e) => setArrivalMinutes(Number(e.target.value))}
-          className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
-        />
-        <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
-          <span>{t('hoop.enrollment.now')}</span>
-          <span>3{t('hoop.enrollment.hours')}</span>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setWhenMode('today')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
+              whenMode === 'today'
+                ? 'border-first-color bg-first-color/10 text-first-color'
+                : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
+            }`}
+          >
+            <FaCalendarDay size={16} />
+            <span className="text-fluid-sm font-medium">{t('hoop.enrollment.today')}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setWhenMode('later')}
+            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
+              whenMode === 'later'
+                ? 'border-first-color bg-first-color/10 text-first-color'
+                : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
+            }`}
+          >
+            <FaCalendarAlt size={16} />
+            <span className="text-fluid-sm font-medium">{t('hoop.enrollment.later')}</span>
+          </button>
         </div>
       </div>
+
+      {whenMode === 'today' ? (
+        /* Arrival time slider - Today mode */
+        <div className="mb-6">
+          <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+            {t('hoop.enrollment.arriveIn')}: <span className="text-first-color">{formatSliderValue(arrivalMinutes, true)}</span>
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="720"
+            step="30"
+            value={arrivalMinutes}
+            onChange={(e) => setArrivalMinutes(Number(e.target.value))}
+            className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
+          />
+          <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
+            <span>{t('hoop.enrollment.now')}</span>
+            <span>12{t('hoop.enrollment.hours')}</span>
+          </div>
+        </div>
+      ) : (
+        /* Calendar and time slot - Later mode */
+        <>
+          <div className="mb-6">
+            <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+              {t('hoop.enrollment.selectDate')}
+            </label>
+            <EnrollmentCalendar
+              selectedDate={selectedDate}
+              onDateChange={setSelectedDate}
+            />
+          </div>
+
+          <div className="mb-6">
+            <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+              {t('hoop.enrollment.selectTime')}
+            </label>
+            <TimeSlotPicker
+              selectedSlot={selectedTimeSlot}
+              onSlotChange={setSelectedTimeSlot}
+            />
+          </div>
+        </>
+      )}
 
       {/* Duration slider */}
       <div className="mb-6">
@@ -124,7 +212,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
         />
         <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
           <span>30{t('hoop.enrollment.minutes')}</span>
-          <span>3{t('hoop.enrollment.hours')}</span>
+          <span>5{t('hoop.enrollment.hours')}</span>
         </div>
       </div>
 
@@ -180,7 +268,12 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
 
       <Button
         onPress={handleEnroll}
-        className={`${colorModeContext} w-full py-3 px-4 rounded-lg bg-green-500 hover:bg-green-600 text-white font-medium transition-colors cursor-pointer`}
+        isDisabled={!isLaterModeValid}
+        className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
+          isLaterModeValid
+            ? 'bg-green-500 hover:bg-green-600 cursor-pointer'
+            : 'bg-gray-400 cursor-not-allowed'
+        }`}
       >
         {t('hoop.enrollment.enroll')}
       </Button>

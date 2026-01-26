@@ -1,3 +1,6 @@
+import { TIME_SLOTS } from "../components/reusable/TimeSlotPicker";
+import type { TimeSlot } from "../types/types";
+
 const haversineDistance = ([lat1, lon1]: [number, number], [lat2, lon2]: [number, number], isMiles = false) => {
       const toRadian = (angle: number) => (Math.PI / 180) * angle;
       const distance = (a: number, b: number) => (Math.PI / 180) * (a - b);
@@ -23,4 +26,13 @@ const haversineDistance = ([lat1, lon1]: [number, number], [lat2, lon2]: [number
 
       return finalDistance;
     };
+
+    // Helper to get the start hour for a time slot
+export const getTimeSlotStartHour = (slot: TimeSlot): number => {
+  const slotConfig = TIME_SLOTS.find(s => s.id === slot)
+  return slotConfig?.startHour ?? 12
+}
+
+
+
 export default haversineDistance;

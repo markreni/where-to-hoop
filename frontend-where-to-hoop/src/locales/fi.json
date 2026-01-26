@@ -179,7 +179,22 @@
     },
     "enrollment": {
       "title": "Liity peliin",
+      "whenLabel": "Milloin",
+      "today": "Tänään",
+      "later": "Myöhemmin",
       "arriveIn": "Saavun",
+      "selectDate": "Valitse päivä",
+      "selectTime": "Valitse aika",
+      "timeSlots": {
+        "morning": "Aamu",
+        "morningRange": "8:00 - 12:00",
+        "afternoon": "Iltapäivä",
+        "afternoonRange": "12:00 - 17:00",
+        "evening": "Ilta",
+        "eveningRange": "17:00 - 21:00",
+        "night": "Yö",
+        "nightRange": "21:00 - 24:00"
+      },
       "playFor": "Pelaan",
       "now": "Nyt",
       "hours": "t",

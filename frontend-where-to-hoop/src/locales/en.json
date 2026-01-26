@@ -179,7 +179,22 @@
     },
     "enrollment": {
       "title": "Join the Game",
+      "whenLabel": "When",
+      "today": "Today",
+      "later": "Later",
       "arriveIn": "I'll arrive in",
+      "selectDate": "Select date",
+      "selectTime": "Select time",
+      "timeSlots": {
+        "morning": "Morning",
+        "morningRange": "8:00 - 12:00",
+        "afternoon": "Afternoon",
+        "afternoonRange": "12:00 - 17:00",
+        "evening": "Evening",
+        "eveningRange": "17:00 - 21:00",
+        "night": "Night",
+        "nightRange": "21:00 - 24:00"
+      },
       "playFor": "I'll play for",
       "now": "Now",
       "hours": "h",

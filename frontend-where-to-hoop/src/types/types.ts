@@ -6,6 +6,8 @@ interface Coordinates {
   longitude: number | null;
 }
 
+type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night';
+
 export interface ObservationImage {
   id: number;
   imageName: string;
@@ -51,7 +53,7 @@ type LocationSource = 'user' | 'hoop';
 // Language type
 type Language = 'en' | 'fi';
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language, LocationSource, PlayerEnrollment, PlayMode };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language, LocationSource, PlayerEnrollment, PlayMode, TimeSlot };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 
