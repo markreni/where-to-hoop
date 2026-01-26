@@ -3,51 +3,10 @@ import { useColorModeValues } from "../contexts/DarkModeContext"
 import { useTranslation } from "../hooks/useTranslation"
 import type { ColorMode } from "../types/types"
 import { BackArrow } from "../components/reusable/BackArrow"
+import { FAQItem } from "../components/reusable/FAQItem"
+import { ConditionCard } from "../components/reusable/ConditionCard"
 import Footer from "../components/Footer"
 import { FaQuestionCircle, FaCamera, FaPlusCircle, FaPlayCircle } from "react-icons/fa"
-
-interface FAQItemProps {
-  question: string
-  answer: string
-  icon: React.ReactNode
-  colorModeContext: ColorMode
-}
-
-const FAQItem = ({ question, answer, icon, colorModeContext }: FAQItemProps) => (
-  <div className={`${colorModeContext} p-4 rounded-lg bg-gray-100 dark:bg-gray-800`}>
-    <div className="flex items-start gap-3">
-      <div className="text-first-color flex-shrink-0 mt-1">
-        {icon}
-      </div>
-      <div>
-        <p className={`${colorModeContext} font-medium background-text mb-2`}>
-          {question}
-        </p>
-        <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400`}>
-          {answer}
-        </p>
-      </div>
-    </div>
-  </div>
-)
-
-interface ConditionCardProps {
-  title: string
-  description: string
-  colorClass: string
-  colorModeContext: ColorMode
-}
-
-const ConditionCard = ({ title, description, colorClass, colorModeContext }: ConditionCardProps) => (
-  <div className={`${colorModeContext} p-4 rounded-lg border-l-4 ${colorClass} bg-gray-50 dark:bg-gray-800`}>
-    <p className={`${colorModeContext} font-semibold background-text mb-1`}>
-      {title}
-    </p>
-    <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400`}>
-      {description}
-    </p>
-  </div>
-)
 
 const Info = () => {
   const colorModeContext: ColorMode = useColorModeValues()
@@ -76,21 +35,18 @@ const Info = () => {
               question={t('faq.readyToPlay.question')}
               answer={t('faq.readyToPlay.answer')}
               icon={<FaPlayCircle size={24} />}
-              colorModeContext={colorModeContext}
             />
 
             <FAQItem
               question={t('faq.addCourt.question')}
               answer={t('faq.addCourt.answer')}
               icon={<FaPlusCircle size={24} />}
-              colorModeContext={colorModeContext}
             />
 
             <FAQItem
               question={t('faq.takePhoto.question')}
               answer={t('faq.takePhoto.answer')}
               icon={<FaCamera size={24} />}
-              colorModeContext={colorModeContext}
             />
           </div>
 
@@ -108,25 +64,21 @@ const Info = () => {
                 title={t('faq.conditions.excellent.title')}
                 description={t('faq.conditions.excellent.description')}
                 colorClass="border-green-500"
-                colorModeContext={colorModeContext}
               />
               <ConditionCard
                 title={t('faq.conditions.good.title')}
                 description={t('faq.conditions.good.description')}
                 colorClass="border-blue-500"
-                colorModeContext={colorModeContext}
               />
               <ConditionCard
                 title={t('faq.conditions.fair.title')}
                 description={t('faq.conditions.fair.description')}
                 colorClass="border-yellow-500"
-                colorModeContext={colorModeContext}
               />
               <ConditionCard
                 title={t('faq.conditions.poor.title')}
                 description={t('faq.conditions.poor.description')}
                 colorClass="border-red-500"
-                colorModeContext={colorModeContext}
               />
             </div>
           </div>
