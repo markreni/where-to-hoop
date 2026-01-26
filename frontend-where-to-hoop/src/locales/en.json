@@ -170,10 +170,12 @@
       "comingSoon": "Coming Soon",
       "comingLater": "Coming Later",
       "noPlayers": "No one here yet. Be the first!",
-      "untilText": "until",
-      "inText": "in",
+      "untilText": "hooping until",
+      "inText": "hooping in",
       "minutesShort": "min",
-      "joinButton": "Join"
+      "joinButton": "Join",
+      "defaultNoteOpen": "Please join me to hoop",
+      "defaultNoteSolo": "Prefer to hoop alone this time"
     },
     "enrollment": {
       "title": "Join the Game",

@@ -173,7 +173,9 @@
       "untilText": "asti",
       "inText": "tulee",
       "minutesShort": "min",
-      "joinButton": "Liity"
+      "joinButton": "Liity",
+      "defaultNoteOpen": "Tule mukaan pelaamaan",
+      "defaultNoteSolo": "Haluan heitellä yksin tällä kertaa"
     },
     "enrollment": {
       "title": "Liity peliin",

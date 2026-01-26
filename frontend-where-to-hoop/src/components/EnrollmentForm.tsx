@@ -4,6 +4,7 @@ import { FaClock, FaUsers, FaUser } from 'react-icons/fa'
 import type { ColorMode, PlayerEnrollment, PlayMode } from '../types/types'
 import { useColorModeValues } from '../contexts/DarkModeContext'
 import { useTranslation } from '../hooks/useTranslation'
+import { MAX_NOTE_LENGTH } from '../utils/constants'
 
 interface EnrollmentFormProps {
   hoopId: string
@@ -17,8 +18,6 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   const [userEnrollment, setUserEnrollment] = useState<PlayerEnrollment | null>(null)
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
-
-  const MAX_NOTE_LENGTH = 100
 
   const formatSliderValue = (minutes: number, isArrival: boolean): string => {
     if (isArrival && minutes === 0) return t('hoop.enrollment.now')

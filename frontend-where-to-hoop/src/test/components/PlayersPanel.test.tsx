@@ -151,4 +151,92 @@ describe('PlayersPanel', () => {
     render(<PlayersPanel playerEnrollments={[enrollment]} />);
     expect(screen.getByText(/in 15 min/)).toBeInTheDocument();
   });
+
+  describe('note functionality', () => {
+    it('displays custom note when provided', () => {
+      const enrollment = createEnrollment({
+        playerName: 'Alice',
+        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
+        duration: 60,
+        playMode: 'open',
+        note: 'Looking for 3v3 game!',
+      });
+
+      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      expect(screen.getByText('Looking for 3v3 game!')).toBeInTheDocument();
+    });
+
+    it('shows default open message when no note and playMode is open', () => {
+      const enrollment = createEnrollment({
+        playerName: 'Bob',
+        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
+        duration: 60,
+        playMode: 'open',
+        note: undefined,
+      });
+
+      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      expect(screen.getByText('Please join me to hoop')).toBeInTheDocument();
+    });
+
+    it('shows default solo message when no note and playMode is solo', () => {
+      const enrollment = createEnrollment({
+        playerName: 'Charlie',
+        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
+        duration: 60,
+        playMode: 'solo',
+        note: undefined,
+      });
+
+      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      expect(screen.getByText('Prefer to hoop alone this time')).toBeInTheDocument();
+    });
+
+    it('shows default message when note is empty string', () => {
+      const enrollment = createEnrollment({
+        playerName: 'Diana',
+        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
+        duration: 60,
+        playMode: 'open',
+        note: '',
+      });
+
+      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      expect(screen.getByText('Please join me to hoop')).toBeInTheDocument();
+    });
+
+    it('shows Join button only for open playMode', () => {
+      const openEnrollment = createEnrollment({
+        id: 'open-1',
+        playerName: 'Eve',
+        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
+        duration: 60,
+        playMode: 'open',
+      });
+      const soloEnrollment = createEnrollment({
+        id: 'solo-1',
+        playerName: 'Frank',
+        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
+        duration: 60,
+        playMode: 'solo',
+      });
+
+      render(<PlayersPanel playerEnrollments={[openEnrollment, soloEnrollment]} />);
+
+      const joinButtons = screen.getAllByRole('button', { name: /join/i });
+      expect(joinButtons).toHaveLength(1);
+    });
+
+    it('does not show Join button for solo players', () => {
+      const enrollment = createEnrollment({
+        playerName: 'Grace',
+        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
+        duration: 60,
+        playMode: 'solo',
+      });
+
+      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      expect(screen.queryByRole('button', { name: /join/i })).not.toBeInTheDocument();
+    });
+  });
 });

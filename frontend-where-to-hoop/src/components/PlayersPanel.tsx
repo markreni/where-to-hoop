@@ -44,23 +44,28 @@ const PlayerCard = ({ enrollment}: PlayerCardProps) => {
     console.log('Joining player:', enrollment.playerName)
   }
 
+  const noteText = enrollment.note || (isOpenToPlay ? t('hoop.playersPanel.defaultNoteOpen') : t('hoop.playersPanel.defaultNoteSolo'))
+
   return (
     <div className={`${colorModeContext} flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800`}>
-      <div className="w-8 h-8 rounded-full bg-first-color flex items-center justify-center text-white text-sm font-medium">
+      <div className="w-8 h-8 shrink-0 rounded-full bg-first-color flex items-center justify-center text-white text-sm font-medium">
         {enrollment.playerName.charAt(0)}
       </div>
-      <div className="flex-1">
-        <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+      <div className="flex-1 min-w-0">
+        <b><p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
           {isPlaying
             ? `${t('hoop.playersPanel.untilText')} ${formatTime(endTime)}`
             : formatArrivalText(arrivalTime, t)
           }
+        </p></b>
+        <p className={`${colorModeContext} text-fluid-xs background-text`}>
+          {noteText}
         </p>
       </div>
       {isOpenToPlay && (
         <button
           onClick={handleJoin}
-          className="px-3 py-1 text-fluid-xs font-medium rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors cursor-pointer"
+          className="shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors cursor-pointer"
         >
           {t('hoop.playersPanel.joinButton')}
         </button>

@@ -27,6 +27,7 @@ const initialHoops: BasketballHoop[] = [
         hoopId: '1',
         arrivalTime: new Date(new Date().getTime() - 10 * 60000), // 10 mins ago
         duration: 60,
+        note: 'Looking for some pickup games!',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 15 * 60000), // 15 mins ago
       },
