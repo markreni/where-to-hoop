@@ -23,6 +23,7 @@ interface PlayerEnrollment {
   arrivalTime: Date; // When they plan to arrive
   duration: number; // How long they plan to play (in minutes)
   playMode: PlayMode; // Whether open to play or solo hooping
+  note?: string; // Optional note to other players
   createdAt: Date;
 }
 

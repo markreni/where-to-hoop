@@ -172,7 +172,8 @@
       "noPlayers": "No one here yet. Be the first!",
       "untilText": "until",
       "inText": "in",
-      "minutesShort": "min"
+      "minutesShort": "min",
+      "joinButton": "Join"
     },
     "enrollment": {
       "title": "Join the Game",
@@ -184,6 +185,9 @@
       "playModeLabel": "I'm going to",
       "openToPlay": "Play with others",
       "soloHooping": "Shoot alone",
+      "noteLabel": "Note to others",
+      "notePlaceholder": "e.g., Looking for 3v3, bring water...",
+      "optional": "optional",
       "enroll": "Let them know I'm coming",
       "cancel": "Cancel my session",
       "success": "You're all set! Others can now see you're coming."

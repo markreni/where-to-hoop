@@ -62,6 +62,32 @@
   right: -1px;
 }
 
+/* ------------ Styles that go along basic background ------------ */
+
+.background-hover {
+  @apply hover:bg-gray-100 dark:hover:bg-gray-800;
+}
+
+.background-text {
+  @apply text-gray-700 dark:text-white;
+}
+
+.background-text-reverse-black {
+  @apply text-white dark:text-black;
+}
+
+.background-text-reverse {
+  @apply text-white dark:text-gray-700;
+}
+
+.background-border {
+  @apply border-black dark:border-white;
+}
+
+.background-border-reverse {
+  @apply border-white dark:border-black;
+}
+
 /* ------------ User Location Marker ------------ */
 
 .user-location-dot-light {
@@ -121,32 +147,6 @@
 
 .first-color-text {
   @apply text-white dark:text-black;
-}
-
-/* ------------ Styles that go along basic background ------------ */
-
-.background-hover {
-  @apply hover:bg-gray-100 dark:hover:bg-gray-800;
-}
-
-.background-text {
-  @apply text-gray-700 dark:text-white;
-}
-
-.background-text-reverse-black {
-  @apply text-white dark:text-black;
-}
-
-.background-text-reverse {
-  @apply text-white dark:text-gray-700;
-}
-
-.background-border {
-  @apply border-black dark:border-white;
-}
-
-.background-border-reverse {
-  @apply border-white dark:border-black;
 }
 
 /* ------------ Theme Directory ------------ */
@@ -255,7 +255,10 @@
     @apply bg-blue-500/80 hover:bg-blue-500/90 dark:hover:bg-blue-500/70 text-blue-200 border-blue-200/70;
   }
   .form-input {
-    @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-first-color dark:text-white;
+    @apply w-full p-3 border text-black dark:text-white border-gray-300 rounded-lg text-fluid-sm resize-none focus:outline-none focus:ring-2 focus:ring-first-color;
+  }
+  .form-button-text {
+    @apply text-gray-600 dark:text-gray-300;
   }
   .border-label-component {
     @apply border-2 border-black/30 shadow-md dark:border-white/50;

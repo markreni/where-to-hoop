@@ -13,9 +13,12 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   const [arrivalMinutes, setArrivalMinutes] = useState(0) // 0-180 in 15 min increments
   const [durationMinutes, setDurationMinutes] = useState(60) // 30-180 in 30 min increments
   const [playMode, setPlayMode] = useState<PlayMode>('open')
+  const [note, setNote] = useState('')
   const [userEnrollment, setUserEnrollment] = useState<PlayerEnrollment | null>(null)
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+
+  const MAX_NOTE_LENGTH = 100
 
   const formatSliderValue = (minutes: number, isArrival: boolean): string => {
     if (isArrival && minutes === 0) return t('hoop.enrollment.now')
@@ -40,6 +43,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
       arrivalTime: new Date(now.getTime() + arrivalMinutes * 60 * 1000),
       duration: durationMinutes,
       playMode,
+      ...(note.trim() && { note: note.trim() }),
       createdAt: now,
     }
     console.log('Enrolled with:', enrollment)
@@ -137,7 +141,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
             className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
               playMode === 'open'
                 ? 'border-first-color bg-first-color/10 text-first-color'
-                : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-400'
+                : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
             }`}
           >
             <FaUsers size={16} />
@@ -149,12 +153,29 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
             className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
               playMode === 'solo'
                 ? 'border-first-color bg-first-color/10 text-first-color'
-                : 'border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-400 hover:border-gray-400'
+                : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
             }`}
           >
             <FaUser size={14} />
             <span className="text-fluid-sm font-medium">{t('hoop.enrollment.soloHooping')}</span>
           </button>
+        </div>
+      </div>
+
+      {/* Note field */}
+      <div className="mb-6">
+        <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+          {t('hoop.enrollment.noteLabel')} <span className="text-gray-400 font-normal">({t('hoop.enrollment.optional')})</span>
+        </label>
+        <textarea
+          value={note}
+          onChange={(e) => setNote(e.target.value.slice(0, MAX_NOTE_LENGTH))}
+          placeholder={t('hoop.enrollment.notePlaceholder')}
+          rows={2}
+          className={`${colorModeContext} form-input`}
+        />
+        <div className="flex justify-end text-fluid-xs text-gray-400 mt-1">
+          {note.length}/{MAX_NOTE_LENGTH}
         </div>
       </div>
 

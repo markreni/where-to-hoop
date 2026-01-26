@@ -15,10 +15,10 @@ import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_S
 
 
 const conditionConfig: Record<Condition, { color: string; labelKey: string }> = {
-  excellent: { color: 'bg-green-500', labelKey: 'addHoop.excellent' },
-  good: { color: 'bg-blue-500', labelKey: 'addHoop.good' },
-  fair: { color: 'bg-amber-500', labelKey: 'addHoop.fair' },
-  poor: { color: 'bg-red-500', labelKey: 'addHoop.poor' },
+  excellent: { color: 'bg-green-500', labelKey: 'common.excellent' },
+  good: { color: 'bg-blue-500', labelKey: 'common.good' },
+  fair: { color: 'bg-amber-500', labelKey: 'common.fair' },
+  poor: { color: 'bg-red-500', labelKey: 'common.poor' },
 };
 
 
@@ -282,7 +282,7 @@ const AddHoop = () => {
               <TextArea
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className={`${colorModeContext} form-input resize-none`}
+                className={`${colorModeContext} form-input`}
                 rows={3}
                 placeholder={t('addHoop.descriptionPlaceholder')}
                 maxLength={MAX_DESCRIPTION_LENGTH}
@@ -308,14 +308,14 @@ const AddHoop = () => {
                     key={condition}
                     type="button"
                     onClick={() => setFormData({ ...formData, condition })}
-                    className={`py-2 px-2 rounded-lg text-fluid-xs font-medium transition-all cursor-pointer flex flex-col items-center gap-1 ${
+                    className={`py-2 px-2 rounded-lg text-fluid-xs form-button-text font-medium transition-all cursor-pointer flex flex-col items-center gap-1 ${
                       formData.condition === condition
-                        ? 'ring-2 ring-first-color ring-offset-2 dark:ring-offset-gray-900'
+                        ? 'ring-1 ring-first-color ring-offset-1 dark:ring-offset-gray-900'
                         : ''
                     } ${colorModeContext} bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700`}
                   >
                     <span className={`w-3 h-3 rounded-full ${conditionConfig[condition].color}`} />
-                    <span className="background-text">{t(conditionConfig[condition].labelKey)}</span>
+                    <span>{t(conditionConfig[condition].labelKey)}</span>
                   </button>
                 ))}
               </div>
@@ -335,10 +335,10 @@ const AddHoop = () => {
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, isIndoor: false })}
-                  className={`flex-1 py-2 px-4 rounded-lg text-fluid-sm font-medium transition-colors cursor-pointer ${
+                  className={`${colorModeContext} flex-1 py-2 px-4 rounded-lg text-fluid-sm font-medium transition-colors cursor-pointer ${
                     formData.isIndoor === false
-                      ? 'bg-first-color text-white dark:text-black'
-                      : `${colorModeContext} bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`
+                      ? 'bg-first-color background-text-reverse-black'
+                      : `${colorModeContext} bg-gray-100 form-button-text hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700`
                   }`}
                 >
                   🌳 {t('addHoop.outdoor')}
@@ -346,10 +346,10 @@ const AddHoop = () => {
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, isIndoor: true })}
-                  className={`flex-1 py-2 px-4 rounded-lg text-fluid-sm font-medium transition-colors cursor-pointer ${
+                  className={`${colorModeContext} flex-1 py-2 px-4 rounded-lg text-fluid-sm font-medium transition-colors cursor-pointer ${
                     formData.isIndoor === true
-                      ? 'bg-first-color text-white dark:text-black'
-                      : `${colorModeContext} bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700`
+                      ? 'bg-first-color background-text-reverse-black'
+                      : `${colorModeContext} bg-gray-100 form-button-text hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700`
                   }`}
                 >
                   🏠 {t('addHoop.indoor')}

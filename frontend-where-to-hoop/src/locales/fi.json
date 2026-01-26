@@ -172,7 +172,8 @@
       "noPlayers": "Ei vielä ketään. Ole ensimmäinen!",
       "untilText": "asti",
       "inText": "tulee",
-      "minutesShort": "min"
+      "minutesShort": "min",
+      "joinButton": "Liity"
     },
     "enrollment": {
       "title": "Liity peliin",
@@ -184,6 +185,9 @@
       "playModeLabel": "Aion",
       "openToPlay": "Pelata muiden kanssa",
       "soloHooping": "Heitellä yksin",
+      "noteLabel": "Viesti muille",
+      "notePlaceholder": "esim. Etsitään 3v3, tuo vettä...",
+      "optional": "valinnainen",
       "enroll": "Ilmoita muille tulostani",
       "cancel": "Peruuta osallistumiseni",
       "success": "Hienoa! Muut näkevät nyt että olet tulossa."

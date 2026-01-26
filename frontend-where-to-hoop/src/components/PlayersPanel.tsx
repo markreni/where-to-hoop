@@ -36,8 +36,13 @@ const PlayerCard = ({ enrollment}: PlayerCardProps) => {
   const endTime = new Date(arrivalTime.getTime() + enrollment.duration * 60 * 1000)
   const now = new Date()
   const isPlaying = arrivalTime <= now
+  const isOpenToPlay = enrollment.playMode === 'open'
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+
+  const handleJoin = () => {
+    console.log('Joining player:', enrollment.playerName)
+  }
 
   return (
     <div className={`${colorModeContext} flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800`}>
@@ -45,7 +50,6 @@ const PlayerCard = ({ enrollment}: PlayerCardProps) => {
         {enrollment.playerName.charAt(0)}
       </div>
       <div className="flex-1">
-     
         <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
           {isPlaying
             ? `${t('hoop.playersPanel.untilText')} ${formatTime(endTime)}`
@@ -53,6 +57,14 @@ const PlayerCard = ({ enrollment}: PlayerCardProps) => {
           }
         </p>
       </div>
+      {isOpenToPlay && (
+        <button
+          onClick={handleJoin}
+          className="px-3 py-1 text-fluid-xs font-medium rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors cursor-pointer"
+        >
+          {t('hoop.playersPanel.joinButton')}
+        </button>
+      )}
     </div>
   )
 }
