@@ -153,4 +153,135 @@ describe('EnrollmentForm', () => {
     expect(durationLabel.textContent).toMatch(/1\s*h/);
     expect(durationLabel.textContent).toContain('30');
   });
+
+  describe('Today/Later toggle', () => {
+    // Helper to get the mode toggle buttons by their exact text
+    const getTodayToggle = () => screen.getByRole('button', { name: /^today$/i });
+    const getLaterToggle = () => screen.getByRole('button', { name: /^later$/i });
+
+    it('renders Today and Later toggle buttons', () => {
+      render(<EnrollmentForm {...defaultProps} />);
+      expect(getTodayToggle()).toBeInTheDocument();
+      expect(getLaterToggle()).toBeInTheDocument();
+    });
+
+    it('defaults to Today mode', () => {
+      render(<EnrollmentForm {...defaultProps} />);
+      const todayButton = getTodayToggle();
+      // Today button should have the active styling (first-color in class)
+      expect(todayButton.className).toContain('text-first-color');
+    });
+
+    it('shows arrival time slider in Today mode', () => {
+      render(<EnrollmentForm {...defaultProps} />);
+      expect(screen.getByText(/I'll arrive in/)).toBeInTheDocument();
+      // There are multiple "Now" texts (label and slider range), just check slider exists
+      const sliders = screen.getAllByRole('slider');
+      expect(sliders.length).toBeGreaterThanOrEqual(1);
+    });
+
+    it('switches to Later mode when Later button is clicked', async () => {
+      vi.useRealTimers();
+      const user = userEvent.setup();
+      render(<EnrollmentForm {...defaultProps} />);
+
+      const laterButton = getLaterToggle();
+      await user.click(laterButton);
+
+      // Later button should now be active
+      expect(laterButton.className).toContain('text-first-color');
+    });
+
+    it('hides arrival slider and shows calendar in Later mode', async () => {
+      vi.useRealTimers();
+      const user = userEvent.setup();
+      render(<EnrollmentForm {...defaultProps} />);
+
+      const laterButton = getLaterToggle();
+      await user.click(laterButton);
+
+      // Arrival slider should be hidden
+      expect(screen.queryByText(/I'll arrive in/)).not.toBeInTheDocument();
+      // Calendar should be visible (check for calendar grid)
+      expect(screen.getByRole('grid')).toBeInTheDocument();
+      // Time slot label should be visible
+      expect(screen.getByText(/Select time/i)).toBeInTheDocument();
+    });
+
+    it('shows time slot options in Later mode', async () => {
+      vi.useRealTimers();
+      const user = userEvent.setup();
+      render(<EnrollmentForm {...defaultProps} />);
+
+      const laterButton = getLaterToggle();
+      await user.click(laterButton);
+
+      // All time slots should be visible
+      expect(screen.getByRole('button', { name: /morning/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /afternoon/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /evening/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /night/i })).toBeInTheDocument();
+    });
+
+    it('disables enroll button in Later mode until date and time slot selected', async () => {
+      vi.useRealTimers();
+      const user = userEvent.setup();
+      render(<EnrollmentForm {...defaultProps} />);
+
+      const laterButton = getLaterToggle();
+      await user.click(laterButton);
+
+      const enrollButton = screen.getByRole('button', { name: /let them know/i });
+      // Button should be disabled (has bg-gray-400 class or isDisabled)
+      expect(enrollButton.className).toContain('bg-gray-400');
+    });
+
+    it('switches back to Today mode when Today button is clicked', async () => {
+      vi.useRealTimers();
+      const user = userEvent.setup();
+      render(<EnrollmentForm {...defaultProps} />);
+
+      // Switch to Later
+      const laterButton = getLaterToggle();
+      await user.click(laterButton);
+
+      // Switch back to Today
+      const todayButton = getTodayToggle();
+      await user.click(todayButton);
+
+      // Arrival slider should be visible again
+      expect(screen.getByText(/I'll arrive in/)).toBeInTheDocument();
+    });
+
+    it('keeps duration slider visible in both modes', async () => {
+      vi.useRealTimers();
+      const user = userEvent.setup();
+      render(<EnrollmentForm {...defaultProps} />);
+
+      // Duration visible in Today mode
+      expect(screen.getByText(/I'll play for/)).toBeInTheDocument();
+
+      // Switch to Later
+      const laterButton = getLaterToggle();
+      await user.click(laterButton);
+
+      // Duration should still be visible
+      expect(screen.getByText(/I'll play for/)).toBeInTheDocument();
+    });
+
+    it('allows selecting a time slot in Later mode', async () => {
+      vi.useRealTimers();
+      const user = userEvent.setup();
+      render(<EnrollmentForm {...defaultProps} />);
+
+      const laterButton = getLaterToggle();
+      await user.click(laterButton);
+
+      const morningButton = screen.getByRole('button', { name: /morning/i });
+      await user.click(morningButton);
+
+      // Morning button should now be active
+      expect(morningButton.className).toContain('border-first-color');
+    });
+  });
 });

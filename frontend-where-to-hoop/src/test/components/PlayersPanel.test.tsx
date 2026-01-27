@@ -49,11 +49,11 @@ describe('PlayersPanel', () => {
     expect(screen.getByText('Playing Now (1)')).toBeInTheDocument();
   });
 
-  it('shows "Coming Soon" section for players arriving within 30 minutes', () => {
+  it('shows "Coming Soon" section for players arriving later today', () => {
     const comingSoonEnrollment = createEnrollment({
       id: 'coming-soon-1',
       playerName: 'Bob',
-      arrivalTime: new Date(fixedNow.getTime() + 15 * 60000), // in 15 mins
+      arrivalTime: new Date(fixedNow.getTime() + 15 * 60000), // in 15 mins (still today)
       duration: 60,
     });
 
@@ -61,11 +61,11 @@ describe('PlayersPanel', () => {
     expect(screen.getByText('Coming Soon (1)')).toBeInTheDocument();
   });
 
-  it('shows "Coming Later" section for players arriving after 30 minutes', () => {
+  it('shows "Coming Later" section for players arriving on a future day', () => {
     const comingLaterEnrollment = createEnrollment({
       id: 'coming-later-1',
       playerName: 'Charlie',
-      arrivalTime: new Date(fixedNow.getTime() + 60 * 60000), // in 60 mins
+      arrivalTime: new Date(fixedNow.getTime() + 24 * 60 * 60000), // tomorrow
       duration: 60,
     });
 
@@ -78,25 +78,25 @@ describe('PlayersPanel', () => {
       createEnrollment({
         id: 'playing-1',
         playerName: 'Alice',
-        arrivalTime: new Date(fixedNow.getTime() - 10 * 60000),
+        arrivalTime: new Date(fixedNow.getTime() - 10 * 60000), // playing now
         duration: 60,
       }),
       createEnrollment({
         id: 'playing-2',
         playerName: 'Bob',
-        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
+        arrivalTime: new Date(fixedNow.getTime() - 5 * 60000), // playing now
         duration: 45,
       }),
       createEnrollment({
         id: 'coming-soon-1',
         playerName: 'Charlie',
-        arrivalTime: new Date(fixedNow.getTime() + 20 * 60000),
+        arrivalTime: new Date(fixedNow.getTime() + 20 * 60000), // later today
         duration: 60,
       }),
       createEnrollment({
         id: 'coming-later-1',
         playerName: 'Diana',
-        arrivalTime: new Date(fixedNow.getTime() + 90 * 60000),
+        arrivalTime: new Date(fixedNow.getTime() + 2 * 24 * 60 * 60000), // in 2 days
         duration: 120,
       }),
     ];

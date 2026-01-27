@@ -22,7 +22,7 @@ interface EnrollmentCalendarProps {
 const EnrollmentCalendar = ({ selectedDate, onDateChange }: EnrollmentCalendarProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
   const todayDate = today(getLocalTimeZone())
-  const maxDate = todayDate.add({ weeks: 1 })
+  const maxDate = todayDate.add({ weeks: 2 })
 
   return (
     <Calendar

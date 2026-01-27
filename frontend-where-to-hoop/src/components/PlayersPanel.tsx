@@ -6,41 +6,44 @@ import { useTranslation } from '../hooks/useTranslation'
 import { PlayerCard } from './reusable/PlayerCard'
 
 // Group enrollments by time status
-  const groupEnrollmentsByTime = (enrollments: PlayerEnrollment[]): {
-    playingNow: PlayerEnrollment[]
-    comingSoon: PlayerEnrollment[] // Within 30 minutes
-    comingLater: PlayerEnrollment[] // More than 30 minutes
-  } => {
-    const now = new Date()
-    const thirtyMinutesFromNow = new Date(now.getTime() + 30 * 60 * 1000)
+const groupEnrollmentsByTime = (enrollments: PlayerEnrollment[]): {
+  playingNow: PlayerEnrollment[]
+  comingSoon: PlayerEnrollment[] // Coming later today
+  comingLater: PlayerEnrollment[] // Coming on a future day
+} => {
+  const now = new Date()
 
-    const playingNow: PlayerEnrollment[] = []
-    const comingSoon: PlayerEnrollment[] = []
-    const comingLater: PlayerEnrollment[] = []
+  // Get end of today (midnight)
+  const endOfToday = new Date(now)
+  endOfToday.setHours(23, 59, 59, 999)
 
-    enrollments.forEach(enrollment => {
-      const arrivalTime = new Date(enrollment.arrivalTime)
-      const endTime = new Date(arrivalTime.getTime() + enrollment.duration * 60 * 1000)
+  const playingNow: PlayerEnrollment[] = []
+  const comingSoon: PlayerEnrollment[] = []
+  const comingLater: PlayerEnrollment[] = []
 
-      if (arrivalTime <= now && endTime > now) {
-        // Currently at the court
-        playingNow.push(enrollment)
-      } else if (arrivalTime > now && arrivalTime <= thirtyMinutesFromNow) {
-        // Arriving within 30 minutes
-        comingSoon.push(enrollment)
-      } else if (arrivalTime > thirtyMinutesFromNow) {
-        // Arriving later
-        comingLater.push(enrollment)
-      }
-    })
+  enrollments.forEach(enrollment => {
+    const arrivalTime = new Date(enrollment.arrivalTime)
+    const endTime = new Date(arrivalTime.getTime() + enrollment.duration * 60 * 1000)
 
-    // Sort each group by arrival time
-    playingNow.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
-    comingSoon.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
-    comingLater.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
+    if (arrivalTime <= now && endTime > now) {
+      // Currently at the court
+      playingNow.push(enrollment)
+    } else if (arrivalTime > now && arrivalTime <= endOfToday) {
+      // Arriving later today
+      comingSoon.push(enrollment)
+    } else if (arrivalTime > endOfToday) {
+      // Arriving on a future day
+      comingLater.push(enrollment)
+    }
+  })
 
-    return { playingNow, comingSoon, comingLater }
-  }
+  // Sort each group by arrival time
+  playingNow.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
+  comingSoon.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
+  comingLater.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
+
+  return { playingNow, comingSoon, comingLater }
+}
   
 // Players panel component
 interface PlayersPanelProps {

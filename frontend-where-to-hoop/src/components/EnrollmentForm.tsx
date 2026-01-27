@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from 'react-aria-components'
-import { FaClock, FaUsers, FaUser, FaCalendarAlt, FaCalendarDay } from 'react-icons/fa'
+import { FaClock, FaUsers, FaUser } from 'react-icons/fa'
 import type { ColorMode, PlayerEnrollment, PlayMode, TimeSlot } from '../types/types'
 import type { DateValue } from 'react-aria-components'
 import { useColorModeValues } from '../contexts/DarkModeContext'
@@ -118,37 +118,30 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
         </h3>
       </div>
 
-      {/* When mode toggle */}
-      <div className="mb-6">
-        <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-          {t('hoop.enrollment.whenLabel')}
-        </label>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setWhenMode('today')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
-              whenMode === 'today'
-                ? 'border-first-color bg-first-color/10 text-first-color'
-                : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
-            }`}
-          >
-            <FaCalendarDay size={16} />
-            <span className="text-fluid-sm font-medium">{t('hoop.enrollment.today')}</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setWhenMode('later')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
-              whenMode === 'later'
-                ? 'border-first-color bg-first-color/10 text-first-color'
-                : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
-            }`}
-          >
-            <FaCalendarAlt size={16} />
-            <span className="text-fluid-sm font-medium">{t('hoop.enrollment.later')}</span>
-          </button>
-        </div>
+      {/* When mode toggle - prominent heading style */}
+      <div className="flex mb-6 border-b border-gray-200 dark:border-gray-700">
+        <button
+          type="button"
+          onClick={() => setWhenMode('today')}
+          className={`flex-1 pb-3 text-fluid-base font-semibold transition-colors cursor-pointer ${
+            whenMode === 'today'
+              ? 'text-first-color border-b-2 border-first-color -mb-px'
+              : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'
+          }`}
+        >
+          {t('hoop.enrollment.today')}
+        </button>
+        <button
+          type="button"
+          onClick={() => setWhenMode('later')}
+          className={`flex-1 pb-3 text-fluid-base font-semibold transition-colors cursor-pointer ${
+            whenMode === 'later'
+              ? 'text-first-color border-b-2 border-first-color -mb-px'
+              : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'
+          }`}
+        >
+          {t('hoop.enrollment.later')}
+        </button>
       </div>
 
       {whenMode === 'today' ? (

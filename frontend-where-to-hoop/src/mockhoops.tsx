@@ -40,6 +40,26 @@ const initialHoops: BasketballHoop[] = [
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago
       },
+      {
+        id: 'enroll-later-1',
+        playerName: 'Marcus',
+        hoopId: '1',
+        arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 10, 0, 0)), // tomorrow morning
+        duration: 90,
+        note: 'Morning workout session, all welcome!',
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 2 * 60 * 60000), // 2 hours ago
+      },
+      {
+        id: 'enroll-later-2',
+        playerName: 'Sophie',
+        hoopId: '1',
+        arrivalTime: new Date(new Date().setHours(new Date().getHours() + 48, 17, 0, 0)), // in 2 days, evening
+        duration: 60,
+        note: 'Looking for 3v3',
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 30 * 60000), // 30 mins ago
+      },
     ],
   },
   {
@@ -87,6 +107,35 @@ const initialHoops: BasketballHoop[] = [
         duration: 90,
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 1 * 60000), // 1 min ago
+      },
+      {
+        id: 'enroll-later-3',
+        playerName: 'Oliver',
+        hoopId: '2',
+        arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 12, 0, 0)), // tomorrow afternoon
+        duration: 120,
+        note: 'Afternoon practice, bring your A-game!',
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 4 * 60 * 60000), // 4 hours ago
+      },
+      {
+        id: 'enroll-later-4',
+        playerName: 'Emma',
+        hoopId: '2',
+        arrivalTime: new Date(new Date().setHours(new Date().getHours() + 72, 18, 0, 0)), // in 3 days, evening
+        duration: 60,
+        playMode: 'solo',
+        createdAt: new Date(new Date().getTime() - 60 * 60000), // 1 hour ago
+      },
+      {
+        id: 'enroll-later-5',
+        playerName: 'Noah',
+        hoopId: '2',
+        arrivalTime: new Date(new Date().setHours(new Date().getHours() + 168, 9, 0, 0)), // in 1 week, morning
+        duration: 90,
+        note: 'Weekend morning hoops!',
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 12 * 60 * 60000), // 12 hours ago
       }
     ],
   },
@@ -171,6 +220,26 @@ const initialHoops: BasketballHoop[] = [
         duration: 120,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 20 * 60000), // 20 mins ago
+      },
+      {
+        id: 'enroll-later-6',
+        playerName: 'Liam',
+        hoopId: '3',
+        arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 21, 0, 0)), // tomorrow night
+        duration: 60,
+        note: 'Night session under the lights',
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 45 * 60000), // 45 mins ago
+      },
+      {
+        id: 'enroll-later-7',
+        playerName: 'Ava',
+        hoopId: '3',
+        arrivalTime: new Date(new Date().setHours(new Date().getHours() + 120, 14, 0, 0)), // in 5 days, afternoon
+        duration: 90,
+        note: 'Casual shooting practice',
+        playMode: 'solo',
+        createdAt: new Date(new Date().getTime() - 3 * 60 * 60000), // 3 hours ago
       }
     ],
   },
