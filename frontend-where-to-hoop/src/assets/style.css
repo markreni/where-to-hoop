@@ -72,6 +72,10 @@
   @apply text-gray-700 dark:text-white;
 }
 
+.background-text-black {
+  @apply text-black dark:text-white;
+}
+
 .background-text-reverse-black {
   @apply text-white dark:text-black;
 }

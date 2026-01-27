@@ -7,6 +7,11 @@
     "nearestCourts": "Lähimmät kentät",
     "mostActiveCourts": "Aktiivisimmat kentät",
     "enableLocation": "Salli sijainnin käyttö nähdäksesi lähimmät kentät",
+    "intro": {
+      "welcome": "Tervetuloa WhereHoopsiin",
+      "description": "Yhteisölähtöinen alusta koripallokenttien löytämiseen ja muiden pelaajien tapaamiseen alueellasi.",
+      "aboutLink": "Lue lisää meistä ja arvoistamme"
+    },
     "hero": {
       "tagline": "Aloitetaan pelit",
       "subtitle": "Löydä kentät. Katso kuka pelaa. Liity peliin.",
@@ -94,7 +99,8 @@
     "connectHoopers": "Yhdisty muihin pelaajiin",
     "connectHoopersDesc": "Tapaa uusia koripallokavereita alueeltasi. Rakenna paikallinen peliyhteisösi ja löydä säännöllisiä pelikavereita.",
     "tip": "Vinkki:",
-    "tipText": "Ota sijaintipalvelut käyttöön parasta kokemusta varten. Tämä auttaa meitä näyttämään lähimmät kentät ja laskemaan etäisyydet tarkasti."
+    "tipText": "Ota sijaintipalvelut käyttöön parasta kokemusta varten. Tämä auttaa meitä näyttämään lähimmät kentät ja laskemaan etäisyydet tarkasti.",
+    "valuesTitle": "Meidän arvomme"
   },
   "privacy": {
     "title": "Tietosuoja- ja datakäytäntö",
@@ -178,7 +184,7 @@
       "defaultNoteSolo": "Haluan heitellä yksin tällä kertaa"
     },
     "enrollment": {
-      "title": "Liity peliin",
+      "title": "Ilmoittaudu pelaamaan",
       "whenLabel": "Milloin",
       "today": "Tänään",
       "later": "Myöhemmin",
@@ -205,7 +211,7 @@
       "noteLabel": "Viesti muille",
       "notePlaceholder": "esim. Etsitään 3v3, tuo vettä...",
       "optional": "valinnainen",
-      "enroll": "Ilmoita muille tulostani",
+      "enroll": "Lähetä ilmoitus",
       "cancel": "Peruuta osallistumiseni",
       "success": "Hienoa! Muut näkevät nyt että olet tulossa."
     }

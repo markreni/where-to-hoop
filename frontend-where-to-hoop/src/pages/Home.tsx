@@ -89,27 +89,35 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         aria-hidden="true"
         className="absolute top-1/6 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-2xl opacity-6 pointer-events-none select-none"
       />
-      <div className="flex-grow flex flex-col gap-10 justify-center px-4 sm:px-16 py-8 max-w-4xl mx-auto w-full relative z-10">
-        {/* Hero Section */}
-        <section className="relative text-center py-8 sm:py-12">
-          <div className="sm:absolute sm:-top-8 sm:-right-12 mb-4 sm:mb-0 flex justify-center sm:justify-end">
-            <WeatherWidget />
-          </div>
-
-          <h1 className={`${colorModeContext} poppins-extrabold text-fluid-4xl background-text-reverse-black mb-4`}>
-            {t('home.hero.tagline')}
+      <div className="flex-grow flex flex-col gap-10 justify-center px-4 sm:px-8 py-8 max-w-4xl mx-auto w-full relative z-10">
+        {/* Intro Section */}
+        <section className="text-center py-8 sm:py-12">
+          <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black mb-4`}>
+            {t('home.intro.welcome')}
           </h1>
-
-          <p className={`${colorModeContext} text-fluid-lg background-text max-w-xl mx-auto mb-8`}>
-            {t('home.hero.subtitle')}
+          <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-8`}>
+            {t('home.intro.description')}
           </p>
 
-          <Link to="/hoops">
-            <button className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-white/10 dark:border-black/10 bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
-              <MdLocationPin size={24}/>
-              {t('home.hero.ctaButton')}
-            </button>
+          {/* About Link */}
+          <Link to="/about" className={`${colorModeContext} inline-block px-3 py-1 rounded-lg background-text-reverse-black bg-white/20 dark:bg-black/20 hover:bg-white/30 dark:hover:bg-black/30 font-medium text-fluid-sm transition-colors mb-8`}>
+            {t('home.intro.aboutLink')}
           </Link>
+
+          {/* Hero Section */}
+          <div className="text-center">
+    
+            <p className={`${colorModeContext} text-fluid-lg background-text max-w-xl mx-auto mb-8`}>
+              {t('home.hero.subtitle')}
+            </p>
+
+            <Link to="/hoops">
+              <button className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 border-white/10 dark:border-black/10 bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
+                <MdLocationPin size={24}/>
+                {t('home.hero.ctaButton')}
+              </button>
+            </Link>
+          </div>
         </section>
 
         <div className="space-y-10">
@@ -140,13 +148,24 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         </div>
 
         {/* Encouragement Section */}
-          <section className={`${colorModeContext} mt-12 p-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-center`}>
+          <section className={`${colorModeContext} relative mt-12 p-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-center`}>
+            {/* Weather widget - right corner on larger screens */}
+            <div className="hidden sm:block sm:absolute sm:top-4 sm:right-4">
+              <WeatherWidget />
+            </div>
+
             <div className="flex justify-center mb-4">
               <GiBasketballBall size={40} className="text-first-color" />
             </div>
             <h2 className={`${colorModeContext} poppins-bold text-fluid-2xl background-text mb-4`}>
               {t('home.encouragement.title')}
             </h2>
+
+            {/* Weather widget - under title on smaller screens */}
+            <div className="sm:hidden flex justify-center mb-4">
+              <WeatherWidget />
+            </div>
+
             <p className={`${colorModeContext} text-fluid-base background-text mb-4 max-w-lg mx-auto`}>
               {getEncouragementMessage()}
             </p>

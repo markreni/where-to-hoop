@@ -62,7 +62,7 @@ const WeatherWidget = () => {
 
   // Success state
   return (
-    <div className={`${colorModeContext} p-3 rounded-lg bg-gray-100 dark:bg-gray-900 min-w-[140px]`}>
+    <div className={`${colorModeContext} p-3 rounded-lg bg-gray-100 border border-1 border-white sm:border-none min-w-[140px] dark:bg-gray-800`}>
       <div className="flex items-center gap-2">
         <div className={`${colorModeContext} background-text`}>
           {getWeatherIcon(weather.data!.weatherCode)}

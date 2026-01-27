@@ -7,6 +7,11 @@
     "nearestCourts": "Nearest Courts",
     "mostActiveCourts": "Most Active Courts",
     "enableLocation": "Enable location access to see the nearest courts",
+    "intro": {
+      "welcome": "Welcome to WhereHoops",
+      "description": "Your community-driven platform to discover basketball courts and connect with fellow players in your area.",
+      "aboutLink": "Find out more about us and our core values"
+    },
     "hero": {
       "tagline": "Game On",
       "subtitle": "Find courts. See who's playing. Join the game.",
@@ -94,7 +99,8 @@
     "connectHoopers": "Connect with Hoopers",
     "connectHoopersDesc": "Meet new basketball buddies in your area. Build your local hooping community and find regular playing partners.",
     "tip": "Tip:",
-    "tipText": "Enable location services for the best experience. This helps us show you the nearest courts and calculate distances accurately."
+    "tipText": "Enable location services for the best experience. This helps us show you the nearest courts and calculate distances accurately.",
+    "valuesTitle": "Our Core Values"
   },
   "privacy": {
     "title": "Privacy & Data Policy",
@@ -159,7 +165,7 @@
         "title": "Poor",
         "description": "Needs significant repairs. Major cracks, holes, or debris on surface. Net missing or badly damaged. No visible markings. Bent rim or damaged backboard. Still playable but with caution."
       }
-    },
+    },  
     "moreQuestions": "Have more questions?",
     "contactUs": "Contact us"
   },
@@ -178,7 +184,7 @@
       "defaultNoteSolo": "Prefer to hoop alone this time"
     },
     "enrollment": {
-      "title": "Join the Game",
+      "title": "Enroll to play",
       "whenLabel": "When",
       "today": "Today",
       "later": "Later",
@@ -205,7 +211,7 @@
       "noteLabel": "Note to others",
       "notePlaceholder": "e.g., Looking for 3v3, bring water...",
       "optional": "optional",
-      "enroll": "Let them know I'm coming",
+      "enroll": "Send enrollment",
       "cancel": "Cancel my session",
       "success": "You're all set! Others can now see you're coming."
     }
