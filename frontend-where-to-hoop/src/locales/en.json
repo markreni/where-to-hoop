@@ -15,7 +15,7 @@
     "hero": {
       "tagline": "Game On",
       "subtitle": "Find courts. See who's playing. Join the game.",
-      "ctaButton": "Explore Courts",
+      "ctaButton": "Explore Map",
       "weather": {
         "feelsLike": "Feels like",
         "loading": "Loading...",

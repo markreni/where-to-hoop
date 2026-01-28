@@ -6,7 +6,12 @@ import { FaMap } from "react-icons/fa";
 import { PiListBold } from "react-icons/pi";
 import { useTranslation } from "../hooks/useTranslation.ts";
 
-const ListToggle = ({ toggleFunction, mapView }: { toggleFunction: (value: boolean) => void; mapView: boolean }): JSX.Element => {
+interface ListToggleProps {
+  toggleFunction: (value: boolean) => void;
+  mapView: boolean;
+}
+
+const ListToggle = ({ toggleFunction, mapView }: ListToggleProps): JSX.Element => {
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
 
