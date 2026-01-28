@@ -23,9 +23,15 @@ const About = () => {
             </h1>
           </div>
 
-          <p className={`${colorModeContext} text-fluid-base background-text`}>
-            {t('about.intro')}
-          </p>
+          <div className="space-y-3">
+            <p className={`${colorModeContext} text-fluid-base background-text`}>
+              {t('about.intro')}
+            </p>
+
+            <p className={`${colorModeContext} text-fluid-base background-text`}>
+              {t('about.intro2')}
+            </p>
+          </div>
 
           <section>
             <h2 className={`${colorModeContext} text-fluid-lg poppins-semibold background-text mb-4`}>
@@ -79,19 +85,23 @@ const About = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl xmd:max-w-3xl lg:max-w-4xl mx-auto">
               <ValueCard
                 icon={<FaHandshake className="text-first-color" size={24} />}
-                text={t('home.intro.values.respect')}
+                title={t('common.values.respect.title')}
+                description={t('common.values.respect.description')}
               />
               <ValueCard
                 icon={<FaUsers className="text-first-color" size={24} />}
-                text={t('home.intro.values.inclusive')}
+                title={t('common.values.inclusive.title')}
+                description={t('common.values.inclusive.description')}
               />
               <ValueCard
                 icon={<FaBalanceScale className="text-first-color" size={24} />}
-                text={t('home.intro.values.fair')}
+                title={t('common.values.fair.title')}
+                description={t('common.values.fair.description')}
               />
               <ValueCard
                 icon={<FaHeart className="text-first-color" size={24} />}
-                text={t('home.intro.values.community')}
+                title={t('common.values.community.title')}
+                description={t('common.values.community.description')}
               />
             </div>
           </section>

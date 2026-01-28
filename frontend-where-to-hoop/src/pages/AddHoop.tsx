@@ -15,10 +15,10 @@ import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_S
 
 
 const conditionConfig: Record<Condition, { color: string; labelKey: string }> = {
-  excellent: { color: 'bg-green-500', labelKey: 'common.excellent' },
-  good: { color: 'bg-blue-500', labelKey: 'common.good' },
-  fair: { color: 'bg-amber-500', labelKey: 'common.fair' },
-  poor: { color: 'bg-red-500', labelKey: 'common.poor' },
+  excellent: { color: 'bg-green-500', labelKey: 'common.condition.excellent' },
+  good: { color: 'bg-blue-500', labelKey: 'common.condition.good' },
+  fair: { color: 'bg-amber-500', labelKey: 'common.condition.fair' },
+  poor: { color: 'bg-red-500', labelKey: 'common.condition.poor' },
 };
 
 

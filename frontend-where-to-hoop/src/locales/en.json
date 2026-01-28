@@ -9,7 +9,7 @@
     "enableLocation": "Enable location access to see the nearest courts",
     "intro": {
       "welcome": "Welcome to WhereHoops",
-      "description": "Your community-driven platform to discover basketball courts and connect with fellow players in your area.",
+      "description": "From basketball lovers, for basketball lovers. WhereHoops is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
       "aboutLink": "Find out more about us and our core values"
     },
     "hero": {
@@ -91,6 +91,7 @@
   "about": {
     "title": "About WhereHoops",
     "intro": "From basketball lovers, for basketball lovers. WhereHoops is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
+    "intro2": "Whether you're looking for a quick solo session or a competitive pickup game, we make it easy to find courts, see real-time player activity, and join the action. Our mission is to bring hoopers together and make every court feel like home.",
     "whatYouCanDo": "What You Can Do",
     "findCourts": "Find Courts Near You",
     "findCourtsDesc": "Discover basketball hoops in your neighborhood with our interactive map. See court conditions, photos, and details before you go.",
@@ -209,7 +210,7 @@
       "openToPlay": "Play with others",
       "soloHooping": "Shoot alone",
       "noteLabel": "Note to others",
-      "notePlaceholder": "e.g., Looking for 3v3, bring water...",
+      "notePlaceholder": "e.g., Looking for some open games, can't wait to hoop!",
       "optional": "optional",
       "enroll": "Send enrollment",
       "cancel": "Cancel my session",
@@ -222,9 +223,29 @@
     "outdoor": "Outdoor",
     "showlist": "Show List",
     "showmap": "Show Map",
-    "excellent": "Excellent",
-    "good": "Good",
-    "fair": "Fair",
-    "poor": "Poor"
+    "condition": {
+      "excellent": "Excellent",
+      "good": "Good",
+      "fair": "Fair",
+      "poor": "Poor"
+    },
+    "values": {
+      "respect": {
+        "title": "Respect",
+        "description": "Treat others with kindness and respect on and off the court."
+      },
+      "inclusive": {
+        "title": "Inclusive",
+        "description": "Everyone is welcomed to play."
+      },
+      "fair": {
+        "title": "Fair",
+        "description": "Play fair, and keep the game fun for all."
+      },
+      "community": {
+        "title": "Community",
+        "description": "Build community."
+      }
+    }
   }
 }

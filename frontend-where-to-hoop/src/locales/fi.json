@@ -9,7 +9,7 @@
     "enableLocation": "Salli sijainnin käyttö nähdäksesi lähimmät kentät",
     "intro": {
       "welcome": "Tervetuloa WhereHoopsiin",
-      "description": "Yhteisölähtöinen alusta koripallokenttien löytämiseen ja muiden pelaajien tapaamiseen alueellasi.",
+      "description": "Koripallon ystäviltä, koripallon ystäville. WhereHoops on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja yhdistymään muiden pelaajien kanssa alueellasi.",
       "aboutLink": "Lue lisää meistä ja arvoistamme"
     },
     "hero": {
@@ -91,6 +91,7 @@
   "about": {
     "title": "Tietoja WhereHoopsista",
     "intro": "Koripallon ystäviltä, koripallon ystäville. WhereHoops on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja yhdistymään muiden pelaajien kanssa alueellasi.",
+    "intro2": "Etsitpä sitten nopeaa yksin harjoittelua tai kilpailuhenkistä pickup-peliä, teemme helpoksi löytää kenttiä, nähdä reaaliaikaisen pelaaja-aktiivisuuden ja liittyä mukaan peliin. Missiomme on tuoda pelaajat yhteen ja tehdä jokaisesta kentästä koti.",
     "whatYouCanDo": "Mitä voit tehdä",
     "findCourts": "Löydä kenttiä läheltäsi",
     "findCourtsDesc": "Löydä koripallokenttiä naapurustostasi interaktiivisen kartan avulla. Näe kenttien kunto, kuvat ja tiedot ennen kuin lähdet.",
@@ -209,7 +210,7 @@
       "openToPlay": "Pelata muiden kanssa",
       "soloHooping": "Heitellä yksin",
       "noteLabel": "Viesti muille",
-      "notePlaceholder": "esim. Etsitään 3v3, tuo vettä...",
+      "notePlaceholder": "esim. Etsin avoimia pelejä, en malta odottaa että pääsee kentälle!",
       "optional": "valinnainen",
       "enroll": "Lähetä ilmoitus",
       "cancel": "Peruuta osallistumiseni",
@@ -222,9 +223,29 @@
     "outdoor": "Ulkokenttä",
     "showlist": "Näytä lista",
     "showmap": "Näytä kartta",
-    "excellent": "Erinomainen",
-    "good": "Hyvä",
-    "fair": "Tyydyttävä",
-    "poor": "Huono"
+    "condition": {
+      "excellent": "Erinomainen",
+      "good": "Hyvä",
+      "fair": "Tyydyttävä",
+      "poor": "Huono"
+    },
+    "values": {
+      "respect": {
+        "title": "Kunnioitus",
+        "description": "Kunnioita kaikkia."
+      },
+      "inclusive": {
+        "title": "Osallistavuus",
+        "description": "Kaikki ovat tervetulleita pelaamaan."
+      },
+      "fair": {
+        "title": "Reiluus",
+        "description": "Pelaa reilusti ja pidä peli hauskana kaikille."
+      },
+      "community": {
+        "title": "Yhteisö",
+        "description": "Rakenna yhteisöä."
+      }
+    }
   }
 }

@@ -5,10 +5,10 @@ import { MapLabel } from '../../components/reusable/MapLabel';
 import type { Condition } from '../../types/types';
 
 const mockConditionOptions = [
-  { labelKey: 'common.excellent', name: 'excellent' as Condition, color: 'hoop-icon--excellent' },
-  { labelKey: 'common.good', name: 'good' as Condition, color: 'hoop-icon--good' },
-  { labelKey: 'common.fair', name: 'fair' as Condition, color: 'hoop-icon--fair' },
-  { labelKey: 'common.poor', name: 'poor' as Condition, color: 'hoop-icon--poor' },
+  { labelKey: 'common.condition.excellent', name: 'excellent' as Condition, color: 'hoop-icon--excellent' },
+  { labelKey: 'common.condition.good', name: 'good' as Condition, color: 'hoop-icon--good' },
+  { labelKey: 'common.condition.fair', name: 'fair' as Condition, color: 'hoop-icon--fair' },
+  { labelKey: 'common.condition.poor', name: 'poor' as Condition, color: 'hoop-icon--poor' },
 ];
 
 const mockDoorOptions = [

@@ -12,7 +12,7 @@ import type { BasketballHoop, ColorMode } from "../types/types.ts";
 import haversineDistance from "../utils/functions.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 import baskethoopImg from "../images/baskethoop.png";
-import { MdLocationPin } from "react-icons/md";
+import { MdLocationPin, MdArrowForward } from "react-icons/md";
 import { GiBasketballBall } from "react-icons/gi";
 
 const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
@@ -100,7 +100,8 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
           </p>
 
           {/* About Link */}
-          <Link to="/about" className={`${colorModeContext} inline-block px-3 py-1 rounded-lg background-text-reverse-black bg-white/20 dark:bg-black/20 hover:bg-white/30 dark:hover:bg-black/30 font-medium text-fluid-sm transition-colors mb-8`}>
+          <Link to="/about" className={`${colorModeContext} inline-flex items-center gap-1 background-text-reverse-black font-small text-fluid-sm hover:underline transition-colors mb-8`}>
+            <MdArrowForward size={16} />
             {t('home.intro.aboutLink')}
           </Link>
 
@@ -148,7 +149,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         </div>
 
         {/* Encouragement Section */}
-          <section className={`${colorModeContext} relative mt-12 p-6 rounded-xl bg-gray-100 dark:bg-gray-800 text-center`}>
+          <section className={`${colorModeContext} relative mt-12 p-6 rounded-xl bg-gray-100 dark:bg-black text-center`}>
             {/* Weather widget - right corner on larger screens */}
             <div className="hidden sm:block sm:absolute sm:top-4 sm:right-4">
               <WeatherWidget />
@@ -157,7 +158,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
             <div className="flex justify-center mb-4">
               <GiBasketballBall size={40} className="text-first-color" />
             </div>
-            <h2 className={`${colorModeContext} poppins-bold text-fluid-2xl background-text mb-4`}>
+            <h2 className={`${colorModeContext} poppins-bold text-fluid-2xl text-first-color mb-4`}>
               {t('home.encouragement.title')}
             </h2>
 

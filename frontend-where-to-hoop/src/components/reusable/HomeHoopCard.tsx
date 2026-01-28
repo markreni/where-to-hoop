@@ -52,7 +52,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
             <HoopBadge
               variant="condition"
               condition={hoop.condition}
-              text={t(`common.${hoop.condition}`)}
+              text={t(`common.condition.${hoop.condition}`)}
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.condition')}
             />

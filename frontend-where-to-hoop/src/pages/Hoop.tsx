@@ -88,7 +88,7 @@ const Hoop = ({ hoop }: HoopProps) => {
                   <HoopBadge
                     variant="condition"
                     condition={hoop.condition}
-                    text={t(`common.${hoop.condition}`)}
+                    text={t(`common.condition.${hoop.condition}`)}
                     tooltip={t('hoops.tooltips.condition')}
                   />
                   <HoopBadge
