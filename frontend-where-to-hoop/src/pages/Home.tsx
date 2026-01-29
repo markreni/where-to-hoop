@@ -96,7 +96,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         <section className="text-center py-8 sm:py-12">
 
           <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black mb-4`}>
-            {t('home.intro.welcome')}
+            {t('home.intro.welcomePrefix')} <span className={`${colorModeContext} background-text-black text-stroke-adaptive`}>WhereHoops</span>
           </h1>
           <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-3`}>
             {t('home.intro.description')}

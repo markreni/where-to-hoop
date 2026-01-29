@@ -188,6 +188,15 @@
   @apply flex justify-center items-center;
 }
 
+.text-stroke-adaptive {
+  -webkit-text-stroke: 3px white;
+  paint-order: stroke fill;
+}
+
+.dark .text-stroke-adaptive {
+  -webkit-text-stroke: 3px black;
+}
+
 /* ------------ Fluid Responsive Text ------------ */
 /* Smooth scaling between 320px and 1280px viewport widths */
 

@@ -9,6 +9,7 @@
     "enableLocation": "Enable location access to see the nearest courts",
     "intro": {
       "welcome": "Welcome to WhereHoops",
+      "welcomePrefix": "Welcome to",
       "description": "From basketball lovers, for basketball lovers.",
       "description2": "WhereHoops is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
       "aboutLink": "Find out more about us and our core values"

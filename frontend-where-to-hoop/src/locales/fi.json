@@ -9,6 +9,7 @@
     "enableLocation": "Salli sijainnin käyttö nähdäksesi lähimmät kentät",
     "intro": {
       "welcome": "Tervetuloa WhereHoopsiin",
+      "welcomePrefix": "Tervetuloa –",
       "description": "Koripallon ystäviltä, koripallon ystäville.",
       "description2": "WhereHoops on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja yhdistymään muiden pelaajien kanssa alueellasi.",
       "aboutLink": "Lue lisää meistä ja arvoistamme"
