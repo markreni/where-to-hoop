@@ -11,7 +11,7 @@ import { useWeather, isWarmWeather, isRainyWeather, isSnowyWeather, isGoodWeathe
 import type { BasketballHoop, ColorMode } from "../types/types.ts";
 import haversineDistance from "../utils/functions.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
-import baskethoopImg from "../images/baskethoop.png";
+//import baskethoopImg from "../images/baskethoop.png";
 import { MdLocationPin, MdArrowForward } from "react-icons/md";
 import { InteractiveBasketball } from "../components/reusable/InteractiveBasketball.tsx";
 
