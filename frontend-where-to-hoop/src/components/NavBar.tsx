@@ -57,12 +57,17 @@ const NavBar = () => {
             <Link to="/">
               <Logo/>
             </Link>
-            <div className="flex-center gap-3">
+            <div className="flex-center gap-4">
               <DarkModeToggle />
-              <LanguageToggle />
+              <div className="xsm:hidden">
+                <LanguageToggle />
+              </div>
             </div>
           </div>
-          <div className="flex-center gap-2">
+          <div className="flex-center gap-5">
+            <div className="hidden xsm:block">
+              <LanguageToggle />
+            </div>
             <MenuTrigger>
               <Button>
                 <FiAlignJustify size={28} className="text-first-color dark:text-yellow-400"/>

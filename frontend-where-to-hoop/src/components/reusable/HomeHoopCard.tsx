@@ -40,7 +40,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
           <strong className="text-fluid-sm line-clamp-1">{hoop.name}</strong>
           <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
         </div>
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <HoopBadge
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
@@ -63,11 +63,13 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
               tooltip={t('hoops.tooltips.currentPlayers')}
             />
           </div>
+          <div className="">
           <HoopCardButton
             actionFunction={readyToPlay}
             title={t('hoops.hoopcardReadyToPlayButton')}
             colors="hoop-card-button-green"
           />
+          </div>
         </div>
       </div>
     </div>

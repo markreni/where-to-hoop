@@ -15,6 +15,7 @@ interface HoopBadgeProps {
   textClassName?: string;
   icon?: ReactNode;
   tooltip?: string;
+  capitalize?: boolean;
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
@@ -41,6 +42,7 @@ const HoopBadge = ({
   textClassName = 'text-fluid-xs',
   icon,
   tooltip,
+  capitalize = true,
 }: HoopBadgeProps) => {
   const conditionClass = variant === 'condition' && condition
     ? conditionColorSelector(condition)
@@ -58,7 +60,7 @@ const HoopBadge = ({
   return (
     <div className={`hoop-card-icon ${variantStyles[variant]} ${conditionClass}`} title={tooltip}>
       {renderIcon()}
-      <span className={`${textClassName} capitalize`}>
+      <span className={`${textClassName} ${capitalize ? 'capitalize' : ''}`}>
         {text}
       </span>
     </div>

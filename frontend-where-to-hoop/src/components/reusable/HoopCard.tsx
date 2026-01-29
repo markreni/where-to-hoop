@@ -63,7 +63,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/150'}
           alt={hoop.name}
         />
-        <div className="flex justify-between gap-2">
+        <div className="flex justify-start gap-2">
           <HoopBadge
             variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
             text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
@@ -78,18 +78,21 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
             textClassName="responsive-hoopcard-elements-text"
             tooltip={t('hoops.tooltips.condition')}
           />
+          {/*
           <HoopBadge
             variant="date"
             text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: "2-digit", month: "2-digit", day: "2-digit" })}
             showIcon={xsm}
             tooltip={t('hoops.tooltips.dateAdded')}
           />
+          */} 
           <HoopBadge
             variant="players"
             text={t('hoops.players', { count: hoop.playerEnrollments.length > 99 ? '>99' : hoop.playerEnrollments.length })}
             showIcon={true}
             textClassName="responsive-hoopcard-elements-text"
             tooltip={t('hoops.tooltips.currentPlayers')}
+            capitalize={false}
           />
         </div>
       </div>
