@@ -82,9 +82,8 @@ describe('HoopCard', () => {
 
   it('renders players count', () => {
     render(<HoopCard {...defaultProps} />);
-    // Find the players badge container and check it contains the count
-    const playersBadge = screen.getByText('5').closest('.hoop-card-icon');
-    expect(playersBadge).toHaveClass('bg-purple-100');
+    // Players badge now shows translated text with count
+    expect(screen.getByText(/5 players on the court/)).toBeInTheDocument();
   });
 
   it('caps players display at >99 for large numbers', () => {

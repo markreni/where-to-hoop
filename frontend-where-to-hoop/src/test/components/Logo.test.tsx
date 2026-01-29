@@ -23,6 +23,6 @@ describe('Logo', () => {
     render(<Logo />);
     const heading = screen.getByRole('heading');
     expect(heading).toHaveClass('text-first-color');
-    expect(heading).toHaveClass('font-bold');
+    expect(heading).toHaveClass('font-medium');
   });
 });

@@ -1,11 +1,12 @@
 import type { BasketballHoop, ColorMode } from "../../types/types.ts";
 import type { FocusableElement } from "@react-types/shared";
-import type { MouseEvent } from "react";
+import { useMemo, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
+import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 
 interface HomeHoopCardProps {
   hoop: BasketballHoop;
@@ -25,6 +26,11 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
     e.stopPropagation();
     navigate(`/hoops/${hoop.id}`);
   };
+
+  const { playingNow } = useMemo(
+        () => groupEnrollmentsByTime(hoop.playerEnrollments),
+        [hoop.playerEnrollments]
+    );
 
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full h-full`}> 
@@ -58,7 +64,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
             />
             <HoopBadge
               variant="players"
-              text={t('hoops.players', { count: hoop.playerEnrollments.length > 99 ? '>99' : hoop.playerEnrollments.length })}
+              text={t('hoops.players', { count: hoop.playerEnrollments.length > 99 ? '>99' : playingNow.length })}
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.currentPlayers')}
             />

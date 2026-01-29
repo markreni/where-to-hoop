@@ -5,6 +5,7 @@ import { BackArrow } from "../components/reusable/BackArrow";
 import Footer from "../components/Footer";
 import { MdEmail } from "react-icons/md";
 import { FaGithub } from "react-icons/fa";
+import { emailDomain } from "../utils/constants";
 
 const Contact = () => {
   const colorModeContext: ColorMode = useColorModeValues();
@@ -25,13 +26,13 @@ const Contact = () => {
 
           <div className="flex flex-col gap-4">
             <a
-              href="mailto:contact@wherehoops.com"
+              href={`mailto:${emailDomain}`}
               className={`${colorModeContext} flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 background-text hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors`}
             >
               <MdEmail size={24} className="text-first-color" />
               <div>
                 <p className="font-medium">{t('contact.email')}</p>
-                <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>contact@wherehoops.com</p>
+                <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>{emailDomain}</p>
               </div>
             </a>
 

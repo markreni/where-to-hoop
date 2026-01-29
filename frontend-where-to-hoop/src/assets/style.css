@@ -250,7 +250,7 @@
     @apply pb-4 sm:pb-6 md:pb-8 lg:pb-12 xl:pb-16 2xl:pb-20;
   }
   .padding-for-nav-bar {
-    @apply pt-20;
+    @apply pt-10;
   }
   .padding-for-back-arrow {
     @apply pt-32;

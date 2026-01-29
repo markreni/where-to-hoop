@@ -4,46 +4,7 @@ import type { ColorMode, PlayerEnrollment } from '../types/types'
 import { useColorModeValues } from '../contexts/DarkModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { PlayerCard } from './reusable/PlayerCard'
-
-// Group enrollments by time status
-const groupEnrollmentsByTime = (enrollments: PlayerEnrollment[]): {
-  playingNow: PlayerEnrollment[]
-  comingSoon: PlayerEnrollment[] // Coming later today
-  comingLater: PlayerEnrollment[] // Coming on a future day
-} => {
-  const now = new Date()
-
-  // Get end of today (midnight)
-  const endOfToday = new Date(now)
-  endOfToday.setHours(23, 59, 59, 999)
-
-  const playingNow: PlayerEnrollment[] = []
-  const comingSoon: PlayerEnrollment[] = []
-  const comingLater: PlayerEnrollment[] = []
-
-  enrollments.forEach(enrollment => {
-    const arrivalTime = new Date(enrollment.arrivalTime)
-    const endTime = new Date(arrivalTime.getTime() + enrollment.duration * 60 * 1000)
-
-    if (arrivalTime <= now && endTime > now) {
-      // Currently at the court
-      playingNow.push(enrollment)
-    } else if (arrivalTime > now && arrivalTime <= endOfToday) {
-      // Arriving later today
-      comingSoon.push(enrollment)
-    } else if (arrivalTime > endOfToday) {
-      // Arriving on a future day
-      comingLater.push(enrollment)
-    }
-  })
-
-  // Sort each group by arrival time
-  playingNow.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
-  comingSoon.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
-  comingLater.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
-
-  return { playingNow, comingSoon, comingLater }
-}
+import { groupEnrollmentsByTime } from '../utils/functions'
   
 // Players panel component
 interface PlayersPanelProps {

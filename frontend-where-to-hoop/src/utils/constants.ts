@@ -13,7 +13,9 @@ const MAX_IMAGE_SIZE_MB: number = 5;
 const MAX_IMAGE_SIZE_BYTES: number = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 const MAX_IMAGES: number = 5;
 
+const emailDomain: string = "mark.renssi@gmail.com";
+
 // Note length constant for adding enrollment
 const MAX_NOTE_LENGTH = 80
 
-export { centerCoordinates, MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES, helsinkiBounds, MAX_NOTE_LENGTH };
+export { centerCoordinates, MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES, helsinkiBounds, MAX_NOTE_LENGTH, emailDomain };

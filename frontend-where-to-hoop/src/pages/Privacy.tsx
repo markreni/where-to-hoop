@@ -4,6 +4,7 @@ import type { ColorMode } from "../types/types";
 import { BackArrow } from "../components/reusable/BackArrow";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { emailDomain } from "../utils/constants";
 
 const Privacy = () => {
   const colorModeContext: ColorMode = useColorModeValues();
@@ -75,7 +76,7 @@ const Privacy = () => {
               <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400`}>
                 {t('privacy.contactText')}{" "}
                 <Link to="/contact" className="text-first-color hover:underline">{t('privacy.contactPage')}</Link>{" "}
-                {t('privacy.orEmail')} <strong>contact@wherehoops.com</strong>.
+                {t('privacy.orEmail')} <strong>{emailDomain}</strong>.
               </p>
             </section>
           </div>

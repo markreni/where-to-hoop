@@ -3,13 +3,14 @@ import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { useNavigate } from "react-router-dom";
 import type { FocusableElement } from "@react-types/shared";
-import type { MouseEvent } from "react";
+import { useMemo, type MouseEvent } from "react";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
+import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 
 interface HoopCardProps {
   hoop: BasketballHoop;
@@ -45,6 +46,11 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
     {/* `Ready to play at hoop ${hoop.name} today at ${new Date().toISOString().split('T')[1]}` */}
     navigate(`/hoops/${hoop.id}`);
   };
+
+  const { playingNow } = useMemo(
+      () => groupEnrollmentsByTime(hoop.playerEnrollments),
+      [hoop.playerEnrollments]
+  );
 
   return (
     <div className={`${colorModeContext} h-1/3 sm:h-full w-full flex flex-col justify-start gap-3 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
@@ -88,7 +94,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           */} 
           <HoopBadge
             variant="players"
-            text={t('hoops.players', { count: hoop.playerEnrollments.length > 99 ? '>99' : hoop.playerEnrollments.length })}
+            text={t('hoops.players', { count: hoop.playerEnrollments.length > 99 ? '>99' : playingNow.length })}
             showIcon={true}
             textClassName="responsive-hoopcard-elements-text"
             tooltip={t('hoops.tooltips.currentPlayers')}

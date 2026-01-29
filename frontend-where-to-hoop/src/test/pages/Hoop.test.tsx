@@ -101,7 +101,7 @@ describe('Hoop Page', () => {
 
   it('renders EnrollmentForm component', () => {
     render(<Hoop hoop={mockHoop} />);
-    expect(screen.getByText('Join the Game')).toBeInTheDocument();
+    expect(screen.getByText('Enroll to play')).toBeInTheDocument();
   });
 
   it('shows "Hoop not found" when hoop is undefined', () => {
