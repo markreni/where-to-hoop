@@ -88,7 +88,7 @@ describe('HoopCard', () => {
   });
 
   it('caps players display at >99 for large numbers', () => {
-    const hoopWithManyPlayers = { ...mockHoop, playerEnrollments: Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerName: `Player${i}`, hoopId: '11', arrivalTime: new Date(), duration: 60, createdAt: new Date() })) };
+    const hoopWithManyPlayers = { ...mockHoop, playerEnrollments: Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerName: `Player${i}`, hoopId: '11', arrivalTime: new Date(), duration: 60, playMode: 'open' as const, createdAt: new Date() })) };
     render(<HoopCard {...defaultProps} hoop={hoopWithManyPlayers} />);
     expect(screen.getByText(/>99/)).toBeInTheDocument();
   });

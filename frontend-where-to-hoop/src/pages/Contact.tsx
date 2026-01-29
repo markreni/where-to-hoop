@@ -36,7 +36,7 @@ const Contact = () => {
             </a>
 
             <a
-              href="https://github.com"
+              href="https://github.com/markreni/where-to-hoop"
               target="_blank"
               rel="noopener noreferrer"
               className={`${colorModeContext} flex items-center gap-3 p-4 rounded-lg bg-gray-100 dark:bg-gray-800 background-text hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors`}

@@ -9,7 +9,8 @@
     "enableLocation": "Salli sijainnin käyttö nähdäksesi lähimmät kentät",
     "intro": {
       "welcome": "Tervetuloa WhereHoopsiin",
-      "description": "Koripallon ystäviltä, koripallon ystäville. WhereHoops on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja yhdistymään muiden pelaajien kanssa alueellasi.",
+      "description": "Koripallon ystäviltä, koripallon ystäville.",
+      "description2": "WhereHoops on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja yhdistymään muiden pelaajien kanssa alueellasi.",
       "aboutLink": "Lue lisää meistä ja arvoistamme"
     },
     "hero": {
@@ -82,10 +83,10 @@
     }
   },
   "footer": {
-    "about": "Tietoja",
+    "about": "Meistä",
     "privacy": "Tietosuoja",
     "contact": "Yhteystiedot",
-    "faq": "Käyttöohjeet",
+    "faq": "FAQ",
     "copyright": "WhereHoops. Kaikki oikeudet pidätetään."
   },
   "about": {

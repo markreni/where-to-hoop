@@ -1,6 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test-utils';
-import userEvent from '@testing-library/user-event';
 import { HomeHoopCard } from '../../components/reusable/HomeHoopCard';
 import type { BasketballHoop } from '../../types/types';
 
@@ -73,7 +72,7 @@ describe('HomeHoopCard', () => {
   });
 
   it('caps players display at >99 for large numbers', () => {
-    const hoopWithManyPlayers = { ...mockHoop, playerEnrollments: Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerName: `Player${i}`, hoopId: '1', arrivalTime: new Date(), duration: 60, createdAt: new Date() })) };
+    const hoopWithManyPlayers = { ...mockHoop, playerEnrollments: Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerName: `Player${i}`, hoopId: '1', arrivalTime: new Date(), duration: 60, playMode: 'open' as const, createdAt: new Date() })) };
     render(<HomeHoopCard {...defaultProps} hoop={hoopWithManyPlayers} />);
     expect(screen.getByText('>99')).toBeInTheDocument();
   });

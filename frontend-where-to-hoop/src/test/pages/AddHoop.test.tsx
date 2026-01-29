@@ -28,8 +28,11 @@ vi.mock('../../hooks/useLocateUser', () => ({
 }));
 
 // Mock URL.createObjectURL
-global.URL.createObjectURL = vi.fn(() => 'mock-url');
-global.URL.revokeObjectURL = vi.fn();
+vi.stubGlobal('URL', {
+  ...URL,
+  createObjectURL: vi.fn(() => 'mock-url'),
+  revokeObjectURL: vi.fn(),
+});
 
 describe('AddHoop', () => {
   beforeEach(() => {

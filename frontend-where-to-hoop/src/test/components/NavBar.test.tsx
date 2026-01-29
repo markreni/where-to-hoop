@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '../test-utils';
-import userEvent from '@testing-library/user-event';
 import NavBar from '../../components/NavBar';
 
 // Mock useMediaQuery

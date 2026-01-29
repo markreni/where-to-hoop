@@ -27,7 +27,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   };
 
   return (
-    <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg cursor-pointer w-full h-full`}> 
+    <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full h-full`}> 
       <div className="w-full h-40 sm:h-48 lg:h-56 bg-gray-100 dark:bg-gray-800">
         <img
           src={imageSrc}

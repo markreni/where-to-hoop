@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { FaGithub } from "react-icons/fa";
+//import { FaGithub } from "react-icons/fa";
 import { useTranslation } from "../hooks/useTranslation";
 
 const Footer = () => {

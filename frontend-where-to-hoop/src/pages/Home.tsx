@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer.tsx";
 import { HomeHoopCard } from "../components/reusable/HomeHoopCard.tsx";
@@ -13,7 +13,7 @@ import haversineDistance from "../utils/functions.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 import baskethoopImg from "../images/baskethoop.png";
 import { MdLocationPin, MdArrowForward } from "react-icons/md";
-import { GiBasketballBall } from "react-icons/gi";
+import { InteractiveBasketball } from "../components/reusable/InteractiveBasketball.tsx";
 
 const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const colorModeContext: ColorMode = useColorModeValues();
@@ -21,6 +21,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const locateUser = useLocateUser();
   const { t } = useTranslation();
   const weather = useWeather();
+  const encouragementRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
       locateUser();
@@ -83,20 +84,25 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   return (
     <div className={`${colorModeContext} padding-for-nav-bar min-h-screen flex flex-col from-second-color to-first-color transition-colors relative overflow-hidden`}>
       {/* Background hoop image */}
-      <img
+      {/*<img
         src={baskethoopImg}
         alt=""
         aria-hidden="true"
         className="absolute top-1/6 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-2xl opacity-6 pointer-events-none select-none"
       />
+      */}
       <div className="flex-grow flex flex-col gap-10 justify-center px-4 sm:px-8 py-8 max-w-4xl mx-auto w-full relative z-10">
         {/* Intro Section */}
         <section className="text-center py-8 sm:py-12">
+
           <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black mb-4`}>
             {t('home.intro.welcome')}
           </h1>
-          <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-8`}>
+          <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-3`}>
             {t('home.intro.description')}
+          </p>
+          <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-8`}>
+            {t('home.intro.description2')}
           </p>
 
           {/* About Link */}
@@ -150,14 +156,14 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         </div>
 
         {/* Encouragement Section */}
-          <section className={`${colorModeContext} relative mt-12 p-6 rounded-xl bg-gray-100 dark:bg-black text-center`}>
+          <section ref={encouragementRef} className={`${colorModeContext} relative mt-12 p-6 rounded-xl bg-gray-100 dark:bg-black text-center overflow-hidden`}>
             {/* Weather widget - right corner on larger screens */}
             <div className="hidden sm:block sm:absolute sm:top-4 sm:right-4">
               <WeatherWidget />
             </div>
 
             <div className="flex justify-center mb-4">
-              <GiBasketballBall size={40} className="text-first-color" />
+              <InteractiveBasketball size={40} className="text-first-color" boundsRef={encouragementRef} />
             </div>
             <h2 className={`${colorModeContext} poppins-bold text-fluid-2xl text-first-color mb-4`}>
               {t('home.encouragement.title')}
