@@ -58,7 +58,7 @@
 }
 
 .leaflet-top.leaflet-right {
-  top: 100px;  /* Adjust to clear navbar */
+  top: 65px;  /* Adjust to clear navbar */
   right: -1px;
 }
 
@@ -270,7 +270,7 @@
     @apply flex items-center justify-center px-2 py-0.5 gap-2 text-sm rounded;
   }
   .hoop-card-button-green {
-    @apply bg-green-500/80 hover:bg-green-500/90 dark:hover:bg-green-500/70 text-green-200 border-green-200/70;
+    @apply bg-green-600/80 hover:bg-green-500/90 dark:hover:bg-green-500/70 text-green-200 border-green-200/90;
   }
   .hoop-card-button-blue {
     @apply bg-blue-500/80 hover:bg-blue-500/90 dark:hover:bg-blue-500/70 text-blue-200 border-blue-200/70;

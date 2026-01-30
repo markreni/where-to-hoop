@@ -52,6 +52,8 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
       [hoop.playerEnrollments]
   );
 
+  const playingNowCount = playingNow.length;
+
   return (
     <div className={`${colorModeContext} h-1/3 sm:h-full w-full flex flex-col justify-start gap-3 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
       <div className="flex justify-between items-start gap-2">
@@ -94,7 +96,11 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
           */} 
           <HoopBadge
             variant="players"
-            text={t('hoops.players', { count: hoop.playerEnrollments.length > 99 ? '>99' : playingNow.length })}
+            text={
+              playingNowCount === 1
+              ? t('hoops.players.one')
+              : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
+            }
             showIcon={true}
             textClassName="responsive-hoopcard-elements-text"
             tooltip={t('hoops.tooltips.currentPlayers')}

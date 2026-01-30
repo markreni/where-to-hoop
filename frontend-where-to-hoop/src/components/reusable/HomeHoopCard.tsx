@@ -35,6 +35,8 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
         [hoop.playerEnrollments]
     );
 
+  const playingNowCount = playingNow.length;
+
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full h-full`}> 
       <div className="w-full h-40 sm:h-48 lg:h-56 bg-gray-100 dark:bg-gray-800">
@@ -68,9 +70,14 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
             />
             <HoopBadge
               variant="players"
-              text={t('hoops.players', { count: hoop.playerEnrollments.length > 99 ? '>99' : playingNow.length })}
+              text={
+                playingNowCount === 1 
+                ? t('hoops.players.one') 
+                : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
+              }
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.currentPlayers')}
+              capitalize={false}
             />
           </div>
           <div className="">

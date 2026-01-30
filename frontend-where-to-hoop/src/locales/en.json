@@ -74,7 +74,10 @@
     "searchPlaceholder": "Find hoops",
     "hoopcardMapButton": "On Map",
     "hoopcardReadyToPlayButton": "Ready to play",
-    "players": "{{count}} players on the court",
+    "players": {
+      "one": "1 player at court",
+      "other": "{{count}} players at court"
+    },
     "tooltips": {
       "courtType": "Court type",
       "condition": "Court condition",

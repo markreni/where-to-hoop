@@ -33,11 +33,11 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
 
   return (
     <Button 
-      className="absolute top-19 right-[10px] text-gray-700 text-3xl z-400 cursor-pointer" 
+      className="absolute top-37 right-[11px] text-gray-800 text-3xl z-400 cursor-pointer" 
         onPress={handleLocateUser}
         aria-label="Locate Me"
       >
-        {mapCenterValues.latitude && mapCenterValues.longitude ? <MdOutlineMyLocation /> : <MdLocationDisabled />}
+        {mapCenterValues.latitude && mapCenterValues.longitude ? <MdOutlineMyLocation size={30}/> : <MdLocationDisabled size={30}/>}
     </Button>
   );
 }
