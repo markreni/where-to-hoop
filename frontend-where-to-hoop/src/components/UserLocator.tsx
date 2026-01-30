@@ -2,12 +2,15 @@ import { Button } from "react-aria-components";
 import { MdOutlineMyLocation } from "react-icons/md";
 import useLocateUser from "../hooks/useLocateUser.ts";
 import { useEffect } from "react";
-import { useLocationDispatch } from "../contexts/LocationContext.tsx";
+import { useLocationDispatch, useLocationValues } from "../contexts/LocationContext.tsx";
+import { MdLocationDisabled } from "react-icons/md";
+import type { Coordinates } from "../types/types.ts";
 
 
 const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => {
   const locateUser = useLocateUser();
   const userLocationDispatch = useLocationDispatch();
+  const mapCenterValues: Coordinates = useLocationValues();
 
   useEffect(() => {
     {/* Automatically watch user's location and update context 
@@ -34,7 +37,7 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
         onPress={handleLocateUser}
         aria-label="Locate Me"
       >
-      <MdOutlineMyLocation />
+        {mapCenterValues.latitude && mapCenterValues.longitude ? <MdOutlineMyLocation /> : <MdLocationDisabled />}
     </Button>
   );
 }

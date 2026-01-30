@@ -248,7 +248,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             className={`${colorModeContext} sm:hidden p-2 rounded-full bg-background background-text transition-all ${
               currentIndex === 0
                 ? 'opacity-40 cursor-not-allowed'
-                : 'hover:bg-second-color active:scale-95'
+                : 'background-hover-gray active:scale-95'
             }`}
           >
             <IoArrowBackSharp size={20} />
@@ -280,7 +280,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             className={`${colorModeContext} sm:hidden p-2 rounded-full bg-background background-text transition-all ${
               currentIndex === itemCount - 1
                 ? 'opacity-40 cursor-not-allowed'
-                : 'hover:bg-second-color active:scale-95'
+                : 'background-hover-gray active:scale-95'
             }`}
           >
             <IoArrowForwardSharp size={20} />

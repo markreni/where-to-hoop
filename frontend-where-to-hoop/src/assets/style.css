@@ -68,6 +68,14 @@
   @apply hover:bg-gray-100 dark:hover:bg-gray-800;
 }
 
+.background-hover-gray {
+  @apply hover:bg-gray-300 dark:hover:bg-gray-700;
+}
+
+.background-hover-text-gray {
+  @apply hover:text-gray-300 dark:hover:text-gray-700;
+}
+
 .background-text {
   @apply text-gray-700 dark:text-white;
 }

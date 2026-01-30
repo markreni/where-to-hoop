@@ -7,6 +7,8 @@ import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
+import breakpoints from "../../assets/style.ts";
+import { useMediaQuery } from "usehooks-ts";
 
 interface HomeHoopCardProps {
   hoop: BasketballHoop;
@@ -20,6 +22,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   const imageSrc = hoop.profile_images.length > 0
     ? hoop.profile_images[0].imageName
     : "https://via.placeholder.com/300x200";
+  const xsm: boolean = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
 
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
@@ -52,6 +55,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
               text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
               iconSize={12}
+              showIcon={xsm}
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.courtType')}
             />

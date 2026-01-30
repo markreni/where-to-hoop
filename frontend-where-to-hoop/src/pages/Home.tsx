@@ -96,7 +96,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         <section className="text-center py-8 sm:py-12">
 
           <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black mb-4`}>
-            {t('home.intro.welcomePrefix')} <span className={`${colorModeContext} background-text-black text-stroke-adaptive`}>WhereHoops</span>
+            {t('home.intro.welcomePrefix')} <span className={`${colorModeContext} background-text-black text-stroke-adaptive`}>{t('home.intro.wherehoops')}</span>
           </h1>
           <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-3`}>
             {t('home.intro.description')}
@@ -120,7 +120,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
 
             <Link to="/hoops">
               <button onClick={() => {localStorage.setItem("hoopsMapView", JSON.stringify(true));}} 
-                  className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg border-1 border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
+                  className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 shadow-xl border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
                 <MdLocationPin size={24}/>
                 {t('home.hero.ctaButton')}
               </button>

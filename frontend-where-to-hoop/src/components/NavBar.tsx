@@ -74,7 +74,7 @@ const NavBar = () => {
               </Button>
               <Popover className="w-24/25 sm:w-full pr-6">
                 <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
-                  <MenuItem className={`${colorModeContext} mb-2 rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>
+                  <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/hoops" className="flex items-center gap-2">
                       <Button onClick={() => locateUser()}>
                         <MdLocationPin size={22}/>
@@ -82,7 +82,7 @@ const NavBar = () => {
                       {t('nav.showHoops')}
                     </Link>
                   </MenuItem>
-                  <MenuItem className={`${colorModeContext} rounded-md hover:text-black dark:text-black dark:hover:text-yellow-400`}>
+                  <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/addhoop" className="flex items-center gap-2">
                       <GiBasketballBasket size={22}/>
                       {t('nav.addHoop')}
