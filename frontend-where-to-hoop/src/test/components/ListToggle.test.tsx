@@ -1,55 +1,50 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import { ListToggle } from '../../components/ListToggle';
 
 describe('ListToggle', () => {
-  const defaultProps = {
-    toggleFunction: vi.fn(),
-    mapView: false,
-  };
+  beforeEach(() => {
+    localStorage.clear();
+  });
 
   it('renders toggle button', () => {
-    render(<ListToggle {...defaultProps} />);
+    render(<ListToggle />);
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
-  it('shows "Show Map" text when mapView is false', () => {
-    render(<ListToggle {...defaultProps} mapView={false} />);
-    expect(screen.getByText('Show Map')).toBeInTheDocument();
-  });
-
-  it('shows "Show List" text when mapView is true', () => {
-    render(<ListToggle {...defaultProps} mapView={true} />);
+  it('shows "Show List" text when mapView is map (default)', () => {
+    render(<ListToggle />);
     expect(screen.getByText('Show List')).toBeInTheDocument();
   });
 
-  it('calls toggleFunction with true when mapView is false and clicked', async () => {
+  it('toggles to list view when clicked', async () => {
     const user = userEvent.setup();
-    const toggleFunction = vi.fn();
+    render(<ListToggle />);
 
-    render(<ListToggle toggleFunction={toggleFunction} mapView={false} />);
+    // Initially shows "Show List" (because default is map view)
+    expect(screen.getByText('Show List')).toBeInTheDocument();
 
     const button = screen.getByRole('button');
     await user.click(button);
 
-    expect(toggleFunction).toHaveBeenCalledWith(true);
+    // After click, shows "Show Map" (because now in list view)
+    expect(screen.getByText('Show Map')).toBeInTheDocument();
   });
 
-  it('calls toggleFunction with false when mapView is true and clicked', async () => {
+  it('toggles back to map view when clicked twice', async () => {
     const user = userEvent.setup();
-    const toggleFunction = vi.fn();
-
-    render(<ListToggle toggleFunction={toggleFunction} mapView={true} />);
+    render(<ListToggle />);
 
     const button = screen.getByRole('button');
-    await user.click(button);
+    await user.click(button); // map -> list
+    await user.click(button); // list -> map
 
-    expect(toggleFunction).toHaveBeenCalledWith(false);
+    expect(screen.getByText('Show List')).toBeInTheDocument();
   });
 
   it('renders icon', () => {
-    const { container } = render(<ListToggle {...defaultProps} />);
+    const { container } = render(<ListToggle />);
     const icon = container.querySelector('svg');
     expect(icon).toBeInTheDocument();
   });

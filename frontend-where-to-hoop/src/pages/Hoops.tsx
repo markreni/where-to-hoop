@@ -1,5 +1,5 @@
 import "leaflet/dist/leaflet.css";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Map }from "../components/Map";
 import { List } from "../components/List";
 import { ListToggle } from "../components/ListToggle";
@@ -8,23 +8,17 @@ import type { BasketballHoop, Condition } from "../types/types";
 import { doorOptions, conditionOptions } from "../utils/options.tsx";
 import haversineDistance from "../utils/functions";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
+import { useMapViewValues } from "../contexts/MapViewContext.tsx";
 import { useTranslation } from "../hooks/useTranslation";
 //import { Link } from "react-router-dom";
 //import { useState, useEffect } from "react";
 
 const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const { t } = useTranslation();
-  const [mapView, toggleView] = useState<boolean>(() => {
-    const stored = localStorage.getItem("hoopsMapView");
-    return stored ? JSON.parse(stored) : true;
-  });
+  const mapView = useMapViewValues();
   const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
   const [selectedDoors, setSelectedDoors] = useState<Set<'indoor' | 'outdoor'>>(new Set(['indoor', 'outdoor']));
   const mapCenterValues = useLocationValues();
-
-  useEffect(() => {
-    localStorage.setItem("hoopsMapView", JSON.stringify(mapView));
-  }, [mapView]);
 
   const toggleCondition = (condition: Condition) => {
     setSelectedConditions(prev => {
@@ -81,12 +75,14 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
     setSelectedDoors(new Set(['indoor', 'outdoor']));
   };
   
+  const isMapView = mapView === 'map';
+
   return (
     <div className="relative h-screen">
       <div className="absolute top-19 left-[10px] z-401">
-        <ListToggle toggleFunction={toggleView} mapView={mapView} />
+        <ListToggle />
       </div>
-      { mapView ? (
+      { isMapView ? (
       <div>
         <div className="absolute bottom-2 right-[10px] z-1001">
           <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: toggleDoor, options: doorOptions, clearFilter: clearDoorFilters }]} />
@@ -96,13 +92,11 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
         </div>
       </div>
       ) : null }
-      { mapView ? (
+      { isMapView ? (
           <Map filteredAndSortedHoops={filteredAndSortedHoops} />
         ) : (
-          <List 
-            filteredAndSortedHoops={filteredAndSortedHoops} 
-            toggleFunction={toggleView} 
-            mapView={mapView} 
+          <List
+            filteredAndSortedHoops={filteredAndSortedHoops}
             filters={{
               selectedConditions,
               selectedDoors,
@@ -111,7 +105,7 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
               clearConditionFilters,
               clearDoorFilters,
             }}
-            /> 
+            />
         )}
     </div>
   );

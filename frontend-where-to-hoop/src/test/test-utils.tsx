@@ -1,6 +1,7 @@
 import { render, type RenderOptions } from '@testing-library/react';
 import type { ReactElement, ReactNode } from 'react';
 import { ColorModeContextProvider } from '../contexts/DarkModeContext';
+import { MapViewContextProvider } from '../contexts/MapViewContext';
 import { LocationContextProvider } from '../contexts/LocationContext';
 import { LanguageContextProvider } from '../contexts/LanguageContext';
 import { ToastProvider } from '../contexts/ToastContext';
@@ -14,13 +15,15 @@ const AllProviders = ({ children }: AllProvidersProps) => {
   return (
     <BrowserRouter>
       <ColorModeContextProvider>
-        <LocationContextProvider>
-          <LanguageContextProvider>
-            <ToastProvider>
-              {children}
-            </ToastProvider>
-          </LanguageContextProvider>
-        </LocationContextProvider>
+        <MapViewContextProvider>
+          <LocationContextProvider>
+            <LanguageContextProvider>
+              <ToastProvider>
+                {children}
+              </ToastProvider>
+            </LanguageContextProvider>
+          </LocationContextProvider>
+        </MapViewContextProvider>
       </ColorModeContextProvider>
     </BrowserRouter>
   );

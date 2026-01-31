@@ -28,7 +28,7 @@ const languageReducer = (_: Language, action: Language): Language => {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 export const LanguageContextProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(languageReducer, initState(initialState));
+  const [state, dispatch] = useReducer(languageReducer, initialState, initState);
 
   useEffect(() => {
     try {

@@ -97,7 +97,7 @@ describe('Hoops', () => {
     const toggleButton = screen.getByRole('button', { name: /Show List/i });
     await user.click(toggleButton);
 
-    expect(window.localStorage.setItem).toHaveBeenCalledWith('hoopsMapView', 'false');
+    expect(window.localStorage.setItem).toHaveBeenCalledWith('mapView', 'list');
   });
 
   it('renders filter labels in map view', () => {

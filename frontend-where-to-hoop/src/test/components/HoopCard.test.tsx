@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import { HoopCard } from '../../components/reusable/HoopCard';
@@ -32,10 +32,12 @@ const mockIndoorHoop: BasketballHoop = {
 describe('HoopCard', () => {
   const defaultProps = {
     hoop: mockHoop,
-    toggleFunction: vi.fn(),
-    mapView: false,
     distance: 2.5,
   };
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
 
   it('renders hoop name', () => {
     render(<HoopCard {...defaultProps} />);
@@ -83,7 +85,7 @@ describe('HoopCard', () => {
   it('renders players count', () => {
     render(<HoopCard {...defaultProps} />);
     // Players badge now shows translated text with count
-    expect(screen.getByText(/5 players on the court/)).toBeInTheDocument();
+    expect(screen.getByText(/5 players on court/)).toBeInTheDocument();
   });
 
   it('caps players display at >99 for large numbers', () => {
@@ -97,38 +99,19 @@ describe('HoopCard', () => {
     expect(screen.getByLabelText('Add to favorites')).toBeInTheDocument();
   });
 
-  it('calls toggleFunction when "On map" button is clicked', async () => {
+  it('switches to map view when "On map" button is clicked', async () => {
     const user = userEvent.setup();
-    const toggleFunction = vi.fn();
-
-    render(<HoopCard {...defaultProps} toggleFunction={toggleFunction} mapView={false} />);
+    render(<HoopCard {...defaultProps} />);
 
     const mapButton = screen.getByRole('button', { name: /map/i });
     await user.click(mapButton);
 
-    expect(toggleFunction).toHaveBeenCalledWith(true);
+    // Verify localStorage was updated to 'map'
+    expect(localStorage.getItem('mapView')).toBe('map');
   });
 
   it('renders "Ready to play" button', () => {
     render(<HoopCard {...defaultProps} />);
     expect(screen.getByRole('button', { name: /ready/i })).toBeInTheDocument();
   });
-
-  /*
-  it('logs message when "Ready to play" is clicked', async () => {
-    const user = userEvent.setup();
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-
-    render(<HoopCard {...defaultProps} />);
-
-    const readyButton = screen.getByRole('button', { name: /ready/i });
-    await user.click(readyButton);
-
-    expect(consoleSpy).toHaveBeenCalledWith(
-      expect.stringContaining('Ready to play at hoop Central Park Court')
-    );
-
-    consoleSpy.mockRestore();
-  });
-  */
 });

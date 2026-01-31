@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, type Dispatch } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer.tsx";
 import { HomeHoopCard } from "../components/reusable/HomeHoopCard.tsx";
@@ -8,12 +8,13 @@ import { useLocationValues } from "../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
 import { useTranslation } from "../hooks/useTranslation.ts";
 import { useWeather, isWarmWeather, isRainyWeather, isSnowyWeather, isGoodWeatherForBasketball } from "../hooks/useWeather.ts";
-import type { BasketballHoop, ColorMode } from "../types/types.ts";
+import type { BasketballHoop, ColorMode, MapView } from "../types/types.ts";
 import haversineDistance from "../utils/functions.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 //import baskethoopImg from "../images/baskethoop.png";
 import { MdLocationPin, MdArrowForward } from "react-icons/md";
 import { InteractiveBasketball } from "../components/reusable/InteractiveBasketball.tsx";
+import { useMapViewDispatch } from "../contexts/MapViewContext.tsx";
 
 const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const colorModeContext: ColorMode = useColorModeValues();
@@ -21,6 +22,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const locateUser = useLocateUser();
   const { t } = useTranslation();
   const weather = useWeather();
+  const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
   const encouragementRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -119,7 +121,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
             </p>
 
             <Link to="/hoops">
-              <button onClick={() => {localStorage.setItem("hoopsMapView", JSON.stringify(true));}} 
+              <button onClick={() => { mapViewDispatch('map') }} 
                   className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 shadow-2xl border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
                 <MdLocationPin size={24}/>
                 {t('home.hero.ctaButton')}

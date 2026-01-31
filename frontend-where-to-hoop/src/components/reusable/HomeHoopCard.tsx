@@ -1,6 +1,6 @@
-import type { BasketballHoop, ColorMode } from "../../types/types.ts";
+import type { BasketballHoop, ColorMode, MapView } from "../../types/types.ts";
 import type { FocusableElement } from "@react-types/shared";
-import { useMemo, type MouseEvent } from "react";
+import { useMemo, type Dispatch, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
@@ -10,6 +10,7 @@ import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 import breakpoints from "../../assets/style.ts";
 import { useMediaQuery } from "usehooks-ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
+import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 
 interface HomeHoopCardProps {
   hoop: BasketballHoop;
@@ -21,6 +22,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   const { t } = useTranslation();
   const userLocationDispatch = useLocationDispatch();
   const navigate = useNavigate();
+  const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
   const imageSrc = hoop.profile_images.length > 0
     ? hoop.profile_images[0].imageName
     : "https://via.placeholder.com/300x200";
@@ -44,6 +46,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
         source: 'hoop',
       },
     });
+    mapViewDispatch('map');
     navigate(`/hoops/`);
   };
 

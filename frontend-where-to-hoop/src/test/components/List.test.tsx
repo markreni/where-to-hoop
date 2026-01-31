@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import { List } from '../../components/List';
@@ -57,10 +57,12 @@ const defaultFilters = {
 describe('List', () => {
   const defaultProps = {
     filteredAndSortedHoops: mockHoops,
-    toggleFunction: vi.fn(),
-    mapView: false,
     filters: defaultFilters,
   };
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
 
   it('renders hoop cards', () => {
     render(<List {...defaultProps} />);

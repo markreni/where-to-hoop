@@ -69,14 +69,14 @@ describe('HomeHoopCard', () => {
   it('renders players count', () => {
     render(<HomeHoopCard {...defaultProps} />);
     // Players badge now shows translated text with count
-    expect(screen.getByText(/5 players on the court/)).toBeInTheDocument();
+    expect(screen.getByText(/5 players on court/)).toBeInTheDocument();
   });
 
   it('caps players display at >99 for large numbers', () => {
     const hoopWithManyPlayers = { ...mockHoop, playerEnrollments: Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerName: `Player${i}`, hoopId: '1', arrivalTime: new Date(), duration: 60, playMode: 'open' as const, createdAt: new Date() })) };
     render(<HomeHoopCard {...defaultProps} hoop={hoopWithManyPlayers} />);
     // Players badge now shows translated text with count
-    expect(screen.getByText(/>99 players on the court/)).toBeInTheDocument();
+    expect(screen.getByText(/>99 players on court/)).toBeInTheDocument();
   });
 
   it('renders Ready to play button', () => {

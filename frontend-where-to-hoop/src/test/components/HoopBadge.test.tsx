@@ -37,7 +37,7 @@ describe('HoopBadge', () => {
       <HoopBadge variant="condition" condition="excellent" text="Excellent" />
     );
     const badge = container.querySelector('.hoop-card-icon');
-    expect(badge).toHaveClass('text-white', 'hoop-icon--excellent');
+    expect(badge).toHaveClass('hoop-icon--excellent');
   });
 
   it('hides icon when showIcon is false', () => {

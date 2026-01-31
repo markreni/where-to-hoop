@@ -25,12 +25,10 @@ interface FilterState {
 
 interface ListProps {
   filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[];
-  toggleFunction: (value: boolean) => void;
-  mapView: boolean;
   filters: FilterState;
 }
 
-const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: ListProps) => {
+const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
   const { selectedConditions, selectedDoors, onToggleCondition, onToggleDoor, clearConditionFilters, clearDoorFilters } = filters;
   const [searchTerm, setSearchTerm] = useState("");
   const [showFilters, setShowFilters] = useState(false);
@@ -113,14 +111,14 @@ const List = ({ filteredAndSortedHoops, toggleFunction, mapView, filters }: List
           <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6 max-w-screen-2xl mx-auto">
             {filteredWithSearchHoops.map(({ hoop, distance }) => (
               <Link key={hoop.id} to={`#`}>
-                <HoopCard hoop={hoop} distance={distance} toggleFunction={toggleFunction} mapView={mapView} />
+                <HoopCard hoop={hoop} distance={distance} />
               </Link>
             ))}
           </div>
         ) : (
           <div className="flex flex-col items-center gap-4 w-full max-w-xl mx-auto">
             {filteredWithSearchHoops.map(({ hoop, distance }) => (
-              <HoopCard key={hoop.id} hoop={hoop} distance={distance} toggleFunction={toggleFunction} mapView={mapView} />
+              <HoopCard key={hoop.id} hoop={hoop} distance={distance} />
             ))}
           </div>
         )}

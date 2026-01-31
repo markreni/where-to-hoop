@@ -1,4 +1,5 @@
-import type { BasketballHoop, ColorMode } from "../../types/types.ts";
+import type { Dispatch } from "react";
+import type { BasketballHoop, ColorMode, MapView } from "../../types/types.ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { useNavigate } from "react-router-dom";
@@ -11,19 +12,19 @@ import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
+import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 
 interface HoopCardProps {
   hoop: BasketballHoop;
-  toggleFunction: (value: boolean) => void;
-  mapView: boolean;
   distance: number;
 }
-const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) => {
+const HoopCard = ({ hoop, distance }: HoopCardProps) => {
   const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
   const colorModeContext: ColorMode = useColorModeValues();
   const userLocationDispatch = useLocationDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
 
   const locateHoop = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
@@ -37,7 +38,7 @@ const HoopCard = ({ hoop, toggleFunction, mapView, distance }: HoopCardProps) =>
         source: 'hoop',
       },
     });
-    toggleFunction(!mapView);
+    mapViewDispatch('map');
   };
 
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {

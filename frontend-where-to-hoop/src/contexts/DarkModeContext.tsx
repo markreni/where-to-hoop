@@ -30,7 +30,7 @@ const colorModeReducer = (_: ColorMode, action: ColorMode ): ColorMode=> {
 const ColorModeContext = createContext<ColorModeContextValue | null>(null);
 
 export const ColorModeContextProvider: React.FC<ColorModeProviderProps> = (props) => {
-  const [state, dispatch] = useReducer(colorModeReducer, initState(initialState))
+  const [state, dispatch] = useReducer(colorModeReducer, initialState, initState)
  
    useEffect(() => {
     try {

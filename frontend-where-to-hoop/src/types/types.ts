@@ -47,13 +47,16 @@ type ToastType = 'success' | 'error' | 'info' | 'warning';
 // Color mode type
 type ColorMode = 'light' | 'dark';
 
+// Map view type - whether to show map or list view
+type MapView = 'map' | 'list';
+
 // Location source type - indicates whether coordinates are from user geolocation or hoop selection
 type LocationSource = 'user' | 'hoop';
 
 // Language type
 type Language = 'en' | 'fi';
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode, ToastType, Language, LocationSource, PlayerEnrollment, PlayMode, TimeSlot };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, PlayerEnrollment, PlayMode, TimeSlot };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 
