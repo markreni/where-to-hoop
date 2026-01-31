@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from 'react-aria-components'
-import { FaClock, FaUsers, FaUser } from 'react-icons/fa'
+import { FaClock, FaUsers, FaUser, FaExclamationCircle } from 'react-icons/fa'
 import type { ColorMode, PlayerEnrollment, PlayMode, TimeSlot } from '../types/types'
 import type { DateValue } from 'react-aria-components'
 import { useColorModeValues } from '../contexts/DarkModeContext'
@@ -111,11 +111,16 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
 
   return (
     <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-2">
         <FaClock className="text-first-color" />
         <h3 className={`${colorModeContext} text-fluid-lg font-semibold background-text`}>
           {t('hoop.enrollment.title')}
         </h3>
+      </div>
+
+      <div className="flex items-center gap-1.5 mb-4 text-gray-500 dark:text-gray-400">
+        <FaExclamationCircle size={12} />
+        <span className="text-fluid-xs">{t('hoop.enrollment.courtsOpenNote')}</span>
       </div>
 
       {/* When mode toggle - prominent heading style */}

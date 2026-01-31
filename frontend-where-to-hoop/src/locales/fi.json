@@ -219,7 +219,8 @@
       "optional": "valinnainen",
       "enroll": "Lähetä ilmoitus",
       "cancel": "Peruuta osallistumiseni",
-      "success": "Hienoa! Muut näkevät nyt että olet tulossa."
+      "success": "Hienoa! Muut näkevät nyt että olet tulossa.",
+      "courtsOpenNote": "Huomioi, että kentät ovat avoimia kaikille"
     }
   },
   "common": {

@@ -110,7 +110,7 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
         </div>
       </div>
       <div className="flex justify-between items-center gap-2">
-        <p className="w-1/2 responsive-hoopcard-elements-text">{hoop.description}</p> 
+        <p className="w-1/2 font-thin responsive-hoopcard-elements-text">{hoop.description}</p> 
         <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" ></HoopCardButton>
       </div>
     </div>                        

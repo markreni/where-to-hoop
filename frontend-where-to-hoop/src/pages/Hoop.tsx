@@ -83,10 +83,12 @@ const Hoop = ({ hoop }: HoopProps) => {
                     variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
                     text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
                     showIcon={true}
+                    textClassName='responsive-hoopcard-elements-text'
                     tooltip={t('hoops.tooltips.courtType')}
                   />
                   <HoopBadge
                     variant="condition"
+                    textClassName='responsive-hoopcard-elements-text'
                     condition={hoop.condition}
                     text={t(`common.condition.${hoop.condition}`)}
                     tooltip={t('hoops.tooltips.condition')}
@@ -95,12 +97,13 @@ const Hoop = ({ hoop }: HoopProps) => {
                     variant="date"
                     text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
                     showIcon={true}
+                    textClassName='responsive-hoopcard-elements-text'
                     tooltip={t('hoops.tooltips.dateAdded')}
                   />
                 </div>
 
                 {/* Description */}
-                <p className={`${colorModeContext} text-fluid-base background-text`}>
+                <p className={`${colorModeContext} font-thin responsive-hoopcard-elements-text background-text`}>
                   {hoop.description}
                 </p>
               </div>

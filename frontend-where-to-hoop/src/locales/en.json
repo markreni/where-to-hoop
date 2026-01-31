@@ -219,7 +219,8 @@
       "optional": "optional",
       "enroll": "Send enrollment",
       "cancel": "Cancel my session",
-      "success": "You're all set! Others can now see you're coming."
+      "success": "You're all set! Others can now see you're coming.",
+      "courtsOpenNote": "Please note that courts are open to all"
     }
   },
   "common": {
