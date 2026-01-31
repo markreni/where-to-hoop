@@ -120,7 +120,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
 
             <Link to="/hoops">
               <button onClick={() => {localStorage.setItem("hoopsMapView", JSON.stringify(true));}} 
-                  className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 shadow-xl border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
+                  className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 shadow-2xl border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
                 <MdLocationPin size={24}/>
                 {t('home.hero.ctaButton')}
               </button>

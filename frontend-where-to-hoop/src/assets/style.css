@@ -145,12 +145,11 @@
   border-radius: 100%;
 }
 
-.hoop-icon--excellent { background-color: #22c55e; } /* green-500 */
-.hoop-icon--good      { background-color: #3b82f6; } /* blue-500  */
-.hoop-icon--fair      { background-color: #f59e0b; } /* amber-500 */
-.hoop-icon--poor      { background-color: #ef4444; } /* red-500   */
-.hoop-icon--unknown   { background-color: #6b7280; } /* gray-500  */
-
+.hoop-icon--excellent { background-color: #22c55e; color: #0d5828} /* green-500 */
+.hoop-icon--good      { background-color: #3b82f6; color: #1e40af} /* blue-500  */
+.hoop-icon--fair      { background-color: #f59e0b; color: #92400e} /* amber-500 */
+.hoop-icon--poor      { background-color: #ef4444; color: #991b1b} /* red-500   */
+.hoop-icon--unknown   { background-color: #6b7280; color: #374151} /* gray-500  */
 /* ------------ Styles that go along main color ------------ */
 
 .main-color-hover {
@@ -270,10 +269,10 @@
     @apply flex items-center justify-center px-2 py-0.5 gap-2 text-sm rounded;
   }
   .hoop-card-button-green {
-    @apply bg-green-600/80 hover:bg-green-500/90 dark:hover:bg-green-500/70 text-green-200 border-green-200/90;
+    @apply bg-green-500 hover:bg-green-600 text-white;
   }
   .hoop-card-button-blue {
-    @apply bg-blue-500/80 hover:bg-blue-500/90 dark:hover:bg-blue-500/70 text-blue-200 border-blue-200/70;
+    @apply bg-blue-500 hover:bg-blue-600 text-white;
   }
   .form-input {
     @apply w-full p-3 border text-black dark:text-white border-gray-300 rounded-lg text-fluid-sm resize-none focus:outline-none focus:ring-2 focus:ring-first-color;

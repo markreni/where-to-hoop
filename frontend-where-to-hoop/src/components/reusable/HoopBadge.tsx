@@ -21,7 +21,7 @@ interface HoopBadgeProps {
 const variantStyles: Record<BadgeVariant, string> = {
   indoor: 'bg-blue-100 text-blue-700',
   outdoor: 'bg-amber-100 text-amber-700',
-  condition: 'text-white',
+  condition: '',
   date: 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
   players: 'bg-purple-100 text-purple-700',
 };

@@ -75,8 +75,8 @@
     "hoopcardMapButton": "On Map",
     "hoopcardReadyToPlayButton": "Ready to play",
     "players": {
-      "one": "1 player at court",
-      "other": "{{count}} players at court"
+      "one": "1 player on court",
+      "other": "{{count}} players on court"
     },
     "tooltips": {
       "courtType": "Court type",

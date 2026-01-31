@@ -9,6 +9,7 @@ import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 import breakpoints from "../../assets/style.ts";
 import { useMediaQuery } from "usehooks-ts";
+import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 
 interface HomeHoopCardProps {
   hoop: BasketballHoop;
@@ -18,6 +19,7 @@ interface HomeHoopCardProps {
 export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
+  const userLocationDispatch = useLocationDispatch();
   const navigate = useNavigate();
   const imageSrc = hoop.profile_images.length > 0
     ? hoop.profile_images[0].imageName
@@ -30,6 +32,21 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
     navigate(`/hoops/${hoop.id}`);
   };
 
+  const locateHoop = (e: MouseEvent<FocusableElement>) => {
+    e.preventDefault();
+    userLocationDispatch({
+      type: 'SET_MAP_CENTER',
+      payload: {
+        coordinates: {
+          latitude: hoop.coordinates.latitude,
+          longitude: hoop.coordinates.longitude,
+        },
+        source: 'hoop',
+      },
+    });
+    navigate(`/hoops/`);
+  };
+
   const { playingNow } = useMemo(
         () => groupEnrollmentsByTime(hoop.playerEnrollments),
         [hoop.playerEnrollments]
@@ -39,7 +56,8 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
 
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full h-full`}> 
-      <div className="w-full h-40 sm:h-48 lg:h-56 bg-gray-100 dark:bg-gray-800">
+      <div className="relative w-full h-40 sm:h-48 lg:h-56 bg-gray-100 dark:bg-gray-800">
+        <div className="absolute top-2 right-2 z-10"><HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue"></HoopCardButton></div>
         <img
           src={imageSrc}
           alt={hoop.name}

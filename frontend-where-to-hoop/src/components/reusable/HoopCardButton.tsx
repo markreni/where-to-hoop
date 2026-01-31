@@ -14,7 +14,7 @@ const HoopCardButton = ({ actionFunction, title, colors }: HoopCardButtonProps) 
 
   return (
     <Button 
-      className={`${colorModeContext} flex items-center gap-2 padding-y-for-elements padding-x-for-elements border-2 shadow-lg ${colors} rounded-xl transition-colors text-fluid-sm whitespace-nowrap cursor-pointer`}
+      className={`${colorModeContext} flex items-center gap-2 padding-y-for-elements padding-x-for-elements shadow-lg ${colors} rounded-xl transition-colors text-fluid-sm whitespace-nowrap cursor-pointer`}
         onClick={(e) => actionFunction(e)}
       >
         {/*<IoMapOutline size={16} /> --- IGNORE ---*/}
