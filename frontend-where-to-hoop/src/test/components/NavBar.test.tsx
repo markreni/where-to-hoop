@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '../test-utils';
+import userEvent from '@testing-library/user-event';
 import NavBar from '../../components/NavBar';
 
 // Mock useMediaQuery
@@ -23,8 +24,10 @@ describe('NavBar', () => {
     expect(screen.getByText('Show Hoops')).toBeInTheDocument();
   });
 
-  it('renders Add Hoop button', () => {
+  it('renders Add Hoop button', async () => {
     render(<NavBar />);
+    const menuButton = screen.getAllByRole('button').find(btn => btn.getAttribute('aria-haspopup') === 'true')!;
+    await userEvent.click(menuButton);
     expect(screen.getByText('Add Hoop')).toBeInTheDocument();
   });
 
@@ -40,8 +43,10 @@ describe('NavBar', () => {
     expect(showHoopsLink).toHaveAttribute('href', '/hoops');
   });
 
-  it('Add Hoop links to /addhoop', () => {
+  it('Add Hoop links to /addhoop', async () => {
     render(<NavBar />);
+    const menuButton = screen.getAllByRole('button').find(btn => btn.getAttribute('aria-haspopup') === 'true')!;
+    await userEvent.click(menuButton);
     const addHoopLink = screen.getByText('Add Hoop').closest('a');
     expect(addHoopLink).toHaveAttribute('href', '/addhoop');
   });
