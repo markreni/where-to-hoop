@@ -33,7 +33,7 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
         zoomControl={false}
         scrollWheelZoom={true}
         maxBounds={helsinkiBounds}
-        maxBoundsViscosity={1.0}
+        maxBoundsViscosity={0.5}
         minZoom={10}
       >
       <MapController onMapReady={(map) => { mapRef.current = map; }} />

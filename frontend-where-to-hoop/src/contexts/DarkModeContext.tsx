@@ -38,6 +38,13 @@ export const ColorModeContextProvider: React.FC<ColorModeProviderProps> = (props
     } catch {
       localStorage.setItem('colorMode', 'light');
     }
+    // Sync .dark class on <html> so global CSS selectors (e.g. Leaflet popups) work
+    /* 
+      Leaflet renders popups into its own DOM containers outside React tree. 
+      Without dark on a high-level element like <html>, the CSS    
+      selector .dark .leaflet-popup-content-wrapper had no matching ancestor.  
+    */
+    document.documentElement.classList.toggle('dark', state === 'dark');
   }, [state]);
   
 
