@@ -135,7 +135,10 @@
     "suggestCourt": "Ehdota kenttää",
     "suggestCourtText": "Tiedätkö koripallokentän, jota ei ole kartalla? Käytä",
     "addHoopFeature": "Lisää kori",
-    "toAddIt": "-toimintoa lisätäksesi sen!"
+    "toAddIt": "-toimintoa lisätäksesi sen!",
+    "MarkTakeCare": "Tarkistan ehdotuksesi ja lisään kuvan paleluun mahdollisimman pian.",
+    "HiMark": "Parhaimin terveisin,",
+    "Mark": "Mark :)"
   },
   "faq": {
     "title": "WhereHoopsin käyttöohjeet",
@@ -146,7 +149,7 @@
     },
     "addCourt": {
       "question": "Miten lisään uuden koripallokentän?",
-      "answer": "Paina navigaatiossa \"Lisää kori\". Täytä kentän nimi, napauta karttaa asettaaksesi sijainnin (tai käytä nykyistä sijaintiasi), lisää kuvaus, valitse kunto ja kenttätyyppi (sisä/ulko), ja lataa vähintään yksi kuva. Tähtikuvakkeella voit valita, mikä kuva näkyy pääkuvana."
+      "answer": "Paina navigointipalkissa valikkopalkin alta \"Lisää kori\"-valikosta. Täytä kentän nimi, siirrä osoitinta karttalla asettaaksesi sijainnin (tai käytä nykyistä sijaintiasi), lisää kuvaus, valitse kentän kunto, valitse kenttätyyppi (sisä/ulko) ja lataa vähintään yksi kuva. Tähtikuvake näyttää, mikä kuva tulee näkymään pääkuvana."
     },
     "takePhoto": {
       "question": "Miten otan hyvän kuvan kentästä?",

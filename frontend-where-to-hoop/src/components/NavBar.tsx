@@ -41,6 +41,22 @@ const NavBar = () => {
                 {t('nav.showHoops')}
               </Button>
             </Link>
+            <MenuTrigger>
+              <Button>
+                <FiAlignJustify size={28} className="text-first-color dark:text-yellow-400"/>
+              </Button>
+              <Popover className="w-24/25 sm:w-full pr-6">
+                <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
+                  <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                    <Link to="/addhoop" className="flex items-center gap-2">
+                      <GiBasketballBasket size={22}/>
+                      {t('nav.addHoop')}
+                    </Link>
+                  </MenuItem>
+                </Menu>
+              </Popover>
+            </MenuTrigger>
+            {/*
             <Link to="/addhoop">
               <Button
                   className={`${colorModeContext} flex items-center gap-2 bg-third-color text-white font-medium px-4 py-2 rounded-md hover:bg-fourth-color transition-colors dark:text-black`}
@@ -49,6 +65,7 @@ const NavBar = () => {
                 {t('nav.addHoop')}
               </Button>
             </Link>
+            */}
           </div>
         </div>
       ) : (

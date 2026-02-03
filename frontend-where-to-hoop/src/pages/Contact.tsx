@@ -59,6 +59,18 @@ const Contact = () => {
               <a href="/addhoop" className="text-first-color hover:underline">{t('contact.addHoopFeature')}</a>{" "}
               {t('contact.toAddIt')}
             </p>
+            <br />
+            <p className={`${colorModeContext} text-fluid-xs background-text italic`}>
+              {t('contact.MarkTakeCare')}
+            </p>
+            <div className="mt-2">
+              <p className={`${colorModeContext} text-fluid-xs background-text`}>
+                {t('contact.HiMark')}
+              </p>
+              <p className={`${colorModeContext} text-fluid-xs background-text`}>
+                {t('contact.Mark')}
+            </p>
+            </div>
           </div>
         </div>
       </div>

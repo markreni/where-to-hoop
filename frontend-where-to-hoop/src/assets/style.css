@@ -156,6 +156,21 @@
   box-shadow: 0 0 8px rgba(66, 133, 244, 0.6);
 }
 
+/* ------------ MiniMap Pin Marker ------------ */
+
+.minimap-pin {
+  width: 16px;
+  height: 16px;
+  background-color: #F88158;
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
+}
+
+.dark .minimap-pin {
+  border-color: black;
+}
+
 /* ------------ Hoop Marker ------------ */
 
 .hoop-emoji {

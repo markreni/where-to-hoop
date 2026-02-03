@@ -135,7 +135,10 @@
     "suggestCourt": "Suggest a Court",
     "suggestCourtText": "Know a basketball court that's not on our map? Use the",
     "addHoopFeature": "Add Hoop",
-    "toAddIt": "feature to add it!"
+    "toAddIt": "feature to add it!",
+    "MarkTakeCare": "I will review your suggestion and add the image to the site as soon as possible.",
+    "HiMark": "Best regards,",
+    "Mark": "Mark :)"
   },
   "faq": {
     "title": "How to Use WhereHoops",
@@ -146,7 +149,7 @@
     },
     "addCourt": {
       "question": "How do I add a new basketball court?",
-      "answer": "Tap \"Add Hoop\" in the navigation. Fill in the court name, tap the map to set the location (or use your current location), add a description, select the condition and court type (indoor/outdoor), and upload at least one photo. The star icon lets you choose which photo appears as the main profile image."
+      "answer": "Tap \"Add Hoop\" in the navigation under the menu. Fill in the court name, tap the map to set the location (or use your current location), add a description, select the condition and court type (indoor/outdoor), and upload at least one photo. The star icon lets you choose which photo appears as the main profile image."
     },
     "takePhoto": {
       "question": "How do I take a good court photo?",

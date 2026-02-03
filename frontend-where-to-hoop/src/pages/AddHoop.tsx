@@ -66,7 +66,7 @@ const AddHoop = () => {
   const handleLocateUser = () => {
     locateUser({
       mapRef,
-      zoom: 10,
+      zoom: 12,
       onAdditionForm: ({ latitude, longitude }) =>
         setFormData((prev) => ({
           ...prev,

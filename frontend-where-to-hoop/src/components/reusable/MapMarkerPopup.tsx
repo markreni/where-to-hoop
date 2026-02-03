@@ -32,8 +32,8 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
         maxWidth={sm ? 300 : 160}
         >
         <div>
-          <div className="flex flex-col justify-start items-start sm:justify-between sm:flex-row sm:items-center mb-1">
-            <strong className="text-fluid-base">{hoop.name}</strong><br />
+          <div className="flex flex-col justify-start items-start sm:justify-between sm:flex-row sm:items-center mb-1.5">
+            <strong className="text-fluid-base">{hoop.name}</strong>
             <span className="text-fluid-sm">{distance.toFixed(1)} km</span>
           </div>
           
