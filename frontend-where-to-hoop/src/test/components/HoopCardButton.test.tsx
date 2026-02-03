@@ -8,6 +8,7 @@ describe('HoopCardButton', () => {
     actionFunction: vi.fn(),
     title: 'Test Button',
     colors: 'bg-blue-500',
+    text: 'text-fluid-sm',
   };
 
   it('renders button with title', () => {
