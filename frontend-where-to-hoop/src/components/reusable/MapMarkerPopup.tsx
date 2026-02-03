@@ -55,6 +55,7 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
             actionFunction={readyToPlay}
             title={t('hoops.hoopcardReadyToPlayButton')}
             colors="hoop-card-button-green"
+            text="text-fluid-sm"
           />
         </div>
         

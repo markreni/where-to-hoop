@@ -60,7 +60,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full h-full`}> 
       <div className="relative w-full h-40 sm:h-48 lg:h-56 bg-gray-100 dark:bg-gray-800">
-        <div className="absolute top-2 right-2 z-10"><HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue"></HoopCardButton></div>
+        <div className="absolute top-2 right-2 z-10"><HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton></div>
         <img
           src={imageSrc}
           alt={hoop.name}
@@ -68,7 +68,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
         />
       </div>
       <div className="p-2 flex flex-col gap-2">
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex items-center justify-start gap-7">
           <strong className="text-fluid-sm line-clamp-1">{hoop.name}</strong>
           <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
         </div>
@@ -106,6 +106,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
             actionFunction={readyToPlay}
             title={t('hoops.hoopcardReadyToPlayButton')}
             colors="hoop-card-button-green"
+            text="text-fluid-base"
           />
           </div>
         </div>

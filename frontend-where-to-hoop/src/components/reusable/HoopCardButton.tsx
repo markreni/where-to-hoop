@@ -8,13 +8,14 @@ interface HoopCardButtonProps {
   actionFunction: (e: MouseEvent<FocusableElement>) => void;
   title: string;
   colors: string;
+  text: string;
 }
-const HoopCardButton = ({ actionFunction, title, colors }: HoopCardButtonProps) => {
+const HoopCardButton = ({ actionFunction, title, colors, text }: HoopCardButtonProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
 
   return (
     <Button 
-      className={`${colorModeContext} flex items-center gap-2 text-white padding-y-for-elements padding-x-for-elements shadow-lg ${colors} rounded-xl font-extralight transition-colors text-fluid-sm whitespace-nowrap cursor-pointer`}
+      className={`${colorModeContext} flex items-center gap-2 text-white padding-y-for-elements padding-x-for-elements shadow-lg ${colors} ${text} rounded-xl font-extralight transition-colors whitespace-nowrap cursor-pointer`}
         onClick={(e) => actionFunction(e)}
       >
         {/*<IoMapOutline size={16} /> --- IGNORE ---*/}

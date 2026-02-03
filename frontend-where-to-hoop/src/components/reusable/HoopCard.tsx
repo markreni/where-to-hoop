@@ -65,7 +65,7 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
           </div>
           <span className="text-fluid-sm">{distance.toFixed(1)} km</span>
         </div>
-        <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue"></HoopCardButton>
+        <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>
       </div>
       <div className="flex flex-col gap-3">
         <img className="rounded-md w-full h-40 object-cover"
@@ -111,7 +111,7 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
       </div>
       <div className="flex justify-between items-center gap-2">
         <p className="w-1/2 font-thin responsive-hoopcard-elements-text">{hoop.description}</p> 
-        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" ></HoopCardButton>
+        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
       </div>
     </div>                        
   );
