@@ -68,48 +68,58 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
         <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>
       </div>
       <div className="flex flex-col gap-3">
-        <img className="rounded-md w-full h-40 object-cover"
-          src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/150'}
-          alt={hoop.name}
-        />
-        <div className="flex justify-start gap-2">
-          <HoopBadge
-            variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
-            text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
-            showIcon={xsm}
-            textClassName="responsive-hoopcard-elements-text"
-            tooltip={t('hoops.tooltips.courtType')}
+        <div className="flex justify-start items-center gap-4">
+          <img className="rounded-md w-full xsm:w-2/3 h-40 object-cover"
+            src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/150'}
+            alt={hoop.name}
           />
-          <HoopBadge
-            variant="condition"
-            condition={hoop.condition}
-            text={t(`common.condition.${hoop.condition}`)}
-            textClassName="responsive-hoopcard-elements-text"
-            tooltip={t('hoops.tooltips.condition')}
-          />
-          {/*
-          <HoopBadge
-            variant="date"
-            text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: "2-digit", month: "2-digit", day: "2-digit" })}
-            showIcon={xsm}
-            tooltip={t('hoops.tooltips.dateAdded')}
-          />
-          */} 
-          <HoopBadge
-            variant="players"
-            text={
-              playingNowCount === 1
-              ? t('hoops.players.one')
-              : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
-            }
-            showIcon={true}
-            textClassName="responsive-hoopcard-elements-text"
-            tooltip={t('hoops.tooltips.currentPlayers')}
-            capitalize={false}
-          />
+          <div className="hidden xsm:flex">
+            <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description}</p> 
+          </div>
+        </div>
+        <div className="flex justify-between items-center gap-2">
+          <div className="flex justify-start gap-2">
+            <HoopBadge
+              variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
+              text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
+              showIcon={xsm}
+              textClassName="responsive-hoopcard-elements-text"
+              tooltip={t('hoops.tooltips.courtType')}
+            />
+            <HoopBadge
+              variant="condition"
+              condition={hoop.condition}
+              text={t(`common.condition.${hoop.condition}`)}
+              textClassName="responsive-hoopcard-elements-text"
+              tooltip={t('hoops.tooltips.condition')}
+            />
+            {/*
+            <HoopBadge
+              variant="date"
+              text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: "2-digit", month: "2-digit", day: "2-digit" })}
+              showIcon={xsm}
+              tooltip={t('hoops.tooltips.dateAdded')}
+            />
+            */} 
+            <HoopBadge
+              variant="players"
+              text={
+                playingNowCount === 1
+                ? t('hoops.players.one')
+                : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
+              }
+              showIcon={true}
+              textClassName="responsive-hoopcard-elements-text"
+              tooltip={t('hoops.tooltips.currentPlayers')}
+              capitalize={false}
+            />
+          </div>
+          <div className="hidden xsm:flex">
+            <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
+          </div>
         </div>
       </div>
-      <div className="flex justify-between items-center gap-2">
+      <div className="flex justify-between items-center xsm:hidden gap-2">
         <p className="w-1/2 font-thin responsive-hoopcard-elements-text">{hoop.description}</p> 
         <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
       </div>
