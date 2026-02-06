@@ -181,7 +181,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
             </p>
             <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto`}>
               {t('home.encouragement.callToAction')}{' '}
-              <span className="inline-flex items-center gap-1 px-2 py-1 rounded bg-green-500/20 dark:text-green-400 font-medium">
+              <span className={`${colorModeContext} inline-flex items-center gap-1 px-2 py-1 rounded bg-green-400/30 dark:text-green-500 font-medium`}>
                 {t('home.encouragement.readyToPlayButton')}
               </span>{' '}
               {t('home.encouragement.onAnyCourtCard')}

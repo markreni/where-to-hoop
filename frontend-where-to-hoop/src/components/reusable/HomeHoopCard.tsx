@@ -72,7 +72,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
           <strong className="text-fluid-sm line-clamp-1">{hoop.name}</strong>
           <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
         </div>
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex flex-col xsm:flex-row items-start xsm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <HoopBadge
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
@@ -101,7 +101,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
               capitalize={false}
             />
           </div>
-          <div className="">
+          <div className="hidden xsm:flex">
           <HoopCardButton
             actionFunction={readyToPlay}
             title={t('hoops.hoopcardReadyToPlayButton')}
@@ -109,6 +109,14 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
             text="text-fluid-base"
           />
           </div>
+        </div>
+        <div className="flex xsm:hidden justify-center">
+          <HoopCardButton
+              actionFunction={readyToPlay}
+              title={t('hoops.hoopcardReadyToPlayButton')}
+              colors="hoop-card-button-green"
+              text="text-fluid-base"
+            />
         </div>
       </div>
     </div>
