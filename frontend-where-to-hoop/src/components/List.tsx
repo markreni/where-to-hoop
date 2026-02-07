@@ -13,6 +13,7 @@ import { MapLabel } from "./reusable/MapLabel";
 import { conditionOptions, doorOptions } from "../utils/options";
 import { Button } from "react-aria-components";
 import Footer from "./Footer";
+import InfoLink from "./reusable/InfoLink";
 
 interface FilterState {
   selectedConditions: Set<Condition>;
@@ -82,23 +83,24 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
             />
           </div>
           <div className="relative">
-            <Button 
-              ref={filterButtonRef} 
+            <Button
+              ref={filterButtonRef}
               onClick={() => setShowFilters(!showFilters)}
               className={`${colorModeContext} rounded-lg p-1 bg-background background-hover border-label-component transition-colors`}
               aria-label="Filter hoops"
               aria-pressed={showFilters}
             >
-              <CiFilter 
-                size={25} 
-                className={`${colorModeContext} background-text`} 
+              <CiFilter
+                size={25}
+                className={`${colorModeContext} background-text`}
               />
             </Button>
-          
+
             {/* Filters - Show below the filter button */}
             {showFilters && (
               <div ref={filterRef} className="absolute top-full right-0 mt-1 flex flex-col min-w-[200px]">
-                <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions, clearFilter:  clearDoorFilters},{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
+                <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions, clearFilter:  clearDoorFilters },{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
+                <InfoLink className="absolute z-400 left-43 top-2" />
               </div>
             )}
         </div>
