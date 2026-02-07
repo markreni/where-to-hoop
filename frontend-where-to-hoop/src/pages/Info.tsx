@@ -83,6 +83,27 @@ const Info = () => {
             </div>
           </div>
 
+          {/* Court Type */}
+          <div className="mb-8">
+            <h2 className={`${colorModeContext} text-fluid-lg poppins-semibold background-text mb-2`}>
+              {t('faq.courtTypeTitle')}
+            </h2>
+            <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400 mb-4`}>
+              {t('faq.courtTypeIntro')}
+            </p>
+
+            <div className="flex flex-col gap-3">
+              <ConditionCard
+                title={`🌳 ${t('faq.courtTypes.outdoor.title')}`}
+                description={t('faq.courtTypes.outdoor.description')}
+              />
+              <ConditionCard
+                title={`🏠 ${t('faq.courtTypes.indoor.title')}`}
+                description={t('faq.courtTypes.indoor.description')}
+              />
+            </div>
+          </div>
+
           {/* Contact Link */}
           <div className={`${colorModeContext} p-4 rounded-lg border border-gray-200 dark:border-gray-700 text-center`}>
             <p className={`${colorModeContext} text-fluid-sm background-text`}>

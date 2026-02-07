@@ -60,20 +60,22 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full h-full`}> 
       <div className="relative w-full h-40 sm:h-48 lg:h-56 bg-gray-100 dark:bg-gray-800">
-        <div className="absolute top-2 right-2 z-10"><HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton></div>
+        <div className="absolute top-2 right-2 z-10">
+          <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-base" />
+        </div>
         <img
           src={imageSrc}
           alt={hoop.name}
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="p-2 flex flex-col gap-2">
+      <div className="p-2 flex flex-col gap-1">
         <div className="flex items-center justify-start gap-7">
           <strong className="text-fluid-sm line-clamp-1">{hoop.name}</strong>
           <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
         </div>
         <div className="flex flex-col xsm:flex-row items-start xsm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-2">
             <HoopBadge
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
               text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
@@ -115,7 +117,7 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
               actionFunction={readyToPlay}
               title={t('hoops.hoopcardReadyToPlayButton')}
               colors="hoop-card-button-green"
-              text="text-fluid-base"
+              text="text-fluid-lg"
             />
         </div>
       </div>

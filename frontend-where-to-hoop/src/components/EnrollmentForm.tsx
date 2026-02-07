@@ -220,7 +220,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
           {t('hoop.enrollment.playModeLabel')}
         </label>
         <div className="flex gap-2">
-          <button
+          <Button
             type="button"
             onClick={() => setPlayMode('open')}
             className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
@@ -231,8 +231,8 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
           >
             <FaUsers size={16} />
             <span className="text-fluid-sm font-medium">{t('hoop.enrollment.openToPlay')}</span>
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => setPlayMode('solo')}
             className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
@@ -243,7 +243,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
           >
             <FaUser size={14} />
             <span className="text-fluid-sm font-medium">{t('hoop.enrollment.soloHooping')}</span>
-          </button>
+          </Button>
         </div>
       </div>
 

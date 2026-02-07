@@ -4,7 +4,7 @@ import type { ColorMode } from '../../types/types'
 interface ConditionCardProps {
   title: string
   description: string
-  colorClass: string
+  colorClass?: string
 }
 
 const ConditionCard = ({ title, description, colorClass }: ConditionCardProps) => {

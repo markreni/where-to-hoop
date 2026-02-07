@@ -4,6 +4,7 @@ import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { Button } from "react-aria-components";
 import { TbFilterX } from "react-icons/tb";
+import InfoLink from "./InfoLink";
 
 
 type MapLabelGroup = {
@@ -37,9 +38,12 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
       {groups.map((group) => (
         <div key={group.title} className="flex flex-col gap-1.5 pb-3 last:pb-0">
           <div className="flex items-center justify-between gap-3">
-            <h4 className={`${colorModeContext} text-fluid-sm background-text font-normal mb-1`}>
-              <strong>{group.title}</strong>
-            </h4>
+            <div className="flex items-center gap-2 mb-1">                                       
+              <h4 className={`${colorModeContext} text-fluid-sm background-text font-normal mb-1`}>                                                                                             
+                <strong>{group.title}</strong>                                                   
+              </h4>                                                                       
+                                                                    
+          </div>   
             {!hasAllValues(group.selectedItems, group.options.map(option => option.name)) && (
               <Button onClick={group.clearFilter} aria-label="Clear filter">
                 <TbFilterX className={`${colorModeContext} mb-1 text-black dark:text-white cursor-pointer`} />
@@ -53,17 +57,17 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
                 key={item.labelKey}
                 type="button"
                 onClick={() => group.onToggleItems(item.name)}
-                className={`flex items-center gap-2 px-2 py-1 rounded transition-colors cursor-pointer ${
+                className={`flex items-center gap-2 w-5/6 px-2 py-1 rounded transition-colors cursor-pointer ${
                   isSelected ? "bg-gray-100 hover:bg-gray-200" : "bg-white"
                 }`}
               >
-                {isCondition(item.name) ? (
+                {isCondition(item.name) && (
                   <div
                     className={`${colorModeContext} w-4 h-4 rounded-full border-2 shadow ${
                       isSelected ? `${item.color} background-border-reverse` : "white border-gray-300 dark:border-gray-600"
                     }`}
                   />
-                ) : null}
+                )}
                 <span className={`text-fluid-sm ${isSelected ? "text-gray-600 font-medium" : "text-gray-600"}`}>{t(item.labelKey)}</span>
               </Button>
             );

@@ -175,6 +175,18 @@
         "description": "Needs significant repairs. Major cracks, holes, or debris on surface. Net missing or badly damaged. No visible markings. Bent rim or damaged backboard. Still playable but with caution."
       }
     },  
+    "courtTypeTitle": "What does indoor/outdoor mean?",
+    "courtTypeIntro": "When adding a court, select the type that matches the venue:",
+    "courtTypes": {
+      "outdoor": {
+        "title": "Outdoor",
+        "description": "An open-air court with no roof or walls. Exposed to weather conditions. Common in parks, playgrounds, and public spaces."
+      },
+      "indoor": {
+        "title": "Indoor",
+        "description": "A court inside a building or covered structure. Protected from weather. Typically found in gyms, sports halls, and recreation centers."
+      }
+    },
     "moreQuestions": "Have more questions?",
     "contactUs": "Contact us"
   },

@@ -175,6 +175,18 @@
         "description": "Tarvitsee merkittäviä korjauksia. Pinnassa suuria halkeamia, reikiä tai roskia. Verkko puuttuu tai pahasti vaurioitunut. Ei näkyviä merkintöjä. Taipunut rengas tai vaurioitunut taustalevy. Silti pelattavissa varoen."
       }
     },
+    "courtTypeTitle": "Mitä sisä-/ulkokenttä tarkoittaa?",
+    "courtTypeIntro": "Kun lisäät kentän, valitse tyyppi, joka vastaa paikkaa:",
+    "courtTypes": {
+      "outdoor": {
+        "title": "Ulkokenttä",
+        "description": "Avoin kenttä ilman kattoa tai seiniä. Alttiina sääolosuhteille. Yleinen puistoissa, leikkikentillä ja julkisilla paikoilla."
+      },
+      "indoor": {
+        "title": "Sisäkenttä",
+        "description": "Kenttä rakennuksen tai katetun rakenteen sisällä. Suojassa säältä. Tyypillisesti löytyy kuntosaleista, urheiluhalleista ja vapaa-ajankeskuksista."
+      }
+    },
     "moreQuestions": "Lisää kysyttävää?",
     "contactUs": "Ota meihin yhteyttä"
   },

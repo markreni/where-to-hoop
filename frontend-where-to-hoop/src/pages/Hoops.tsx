@@ -82,7 +82,7 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
       <div className="absolute top-19 left-[10px] z-401">
         <ListToggle />
       </div>
-      { isMapView ? (
+      { isMapView && (
       <div>
         <div className="absolute bottom-2 right-[10px] z-1001">
           <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: toggleDoor, options: doorOptions, clearFilter: clearDoorFilters }]} />
@@ -91,7 +91,7 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
           <MapLabel groups={[{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: toggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
         </div>
       </div>
-      ) : null }
+      )}
       { isMapView ? (
           <Map filteredAndSortedHoops={filteredAndSortedHoops} />
         ) : (

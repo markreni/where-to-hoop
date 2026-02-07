@@ -1,5 +1,4 @@
 import { Label, TextField, TextArea, Button } from "react-aria-components";
-import { Link } from "react-router-dom";
 import { type BasketballHoop, type ColorMode, type Condition, type ObservationImage } from "../types/types";
 import { useColorModeValues } from "../contexts/DarkModeContext";
 import { useTranslation } from "../hooks/useTranslation";
@@ -10,7 +9,8 @@ import useLocateUser from "../hooks/useLocateUser";
 import { BackArrow } from "../components/reusable/BackArrow";
 import { MdOutlineMyLocation } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
-import { FaStar, FaRegStar, FaInfoCircle, FaCheckCircle } from "react-icons/fa";
+import { FaStar, FaRegStar, FaCheckCircle } from "react-icons/fa";
+import InfoLink from "../components/reusable/InfoLink";
 import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES } from "../utils/constants";
 
 
@@ -176,7 +176,7 @@ const AddHoop = () => {
         <div className={`${colorModeContext} sticky top-0 z-1001 flex flex-col p-6 border-b border-gray-200 bg-background`}>
           <div className="flex items-center justify-between">
             <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>{t('addHoop.title')}</h2>
-            <Link to="/faq"><FaInfoCircle className="text-gray-400 cursor-pointer" size={20}/></Link>
+            <InfoLink />
           </div>
           {/* Progress indicator */}
           <div className="flex items-center gap-3 mt-3">
