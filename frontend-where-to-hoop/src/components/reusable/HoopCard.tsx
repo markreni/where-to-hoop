@@ -73,8 +73,9 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
             src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/150'}
             alt={hoop.name}
           />
-          <div className="hidden xsm:flex">
+          <div className="flex-col gap-1 hidden xsm:flex">
             <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description}</p> 
+            <p className="text-fluid-xs">{hoop.address}</p>
           </div>
         </div>
         <div className="flex justify-between items-center gap-2">

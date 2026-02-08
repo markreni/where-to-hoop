@@ -35,6 +35,7 @@ interface BasketballHoop {
   name: string;
   profile_images: ObservationImage[];
   coordinates: Coordinates;
+  address?: string;
   description: string;
   condition: Condition;
   isIndoor: boolean;

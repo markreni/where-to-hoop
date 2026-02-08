@@ -3,7 +3,7 @@ import { type BasketballHoop, type ColorMode, type Condition, type ObservationIm
 import { useColorModeValues } from "../contexts/DarkModeContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { useToast } from "../contexts/ToastContext";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { MiniMap } from "../components/MiniMap";
 import useLocateUser from "../hooks/useLocateUser";
 import { BackArrow } from "../components/reusable/BackArrow";
@@ -12,6 +12,7 @@ import { IoMdClose } from "react-icons/io";
 import { FaStar, FaRegStar, FaCheckCircle } from "react-icons/fa";
 import InfoLink from "../components/reusable/InfoLink";
 import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES } from "../utils/constants";
+import { reverseGeocode } from "../utils/functions";
 
 
 const conditionConfig: Record<Condition, { color: string; labelKey: string }> = {
@@ -49,11 +50,30 @@ const AddHoop = () => {
   const [formData, setFormData] = useState<FormData>(emptyHoop);
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [profileImageIndex, setProfileImageIndex] = useState<number>(0);
+  const [address, setAddress] = useState<string | null>(null);
+  const [loadingAddress, setLoadingAddress] = useState(false);
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
   const { success, error, warning } = useToast();
 
+  useEffect(() => {
+    const { latitude, longitude } = formData.coordinates;
+    if (latitude === null || longitude === null) {
+      setAddress(null);
+      return;
+    }
+    let cancelled = false;
+    setLoadingAddress(true);
+    reverseGeocode(latitude, longitude).then((result) => {
+      if (!cancelled) {
+        setAddress(result);
+        setLoadingAddress(false);
+      }
+    });
+    return () => { cancelled = true; };
+  }, [formData.coordinates.latitude, formData.coordinates.longitude]);
+  
   const isLocationSelected = formData.coordinates.latitude !== null && formData.coordinates.longitude !== null;
   const isNameFilled = formData.name.trim().length > 0;
   const isConditionSelected = formData.condition !== null;
@@ -166,6 +186,7 @@ const AddHoop = () => {
     setFormData(emptyHoop);
     setImageFiles([]);
     setProfileImageIndex(0);
+    setAddress(null);
   };
 
   return (
@@ -236,7 +257,17 @@ const AddHoop = () => {
                 <MdOutlineMyLocation size={24} />
                 {t('addHoop.useCurrentLocation')}
               </Button>
-              { /*  
+              {loadingAddress && (
+                <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+                  {t('addHoop.loadingAddress')}
+                </span>
+              )}
+              {!loadingAddress && address && (
+                <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+                  {address}
+                </span>
+              )}
+              { /*
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <input

@@ -75,4 +75,22 @@ export const groupEnrollmentsByTime = (enrollments: PlayerEnrollment[]): {
   return { playingNow, comingSoon, comingLater }
 }
 
+export const reverseGeocode = async (lat: number, lng: number): Promise<string | null> => {
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`,
+      { headers: { 'Accept-Language': 'en' } }
+    );
+    if (!response.ok) return null;
+    const data = await response.json();
+    const address = data.address;
+    const { road, house_number, city, state, postcode } = address;
+    return house_number && road && city && state && postcode
+      ? `${road} ${house_number}, ${postcode}, ${city}, ${state}`
+      : null;
+  } catch {
+    return null;
+  }
+};
+
 export default haversineDistance;

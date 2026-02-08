@@ -44,6 +44,7 @@
     "namePlaceholder": "e.g., Central Park Court",
     "location": "Location",
     "useCurrentLocation": "Use Current Location",
+    "loadingAddress": "Loading address...",
     "description": "Description",
     "descriptionPlaceholder": "Add details about the court...",
     "condition": "Condition",

@@ -4,7 +4,7 @@ import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { Button } from "react-aria-components";
 import { TbFilterX } from "react-icons/tb";
-import InfoLink from "./InfoLink";
+//import InfoLink from "./InfoLink";
 
 
 type MapLabelGroup = {

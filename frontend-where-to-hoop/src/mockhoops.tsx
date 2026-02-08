@@ -17,6 +17,7 @@ const initialHoops: BasketballHoop[] = [
       }
     ],
     description: 'Great outdoor court with two hoops',
+    address: 'Central Park 11, 00530, Helsinki',
     condition: 'good',
     isIndoor: false,
     createdAt: new Date().toISOString(),
@@ -77,6 +78,7 @@ const initialHoops: BasketballHoop[] = [
       }
     ],
     description: 'Indoor court, well maintained',
+    address: 'Downtown Center 5, 00100, Helsinki',
     condition: 'excellent',
     isIndoor: true,
     createdAt: new Date().toISOString(),
@@ -154,6 +156,7 @@ const initialHoops: BasketballHoop[] = [
       }
     ],
     description: 'Single hoop near the river',
+    address: 'Riverside Park 7, 00550, Helsinki',
     condition: 'fair',
     isIndoor: false,
     createdAt: new Date().toISOString(),

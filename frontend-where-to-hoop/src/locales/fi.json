@@ -44,6 +44,7 @@
     "namePlaceholder": "esim. Keskuspuiston kenttä",
     "location": "Sijainti",
     "useCurrentLocation": "Käytä nykyistä sijaintia",
+    "loadingAddress": "Ladataan osoitetta...",
     "description": "Kuvaus",
     "descriptionPlaceholder": "Lisää tietoja kentästä...",
     "condition": "Kunto",
