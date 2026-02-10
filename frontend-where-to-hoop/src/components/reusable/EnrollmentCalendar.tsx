@@ -9,7 +9,7 @@ import {
   Button,
 } from 'react-aria-components'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import { useColorModeValues } from '../../contexts/DarkModeContext'
+import { useColorModeValues } from '../../contexts/ColorModeContext'
 import type { ColorMode } from '../../types/types'
 import type { DateValue } from 'react-aria-components'
 import { today, getLocalTimeZone } from '@internationalized/date'

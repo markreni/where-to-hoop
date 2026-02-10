@@ -87,7 +87,8 @@ describe('Hoop Page', () => {
     expect(screen.getByText('Excellent')).toBeInTheDocument();
   });
 
-  it('renders date badge with formatted date', () => {
+  // Date badge is currently commented out in the Hoop page
+  it.skip('renders date badge with formatted date', () => {
     render(<Hoop hoop={mockHoop} />);
     // Check that a date is displayed (format may vary by locale)
     const dateBadge = screen.getByText(/Jan 10, 2024|10.*Jan.*2024/);

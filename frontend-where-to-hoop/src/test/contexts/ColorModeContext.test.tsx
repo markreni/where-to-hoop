@@ -5,7 +5,7 @@ import {
   ColorModeContextProvider,
   useColorModeValues,
   useColorModeDispatch,
-} from '../../contexts/DarkModeContext';
+} from '../../contexts/ColorModeContext';
 
 // Mock localStorage
 const localStorageMock = (() => {

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { FaUser } from 'react-icons/fa'
 import type { ColorMode, PlayerEnrollment } from '../types/types'
-import { useColorModeValues } from '../contexts/DarkModeContext'
+import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { PlayerCard } from './reusable/PlayerCard'
 import { groupEnrollmentsByTime } from '../utils/functions'

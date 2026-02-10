@@ -1,6 +1,6 @@
 import { ToggleButton } from "react-aria-components";
 import { IoBasketballOutline, IoBasketballSharp } from "react-icons/io5";
-import { useColorModeValues, useColorModeDispatch } from "../../contexts/DarkModeContext.tsx";
+import { useColorModeValues, useColorModeDispatch } from "../../contexts/ColorModeContext.tsx";
 import type { ColorMode } from "../../types/types.ts";
 import type { JSX } from "react";
 

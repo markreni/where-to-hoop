@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, type ReactNode } from "react";
 import { IoArrowBackSharp, IoArrowForwardSharp } from "react-icons/io5";
-import { useColorModeValues } from "../../contexts/DarkModeContext";
+import { useColorModeValues } from "../../contexts/ColorModeContext";
 
 interface CarouselProps {
   children: ReactNode[];

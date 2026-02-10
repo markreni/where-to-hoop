@@ -1,6 +1,6 @@
 import type { JSX, Dispatch } from "react";
 import { Button } from "react-aria-components";
-import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import type { ColorMode, MapView } from "../types/types";
 import { FaMap } from "react-icons/fa";
 import { PiListBold } from "react-icons/pi";

@@ -12,7 +12,7 @@ import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
 import { UserLocator } from "./UserLocator.tsx";
 import { centerCoordinates }from "../utils/constants.ts";
 import { MapController } from "./reusable/MapController.tsx";
-import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import { helsinkiBounds } from "../utils/constants.ts";
 
 

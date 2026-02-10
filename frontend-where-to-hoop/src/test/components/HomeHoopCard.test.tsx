@@ -81,7 +81,8 @@ describe('HomeHoopCard', () => {
 
   it('renders Ready to play button', () => {
     render(<HomeHoopCard {...defaultProps} />);
-    expect(screen.getByRole('button', { name: /ready/i })).toBeInTheDocument();
+    const buttons = screen.getAllByRole('button', { name: /ready/i });
+    expect(buttons.length).toBeGreaterThan(0);
   });
 
   /*

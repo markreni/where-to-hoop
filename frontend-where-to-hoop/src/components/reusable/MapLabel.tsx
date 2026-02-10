@@ -1,6 +1,6 @@
 
 import type { ColorMode, Condition } from "../../types/types.ts";
-import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { Button } from "react-aria-components";
 import { TbFilterX } from "react-icons/tb";

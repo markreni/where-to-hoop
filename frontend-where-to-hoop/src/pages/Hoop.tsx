@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useColorModeValues } from '../contexts/DarkModeContext'
+import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useLocationValues } from '../contexts/LocationContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { BackArrow } from '../components/reusable/BackArrow'
@@ -14,7 +14,7 @@ import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
 import { Button } from 'react-aria-components'
 
 interface HoopProps {
-  hoop: BasketballHoop 
+  hoop: BasketballHoop | undefined
 }
 
 // Main Hoop page component
@@ -41,13 +41,6 @@ const Hoop = ({ hoop }: HoopProps) => {
     )
   }, [hoop, userLocation])
 
-  const { playingNow } = useMemo(
-        () => groupEnrollmentsByTime(hoop.playerEnrollments),
-        [hoop.playerEnrollments]
-    );
-
-  const playingNowCount = playingNow.length;
-
   if (!hoop) {
     return (
       <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
@@ -59,6 +52,9 @@ const Hoop = ({ hoop }: HoopProps) => {
       </div>
     )
   }
+
+  const { playingNow } = groupEnrollmentsByTime(hoop.playerEnrollments);
+  const playingNowCount = playingNow.length;
 
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>

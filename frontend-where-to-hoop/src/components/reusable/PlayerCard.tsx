@@ -1,5 +1,5 @@
 import type { ColorMode, PlayerEnrollment } from '../../types/types'
-import { useColorModeValues } from '../../contexts/DarkModeContext'
+import { useColorModeValues } from '../../contexts/ColorModeContext'
 import { useTranslation } from '../../hooks/useTranslation'
 
 // Helper to format time

@@ -7,7 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import useLocateUser from "../hooks/useLocateUser";
 import { SearchField } from "./reusable/SearchField";
 import { CiFilter } from "react-icons/ci";
-import { useColorModeValues } from "../contexts/DarkModeContext";
+import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { MapLabel } from "./reusable/MapLabel";
 import { conditionOptions, doorOptions } from "../utils/options";

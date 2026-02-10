@@ -1,6 +1,6 @@
 import { render, type RenderOptions } from '@testing-library/react';
 import type { ReactElement, ReactNode } from 'react';
-import { ColorModeContextProvider } from '../contexts/DarkModeContext';
+import { ColorModeContextProvider } from '../contexts/ColorModeContext';
 import { MapViewContextProvider } from '../contexts/MapViewContext';
 import { LocationContextProvider } from '../contexts/LocationContext';
 import { LanguageContextProvider } from '../contexts/LanguageContext';

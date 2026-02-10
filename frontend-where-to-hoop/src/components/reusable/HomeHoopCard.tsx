@@ -2,7 +2,7 @@ import type { BasketballHoop, ColorMode, MapView } from "../../types/types.ts";
 import type { FocusableElement } from "@react-types/shared";
 import { useMemo, type Dispatch, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";

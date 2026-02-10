@@ -1,6 +1,6 @@
 import { Button } from "react-aria-components";
 import { useNavigate } from "react-router-dom";
-import { useColorModeValues } from "../../contexts/DarkModeContext";
+import { useColorModeValues } from "../../contexts/ColorModeContext";
 import { IoArrowBackSharp } from "react-icons/io5";
 
 const BackArrow = () => {

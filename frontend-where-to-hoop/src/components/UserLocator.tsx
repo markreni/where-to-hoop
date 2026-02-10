@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useLocationDispatch, useLocationValues } from "../contexts/LocationContext.tsx";
 import { MdLocationDisabled } from "react-icons/md";
 import type { ColorMode, Coordinates } from "../types/types.ts";
-import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 
 
 const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => {

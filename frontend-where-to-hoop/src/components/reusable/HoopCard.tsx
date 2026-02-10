@@ -1,7 +1,7 @@
 import type { Dispatch } from "react";
 import type { BasketballHoop, ColorMode, MapView } from "../../types/types.ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
-import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { useNavigate } from "react-router-dom";
 import type { FocusableElement } from "@react-types/shared";
 import { useMemo, type MouseEvent } from "react";

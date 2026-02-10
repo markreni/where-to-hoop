@@ -1,5 +1,5 @@
 import { FaSun, FaCloudSun, FaMoon, FaStar } from 'react-icons/fa'
-import { useColorModeValues } from '../../contexts/DarkModeContext'
+import { useColorModeValues } from '../../contexts/ColorModeContext'
 import { useTranslation } from '../../hooks/useTranslation'
 import type { ColorMode, TimeSlot } from '../../types/types'
 

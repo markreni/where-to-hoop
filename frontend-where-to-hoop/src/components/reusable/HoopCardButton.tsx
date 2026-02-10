@@ -1,5 +1,5 @@
 import { Button } from "react-aria-components";
-import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import type { ColorMode } from "../../types/types.ts";
 import type { FocusableElement } from "@react-types/shared/src/dom";
 import type { MouseEvent } from "react"; 

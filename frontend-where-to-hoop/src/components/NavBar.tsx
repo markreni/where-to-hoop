@@ -7,7 +7,7 @@ import { GiBasketballBasket } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
 import { DarkModeToggle } from "./reusable/DarkModeToggle.tsx";
 import { LanguageToggle } from "./reusable/LanguageToggle.tsx";
-import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import { useTranslation } from "../hooks/useTranslation.ts";
 import type { ColorMode } from "../types/types.ts";
 import breakpoints from "../assets/style.ts";

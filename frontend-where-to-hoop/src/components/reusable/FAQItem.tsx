@@ -1,4 +1,4 @@
-import { useColorModeValues } from '../../contexts/DarkModeContext'
+import { useColorModeValues } from '../../contexts/ColorModeContext'
 import type { ColorMode } from '../../types/types'
 
 interface FAQItemProps {

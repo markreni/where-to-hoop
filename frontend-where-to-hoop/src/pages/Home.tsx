@@ -5,7 +5,7 @@ import { HomeHoopCard } from "../components/reusable/HomeHoopCard.tsx";
 import { Carousel } from "../components/reusable/Carousel.tsx";
 import { WeatherWidget } from "../components/reusable/WeatherWidget.tsx";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
-import { useColorModeValues } from "../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import { useTranslation } from "../hooks/useTranslation.ts";
 import { useWeather, isWarmWeather, isRainyWeather, isSnowyWeather, isGoodWeatherForBasketball } from "../hooks/useWeather.ts";
 import type { BasketballHoop, ColorMode, MapView } from "../types/types.ts";

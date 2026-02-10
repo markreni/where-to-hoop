@@ -1,6 +1,6 @@
 import { Label, TextField, TextArea, Button } from "react-aria-components";
 import { type BasketballHoop, type ColorMode, type Condition, type ObservationImage } from "../types/types";
-import { useColorModeValues } from "../contexts/DarkModeContext";
+import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { useToast } from "../contexts/ToastContext";
 import { useState, useRef, useEffect } from "react";
@@ -51,6 +51,7 @@ const AddHoop = () => {
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const [profileImageIndex, setProfileImageIndex] = useState<number>(0);
   const [address, setAddress] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [loadingAddress, setLoadingAddress] = useState(false);
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
@@ -187,6 +188,7 @@ const AddHoop = () => {
     setImageFiles([]);
     setProfileImageIndex(0);
     setAddress(null);
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   return (
@@ -405,6 +407,7 @@ const AddHoop = () => {
               </div>
 
               <input
+                ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 multiple

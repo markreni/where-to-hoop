@@ -1,7 +1,7 @@
 import { Button } from "react-aria-components";
 import { useLanguage, useSetLanguage } from "../../contexts/LanguageContext";
 import type { JSX } from "react";
-import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import type { ColorMode } from "../../types/types.ts";
 
 const LanguageToggle = (): JSX.Element => {

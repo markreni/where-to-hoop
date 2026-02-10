@@ -6,7 +6,7 @@ import {
 } from 'react-aria-components';
 import { FaSearch } from "react-icons/fa";
 //import { MdCancel } from "react-icons/md";
-import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
+import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import type { ColorMode } from "../../types/types.ts";
 
 

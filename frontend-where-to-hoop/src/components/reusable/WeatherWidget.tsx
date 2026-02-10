@@ -1,4 +1,4 @@
-import { useColorModeValues } from '../../contexts/DarkModeContext.tsx'
+import { useColorModeValues } from '../../contexts/ColorModeContext.tsx'
 import { useTranslation } from '../../hooks/useTranslation.ts'
 import { useWeather } from '../../hooks/useWeather.ts'
 import type { ColorMode } from '../../types/types.ts'

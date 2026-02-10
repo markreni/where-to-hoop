@@ -1,4 +1,4 @@
-import { useColorModeValues } from "../contexts/DarkModeContext";
+import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useTranslation } from "../hooks/useTranslation";
 import type { ColorMode } from "../types/types";
 import { BackArrow } from "../components/reusable/BackArrow";
