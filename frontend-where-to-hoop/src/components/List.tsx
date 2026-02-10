@@ -13,7 +13,6 @@ import { MapLabel } from "./reusable/MapLabel";
 import { conditionOptions, doorOptions } from "../utils/options";
 import { Button } from "react-aria-components";
 import Footer from "./Footer";
-import InfoLink from "./reusable/InfoLink";
 
 interface FilterState {
   selectedConditions: Set<Condition>;
@@ -99,8 +98,7 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
             {/* Filters - Show below the filter button */}
             {showFilters && (
               <div ref={filterRef} className="absolute top-full right-0 mt-1 flex flex-col min-w-[200px]">
-                <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions, clearFilter:  clearDoorFilters },{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
-                <InfoLink className="absolute z-400 left-43 top-2" />
+                <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: onToggleDoor, options: doorOptions, clearFilter:  clearDoorFilters },{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: onToggleCondition, options: conditionOptions, clearFilter: clearConditionFilters, showInfoLink: true }]} />
               </div>
             )}
         </div>

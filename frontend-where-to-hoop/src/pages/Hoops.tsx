@@ -88,7 +88,7 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
           <MapLabel groups={[{ title: t('hoops.doorType'), selectedItems: selectedDoors, onToggleItems: toggleDoor, options: doorOptions, clearFilter: clearDoorFilters }]} />
         </div>
         <div className="absolute bottom-2 left-[10px] z-1001">
-          <MapLabel groups={[{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: toggleCondition, options: conditionOptions, clearFilter: clearConditionFilters }]} />
+          <MapLabel groups={[{ title: t('hoops.courtCondition'), selectedItems: selectedConditions, onToggleItems: toggleCondition, options: conditionOptions, clearFilter: clearConditionFilters, showInfoLink: true }]} />
         </div>
       </div>
       )}

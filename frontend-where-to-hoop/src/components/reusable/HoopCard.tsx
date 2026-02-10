@@ -13,6 +13,7 @@ import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
+import { Button } from "react-aria-components";
 
 interface HoopCardProps {
   hoop: BasketballHoop;
@@ -79,7 +80,7 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
           </div>
         </div>
         <div className="flex justify-between items-center gap-2">
-          <div className="flex justify-start gap-2">
+          <div className="flex justify-start flex-wrap gap-2">
             <HoopBadge
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
               text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
@@ -87,13 +88,15 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.courtType')}
             />
+            
             <HoopBadge
-              variant="condition"
-              condition={hoop.condition}
-              text={t(`common.condition.${hoop.condition}`)}
-              textClassName="responsive-hoopcard-elements-text"
-              tooltip={t('hoops.tooltips.condition')}
-            />
+                variant="condition"
+                condition={hoop.condition}
+                text={t(`common.condition.${hoop.condition}`)}
+                textClassName="responsive-hoopcard-elements-text"
+                tooltip={t('hoops.tooltips.condition')}
+              />
+        
             {/*
             <HoopBadge
               variant="date"
@@ -102,18 +105,20 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
               tooltip={t('hoops.tooltips.dateAdded')}
             />
             */} 
-            <HoopBadge
-              variant="players"
-              text={
-                playingNowCount === 1
-                ? t('hoops.players.one')
-                : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
-              }
-              showIcon={true}
-              textClassName="responsive-hoopcard-elements-text"
-              tooltip={t('hoops.tooltips.currentPlayers')}
-              capitalize={false}
-            />
+            <Button className="p-0 cursor-pointer" onPress={() => {}} aria-label={t('hoops.tooltips.currentPlayers')}>
+              <HoopBadge
+                variant="players"
+                text={
+                  playingNowCount === 1
+                  ? t('hoops.players.one')
+                  : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
+                }
+                showIcon={true}
+                textClassName="responsive-hoopcard-elements-text"
+                tooltip={t('hoops.tooltips.currentPlayers')}
+                capitalize={false}
+              />
+            </Button>
           </div>
           <div className="hidden xsm:flex">
             <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
@@ -121,7 +126,7 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
         </div>
       </div>
       <div className="flex justify-between items-center xsm:hidden gap-2">
-        <p className="w-1/2 font-thin responsive-hoopcard-elements-text">{hoop.description}</p> 
+        <p className="w-1/2 font-thin responsive-hoopcard-elements-text">{hoop.description}</p>   
         <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
       </div>
     </div>                        

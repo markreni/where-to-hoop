@@ -4,7 +4,7 @@ import { useColorModeValues } from "../../contexts/DarkModeContext.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { Button } from "react-aria-components";
 import { TbFilterX } from "react-icons/tb";
-//import InfoLink from "./InfoLink";
+import InfoLink from "./InfoLink";
 
 
 type MapLabelGroup = {
@@ -13,6 +13,7 @@ type MapLabelGroup = {
   onToggleItems: (value: any) => void;
   options: { labelKey: string; name: any; color: string }[];
   clearFilter: () => void;
+  showInfoLink?: boolean;
 };
 
 interface MapLabelProps {
@@ -38,10 +39,11 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
       {groups.map((group) => (
         <div key={group.title} className="flex flex-col gap-1.5 pb-3 last:pb-0">
           <div className="flex items-center justify-start gap-2.5">
-            <div className="flex items-center gap-2">                                       
-              <h4 className={`${colorModeContext} text-fluid-sm background-text font-normal`}>                                                                                             
-                <strong>{group.title}</strong>                                                   
-              </h4>                                                                                                                             
+            <div className="flex items-center gap-2">
+              <h4 className={`${colorModeContext} text-fluid-sm background-text font-normal`}>
+                <strong>{group.title}</strong>
+              </h4>
+              {group.showInfoLink && <InfoLink />}
             </div>   
             {!hasAllValues(group.selectedItems, group.options.map(option => option.name)) && (
               <Button onClick={group.clearFilter} aria-label="Clear filter">

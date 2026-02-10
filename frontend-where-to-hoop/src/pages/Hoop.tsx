@@ -1,4 +1,5 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useColorModeValues } from '../contexts/DarkModeContext'
 import { useLocationValues } from '../contexts/LocationContext'
 import { useTranslation } from '../hooks/useTranslation'
@@ -9,10 +10,11 @@ import { EnrollmentForm } from '../components/EnrollmentForm'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
-import haversineDistance from '../utils/functions'
+import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
+import { Button } from 'react-aria-components'
 
 interface HoopProps {
-  hoop: BasketballHoop | undefined
+  hoop: BasketballHoop 
 }
 
 // Main Hoop page component
@@ -20,6 +22,15 @@ const Hoop = ({ hoop }: HoopProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   const userLocation: Coordinates = useLocationValues()
+  const { hash } = useLocation()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash)
+      el?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [hash])
 
   // Calculate distance
   const distance: number | null = useMemo(() => {
@@ -29,6 +40,13 @@ const Hoop = ({ hoop }: HoopProps) => {
       [hoop.coordinates.latitude!, hoop.coordinates.longitude!],
     )
   }, [hoop, userLocation])
+
+  const { playingNow } = useMemo(
+        () => groupEnrollmentsByTime(hoop.playerEnrollments),
+        [hoop.playerEnrollments]
+    );
+
+  const playingNowCount = playingNow.length;
 
   if (!hoop) {
     return (
@@ -93,6 +111,7 @@ const Hoop = ({ hoop }: HoopProps) => {
                     text={t(`common.condition.${hoop.condition}`)}
                     tooltip={t('hoops.tooltips.condition')}
                   />
+                  {/*
                   <HoopBadge
                     variant="date"
                     text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
@@ -100,6 +119,21 @@ const Hoop = ({ hoop }: HoopProps) => {
                     textClassName='responsive-hoopcard-elements-text'
                     tooltip={t('hoops.tooltips.dateAdded')}
                   />
+                  */}
+                  <Button className="p-0 cursor-pointer" onPress={() => navigate(`/hoops/${hoop.id}#players`)} aria-label={t('hoops.tooltips.currentPlayers')}>
+                    <HoopBadge
+                      variant="players"
+                      text={
+                        playingNowCount === 1
+                        ? t('hoops.players.one')
+                        : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
+                      }
+                      showIcon={true}
+                      textClassName="responsive-hoopcard-elements-text"
+                      tooltip={t('hoops.tooltips.currentPlayers')}
+                      capitalize={false}
+                    />
+                  </Button>
                 </div>
 
                 {/* Description */}

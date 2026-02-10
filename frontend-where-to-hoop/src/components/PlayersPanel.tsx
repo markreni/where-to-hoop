@@ -54,7 +54,7 @@ const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments }: Player
   const totalPlayers = playingNow.length + comingSoon.length + comingLater.length
 
   return (
-    <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
+    <div id="players" className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
       <div className="flex items-center gap-2 mb-4">
         <FaUser className="text-first-color" />
         <h3 className={`${colorModeContext} text-fluid-lg font-semibold background-text`}>

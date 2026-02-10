@@ -77,6 +77,10 @@
   background-color: black;
 }
 
+.leaflet-popup-content {
+  margin: 5px 10px 10px 10px !important;
+}
+
 /* ------------ Leaflet Zoom Controls ------------ */
 
 .leaflet-control-zoom-in,
