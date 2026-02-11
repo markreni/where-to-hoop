@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom"
+import { useEffect } from "react"
+import { Link, useLocation } from "react-router-dom"
 import { useColorModeValues } from "../contexts/ColorModeContext"
 import { useTranslation } from "../hooks/useTranslation"
 import type { ColorMode } from "../types/types"
@@ -11,6 +12,14 @@ import { FaQuestionCircle, FaCamera, FaPlusCircle, FaPlayCircle } from "react-ic
 const Info = () => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+  const { hash } = useLocation()
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash)
+      el?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [hash])
 
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
@@ -18,11 +27,12 @@ const Info = () => {
       <div className="flex-grow padding-x-for-page padding-b-for-page">
         <div className={`${colorModeContext} max-w-2xl mx-auto bg-background rounded-lg shadow-lg p-6 sm:p-8`}>
           {/* Header */}
-          <div className="flex items-center gap-3 mb-6">
+          <div className="relative flex items-center gap-3 mb-6">
             <FaQuestionCircle size={36} className="text-first-color" />
             <h1 className={`${colorModeContext} text-fluid-2xl poppins-bold background-text`}>
               {t('faq.title')}
             </h1>
+            <span className={`${colorModeContext} absolute -right-18 -top-6 transform -translate-x-1/2 rotate-12 text-fluid-2xl font-bold italic text-gray-400 dark:text-gray-500`}>¿Qué?</span>
           </div>
 
           <p className={`${colorModeContext} text-fluid-base background-text mb-8`}>
@@ -51,7 +61,7 @@ const Info = () => {
           </div>
 
           {/* Condition Guidelines */}
-          <div className="mb-8">
+          <div id="condition-guidelines" className="mb-8">
             <h2 className={`${colorModeContext} text-fluid-lg poppins-semibold background-text mb-2`}>
               {t('faq.conditionTitle')}
             </h2>

@@ -246,6 +246,36 @@ const initialHoops: BasketballHoop[] = [
       }
     ],
   },
+  {
+    id: '4',
+    name: 'Kallio Playground',
+    coordinates: {
+      latitude: 60.18450741939996,
+      longitude: 24.957467801354446,
+    },
+    profile_images: [
+      {
+        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        id: 4,
+        addedDate: new Date().toISOString()
+      }
+    ],
+    description: 'Neighborhood court with one hoop, popular with locals',
+    condition: 'poor',
+    isIndoor: false,
+    createdAt: new Date().toISOString(),
+    playerEnrollments: [
+      {
+        id: 'enroll-13',
+        playerName: 'Mika',
+        hoopId: '4',
+        arrivalTime: new Date(new Date().getTime() - 15 * 60000),
+        duration: 45,
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 20 * 60000),
+      },
+    ],
+  },
 ];
 
 export default initialHoops;

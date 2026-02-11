@@ -159,7 +159,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
   const showRightFade = currentIndex < itemCount - 1 || dragOffset > 0;
 
   return (
-    <div className={`relative max-w-lg mx-auto ${className}`}>
+    <div className={`relative max-w-xl xsm:max-w-lg mx-auto ${className}`}>
       {/* Carousel track */}
       <div
         ref={containerRef}
