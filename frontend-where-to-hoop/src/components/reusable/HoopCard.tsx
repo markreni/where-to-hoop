@@ -64,7 +64,10 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
             <strong className="text-fluid-base">{hoop.name}</strong>
             <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={23} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
           </div>
-          <span className="text-fluid-sm">{distance.toFixed(1)} km</span>
+          <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
+            <span className="text-fluid-xs font-extralight">{distance.toFixed(1)} km</span>
+            <p className="text-fluid-xs">{hoop.address}</p>
+          </div>
         </div>
         <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>
       </div>
@@ -76,7 +79,6 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
           />
           <div className="flex-col gap-1 hidden xsm:flex">
             <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description}</p> 
-            <p className="text-fluid-xs">{hoop.address}</p>
           </div>
         </div>
         <div className="flex justify-between items-center gap-2">

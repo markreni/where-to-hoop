@@ -7,6 +7,7 @@ import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { MAX_NOTE_LENGTH } from '../utils/constants'
 import { EnrollmentCalendar } from './reusable/EnrollmentCalendar'
+import InfoLink from './reusable/InfoLink'
 import { TimeSlotPicker } from './reusable/TimeSlotPicker'
 import { getLocalTimeZone } from '@internationalized/date'
 import { getTimeSlotStartHour } from '../utils/functions'
@@ -111,11 +112,14 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
 
   return (
     <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
-      <div className="flex items-center gap-2 mb-2">
-        <FaClock className="text-first-color" />
-        <h3 className={`${colorModeContext} text-fluid-lg font-semibold background-text`}>
-          {t('hoop.enrollment.title')}
-        </h3>
+      <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center gap-2">
+          <FaClock className="text-first-color" />
+          <h3 className={`${colorModeContext} text-fluid-lg font-semibold background-text`}>
+            {t('hoop.enrollment.title')}
+          </h3>
+        </div>
+        <InfoLink />
       </div>
 
       <div className="flex items-center gap-1.5 mb-4 text-gray-500 dark:text-gray-400">

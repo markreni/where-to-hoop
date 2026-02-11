@@ -76,11 +76,14 @@ const Hoop = ({ hoop }: HoopProps) => {
                       </h1>
                       <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
                     </div>
+                    <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
                     {distance !== null && (
                       <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
                         {distance.toFixed(1)} km
                       </p>
                     )}
+                    <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address}</p>
+                   </div>
                   </div>
                 </div>
 

@@ -146,7 +146,7 @@
     "intro": "Löydä vastauksia yleisimpiin kysymyksiin WhereHoopsin käytöstä.",
     "readyToPlay": {
       "question": "Miten kerron muille, että olen menossa pelaamaan?",
-      "answer": "Paina minkä tahansa kentän kortilla (etusivulla tai kenttälistassa) vihreää \"Valmis pelaamaan\" -nappia. Tämä kertoo muille käyttäjille, että olet matkalla kentälle, mikä auttaa löytämään pelikavereita ja pickup-pelejä."
+      "answer": "Paina minkä tahansa kentän kortilla (etusivulla tai kenttälistassa) vihreää \"Valmis pelaamaan\" -nappia.\nTämä vie sinut kentän sivulle, jossa voit ilmoittautua pelisessioon ilmoittautumislomakkeella.\nValitse saapumisaikasi, peliaika ja\nhaluatko pelata muiden kanssa.\nIlmoittautumisesi näkyy kentän \"Kuka pelaa\" -paneelissa, jotta muut pelaajat tietävät sinun olevan paikalla."
     },
     "addCourt": {
       "question": "Miten lisään uuden koripallokentän?",

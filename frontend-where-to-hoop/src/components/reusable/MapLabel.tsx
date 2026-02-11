@@ -6,7 +6,6 @@ import { Button } from "react-aria-components";
 import { TbFilterX } from "react-icons/tb";
 import InfoLink from "./InfoLink";
 
-
 type MapLabelGroup = {
   title: string;
   selectedItems: Set<any>;
@@ -14,6 +13,7 @@ type MapLabelGroup = {
   options: { labelKey: string; name: any; color: string }[];
   clearFilter: () => void;
   showInfoLink?: boolean;
+  infoLinkSectionId?: string;
 };
 
 interface MapLabelProps {
@@ -43,7 +43,7 @@ const MapLabel = ({ groups, className }: MapLabelProps) => {
               <h4 className={`${colorModeContext} text-fluid-sm background-text font-normal`}>
                 <strong>{group.title}</strong>
               </h4>
-              {group.showInfoLink && <InfoLink />}
+              {group.showInfoLink && <InfoLink sectionId={group.infoLinkSectionId} />}
             </div>   
             {!hasAllValues(group.selectedItems, group.options.map(option => option.name)) && (
               <Button onClick={group.clearFilter} aria-label="Clear filter">

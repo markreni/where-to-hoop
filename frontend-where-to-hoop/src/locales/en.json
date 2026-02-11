@@ -146,7 +146,7 @@
     "intro": "Find answers to common questions about using WhereHoops.",
     "readyToPlay": {
       "question": "How do I let others know I'm going to play?",
-      "answer": "On any court card (on the home page or courts list), tap the green \"Ready to play\" button. This signals to other users that you're heading to that court, helping you find pickup games and connect with fellow hoopers."
+      "answer": "On any court card (on the home page or courts list), tap the green \"Ready to play\" button.\nThis will navigate you to the court's page, then use the enrollment form to sign up for a session.\nChoose your arrival time, how long you'll play, and\nwhether you're open to playing with others.\nYour enrollment will appear on the court's \"Who's Playing\" panel, letting other hoopers know you'll be there."
     },
     "addCourt": {
       "question": "How do I add a new basketball court?",
