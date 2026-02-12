@@ -82,7 +82,7 @@ const Hoop = ({ hoop }: HoopProps) => {
                         {distance.toFixed(1)} km
                       </p>
                     )}
-                    <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address}</p>
+                    <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address??"No address is specified"}</p>
                    </div>
                   </div>
                 </div>

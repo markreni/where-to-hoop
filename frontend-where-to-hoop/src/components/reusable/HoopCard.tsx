@@ -13,7 +13,7 @@ import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
-import { Button } from "react-aria-components";
+//import { Button } from "react-aria-components";
 
 interface HoopCardProps {
   hoop: BasketballHoop;
@@ -66,7 +66,7 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
           </div>
           <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
             <span className="text-fluid-xs font-extralight">{distance.toFixed(1)} km</span>
-            <p className="text-fluid-xs">{hoop.address}</p>
+            <p className="text-fluid-xs">{hoop.address??"No address is specified"}</p>
           </div>
         </div>
         <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>
