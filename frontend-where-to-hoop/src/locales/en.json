@@ -74,6 +74,7 @@
     "courtCondition": "Court Condition",
     "searchPlaceholder": "Find hoops",
     "hoopcardMapButton": "On Map",
+    "hoopcardPlayingNow": "Playing now",
     "hoopcardReadyToPlayButton": "Ready to play",
     "players": {
       "one": "1 player on court",

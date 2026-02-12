@@ -276,6 +276,85 @@ const initialHoops: BasketballHoop[] = [
       },
     ],
   },
+  {
+    id: '5',
+    name: 'Töölö Sports Hall',
+    coordinates: {
+      latitude: 60.17850741939996,
+      longitude: 24.927467801354446,
+    },
+    profile_images: [
+      {
+        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        id: 5,
+        addedDate: new Date().toISOString()
+      }
+    ],
+    description: 'Indoor hall with two full-size courts and great lighting',
+    address: 'Töölönkatu 42, 00250, Helsinki',
+    condition: 'excellent',
+    isIndoor: true,
+    createdAt: new Date().toISOString(),
+    playerEnrollments: [
+      {
+        id: 'enroll-14',
+        playerName: 'Tomas',
+        hoopId: '5',
+        arrivalTime: new Date(new Date().getTime() - 25 * 60000),
+        duration: 90,
+        note: 'Running 5v5, need two more!',
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 30 * 60000),
+      },
+      {
+        id: 'enroll-15',
+        playerName: 'Liisa',
+        hoopId: '5',
+        arrivalTime: new Date(new Date().getTime() - 20 * 60000),
+        duration: 60,
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 25 * 60000),
+      },
+      {
+        id: 'enroll-16',
+        playerName: 'Jari',
+        hoopId: '5',
+        arrivalTime: new Date(new Date().getTime() - 15 * 60000),
+        duration: 120,
+        note: 'Warming up, come join!',
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 20 * 60000),
+      },
+      {
+        id: 'enroll-17',
+        playerName: 'Nea',
+        hoopId: '5',
+        arrivalTime: new Date(new Date().getTime() - 10 * 60000),
+        duration: 60,
+        playMode: 'solo',
+        createdAt: new Date(new Date().getTime() - 15 * 60000),
+      },
+      {
+        id: 'enroll-18',
+        playerName: 'Ville',
+        hoopId: '5',
+        arrivalTime: new Date(new Date().getTime() - 5 * 60000),
+        duration: 90,
+        note: 'Shooting drills',
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 10 * 60000),
+      },
+      {
+        id: 'enroll-19',
+        playerName: 'Kaisa',
+        hoopId: '5',
+        arrivalTime: new Date(new Date().getTime() - 2 * 60000),
+        duration: 75,
+        playMode: 'open',
+        createdAt: new Date(new Date().getTime() - 8 * 60000),
+      },
+    ],
+  },
 ];
 
 export default initialHoops;

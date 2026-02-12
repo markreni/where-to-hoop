@@ -25,14 +25,14 @@ const Info = () => {
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
       <BackArrow />
       <div className="flex-grow padding-x-for-page padding-b-for-page">
-        <div className={`${colorModeContext} max-w-2xl mx-auto bg-background rounded-lg shadow-lg p-6 sm:p-8`}>
+        <div className={`${colorModeContext} relative max-w-2xl mx-auto bg-background rounded-lg shadow-lg p-6 sm:p-8`}>
           {/* Header */}
-          <div className="relative flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-6">
             <FaQuestionCircle size={36} className="text-first-color" />
             <h1 className={`${colorModeContext} text-fluid-2xl poppins-bold background-text`}>
               {t('faq.title')}
             </h1>
-            <span className={`${colorModeContext} absolute -right-18 -top-6 transform -translate-x-1/2 rotate-12 text-fluid-2xl font-bold italic text-gray-400 dark:text-gray-500`}>¿Qué?</span>
+            <span className={`${colorModeContext} absolute -right-11 top-2 transform -translate-x-1/2 rotate-12 text-fluid-2xl font-bold italic text-gray-400 dark:text-gray-500`}>¿Qué?</span>
           </div>
 
           <p className={`${colorModeContext} text-fluid-base background-text mb-8`}>
@@ -93,7 +93,7 @@ const Info = () => {
             </div>
           </div>
 
-          {/* Court Type */}
+          {/* Court Type
           <div className="mb-8">
             <h2 className={`${colorModeContext} text-fluid-lg poppins-semibold background-text mb-2`}>
               {t('faq.courtTypeTitle')}
@@ -113,6 +113,8 @@ const Info = () => {
               />
             </div>
           </div>
+          */
+          }
 
           {/* Contact Link */}
           <div className={`${colorModeContext} p-4 rounded-lg border border-gray-200 dark:border-gray-700 text-center`}>

@@ -70,12 +70,12 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
         />
       </div>
       <div className="p-2 flex flex-col gap-1">
-        <div className="flex items-center justify-between gap-x-7 gap-y-1 flex-wrap">
-          <div className="flex items-center gap-7">
+        <div className="flex items-center justify-between gap-x-7 gap-y-0 flex-wrap">
+          <div className="flex items-center gap-5">
             <strong className="text-fluid-sm line-clamp-1">{hoop.name}</strong>
             <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
           </div>
-          <span className={`${colorModeContext} text-fluid-xs background-text pr-2 xsm:pr-7`}>{t(`${hoop.address??""}`)}</span>
+          <span className={`${colorModeContext} text-fluid-xs background-text pr-2 xsm:pr-7`}>{t(`${hoop.address??"No address is specified"}`)}</span>
         </div>
         <div className="flex flex-col xsm:flex-row items-start xsm:items-center justify-between gap-3">
           <div className="flex items-center gap-2 mb-2 flex-wrap">

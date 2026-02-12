@@ -73,6 +73,7 @@
     "doorType": "Tyyppi",
     "courtCondition": "Kentän kunto",
     "searchPlaceholder": "Etsi kenttiä",
+    "hoopcardPlayingNow": "Pelaamassa nyt",
     "hoopcardMapButton": "Kartalla",
     "hoopcardReadyToPlayButton": "Valmis pelaamaan",
     "players": {

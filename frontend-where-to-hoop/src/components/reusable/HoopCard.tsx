@@ -72,13 +72,36 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
         <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>
       </div>
       <div className="flex flex-col gap-3">
-        <div className="flex justify-start items-center gap-4">
+        <div className="flex justify-start gap-4">
           <img className="rounded-md w-full xsm:w-2/3 h-40 object-cover"
             src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/150'}
             alt={hoop.name}
           />
-          <div className="flex-col gap-1 hidden xsm:flex">
-            <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description}</p> 
+          <div className="flex-col gap-1 items-start justify-around hidden xsm:flex">
+            <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description}</p>
+            {playingNow.length > 0 && (
+              <div className="flex items-center justify-start gap-x-2 gap-y-1 mt-1 flex-wrap">
+                <span className="text-fluid-xs text-gray-500 dark:text-gray-400">
+                  {t('hoops.hoopcardPlayingNow')}
+                </span>
+                <div className="flex -space-x-1.5">
+                  {playingNow.slice(0, 5).map(enrollment => (
+                    <div
+                      key={enrollment.id}
+                      className="w-6 h-6 rounded-full bg-first-color flex items-center justify-center text-white text-xs font-medium ring-2 ring-background"
+                      title={enrollment.playerName}
+                    >
+                      {enrollment.playerName.charAt(0)}
+                    </div>
+                  ))}
+                  {playingNow.length > 5 && (
+                    <div className="w-6 h-6 rounded-full bg-gray-400 dark:bg-gray-600 flex items-center justify-center text-white text-xs font-medium ring-2 ring-background">
+                      +{playingNow.length - 5}
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex justify-between items-center gap-2">
@@ -107,8 +130,8 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
               tooltip={t('hoops.tooltips.dateAdded')}
             />
             */} 
-            <Button className="p-0 cursor-pointer" onPress={() => {}} aria-label={t('hoops.tooltips.currentPlayers')}>
-              <HoopBadge
+            {/*<Button className="p-0" onPress={() => {}} aria-label={t('hoops.tooltips.currentPlayers')} /> */}
+            <HoopBadge
                 variant="players"
                 text={
                   playingNowCount === 1
@@ -120,7 +143,7 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
                 tooltip={t('hoops.tooltips.currentPlayers')}
                 capitalize={false}
               />
-            </Button>
+      
           </div>
           <div className="hidden xsm:flex">
             <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
