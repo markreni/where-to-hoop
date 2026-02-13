@@ -31,19 +31,19 @@ const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments }: Player
     [playerEnrollments]
   )
 
-  const renderPlayerGroup = (title: string, players: PlayerEnrollment[]) => {
-    if (players.length === 0) return null
+  const renderPlayerGroup = (title: string, enrollments: PlayerEnrollment[]) => {
+    if (enrollments.length === 0) return null
 
     return (
       <div className="mb-4">
         <h4 className={`${colorModeContext} text-fluid-sm font-semibold background-text mb-2`}>
-          {title} ({players.length})
+          {title} ({enrollments.length})
         </h4>
         <div className="flex flex-col gap-2">
-          {players.map(player => (
+          {enrollments.map(enrollment => (
             <PlayerCard
-              key={player.id}
-              enrollment={player}
+              key={enrollment.id}
+              enrollment={enrollment}
             />
           ))}
         </div>

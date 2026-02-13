@@ -1,7 +1,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import Hoop from '../../pages/Hoop';
-import type { BasketballHoop } from '../../types/types';
+import type { BasketballHoop, Player } from '../../types/types';
+
+const mockPlayer = (firstName: string): Player => ({
+  id: `player-${firstName.toLowerCase()}`,
+  firstName,
+  lastName: '',
+  nickname: '',
+  email: `${firstName.toLowerCase()}@test.com`,
+  favoriteHoops: [],
+});
 
 describe('Hoop Page', () => {
   const fixedNow = new Date('2024-01-15T12:00:00Z');
@@ -29,7 +38,7 @@ describe('Hoop Page', () => {
     playerEnrollments: [
       {
         id: 'enroll-1',
-        playerName: 'Alice',
+        player: mockPlayer('Alice'),
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(fixedNow.getTime() - 10 * 60000),
         duration: 60,
@@ -38,7 +47,7 @@ describe('Hoop Page', () => {
       },
       {
         id: 'enroll-2',
-        playerName: 'Bob',
+        player: mockPlayer('Bob'),
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(fixedNow.getTime() + 20 * 60000),
         duration: 90,

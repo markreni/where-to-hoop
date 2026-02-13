@@ -66,7 +66,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
     const now = new Date()
     const enrollment: PlayerEnrollment = {
       id: `user-${Date.now()}`,
-      playerName: 'You',
+      player: { id: 'current-user', firstName: 'You', lastName: '', nickname: '', email: '', favoriteHoops: [] },
       hoopId,
       arrivalTime: calculateArrivalTime(),
       duration: durationMinutes,

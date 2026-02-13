@@ -32,7 +32,7 @@ const Info = () => {
             <h1 className={`${colorModeContext} text-fluid-2xl poppins-bold background-text`}>
               {t('faq.title')}
             </h1>
-            <span className={`${colorModeContext} absolute -right-11 top-2 transform -translate-x-1/2 rotate-12 text-fluid-2xl font-bold italic text-gray-400 dark:text-gray-500`}>¿Qué?</span>
+            {/*<span className={`${colorModeContext} absolute -right-11 top-2 transform -translate-x-1/2 rotate-12 text-fluid-2xl font-bold italic text-gray-400 dark:text-gray-500`}>¿Qué?</span>*/}
           </div>
 
           <p className={`${colorModeContext} text-fluid-base background-text mb-8`}>

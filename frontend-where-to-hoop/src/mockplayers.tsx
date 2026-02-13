@@ -1,0 +1,86 @@
+import type { Player } from './types/types';
+
+const mockPlayers: Player[] = [
+  {
+    id: 'player-1',
+    firstName: 'Alice',
+    lastName: 'Korhonen',
+    nickname: 'Ace',
+    email: 'alice.korhonen@email.com',
+    favoriteHoops: ['1', '3'],
+  },
+  {
+    id: 'player-2',
+    firstName: 'Bob',
+    lastName: 'Virtanen',
+    nickname: 'Bobby',
+    email: 'bob.virtanen@email.com',
+    favoriteHoops: ['1'],
+  },
+  {
+    id: 'player-3',
+    firstName: 'Charlie',
+    lastName: 'Mäkinen',
+    nickname: 'Chuck',
+    email: 'charlie.makinen@email.com',
+    favoriteHoops: ['2'],
+  },
+  {
+    id: 'player-4',
+    firstName: 'Diana',
+    lastName: 'Laine',
+    nickname: 'Di',
+    email: 'diana.laine@email.com',
+    favoriteHoops: ['2', '5'],
+  },
+  {
+    id: 'player-5',
+    firstName: 'Ethan',
+    lastName: 'Niemi',
+    nickname: 'E',
+    email: 'ethan.niemi@email.com',
+    favoriteHoops: ['2', '3'],
+  },
+  {
+    id: 'player-6',
+    firstName: 'Fiona',
+    lastName: 'Heikkinen',
+    nickname: 'Fi',
+    email: 'fiona.heikkinen@email.com',
+    favoriteHoops: ['3'],
+  },
+  {
+    id: 'player-7',
+    firstName: 'Mika',
+    lastName: 'Järvinen',
+    nickname: 'Mikke',
+    email: 'mika.jarvinen@email.com',
+    favoriteHoops: ['4', '1'],
+  },
+  {
+    id: 'player-8',
+    firstName: 'Tomas',
+    lastName: 'Lehtonen',
+    nickname: 'Tommy',
+    email: 'tomas.lehtonen@email.com',
+    favoriteHoops: ['5'],
+  },
+  {
+    id: 'player-9',
+    firstName: 'Liisa',
+    lastName: 'Salminen',
+    nickname: 'Lii',
+    email: 'liisa.salminen@email.com',
+    favoriteHoops: ['5', '2'],
+  },
+  {
+    id: 'player-10',
+    firstName: 'Ville',
+    lastName: 'Koskinen',
+    nickname: 'V',
+    email: 'ville.koskinen@email.com',
+    favoriteHoops: ['5', '3'],
+  },
+];
+
+export default mockPlayers;

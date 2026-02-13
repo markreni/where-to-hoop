@@ -17,10 +17,22 @@ export interface ObservationImage {
 // Play mode type - whether player is open to play with others or solo
 type PlayMode = 'open' | 'solo';
 
+interface Player {
+  id: string;
+  firstName: string;
+  lastName: string;
+  nickname: string;
+  email: string;
+  profilePicture?: string; // Optional profile picture URL
+  //skillLevel: number; // 1-10 scale
+  //preferredPlayTimes: TimeSlot[]; // When they usually play
+  //playModePreference: PlayMode; // Whether they prefer open play or solo hooping
+  favoriteHoops: string[]; // IDs of their favorite hoops
+}
 // Player enrollment types
 interface PlayerEnrollment {
   id: string;
-  playerName: string;
+  player: Player;
   hoopId: string;
   arrivalTime: Date; // When they plan to arrive
   duration: number; // How long they plan to play (in minutes)
@@ -57,7 +69,7 @@ type LocationSource = 'user' | 'hoop';
 // Language type
 type Language = 'en' | 'fi';
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, PlayerEnrollment, PlayMode, TimeSlot };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, Player, PlayerEnrollment, PlayMode, TimeSlot };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 

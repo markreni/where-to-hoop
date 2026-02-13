@@ -1,7 +1,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import { PlayersPanel } from '../../components/PlayersPanel';
-import type { PlayerEnrollment } from '../../types/types';
+import type { Player, PlayerEnrollment } from '../../types/types';
+
+const mockPlayer = (firstName: string): Player => ({
+  id: `player-${firstName.toLowerCase()}`,
+  firstName,
+  lastName: '',
+  nickname: firstName,
+  email: `${firstName.toLowerCase()}@test.com`,
+  favoriteHoops: [],
+});
 
 describe('PlayersPanel', () => {
   // Use fixed date for consistent testing
@@ -18,7 +27,7 @@ describe('PlayersPanel', () => {
 
   const createEnrollment = (overrides: Partial<PlayerEnrollment> = {}): PlayerEnrollment => ({
     id: 'test-1',
-    playerName: 'Test Player',
+    player: mockPlayer('Test'),
     hoopId: 'hoop-1',
     arrivalTime: fixedNow,
     duration: 60,
@@ -40,7 +49,7 @@ describe('PlayersPanel', () => {
   it('shows "Playing Now" section for players currently at court', () => {
     const playingNowEnrollment = createEnrollment({
       id: 'playing-1',
-      playerName: 'Alice',
+      player: mockPlayer('Alice'),
       arrivalTime: new Date(fixedNow.getTime() - 10 * 60000), // 10 mins ago
       duration: 60,
     });
@@ -52,7 +61,7 @@ describe('PlayersPanel', () => {
   it('shows "Coming Soon" section for players arriving later today', () => {
     const comingSoonEnrollment = createEnrollment({
       id: 'coming-soon-1',
-      playerName: 'Bob',
+      player: mockPlayer('Bob'),
       arrivalTime: new Date(fixedNow.getTime() + 15 * 60000), // in 15 mins (still today)
       duration: 60,
     });
@@ -64,7 +73,7 @@ describe('PlayersPanel', () => {
   it('shows "Coming Later" section for players arriving on a future day', () => {
     const comingLaterEnrollment = createEnrollment({
       id: 'coming-later-1',
-      playerName: 'Charlie',
+      player: mockPlayer('Charlie'),
       arrivalTime: new Date(fixedNow.getTime() + 24 * 60 * 60000), // tomorrow
       duration: 60,
     });
@@ -77,25 +86,25 @@ describe('PlayersPanel', () => {
     const enrollments: PlayerEnrollment[] = [
       createEnrollment({
         id: 'playing-1',
-        playerName: 'Alice',
+        player: mockPlayer('Alice'),
         arrivalTime: new Date(fixedNow.getTime() - 10 * 60000), // playing now
         duration: 60,
       }),
       createEnrollment({
         id: 'playing-2',
-        playerName: 'Bob',
+        player: mockPlayer('Bob'),
         arrivalTime: new Date(fixedNow.getTime() - 5 * 60000), // playing now
         duration: 45,
       }),
       createEnrollment({
         id: 'coming-soon-1',
-        playerName: 'Charlie',
+        player: mockPlayer('Charlie'),
         arrivalTime: new Date(fixedNow.getTime() + 20 * 60000), // later today
         duration: 60,
       }),
       createEnrollment({
         id: 'coming-later-1',
-        playerName: 'Diana',
+        player: mockPlayer('Diana'),
         arrivalTime: new Date(fixedNow.getTime() + 2 * 24 * 60 * 60000), // in 2 days
         duration: 120,
       }),
@@ -110,7 +119,7 @@ describe('PlayersPanel', () => {
   it('excludes expired enrollments from display', () => {
     const expiredEnrollment = createEnrollment({
       id: 'expired-1',
-      playerName: 'Expired Player',
+      player: mockPlayer('Expired'),
       arrivalTime: new Date(fixedNow.getTime() - 120 * 60000), // 2 hours ago
       duration: 60, // ended 1 hour ago
     });
@@ -121,7 +130,7 @@ describe('PlayersPanel', () => {
 
   it('displays player initial in avatar', () => {
     const enrollment = createEnrollment({
-      playerName: 'Alice',
+      player: mockPlayer('Alice'),
       arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
       duration: 60,
     });
@@ -132,7 +141,7 @@ describe('PlayersPanel', () => {
 
   it('shows "until" time for playing now players', () => {
     const enrollment = createEnrollment({
-      playerName: 'Alice',
+      player: mockPlayer('Alice'),
       arrivalTime: new Date(fixedNow.getTime() - 30 * 60000), // started 30 mins ago
       duration: 60, // 30 mins remaining
     });
@@ -143,7 +152,7 @@ describe('PlayersPanel', () => {
 
   it('shows arrival time for coming soon players', () => {
     const enrollment = createEnrollment({
-      playerName: 'Bob',
+      player: mockPlayer('Bob'),
       arrivalTime: new Date(fixedNow.getTime() + 15 * 60000), // in 15 mins
       duration: 60,
     });
@@ -155,7 +164,7 @@ describe('PlayersPanel', () => {
   describe('note functionality', () => {
     it('displays custom note when provided', () => {
       const enrollment = createEnrollment({
-        playerName: 'Alice',
+        player: mockPlayer('Alice'),
         arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
         duration: 60,
         playMode: 'open',
@@ -168,7 +177,7 @@ describe('PlayersPanel', () => {
 
     it('shows default open message when no note and playMode is open', () => {
       const enrollment = createEnrollment({
-        playerName: 'Bob',
+        player: mockPlayer('Bob'),
         arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
         duration: 60,
         playMode: 'open',
@@ -181,7 +190,7 @@ describe('PlayersPanel', () => {
 
     it('shows default solo message when no note and playMode is solo', () => {
       const enrollment = createEnrollment({
-        playerName: 'Charlie',
+        player: mockPlayer('Charlie'),
         arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
         duration: 60,
         playMode: 'solo',
@@ -194,7 +203,7 @@ describe('PlayersPanel', () => {
 
     it('shows default message when note is empty string', () => {
       const enrollment = createEnrollment({
-        playerName: 'Diana',
+        player: mockPlayer('Diana'),
         arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
         duration: 60,
         playMode: 'open',
@@ -208,14 +217,14 @@ describe('PlayersPanel', () => {
     it('shows Join button only for open playMode', () => {
       const openEnrollment = createEnrollment({
         id: 'open-1',
-        playerName: 'Eve',
+        player: mockPlayer('Eve'),
         arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
         duration: 60,
         playMode: 'open',
       });
       const soloEnrollment = createEnrollment({
         id: 'solo-1',
-        playerName: 'Frank',
+        player: mockPlayer('Frank'),
         arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
         duration: 60,
         playMode: 'solo',
@@ -229,7 +238,7 @@ describe('PlayersPanel', () => {
 
     it('does not show Join button for solo players', () => {
       const enrollment = createEnrollment({
-        playerName: 'Grace',
+        player: mockPlayer('Grace'),
         arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
         duration: 60,
         playMode: 'solo',
