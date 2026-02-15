@@ -67,7 +67,8 @@
       "imageTooLarge": "Some images exceed {{size}}MB limit: {{files}}",
       "remainingImages": "Only {{count}} more image(s) can be added"
     },
-    "success": "Basketball hoop added successfully!"
+    "success": "Basketball hoop added successfully!",
+    "noAddressFound": "No address found for the selected location."
   },
   "hoops": {
     "doorType": "Door Type",

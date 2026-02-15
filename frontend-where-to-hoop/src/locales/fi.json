@@ -67,7 +67,8 @@
       "imageTooLarge": "Jotkin kuvat ylittävät {{size}}MB rajan: {{files}}",
       "remainingImages": "Voit lisätä vielä {{count}} kuva(a)"
     },
-    "success": "Koripallokori lisätty onnistuneesti!"
+    "success": "Koripallokori lisätty onnistuneesti!",
+    "noAddressFound": "Osoitetta ei löytynyt valitulle sijainnille."
   },
   "hoops": {
     "doorType": "Tyyppi",

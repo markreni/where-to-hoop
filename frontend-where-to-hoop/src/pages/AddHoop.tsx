@@ -268,6 +268,11 @@ const AddHoop = () => {
                 <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
                   {address}
                 </span>
+              ) }
+              {!loadingAddress && !address && (
+                <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+                  {t('addHoop.noAddressFound')}
+                </span>
               )}
               { /*
               <div className="grid grid-cols-2 gap-2">
