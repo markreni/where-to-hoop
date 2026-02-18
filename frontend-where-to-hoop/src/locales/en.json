@@ -72,7 +72,7 @@
   },
   "hoops": {
     "doorType": "Door Type",
-    "courtCondition": "Court Condition",
+    "courtCondition": "Condition",
     "searchPlaceholder": "Find hoops",
     "hoopcardMapButton": "On Map",
     "hoopcardPlayingNow": "Playing now",
@@ -245,8 +245,8 @@
     "all": "All",
     "indoor": "Indoor",
     "outdoor": "Outdoor",
-    "showlist": "Show List",
-    "showmap": "Show Map",
+    "showlist": "List",
+    "showmap": "Map",
     "condition": {
       "excellent": "Excellent",
       "good": "Good",

@@ -16,7 +16,7 @@ const ListToggle = (): JSX.Element => {
 
   return (
     <Button
-      className={`${colorModeContext} flex-center gap-3 py-2 px-3 rounded-lg bg-background background-hover background-text border-label-component text-sm font-normal transition-colors cursor-pointer`}
+      className={`${colorModeContext} flex-center gap-2 py-2 px-3 rounded-lg bg-background background-hover background-text border-label-component text-sm font-normal transition-colors cursor-pointer`}
       onClick={() => mapViewDispatch(isMapView ? 'list' : 'map')}
       >
       {isMapView ? <PiListBold size={15}/> : <FaMap size={15}/>}

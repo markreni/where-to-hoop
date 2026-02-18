@@ -156,23 +156,45 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
       {whenMode === 'today' ? (
         /* Arrival time slider - Today mode */
         <div>
-          <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-            {t('hoop.enrollment.arriveIn')}: <span className="text-first-color">{formatSliderValue(arrivalMinutes, true)}</span>
-          </label>
-          <input
-            type="range"
-            min="0"
-            max="720"
-            step="30"
-            value={arrivalMinutes}
-            onChange={(e) => setArrivalMinutes(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
-          />
-          <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
-            <span>{t('hoop.enrollment.now')}</span>
-            <span>12{t('hoop.enrollment.hours')}</span>
+          <div>
+            <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+              {t('hoop.enrollment.arriveIn')}: <span className="text-first-color">{formatSliderValue(arrivalMinutes, true)}</span>
+            </label>
+            <input
+              type="range"
+              min="0"
+              max="720"
+              step="30"
+              value={arrivalMinutes}
+              onChange={(e) => setArrivalMinutes(Number(e.target.value))}
+              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
+            />
+            <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
+              <span>{t('hoop.enrollment.now')}</span>
+              <span>12{t('hoop.enrollment.hours')}</span>
+            </div>
+          </div>
+          {/* Duration slider */}
+          <div>
+            <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+              {t('hoop.enrollment.playFor')}: <span className="text-first-color">{formatSliderValue(durationMinutes, false)}</span>
+            </label>
+            <input
+              type="range"
+              min="30"
+              max="300"
+              step="30"
+              value={durationMinutes}
+              onChange={(e) => setDurationMinutes(Number(e.target.value))}
+              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
+            />
+            <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
+              <span>30{t('hoop.enrollment.minutes')}</span>
+              <span>5{t('hoop.enrollment.hours')}</span>
+            </div>
           </div>
         </div>
+        
       ) : (
         /* Calendar and time slot - Later mode */
         <div>
@@ -197,26 +219,6 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
           </div>
         </div>
       )}
-
-      {/* Duration slider */}
-      <div>
-        <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-          {t('hoop.enrollment.playFor')}: <span className="text-first-color">{formatSliderValue(durationMinutes, false)}</span>
-        </label>
-        <input
-          type="range"
-          min="30"
-          max="300"
-          step="30"
-          value={durationMinutes}
-          onChange={(e) => setDurationMinutes(Number(e.target.value))}
-          className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
-        />
-        <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
-          <span>30{t('hoop.enrollment.minutes')}</span>
-          <span>5{t('hoop.enrollment.hours')}</span>
-        </div>
-      </div>
 
       {/* Play mode selector */}
       <div>
