@@ -245,7 +245,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
             }`}
           >
             <FaUsers size={16} />
-            <span className="text-fluid-sm font-medium">{t('hoop.enrollment.openToPlay')}</span>
+            <span className="text-fluid-xs xsm:text-fluid-sm font-medium">{t('hoop.enrollment.openToPlay')}</span>
           </Button>
           <Button
             type="button"
