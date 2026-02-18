@@ -111,8 +111,8 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   }
 
   return (
-    <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
-      <div className="flex items-center justify-between mb-2">
+    <div className={`${colorModeContext} flex flex-col gap-6 bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <FaClock className="text-first-color" />
           <h3 className={`${colorModeContext} text-fluid-lg font-semibold background-text`}>
@@ -128,13 +128,13 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
       </div>
 
       {/* When mode toggle - prominent heading style */}
-      <div className="flex mb-6 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex border-b border-gray-200 dark:border-gray-700">
         <button
           type="button"
           onClick={() => setWhenMode('today')}
           className={`flex-1 pb-3 text-fluid-base font-semibold transition-colors cursor-pointer ${
             whenMode === 'today'
-              ? 'text-first-color border-b-2 border-first-color -mb-px'
+              ? 'text-first-color border-b-2 border-first-color -mb-1px'
               : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'
           }`}
         >
@@ -145,7 +145,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
           onClick={() => setWhenMode('later')}
           className={`flex-1 pb-3 text-fluid-base font-semibold transition-colors cursor-pointer ${
             whenMode === 'later'
-              ? 'text-first-color border-b-2 border-first-color -mb-px'
+              ? 'text-first-color border-b-2 border-first-color -mb-1px'
               : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'
           }`}
         >
@@ -155,7 +155,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
 
       {whenMode === 'today' ? (
         /* Arrival time slider - Today mode */
-        <div className="mb-6">
+        <div>
           <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
             {t('hoop.enrollment.arriveIn')}: <span className="text-first-color">{formatSliderValue(arrivalMinutes, true)}</span>
           </label>
@@ -175,8 +175,8 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
         </div>
       ) : (
         /* Calendar and time slot - Later mode */
-        <>
-          <div className="mb-6">
+        <div>
+          <div>
             <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
               {t('hoop.enrollment.selectDate')}
             </label>
@@ -186,7 +186,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
             />
           </div>
 
-          <div className="mb-6">
+          <div>
             <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
               {t('hoop.enrollment.selectTime')}
             </label>
@@ -195,11 +195,11 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
               onSlotChange={setSelectedTimeSlot}
             />
           </div>
-        </>
+        </div>
       )}
 
       {/* Duration slider */}
-      <div className="mb-6">
+      <div>
         <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
           {t('hoop.enrollment.playFor')}: <span className="text-first-color">{formatSliderValue(durationMinutes, false)}</span>
         </label>
@@ -219,7 +219,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
       </div>
 
       {/* Play mode selector */}
-      <div className="mb-6">
+      <div>
         <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
           {t('hoop.enrollment.playModeLabel')}
         </label>
@@ -252,7 +252,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
       </div>
 
       {/* Note field */}
-      <div className="mb-6">
+      <div>
         <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
           {t('hoop.enrollment.noteLabel')} <span className="text-gray-400 font-normal">({t('hoop.enrollment.optional')})</span>
         </label>

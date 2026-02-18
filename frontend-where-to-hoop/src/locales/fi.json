@@ -245,8 +245,8 @@
     "all": "Kaikki",
     "indoor": "Sisäkenttä",
     "outdoor": "Ulkokenttä",
-    "showlist": "Näytä lista",
-    "showmap": "Näytä kartta",
+    "showlist": "Lista",
+    "showmap": "Kartta",
     "condition": {
       "excellent": "Erinomainen",
       "good": "Hyvä",
