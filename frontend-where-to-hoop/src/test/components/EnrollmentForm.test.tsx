@@ -154,6 +154,49 @@ describe('EnrollmentForm', () => {
     expect(durationLabel.textContent).toContain('30');
   });
 
+  describe('arrival slider max depends on time of day', () => {
+    const getArrivalSlider = () => screen.getAllByRole('slider')[0];
+
+    it('sets max to 720 at noon (capped at 12h)', () => {
+      vi.setSystemTime(new Date(2024, 0, 15, 12, 0, 0));
+      render(<EnrollmentForm {...defaultProps} />);
+      expect(getArrivalSlider()).toHaveAttribute('max', '720');
+    });
+
+    it('sets max to 360 at 18:00 (6h remaining)', () => {
+      vi.setSystemTime(new Date(2024, 0, 15, 18, 0, 0));
+      render(<EnrollmentForm {...defaultProps} />);
+      expect(getArrivalSlider()).toHaveAttribute('max', '360');
+    });
+
+    it('rounds max down to nearest 30 min', () => {
+      vi.setSystemTime(new Date(2024, 0, 15, 18, 23, 0)); // 5h 37min left → 330
+      render(<EnrollmentForm {...defaultProps} />);
+      expect(getArrivalSlider()).toHaveAttribute('max', '330');
+    });
+
+    it('sets max to 30 at 23:30', () => {
+      vi.setSystemTime(new Date(2024, 0, 15, 23, 30, 0));
+      render(<EnrollmentForm {...defaultProps} />);
+      expect(getArrivalSlider()).toHaveAttribute('max', '30');
+    });
+
+    it('caps max at 720 when more than 12h remain', () => {
+      vi.setSystemTime(new Date(2024, 0, 15, 8, 0, 0)); // 16h remaining
+      render(<EnrollmentForm {...defaultProps} />);
+      expect(getArrivalSlider()).toHaveAttribute('max', '720');
+    });
+
+    it('shows the dynamic max in the slider end label', () => {
+      vi.setSystemTime(new Date(2024, 0, 15, 18, 0, 0)); // 6h remaining
+      render(<EnrollmentForm {...defaultProps} />);
+      // Navigate from the slider to its range label div and check the right-end span
+      const slider = getArrivalSlider();
+      const endLabel = slider.nextElementSibling?.querySelector('span:last-child');
+      expect(endLabel?.textContent).toMatch(/6\s*h/);
+    });
+  });
+
   describe('Today/Later toggle', () => {
     // Helper to get the mode toggle buttons by their exact text
     const getTodayToggle = () => screen.getByRole('button', { name: /^today$/i });
@@ -253,7 +296,7 @@ describe('EnrollmentForm', () => {
       expect(screen.getByText(/I'll arrive in/)).toBeInTheDocument();
     });
 
-    it('keeps duration slider visible in both modes', async () => {
+    it('shows duration slider in Today mode but not in Later mode', async () => {
       vi.useRealTimers();
       const user = userEvent.setup();
       render(<EnrollmentForm {...defaultProps} />);
@@ -265,8 +308,8 @@ describe('EnrollmentForm', () => {
       const laterButton = getLaterToggle();
       await user.click(laterButton);
 
-      // Duration should still be visible
-      expect(screen.getByText(/I'll play for/)).toBeInTheDocument();
+      // Duration slider is not shown in Later mode
+      expect(screen.queryByText(/I'll play for/)).not.toBeInTheDocument();
     });
 
     it('allows selecting a time slot in Later mode', async () => {

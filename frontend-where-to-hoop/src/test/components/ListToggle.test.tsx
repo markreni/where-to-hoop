@@ -13,23 +13,23 @@ describe('ListToggle', () => {
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
-  it('shows "Show List" text when mapView is map (default)', () => {
+  it('shows "List" text when mapView is map (default)', () => {
     render(<ListToggle />);
-    expect(screen.getByText('Show List')).toBeInTheDocument();
+    expect(screen.getByText('List')).toBeInTheDocument();
   });
 
   it('toggles to list view when clicked', async () => {
     const user = userEvent.setup();
     render(<ListToggle />);
 
-    // Initially shows "Show List" (because default is map view)
-    expect(screen.getByText('Show List')).toBeInTheDocument();
+    // Initially shows "List" (because default is map view)
+    expect(screen.getByText('List')).toBeInTheDocument();
 
     const button = screen.getByRole('button');
     await user.click(button);
 
-    // After click, shows "Show Map" (because now in list view)
-    expect(screen.getByText('Show Map')).toBeInTheDocument();
+    // After click, shows "Map" (because now in list view)
+    expect(screen.getByText('Map')).toBeInTheDocument();
   });
 
   it('toggles back to map view when clicked twice', async () => {
@@ -40,7 +40,7 @@ describe('ListToggle', () => {
     await user.click(button); // map -> list
     await user.click(button); // list -> map
 
-    expect(screen.getByText('Show List')).toBeInTheDocument();
+    expect(screen.getByText('List')).toBeInTheDocument();
   });
 
   it('renders icon', () => {

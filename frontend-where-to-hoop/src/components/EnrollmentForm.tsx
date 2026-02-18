@@ -18,9 +18,16 @@ interface EnrollmentFormProps {
   hoopId: string
 }
 
+const getMaxArrivalMinutes = (): number => {
+  const now = new Date()
+  const minutesUntilMidnight = (23 - now.getHours()) * 60 + (60 - now.getMinutes())
+  return Math.min(Math.floor(minutesUntilMidnight / 30) * 30, 720)
+}
+
 const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   const [whenMode, setWhenMode] = useState<WhenMode>('today')
-  const [arrivalMinutes, setArrivalMinutes] = useState(0) // 0-720 in 30 min increments
+  const maxArrivalMinutes = getMaxArrivalMinutes()
+  const [arrivalMinutes, setArrivalMinutes] = useState(0) // 0-maxArrivalMinutes in 30 min increments
   const [selectedDate, setSelectedDate] = useState<DateValue | null>(null)
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null)
   const [durationMinutes, setDurationMinutes] = useState(60) // 30-300 in 30 min increments
@@ -112,19 +119,21 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
 
   return (
     <div className={`${colorModeContext} flex flex-col gap-6 bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <FaClock className="text-first-color" />
-          <h3 className={`${colorModeContext} text-fluid-lg font-semibold background-text`}>
-            {t('hoop.enrollment.title')}
-          </h3>
+      <div>
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            <FaClock className="text-first-color" />
+            <h3 className={`${colorModeContext} text-fluid-lg font-semibold background-text`}>
+              {t('hoop.enrollment.title')}
+            </h3>
+          </div>
+          <InfoLink />
         </div>
-        <InfoLink />
-      </div>
 
-      <div className="flex items-center gap-1.5 mb-4 text-gray-500 dark:text-gray-400">
-        <FaExclamationCircle size={12} />
-        <span className="text-fluid-xs">{t('hoop.enrollment.courtsOpenNote')}</span>
+        <div className="flex items-center gap-1.5 mb-4 text-gray-500 dark:text-gray-400">
+          <FaExclamationCircle size={12} />
+          <span className="text-fluid-xs">{t('hoop.enrollment.courtsOpenNote')}</span>
+        </div>
       </div>
 
       {/* When mode toggle - prominent heading style */}
@@ -163,7 +172,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
             <input
               type="range"
               min="0"
-              max="720"
+              max={maxArrivalMinutes}
               step="30"
               value={arrivalMinutes}
               onChange={(e) => setArrivalMinutes(Number(e.target.value))}
@@ -171,7 +180,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
             />
             <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
               <span>{t('hoop.enrollment.now')}</span>
-              <span>12{t('hoop.enrollment.hours')}</span>
+              <span>{formatSliderValue(maxArrivalMinutes, false)}</span>
             </div>
           </div>
           {/* Duration slider */}
@@ -182,7 +191,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
             <input
               type="range"
               min="30"
-              max="300"
+              max="720"
               step="30"
               value={durationMinutes}
               onChange={(e) => setDurationMinutes(Number(e.target.value))}
@@ -190,7 +199,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
             />
             <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
               <span>30{t('hoop.enrollment.minutes')}</span>
-              <span>5{t('hoop.enrollment.hours')}</span>
+              <span>12{t('hoop.enrollment.hours')}</span>
             </div>
           </div>
         </div>

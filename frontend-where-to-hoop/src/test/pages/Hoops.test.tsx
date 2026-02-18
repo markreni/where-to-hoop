@@ -50,43 +50,43 @@ describe('Hoops', () => {
 
   it('renders list toggle button', () => {
     render(<Hoops hoops={initialHoops}/>);
-    expect(screen.getByRole('button', { name: /Show List|Show Map/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'List' })).toBeInTheDocument();
   });
 
   it('defaults to map view', () => {
     render(<Hoops hoops={initialHoops}/>);
     expect(screen.getByTestId('map-component')).toBeInTheDocument();
-    expect(screen.getByText('Show List')).toBeInTheDocument();
+    expect(screen.getByText('List')).toBeInTheDocument();
   });
 
   it('toggles to list view when button is clicked', async () => {
     const user = userEvent.setup();
     render(<Hoops hoops={initialHoops}/>);
 
-    const toggleButton = screen.getByRole('button', { name: /Show List/i });
+    const toggleButton = screen.getByRole('button', { name: 'List' });
     await user.click(toggleButton);
 
     // Should now show list view with hoop cards
     expect(screen.queryByTestId('map-component')).not.toBeInTheDocument();
-    expect(screen.getByText('Show Map')).toBeInTheDocument();
+    expect(screen.getByText('Map')).toBeInTheDocument();
   });
 
   it('toggles back to map view', async () => {
     const user = userEvent.setup();
     render(<Hoops hoops={initialHoops}/>);
 
-    const toggleButton = screen.getByRole('button', { name: /Show List/i });
+    const toggleButton = screen.getByRole('button', { name: 'List' });
     await user.click(toggleButton);
 
     // Now in list view
-    expect(screen.getByText('Show Map')).toBeInTheDocument();
+    expect(screen.getByText('Map')).toBeInTheDocument();
 
     // Toggle back
-    const mapToggleButton = screen.getByRole('button', { name: /Show Map/i });
+    const mapToggleButton = screen.getByRole('button', { name: 'Map' });
     await user.click(mapToggleButton);
 
     expect(screen.getByTestId('map-component')).toBeInTheDocument();
-    expect(screen.getByText('Show List')).toBeInTheDocument();
+    expect(screen.getByText('List')).toBeInTheDocument();
   });
 
   it('persists map view preference to localStorage', async () => {
@@ -94,7 +94,7 @@ describe('Hoops', () => {
     render(<Hoops hoops={initialHoops}/>);
 
     // Toggle to list view
-    const toggleButton = screen.getByRole('button', { name: /Show List/i });
+    const toggleButton = screen.getByRole('button', { name: 'List' });
     await user.click(toggleButton);
 
     expect(window.localStorage.setItem).toHaveBeenCalledWith('mapView', 'list');
@@ -103,7 +103,7 @@ describe('Hoops', () => {
   it('renders filter labels in map view', () => {
     render(<Hoops hoops={initialHoops} />);
     expect(screen.getByText('Door Type')).toBeInTheDocument();
-    expect(screen.getByText('Court Condition')).toBeInTheDocument();
+    expect(screen.getByText('Condition')).toBeInTheDocument();
   });
 
   it('renders condition filter options in map view', () => {
@@ -125,7 +125,7 @@ describe('Hoops', () => {
     render(<Hoops hoops={initialHoops}/>);
 
     // Toggle to list view
-    const toggleButton = screen.getByRole('button', { name: /Show List/i });
+    const toggleButton = screen.getByRole('button', { name: 'List' });
     await user.click(toggleButton);
 
     // Should show mock hoop names
@@ -139,7 +139,7 @@ describe('Hoops', () => {
     render(<Hoops hoops={initialHoops}/>);
 
     // Toggle to list view
-    const toggleButton = screen.getByRole('button', { name: /Show List/i });
+    const toggleButton = screen.getByRole('button', { name: 'List' });
     await user.click(toggleButton);
 
     expect(screen.getByPlaceholderText('Find hoops')).toBeInTheDocument();
@@ -150,7 +150,7 @@ describe('Hoops', () => {
     render(<Hoops hoops={initialHoops}/>);
 
     // Toggle to list view
-    const toggleButton = screen.getByRole('button', { name: /Show List/i });
+    const toggleButton = screen.getByRole('button', { name: 'List' });
     await user.click(toggleButton);
 
     expect(screen.getByRole('button', { name: 'Filter hoops' })).toBeInTheDocument();
@@ -161,7 +161,7 @@ describe('Hoops', () => {
     render(<Hoops hoops={initialHoops}/>);
 
     // Toggle to list view
-    const toggleButton = screen.getByRole('button', { name: /Show List/i });
+    const toggleButton = screen.getByRole('button', { name: 'List' });
     await user.click(toggleButton);
 
     // Type in search
