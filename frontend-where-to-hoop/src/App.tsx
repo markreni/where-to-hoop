@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import {
   Routes,
   Route,
@@ -18,44 +19,38 @@ import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Contact from "./pages/Contact.tsx";
 import Info from "./pages/Info.tsx";
-import initialHoops from "./mockhoops.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
 import type { BasketballHoopWithEnrollments } from "./types/types.ts";
-import supabase from './utils/supabase'
+import { fetchHoops } from "./utils/requests.ts";
 
 
-function App() {
-  const [hoops, setHoops] = useState<BasketballHoopWithEnrollments[]>([])
+const App = () => {
   const match = useMatch("/hoops/:id");
+
+  const { data: hoops = [], isLoading } = useQuery<BasketballHoopWithEnrollments[]>({
+    queryKey: ['hoops'],
+    queryFn: fetchHoops,
+  })
+
+  const hoop = match?.params.id ? hoops.find(h => h.id === match.params.id) : undefined
 
   // Filter hoops to only include those within Helsinki greater area
   const filteredHoops: BasketballHoopWithEnrollments[] = useMemo(() => {
     const [[swLat, swLng], [neLat, neLng]] = helsinkiBounds as [[number, number], [number, number]];
-    return initialHoops.filter(hoop => {
+    return hoops.filter(hoop => {
       const { latitude, longitude } = hoop.coordinates;
       if (latitude === undefined || longitude === undefined || latitude === null || longitude === null) return false;
       return latitude >= swLat && latitude <= neLat && longitude >= swLng && longitude <= neLng;
     });
-  }, []);
+  }, [hoops]);
 
-  const hoop = match?.params.id ? hoops.find(h => h.id === match.params.id) : undefined
-
-  useEffect(() => {
-    async function getHoops() {
-      const { data, error } = await supabase.from('basketball_hoop').select()
-
-      if (error) {
-        console.error("Error fetching hoops:", error);
-        return;
-      }
-
-      if (data && data.length > 1) {
-        setHoops(data)
-      }
-    }
-
-    getHoops()
-  }, [])
+  if (isLoading) {
+    return (
+      <div className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen flex items-center justify-center">
+        <p className="text-2xl text-text">Loading hoops...</p>
+      </div>
+    );
+  }
 
   return (
     <div

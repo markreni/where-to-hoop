@@ -8,10 +8,12 @@ import { MapViewContextProvider } from './contexts/MapViewContext.tsx'
 import { LanguageContextProvider } from './contexts/LanguageContext.tsx'
 import { ToastProvider } from './contexts/ToastContext.tsx'
 import { BrowserRouter as RouterContext } from "react-router-dom"
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <RouterContext>
+      <QueryClientProvider client={new QueryClient()}>
       <LocationContextProvider>
         <ColorModeContextProvider>
           <MapViewContextProvider>
@@ -23,6 +25,7 @@ createRoot(document.getElementById('root')!).render(
           </MapViewContextProvider>
         </ColorModeContextProvider>
       </LocationContextProvider>
+      </QueryClientProvider>
     </RouterContext>
   </StrictMode>
 )

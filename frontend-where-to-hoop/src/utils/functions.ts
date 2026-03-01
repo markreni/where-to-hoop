@@ -36,7 +36,7 @@ export const getTimeSlotStartHour = (slot: TimeSlot): number => {
 
 
 // Group enrollments by time status
-export const groupEnrollmentsByTime = (enrollments: PlayerEnrollment[]): {
+export const groupEnrollmentsByTime = (enrollments: PlayerEnrollment[] = []): {
   playingNow: PlayerEnrollment[]
   comingSoon: PlayerEnrollment[] // Coming later today
   comingLater: PlayerEnrollment[] // Coming on a future day

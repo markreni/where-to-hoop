@@ -5,7 +5,7 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import type { BasketballHoop, Coordinates, ColorMode } from "../types/types";
 import { useRef } from "react";
-import { useLocationValues, useUserLocation } from "../contexts/LocationContext.tsx";
+import { useLocationValues, useUserLocation, useLocationState } from "../contexts/LocationContext.tsx";
 //import { ImLocation2 } from "react-icons/im";
 import { conditionColorSelector } from "../utils/options.tsx";
 import { MapMarkerPopup } from "./reusable/MapMarkerPopup.tsx";
@@ -19,6 +19,7 @@ import { helsinkiBounds } from "../utils/constants.ts";
 const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[] }) => {
   const mapCenterValues: Coordinates = useLocationValues();
   const userLocation: Coordinates = useUserLocation();
+  const mapCenterState = useLocationState();
   const mapRef = useRef<L.Map | null>(null);
   const colorModeContext: ColorMode = useColorModeValues();
 
@@ -29,7 +30,7 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
       <MapContainer
         className="h-[100vh] w-[100vw]"
         center={centerPosition}
-        zoom={11}
+        zoom={mapCenterState.source === 'hoop' ? 14 : 11}
         zoomControl={false}
         scrollWheelZoom={true}
         maxBounds={helsinkiBounds}
