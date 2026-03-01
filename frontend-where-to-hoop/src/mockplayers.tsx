@@ -1,13 +1,13 @@
-import type { Player } from './types/types';
+import type { User} from './types/types';
 
-const mockPlayers: Player[] = [
+const mockPlayers: User[] = [
   {
     id: 'player-1',
     firstName: 'Alice',
     lastName: 'Korhonen',
     nickname: 'Ace',
     email: 'alice.korhonen@email.com',
-    favoriteHoops: ['1', '3'],
+    favouriteHoops: ['1', '3'],
   },
   {
     id: 'player-2',
@@ -15,7 +15,7 @@ const mockPlayers: Player[] = [
     lastName: 'Virtanen',
     nickname: 'Bobby',
     email: 'bob.virtanen@email.com',
-    favoriteHoops: ['1'],
+    favouriteHoops: ['1'],
   },
   {
     id: 'player-3',
@@ -23,7 +23,7 @@ const mockPlayers: Player[] = [
     lastName: 'Mäkinen',
     nickname: 'Chuck',
     email: 'charlie.makinen@email.com',
-    favoriteHoops: ['2'],
+    favouriteHoops: ['2'],
   },
   {
     id: 'player-4',
@@ -31,7 +31,7 @@ const mockPlayers: Player[] = [
     lastName: 'Laine',
     nickname: 'Di',
     email: 'diana.laine@email.com',
-    favoriteHoops: ['2', '5'],
+    favouriteHoops: ['2', '5'],
   },
   {
     id: 'player-5',
@@ -39,7 +39,7 @@ const mockPlayers: Player[] = [
     lastName: 'Niemi',
     nickname: 'E',
     email: 'ethan.niemi@email.com',
-    favoriteHoops: ['2', '3'],
+    favouriteHoops: ['2', '3'],
   },
   {
     id: 'player-6',
@@ -47,7 +47,7 @@ const mockPlayers: Player[] = [
     lastName: 'Heikkinen',
     nickname: 'Fi',
     email: 'fiona.heikkinen@email.com',
-    favoriteHoops: ['3'],
+    favouriteHoops: ['3'],
   },
   {
     id: 'player-7',
@@ -55,7 +55,7 @@ const mockPlayers: Player[] = [
     lastName: 'Järvinen',
     nickname: 'Mikke',
     email: 'mika.jarvinen@email.com',
-    favoriteHoops: ['4', '1'],
+    favouriteHoops: ['4', '1'],
   },
   {
     id: 'player-8',
@@ -63,7 +63,7 @@ const mockPlayers: Player[] = [
     lastName: 'Lehtonen',
     nickname: 'Tommy',
     email: 'tomas.lehtonen@email.com',
-    favoriteHoops: ['5'],
+    favouriteHoops: ['5'],
   },
   {
     id: 'player-9',
@@ -71,7 +71,7 @@ const mockPlayers: Player[] = [
     lastName: 'Salminen',
     nickname: 'Lii',
     email: 'liisa.salminen@email.com',
-    favoriteHoops: ['5', '2'],
+    favouriteHoops: ['5', '2'],
   },
   {
     id: 'player-10',
@@ -79,7 +79,7 @@ const mockPlayers: Player[] = [
     lastName: 'Koskinen',
     nickname: 'V',
     email: 'ville.koskinen@email.com',
-    favoriteHoops: ['5', '3'],
+    favouriteHoops: ['5', '3'],
   },
 ];
 

@@ -17,7 +17,7 @@ export interface ObservationImage {
 // Play mode type - whether player is open to play with others or solo
 type PlayMode = 'open' | 'solo';
 
-interface Player {
+interface User {
   id: string;
   firstName: string;
   lastName: string;
@@ -27,12 +27,13 @@ interface Player {
   //skillLevel: number; // 1-10 scale
   //preferredPlayTimes: TimeSlot[]; // When they usually play
   //playModePreference: PlayMode; // Whether they prefer open play or solo hooping
-  favoriteHoops: string[]; // IDs of their favorite hoops
+  favouriteHoops: string[]; // IDs of their favorite hoops
+  //enrolments: PlayerEnrollment[]; // Hoops they are currently enrolled in
 }
 // Player enrollment types
 interface PlayerEnrollment {
   id: string;
-  player: Player;
+  player: User;
   hoopId: string;
   arrivalTime: Date; // When they plan to arrive
   duration: number; // How long they plan to play (in minutes)
@@ -51,8 +52,12 @@ interface BasketballHoop {
   description: string;
   condition: Condition;
   isIndoor: boolean;
-  playerEnrollments: PlayerEnrollment[]; // Number of players currently at the court
+  //playerEnrollments: PlayerEnrollment[]; // Number of players currently at the court
 };
+
+interface BasketballHoopWithEnrollments extends BasketballHoop {
+    playerEnrollments: PlayerEnrollment[];
+  }
 
 // Toast types
 type ToastType = 'success' | 'error' | 'info' | 'warning';
@@ -69,7 +74,7 @@ type LocationSource = 'user' | 'hoop';
 // Language type
 type Language = 'en' | 'fi';
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, Player, PlayerEnrollment, PlayMode, TimeSlot };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, User, PlayerEnrollment, PlayMode, TimeSlot, BasketballHoopWithEnrollments };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 

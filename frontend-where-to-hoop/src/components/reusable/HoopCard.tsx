@@ -1,5 +1,5 @@
 import type { Dispatch } from "react";
-import type { BasketballHoop, ColorMode, MapView } from "../../types/types.ts";
+import type { BasketballHoopWithEnrollments, ColorMode, MapView } from "../../types/types.ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 //import { Button } from "react-aria-components";
 
 interface HoopCardProps {
-  hoop: BasketballHoop;
+  hoop: BasketballHoopWithEnrollments;
   distance: number;
 }
 const HoopCard = ({ hoop, distance }: HoopCardProps) => {

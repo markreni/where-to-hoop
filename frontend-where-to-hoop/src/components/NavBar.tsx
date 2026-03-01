@@ -34,7 +34,7 @@ const NavBar = () => {
             <LanguageToggle />
             <Link to="/hoops">
               <Button
-                className={`${colorModeContext} flex items-center gap-2 px-4 py-2 rounded-md bg-first-color main-color-hover first-color-text font-medium transition-colors`}
+                className={`${colorModeContext} flex items-center gap-2 px-4 py-2 rounded-md bg-first-color main-color-hover first-color-text font-medium transition-colors tracking-normal`}
                 onClick={() => locateUser()}
               >
                 <MdLocationPin size={22}/>

@@ -8,7 +8,7 @@ import { useLocationValues } from "../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import { useTranslation } from "../hooks/useTranslation.ts";
 import { useWeather, isWarmWeather, isRainyWeather, isSnowyWeather, isGoodWeatherForBasketball } from "../hooks/useWeather.ts";
-import type { BasketballHoop, ColorMode, MapView } from "../types/types.ts";
+import type { BasketballHoopWithEnrollments, ColorMode, MapView } from "../types/types.ts";
 import haversineDistance from "../utils/functions.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 //import baskethoopImg from "../images/baskethoop.png";
@@ -16,7 +16,7 @@ import { MdLocationPin, MdArrowForward } from "react-icons/md";
 import { InteractiveBasketball } from "../components/reusable/InteractiveBasketball.tsx";
 import { useMapViewDispatch } from "../contexts/MapViewContext.tsx";
 
-const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
+const Home = ({ hoops }: { hoops: BasketballHoopWithEnrollments[] }) => {
   const colorModeContext: ColorMode = useColorModeValues();
   const mapCenterValues = useLocationValues();
   const locateUser = useLocateUser();
@@ -54,7 +54,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   };
 
   // Sort hoops by distance from user
-  const sortedHoopsWithDistance: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
+  const sortedHoopsWithDistance: { hoop: BasketballHoopWithEnrollments; distance: number }[] = useMemo(() => {
     if (!mapCenterValues.latitude || !mapCenterValues.longitude) {
       return hoops.map(hoop => ({ hoop, distance: 0 }));
     }
@@ -70,7 +70,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
       .sort((a, b) => a.distance - b.distance);
   }, [mapCenterValues.latitude, mapCenterValues.longitude]);
 
-  const sortedHoopsWithPlayers: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
+  const sortedHoopsWithPlayers: { hoop: BasketballHoopWithEnrollments; distance: number }[] = useMemo(() => {
     return hoops
       .map(hoop => ({
         hoop,

@@ -4,7 +4,7 @@ import { Map }from "../components/Map";
 import { List } from "../components/List";
 import { ListToggle } from "../components/ListToggle";
 import { MapLabel } from "../components/reusable/MapLabel";
-import type { BasketballHoop, Condition } from "../types/types";
+import type { BasketballHoopWithEnrollments, Condition } from "../types/types";
 import { doorOptions, conditionOptions } from "../utils/options.tsx";
 import haversineDistance from "../utils/functions";
 import { useLocationValues } from "../contexts/LocationContext.tsx";
@@ -13,7 +13,7 @@ import { useTranslation } from "../hooks/useTranslation";
 //import { Link } from "react-router-dom";
 //import { useState, useEffect } from "react";
 
-const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
+const Hoops = ({ hoops }: { hoops: BasketballHoopWithEnrollments[] }) => {
   const { t } = useTranslation();
   const mapView = useMapViewValues();
   const [selectedConditions, setSelectedConditions] = useState<Set<Condition>>(new Set(['excellent', 'good', 'fair', 'poor']));
@@ -45,7 +45,7 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
   };
 
   // Sort hoops by distance from user
-  const sortedHoopsWithDistance: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
+  const sortedHoopsWithDistance: { hoop: BasketballHoopWithEnrollments; distance: number }[] = useMemo(() => {
   
   if (!hoops || !mapCenterValues.latitude || !mapCenterValues.longitude) {
     return hoops.map(hoop => ({ hoop, distance: 0 }));

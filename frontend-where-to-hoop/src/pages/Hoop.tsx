@@ -9,12 +9,12 @@ import { HoopBadge } from '../components/reusable/HoopBadge'
 import { EnrollmentForm } from '../components/EnrollmentForm'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
-import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
+import type { BasketballHoopWithEnrollments, ColorMode, Coordinates } from '../types/types'
 import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
 import { Button } from 'react-aria-components'
 
 interface HoopProps {
-  hoop: BasketballHoop | undefined
+  hoop: BasketballHoopWithEnrollments | undefined
 }
 
 // Main Hoop page component

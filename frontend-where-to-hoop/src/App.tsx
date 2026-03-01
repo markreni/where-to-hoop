@@ -20,14 +20,14 @@ import Contact from "./pages/Contact.tsx";
 import Info from "./pages/Info.tsx";
 import initialHoops from "./mockhoops.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
-import type { BasketballHoop } from "./types/types.ts";
+import type { BasketballHoopWithEnrollments } from "./types/types.ts";
 
 
 function App() {
   const match = useMatch("/hoops/:id");
 
   // Filter hoops to only include those within Helsinki greater area
-  const hoops: BasketballHoop[] = useMemo(() => {
+  const hoops: BasketballHoopWithEnrollments[] = useMemo(() => {
     const [[swLat, swLng], [neLat, neLng]] = helsinkiBounds as [[number, number], [number, number]];
     return initialHoops.filter(hoop => {
       const { latitude, longitude } = hoop.coordinates;

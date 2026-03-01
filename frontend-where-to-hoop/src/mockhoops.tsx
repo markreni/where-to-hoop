@@ -1,10 +1,10 @@
-import type { BasketballHoop } from './types/types';
+import type { BasketballHoopWithEnrollments } from './types/types';
 import mockPlayers from './mockplayers';
 
 const [alice, bob, charlie, diana, ethan, fiona, mika, tomas, liisa, ville] = mockPlayers;
 
 // Mock data for initial hoops
-const initialHoops: BasketballHoop[] = [
+const initialHoops: BasketballHoopWithEnrollments[] = [
   {
     id: '1',
     name: 'Central Park Court',

@@ -1,4 +1,4 @@
-import type { BasketballHoop, ColorMode, MapView } from "../../types/types.ts";
+import type { BasketballHoopWithEnrollments, ColorMode, MapView } from "../../types/types.ts";
 import type { FocusableElement } from "@react-types/shared";
 import { useMemo, type Dispatch, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 
 interface HomeHoopCardProps {
-  hoop: BasketballHoop;
+  hoop: BasketballHoopWithEnrollments;
   distance: number;
 }
 

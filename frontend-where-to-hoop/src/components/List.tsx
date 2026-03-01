@@ -1,5 +1,5 @@
 import breakpoints from "../assets/style";
-import type { BasketballHoop, ColorMode, Condition } from "../types/types";
+import type { BasketballHoopWithEnrollments, ColorMode, Condition } from "../types/types";
 import { HoopCard } from "./reusable/HoopCard";
 import { useMediaQuery } from 'usehooks-ts'
 import { Link } from "react-router-dom";
@@ -24,7 +24,7 @@ interface FilterState {
 }
 
 interface ListProps {
-  filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[];
+  filteredAndSortedHoops: { hoop: BasketballHoopWithEnrollments; distance: number; }[];
   filters: FilterState;
 }
 
@@ -74,7 +74,7 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
       {/* Filter and Search Bar - Fixed at top */}
       <div className="sticky top-0 px-3">
         <div className="flex items-center justify-end gap-1 xsm:gap-2 sm:gap-4 max-w-screen-2xl mx-auto">
-          <div className="w-4/9 xsm:w-1/2 sm:w-2/3">
+          <div className="w-5/9 sm:w-2/3">
             <SearchField
               placeholder={t('hoops.searchPlaceholder')}
               value={searchTerm}
