@@ -4,6 +4,7 @@
 logs
 **/*.backup.*
 **/*.back.*
+*.env
 
 backend-where-to-hoop/node_modules
 backend-where-to-hoop/bower_components

@@ -1,15 +1,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import { PlayersPanel } from '../../components/PlayersPanel';
-import type { Player, PlayerEnrollment } from '../../types/types';
+import type { User, PlayerEnrollment } from '../../types/types';
 
-const mockPlayer = (firstName: string): Player => ({
+const mockPlayer = (firstName: string): User => ({
   id: `player-${firstName.toLowerCase()}`,
   firstName,
   lastName: '',
   nickname: firstName,
   email: `${firstName.toLowerCase()}@test.com`,
-  favoriteHoops: [],
+  favouriteHoops: [],
 });
 
 describe('PlayersPanel', () => {

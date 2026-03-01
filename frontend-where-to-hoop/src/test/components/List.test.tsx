@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import { List } from '../../components/List';
-import type { BasketballHoop, Condition } from '../../types/types';
+import type { BasketballHoopWithEnrollments, Condition } from '../../types/types';
 
 // Mock useMediaQuery
 vi.mock('usehooks-ts', () => ({
@@ -14,7 +14,7 @@ vi.mock('../../hooks/useLocateUser', () => ({
   default: () => vi.fn(),
 }));
 
-const mockHoops: { hoop: BasketballHoop; distance: number }[] = [
+const mockHoops: { hoop: BasketballHoopWithEnrollments; distance: number }[] = [
   {
     hoop: {
       id: '1',

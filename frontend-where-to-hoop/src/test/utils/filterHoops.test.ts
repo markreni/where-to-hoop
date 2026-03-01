@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { helsinkiBounds } from '../../utils/constants';
-import type { BasketballHoop } from '../../types/types';
+import type { BasketballHoopWithEnrollments } from '../../types/types';
 
 // Helper function that mirrors the filtering logic in App.tsx
-const filterHoopsWithinBounds = (hoops: BasketballHoop[]): BasketballHoop[] => {
+const filterHoopsWithinBounds = (hoops: BasketballHoopWithEnrollments[]): BasketballHoopWithEnrollments[] => {
   const [[swLat, swLng], [neLat, neLng]] = helsinkiBounds as [[number, number], [number, number]];
   return hoops.filter(hoop => {
     const { latitude, longitude } = hoop.coordinates;
@@ -13,7 +13,7 @@ const filterHoopsWithinBounds = (hoops: BasketballHoop[]): BasketballHoop[] => {
 };
 
 // Factory function to create mock hoops with specific coordinates
-const createMockHoop = (id: string, latitude: number | null, longitude: number | null): BasketballHoop => ({
+const createMockHoop = (id: string, latitude: number | null, longitude: number | null): BasketballHoopWithEnrollments => ({
   id,
   name: `Test Court ${id}`,
   createdAt: '2024-01-15T10:00:00Z',

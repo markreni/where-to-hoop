@@ -1,15 +1,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import Hoop from '../../pages/Hoop';
-import type { BasketballHoop, Player } from '../../types/types';
+import type { BasketballHoopWithEnrollments, User } from '../../types/types';
 
-const mockPlayer = (firstName: string): Player => ({
-  id: `player-${firstName.toLowerCase()}`,
+const mockUser = (firstName: string): User => ({
+  id: `user-${firstName.toLowerCase()}`,
   firstName,
   lastName: '',
   nickname: '',
   email: `${firstName.toLowerCase()}@test.com`,
-  favoriteHoops: [],
+  favouriteHoops: [],
 });
 
 describe('Hoop Page', () => {
@@ -24,7 +24,7 @@ describe('Hoop Page', () => {
     vi.useRealTimers();
   });
 
-  const mockHoop: BasketballHoop = {
+  const mockHoop: BasketballHoopWithEnrollments = {
     id: 'test-hoop-1',
     name: 'Central Park Court',
     createdAt: '2024-01-10T10:00:00Z',
@@ -38,7 +38,7 @@ describe('Hoop Page', () => {
     playerEnrollments: [
       {
         id: 'enroll-1',
-        player: mockPlayer('Alice'),
+        player: mockUser('Alice'),
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(fixedNow.getTime() - 10 * 60000),
         duration: 60,
@@ -47,7 +47,7 @@ describe('Hoop Page', () => {
       },
       {
         id: 'enroll-2',
-        player: mockPlayer('Bob'),
+        player: mockUser('Bob'),
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(fixedNow.getTime() + 20 * 60000),
         duration: 90,
