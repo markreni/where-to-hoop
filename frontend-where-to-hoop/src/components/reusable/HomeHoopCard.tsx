@@ -23,8 +23,8 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
   const userLocationDispatch = useLocationDispatch();
   const navigate = useNavigate();
   const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
-  const imageSrc = hoop.profile_images.length > 0
-    ? hoop.profile_images[0].imageName
+  const imageSrc = hoop.images.length > 0
+    ? hoop.images[0].imageName
     : "https://via.placeholder.com/300x200";
   const xsm: boolean = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
 

@@ -4,6 +4,8 @@ import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { useToast } from "../contexts/ToastContext";
 import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { MiniMap } from "../components/MiniMap";
 import useLocateUser from "../hooks/useLocateUser";
 import { BackArrow } from "../components/reusable/BackArrow";
@@ -13,6 +15,7 @@ import { FaStar, FaRegStar, FaCheckCircle } from "react-icons/fa";
 import InfoLink from "../components/reusable/InfoLink";
 import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES } from "../utils/constants";
 import { reverseGeocode } from "../utils/functions";
+import { insertHoop } from "../utils/requests";
 
 
 const conditionConfig: Record<Condition, { color: string; labelKey: string }> = {
@@ -30,7 +33,7 @@ type FormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor"> & {
 
 const emptyHoop: FormData = {
   name: '',
-  profile_images: [],
+  images: [],
   coordinates: { latitude: null, longitude: null },
   description: '',
   condition: null,
@@ -53,6 +56,8 @@ const AddHoop = () => {
   const [address, setAddress] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loadingAddress, setLoadingAddress] = useState(false);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
@@ -138,7 +143,7 @@ const AddHoop = () => {
     }
   };
 
-  const addHoop = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleHoopSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Validate all required fields
@@ -172,15 +177,21 @@ const AddHoop = () => {
       condition: formData.condition!,
       isIndoor: formData.isIndoor!,
       createdAt: formData.createdAt,
-      profile_images: observationImages,
+      images: observationImages,
       //playerEnrollments: [],
     };
 
-    console.log("Form submitted:", hoopData);
-    console.log("Image files:", imageFiles);
+    insertHoop(hoopData).then(async (inserted) => {
+      success(t('addHoop.success'));
+      await queryClient.invalidateQueries({ queryKey: ['hoops'] });
+      navigate(`/hoops/${inserted.id}`);
+    }).catch(() => {
+      error(t('addHoop.errors.submitFailed'));
+    });
 
-    success(t('addHoop.success'));
-    resetForm();
+    //console.log("Form submitted:", hoopData);
+    //console.log("Image files:", imageFiles);
+    
   };
 
   const resetForm = () => {
@@ -216,7 +227,7 @@ const AddHoop = () => {
         </div>  
 
         {/* Form */}
-        <form onSubmit={addHoop} className="flex flex-col p-6 gap-8">
+        <form onSubmit={handleHoopSubmit} className="flex flex-col p-6 gap-8">
           <div className="flex flex-col gap-4">
             {/* Name */}
             <TextField isRequired className={"flex flex-col gap-2"}>

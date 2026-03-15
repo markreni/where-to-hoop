@@ -16,7 +16,7 @@ const mockHoop: BasketballHoopWithEnrollments = {
   id: '1',
   name: 'Test Court',
   createdAt: '2024-01-15T10:00:00Z',
-  profile_images: [{ id: 1, imageName: 'https://example.com/court.jpg', addedDate: '2024-01-15' }],
+  images: [{ id: 1, imageName: 'https://example.com/court.jpg', addedDate: '2024-01-15' }],
   coordinates: { latitude: 60.1699, longitude: 24.9384 },
   description: 'Great outdoor court',
   condition: 'excellent',
@@ -53,7 +53,7 @@ describe('HomeHoopCard', () => {
   });
 
   it('renders placeholder image when no profile images', () => {
-    const hoopWithoutImages = { ...mockHoop, profile_images: [] };
+    const hoopWithoutImages = { ...mockHoop, images: [] };
     render(<HomeHoopCard {...defaultProps} hoop={hoopWithoutImages} />);
     const image = screen.getByRole('img');
     expect(image).toHaveAttribute('src', 'https://via.placeholder.com/300x200');

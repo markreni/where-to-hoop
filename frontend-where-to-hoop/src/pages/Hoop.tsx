@@ -90,7 +90,7 @@ const Hoop = ({ hoop }: HoopProps) => {
                 {/* Image */}
                 <img
                   className="rounded-lg w-full h-48 sm:h-64 object-cover mb-4"
-                  src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/400x300'}
+                  src={hoop.images.length > 0 ? hoop.images[0].imageName : 'https://via.placeholder.com/400x300'}
                   alt={hoop.name}
                 />
 

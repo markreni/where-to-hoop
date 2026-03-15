@@ -46,7 +46,7 @@ interface BasketballHoop {
   readonly id: string;
   readonly createdAt: string; // ISO date string
   name: string;
-  profile_images: ObservationImage[];
+  images: ObservationImage[];
   coordinates: Coordinates;
   address?: string;
   description: string;

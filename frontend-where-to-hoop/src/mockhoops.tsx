@@ -12,7 +12,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       latitude: 60.171550741939996,
       longitude: 24.947467801354446,
     },
-    profile_images: [
+    images: [
       {
         imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 1,
@@ -73,7 +73,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       latitude: 60.271550741939996,
       longitude: 24.977467801354446,
     },
-    profile_images: [
+    images: [
       {
         imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 2,
@@ -151,7 +151,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       latitude: 60.41550741939996,
       longitude: 25.147467801354446,
     },
-    profile_images: [
+    images: [
       {
         imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 3,
@@ -256,7 +256,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       latitude: 60.18450741939996,
       longitude: 24.957467801354446,
     },
-    profile_images: [
+    images: [
       {
         imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 4,
@@ -286,7 +286,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       latitude: 60.17850741939996,
       longitude: 24.927467801354446,
     },
-    profile_images: [
+    images: [
       {
         imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 5,

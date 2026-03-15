@@ -28,7 +28,7 @@ describe('Hoop Page', () => {
     id: 'test-hoop-1',
     name: 'Central Park Court',
     createdAt: '2024-01-10T10:00:00Z',
-    profile_images: [
+    images: [
       { id: 1, imageName: 'https://example.com/court.jpg', addedDate: '2024-01-10' },
     ],
     coordinates: { latitude: 60.1699, longitude: 24.9384 },
@@ -74,7 +74,7 @@ describe('Hoop Page', () => {
   });
 
   it('renders placeholder image when no profile images', () => {
-    const hoopWithoutImages = { ...mockHoop, profile_images: [] };
+    const hoopWithoutImages = { ...mockHoop, images: [] };
     render(<Hoop hoop={hoopWithoutImages} />);
     const image = screen.getByRole('img');
     expect(image).toHaveAttribute('src', 'https://via.placeholder.com/400x300');

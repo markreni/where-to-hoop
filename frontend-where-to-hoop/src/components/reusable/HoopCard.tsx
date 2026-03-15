@@ -74,7 +74,7 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
       <div className="flex flex-col gap-3">
         <div className="flex justify-start gap-4">
           <img className="rounded-md w-full xsm:w-2/3 h-40 object-cover"
-            src={hoop.profile_images.length > 0 ? hoop.profile_images[0].imageName : 'https://via.placeholder.com/150'}
+            src={hoop.images.length > 0 ? hoop.images[0].imageName : 'https://via.placeholder.com/150'}
             alt={hoop.name}
           />
           <div className="flex-col gap-1 items-start justify-around hidden xsm:flex">

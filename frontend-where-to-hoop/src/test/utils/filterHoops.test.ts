@@ -17,7 +17,7 @@ const createMockHoop = (id: string, latitude: number | null, longitude: number |
   id,
   name: `Test Court ${id}`,
   createdAt: '2024-01-15T10:00:00Z',
-  profile_images: [],
+  images: [],
   coordinates: { latitude, longitude },
   description: 'Test court description',
   condition: 'good',
