@@ -6,6 +6,9 @@ import { LocationContextProvider } from '../contexts/LocationContext';
 import { LanguageContextProvider } from '../contexts/LanguageContext';
 import { ToastProvider } from '../contexts/ToastContext';
 import { BrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
 
 interface AllProvidersProps {
   children: ReactNode;
@@ -13,6 +16,7 @@ interface AllProvidersProps {
 
 const AllProviders = ({ children }: AllProvidersProps) => {
   return (
+    <QueryClientProvider client={queryClient}>
     <BrowserRouter>
       <ColorModeContextProvider>
         <MapViewContextProvider>
@@ -26,6 +30,7 @@ const AllProviders = ({ children }: AllProvidersProps) => {
         </MapViewContextProvider>
       </ColorModeContextProvider>
     </BrowserRouter>
+    </QueryClientProvider>
   );
 };
 
