@@ -2,8 +2,16 @@ import type { BasketballHoop, BasketballHoopWithEnrollments } from '../types/typ
 import supabase from './supabase'
 
 const fetchHoops = async (): Promise<BasketballHoopWithEnrollments[]> => {
-  const { data, error } = await supabase.from('basketball_hoop').select()
-  if (error) throw error
+  const { data, error } = await supabase
+    .from('basketball_hoop')
+    .select("*")
+    .order('created_at', { ascending: true})
+
+  if (error) { 
+    console.error('Fetch error:', error.message)
+    throw error
+  }
+
   return (data ?? []).map(hoop => ({
     ...hoop,
     playerEnrollments: [],
@@ -25,7 +33,9 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>) => {
     address: hoop.address ?? null,
     images: hoop.images?.[0] ?? null,
   }
+
   const { data, error } = await supabase.from('basketball_hoop').insert(insertPayload).select().single()
+
   if (error) {
     console.error('Insert error:', error)
     throw error
@@ -40,5 +50,46 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>) => {
     }
   }
 }
+/*
+const updateHoop = async (id: string, newDescription: string): Promise<BasketballHoop> => {
+  
+  const { data, error } = await supabase.from('basketball_hoop').update({ description: newDescription }).eq('id', id).select().single()
+  
+  if (error) {
+    console.error('Update error:', error)
+    throw error
+  }
+  console.log('Updated hoop:', data)
+
+  return {
+    ...data,
+    coordinates: {
+      latitude: data.latitude,
+      longitude: data.longitude
+    }
+  } 
+}
+*/
+
+/*
+const deleteHoop = async (id: string): Promise<BasketballHoop> => {
+  
+  const { data, error } = await supabase.from('basketball_hoop').delete().eq('id', id).select().single()
+  
+  if (error) {
+    console.error('Delete error:', error)
+    throw error
+  }
+  console.log('Deleted hoop:', data)
+
+  return {
+    ...data,
+    coordinates: {
+      latitude: data.latitude,
+      longitude: data.longitude
+    }
+  } 
+}
+*/
 
 export { fetchHoops, insertHoop } 
