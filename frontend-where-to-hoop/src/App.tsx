@@ -19,6 +19,8 @@ import About from "./pages/About.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Contact from "./pages/Contact.tsx";
 import Info from "./pages/Info.tsx";
+import SignUp from "./pages/SignUp.tsx";
+import SignIn from "./pages/SignIn.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
 import type { BasketballHoopWithEnrollments } from "./types/types.ts";
 import { fetchHoops } from "./utils/requests.ts";
@@ -68,6 +70,8 @@ const App = () => {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<Info/>} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
         </Routes>
       </div>
     </div>

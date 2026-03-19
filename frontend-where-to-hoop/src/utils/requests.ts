@@ -92,4 +92,26 @@ const deleteHoop = async (id: string): Promise<BasketballHoop> => {
 }
 */
 
-export { fetchHoops, insertHoop } 
+const signUp = async (email: string, password: string, nickname: string) => {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: { data: { nickname } },
+  })
+  if (error) {
+    console.error('Sign up error:', error.message)
+    throw error
+  }
+  return data
+}
+
+const signIn = async (email: string, password: string) => {
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  if (error) {
+    console.error('Sign in error:', error.message)
+    throw error
+  }
+  return data
+}
+
+export { fetchHoops, insertHoop, signUp, signIn }

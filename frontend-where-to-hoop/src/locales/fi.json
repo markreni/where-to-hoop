@@ -1,7 +1,9 @@
 {
   "nav": {
     "showHoops": "Näytä korit",
-    "addHoop": "Lisää kori"
+    "addHoop": "Lisää kori",
+    "signIn": "Kirjaudu sisään",
+    "signUp": "Rekisteröidy"
   },
   "home": {
     "nearestCourts": "Lähimmät kentät",

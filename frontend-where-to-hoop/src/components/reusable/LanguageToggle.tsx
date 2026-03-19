@@ -16,7 +16,7 @@ const LanguageToggle = (): JSX.Element => {
   return (
     <Button
       onPress={toggleLanguage}
-      className={`${colorModeContext} ml-2 px-2 py-1 rounded-md bg-first-color text-background text-sm font-medium main-color-hover transition-colors cursor-pointer`}
+      className={`${colorModeContext} ml-2 px-2 py-1 rounded-md border border-first-color text-first-color text-sm font-medium hover:bg-first-color hover:text-white dark:hover:text-black transition-colors cursor-pointer`}
     >
       {language.toUpperCase()}
     </Button>

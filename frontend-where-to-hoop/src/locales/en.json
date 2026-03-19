@@ -1,7 +1,9 @@
 {
   "nav": {
     "showHoops": "Show Hoops",
-    "addHoop": "Add Hoop"
+    "addHoop": "Add Hoop",
+    "signIn": "Sign in",
+    "signUp": "Sign up"
   },
   "home": {
     "nearestCourts": "Nearest Courts",

@@ -12,6 +12,7 @@ import { useTranslation } from "../hooks/useTranslation.ts";
 import type { ColorMode } from "../types/types.ts";
 import breakpoints from "../assets/style.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
+import { IoMdPerson, IoMdPersonAdd } from "react-icons/io";
 
 
 const NavBar = () => {
@@ -30,27 +31,53 @@ const NavBar = () => {
             </Link>
             <DarkModeToggle />
           </div>
-          <div className="flex-center gap-4">
+          <div className="flex-center gap-6">
             <LanguageToggle />
-            <Link to="/hoops">
-              <Button
-                className={`${colorModeContext} flex items-center gap-2 px-4 py-2 rounded-md bg-first-color main-color-hover first-color-text font-medium transition-colors tracking-normal`}
-                onClick={() => locateUser()}
-              >
-                <MdLocationPin size={22}/>
-                {t('nav.showHoops')}
-              </Button>
+            <div className="flex-center gap-4">
+              <Link to="/hoops">
+                <Button
+                  className={`${colorModeContext} flex items-center gap-2 px-4 py-2 rounded-md bg-first-color main-color-hover first-color-text font-medium transition-colors tracking-normal`}
+                  onClick={() => locateUser()}
+                >
+                  <MdLocationPin size={22}/>
+                  {t('nav.showHoops')}
+                </Button>
+              </Link>
+              <Link to="/signin">
+                <Button className={`${colorModeContext} hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md border border-first-color text-first-color text-fluid-sm font-medium hover:bg-first-color hover:text-white dark:hover:text-black transition-colors`}>
+                  <IoMdPerson size={18}/>
+                  {t('nav.signIn')}
+                </Button>
+              </Link>
+            </div>
+            { /*
+            <Link to="/signup" className={`${colorModeContext} hidden lg:block text-fluid-sm background-text hover:text-first-color transition-colors`}>
+              {t('nav.signUp')}
             </Link>
+            */
+            }
             <MenuTrigger>
               <Button>
                 <FiAlignJustify size={28} className="text-first-color dark:text-yellow-400"/>
               </Button>
               <Popover className="w-24/25 sm:w-full pr-6">
                 <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
-                  <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                  <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/addhoop" className="flex items-center gap-2">
                       <GiBasketballBasket size={22}/>
                       {t('nav.addHoop')}
+                    </Link>
+                  </MenuItem>
+                  <MenuItem className={`${colorModeContext} md:hidden mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                    <Link to="/signin" className="flex items-center gap-2">
+                      <IoMdPerson size={22}/>
+                      {t('nav.signIn')}
+                    </Link>
+                  </MenuItem>
+                  <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                    <Link to="/signup" className="flex items-center gap-2">
+                      <IoMdPersonAdd size={22}/>
+                      {t('nav.signUp')}
                     </Link>
                   </MenuItem>
                 </Menu>
@@ -99,10 +126,22 @@ const NavBar = () => {
                       {t('nav.showHoops')}
                     </Link>
                   </MenuItem>
-                  <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                  <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/addhoop" className="flex items-center gap-2">
                       <GiBasketballBasket size={22}/>
                       {t('nav.addHoop')}
+                    </Link>
+                  </MenuItem>
+                  <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                    <Link to="/signin" className="flex items-center gap-2">
+                      <IoMdPerson size={22}/>
+                      {t('nav.signIn')}
+                    </Link>
+                  </MenuItem>
+                  <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                    <Link to="/signup" className="flex items-center gap-2">
+                      <IoMdPersonAdd size={22}/>
+                      {t('nav.signUp')}
                     </Link>
                   </MenuItem>
                 </Menu>
