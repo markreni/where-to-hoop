@@ -16,6 +16,7 @@ import InfoLink from "../components/reusable/InfoLink";
 import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES } from "../utils/constants";
 import { reverseGeocode } from "../utils/functions";
 import { insertHoop } from "../utils/requests";
+import { useAuth } from "../contexts/AuthContext";
 
 
 const conditionConfig: Record<Condition, { color: string; labelKey: string }> = {
@@ -39,6 +40,7 @@ const emptyHoop: FormData = {
   condition: null,
   isIndoor: null,
   createdAt: new Date().toISOString(),
+  addedBy: '',
   //playerEnrollments: [],
 };
 
@@ -62,6 +64,7 @@ const AddHoop = () => {
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
   const { success, error, warning } = useToast();
+  const { user } = useAuth();
 
   useEffect(() => {
     const { latitude, longitude } = formData.coordinates;
@@ -178,6 +181,7 @@ const AddHoop = () => {
       isIndoor: formData.isIndoor!,
       createdAt: formData.createdAt,
       images: observationImages,
+      addedBy: user!.email!,
       //playerEnrollments: [],
     };
 

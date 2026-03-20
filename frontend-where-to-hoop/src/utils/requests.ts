@@ -32,6 +32,7 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>) => {
     longitude: hoop.coordinates.longitude,
     address: hoop.address ?? null,
     images: hoop.images?.[0] ?? null,
+    added_by: hoop.addedBy
   }
 
   const { data, error } = await supabase.from('basketball_hoop').insert(insertPayload).select().single()

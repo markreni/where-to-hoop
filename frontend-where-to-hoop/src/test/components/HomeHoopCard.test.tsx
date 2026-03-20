@@ -21,6 +21,7 @@ const mockHoop: BasketballHoopWithEnrollments = {
   description: 'Great outdoor court',
   condition: 'excellent',
   isIndoor: false,
+  addedBy: 'test@example.com',
   playerEnrollments: [
     { id: 'e1', player: mockUser('Alice'), hoopId: '1', arrivalTime: new Date(), duration: 60, playMode: 'open', createdAt: new Date() },
     { id: 'e2', player: mockUser('Bob'), hoopId: '1', arrivalTime: new Date(), duration: 30, playMode: 'solo', createdAt: new Date() },
