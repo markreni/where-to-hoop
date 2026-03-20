@@ -13,6 +13,11 @@ vi.mock('../utils/supabase', () => ({
         })),
       })),
     })),
+    auth: {
+      getSession: vi.fn().mockResolvedValue({ data: { session: null }, error: null }),
+      onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
+      signOut: vi.fn().mockResolvedValue({ error: null }),
+    },
   },
 }));
 

@@ -3,7 +3,8 @@
     "showHoops": "Näytä korit",
     "addHoop": "Lisää kori",
     "signIn": "Kirjaudu sisään",
-    "signUp": "Rekisteröidy"
+    "signUp": "Rekisteröidy",
+    "signOut": "Kirjaudu ulos"
   },
   "home": {
     "nearestCourts": "Lähimmät kentät",
@@ -67,7 +68,9 @@
       "addImage": "Lisää vähintään yksi kuva",
       "maxImages": "Enintään {{count}} kuvaa sallittu",
       "imageTooLarge": "Jotkin kuvat ylittävät {{size}}MB rajan: {{files}}",
-      "remainingImages": "Voit lisätä vielä {{count}} kuva(a)"
+      "remainingImages": "Voit lisätä vielä {{count}} kuva(a)",
+      "submitFailed": "Korin lisääminen epäonnistui. Yritä uudelleen.",
+      "signInRequired": "Sinun täytyy olla kirjautuneena lisätäksesi korin."
     },
     "success": "Koripallokori lisätty onnistuneesti!",
     "noAddressFound": "Osoitetta ei löytynyt valitulle sijainnille."

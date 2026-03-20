@@ -12,7 +12,8 @@ import { useTranslation } from "../hooks/useTranslation.ts";
 import type { ColorMode } from "../types/types.ts";
 import breakpoints from "../assets/style.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
-import { IoMdPerson, IoMdPersonAdd } from "react-icons/io";
+import { IoMdPerson, IoMdPersonAdd, IoMdLogOut } from "react-icons/io";
+import { useAuth } from "../contexts/AuthContext.tsx";
 
 
 const NavBar = () => {
@@ -20,6 +21,7 @@ const NavBar = () => {
   const sm = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
+  const { user, signOut } = useAuth();
   
   return (
     <div className={`${colorModeContext} fixed z-402 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
@@ -43,12 +45,22 @@ const NavBar = () => {
                   {t('nav.showHoops')}
                 </Button>
               </Link>
-              <Link to="/signin">
-                <Button className={`${colorModeContext} hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md border border-first-color text-first-color text-fluid-sm font-medium hover:bg-first-color hover:text-white dark:hover:text-black transition-colors`}>
+              {!user ? (
+                <Link to="/signin">
+                  <Button className={`${colorModeContext} hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md border border-first-color text-first-color text-fluid-sm font-medium hover:bg-first-color hover:text-white dark:hover:text-black transition-colors`}>
+                    <IoMdPerson size={18}/>
+                    {t('nav.signIn')}
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  className={`${colorModeContext} hidden md:flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-first-color hover:text-first-color/70 transition-colors`}
+                  onPress={() => signOut()}
+                >
                   <IoMdPerson size={18}/>
-                  {t('nav.signIn')}
+                  {t('nav.signOut')}
                 </Button>
-              </Link>
+              )}
             </div>
             { /*
             <Link to="/signup" className={`${colorModeContext} hidden lg:block text-fluid-sm background-text hover:text-first-color transition-colors`}>
@@ -60,26 +72,40 @@ const NavBar = () => {
               <Button>
                 <FiAlignJustify size={28} className="text-first-color dark:text-yellow-400"/>
               </Button>
-              <Popover className="w-24/25 sm:w-full pr-6">
+              <Popover className="w-24/25 xsm:w-1/3 sm:w-1/4 xmd:1/5 pr-6">
                 <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
-                  <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                  {!user ? (
+                      <MenuItem className={`${colorModeContext} md:hidden mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                        <Link to="/signin" className="flex items-center gap-2">
+                          <IoMdPerson size={22}/>
+                          {t('nav.signIn')}
+                        </Link>
+                      </MenuItem>          
+                  ) : (
+                    <MenuItem
+                      className={`${colorModeContext} mb-2 md:mb-0 md:hidden rounded-md background-hover-text-gray background-text-reverse-black`}
+                      onAction={() => signOut()}
+                    >
+                      <span className="flex items-center gap-2">
+                        <IoMdLogOut size={22}/>
+                        {t('nav.signOut')}
+                      </span>
+                    </MenuItem>
+                  )}
+                  <MenuItem className={`${colorModeContext} ${!user && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/addhoop" className="flex items-center gap-2">
                       <GiBasketballBasket size={22}/>
                       {t('nav.addHoop')}
                     </Link>
                   </MenuItem>
-                  <MenuItem className={`${colorModeContext} md:hidden mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                    <Link to="/signin" className="flex items-center gap-2">
-                      <IoMdPerson size={22}/>
-                      {t('nav.signIn')}
-                    </Link>
-                  </MenuItem>
-                  <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                    <Link to="/signup" className="flex items-center gap-2">
-                      <IoMdPersonAdd size={22}/>
-                      {t('nav.signUp')}
-                    </Link>
-                  </MenuItem>
+                  {!user && (
+                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                      <Link to="/signup" className="flex items-center gap-2">
+                         <IoMdPersonAdd size={22}/>
+                         {t('nav.signUp')}
+                      </Link>
+                    </MenuItem>
+                  )}  
                 </Menu>
               </Popover>
             </MenuTrigger>
@@ -126,24 +152,38 @@ const NavBar = () => {
                       {t('nav.showHoops')}
                     </Link>
                   </MenuItem>
-                  <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                  {!user ? (
+                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                        <Link to="/signin" className="flex items-center gap-2">
+                          <IoMdPerson size={22}/>
+                          {t('nav.signIn')}
+                        </Link>
+                      </MenuItem>
+                  ) : (
+                    <MenuItem
+                      className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}
+                      onAction={() => signOut()}
+                    >
+                      <span className="flex items-center gap-2">
+                        <IoMdLogOut size={22}/>
+                        {t('nav.signOut')}
+                      </span>
+                    </MenuItem>
+                  )}
+                   <MenuItem className={`${colorModeContext} ${!user && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/addhoop" className="flex items-center gap-2">
                       <GiBasketballBasket size={22}/>
                       {t('nav.addHoop')}
                     </Link>
                   </MenuItem>
-                  <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                    <Link to="/signin" className="flex items-center gap-2">
-                      <IoMdPerson size={22}/>
-                      {t('nav.signIn')}
-                    </Link>
-                  </MenuItem>
+                  {!user && (
                   <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/signup" className="flex items-center gap-2">
                       <IoMdPersonAdd size={22}/>
                       {t('nav.signUp')}
                     </Link>
                   </MenuItem>
+                  )}
                 </Menu>
               </Popover>
             </MenuTrigger>

@@ -185,8 +185,12 @@ const AddHoop = () => {
       success(t('addHoop.success'));
       await queryClient.invalidateQueries({ queryKey: ['hoops'] });
       navigate(`/hoops/${inserted.id}`);
-    }).catch(() => {
-      error(t('addHoop.errors.submitFailed'));
+    }).catch((err: { code?: string }) => {
+      if (err?.code === '42501') {
+        error(t('addHoop.errors.signInRequired'));
+      } else {
+        error(t('addHoop.errors.submitFailed'));
+      }
     });
 
     //console.log("Form submitted:", hoopData);

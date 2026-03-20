@@ -3,7 +3,8 @@
     "showHoops": "Show Hoops",
     "addHoop": "Add Hoop",
     "signIn": "Sign in",
-    "signUp": "Sign up"
+    "signUp": "Sign up",
+    "signOut": "Sign out"
   },
   "home": {
     "nearestCourts": "Nearest Courts",
@@ -67,7 +68,9 @@
       "addImage": "Please add at least one image",
       "maxImages": "Maximum {{count}} images allowed",
       "imageTooLarge": "Some images exceed {{size}}MB limit: {{files}}",
-      "remainingImages": "Only {{count}} more image(s) can be added"
+      "remainingImages": "Only {{count}} more image(s) can be added",
+      "submitFailed": "Failed to submit the hoop. Please try again.",
+      "signInRequired": "You must be signed in to add a hoop."
     },
     "success": "Basketball hoop added successfully!",
     "noAddressFound": "No address found for the selected location."

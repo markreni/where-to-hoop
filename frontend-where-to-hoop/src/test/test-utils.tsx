@@ -5,6 +5,7 @@ import { MapViewContextProvider } from '../contexts/MapViewContext';
 import { LocationContextProvider } from '../contexts/LocationContext';
 import { LanguageContextProvider } from '../contexts/LanguageContext';
 import { ToastProvider } from '../contexts/ToastContext';
+import { AuthContextProvider } from '../contexts/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -23,7 +24,9 @@ const AllProviders = ({ children }: AllProvidersProps) => {
           <LocationContextProvider>
             <LanguageContextProvider>
               <ToastProvider>
-                {children}
+                <AuthContextProvider>
+                  {children}
+                </AuthContextProvider>
               </ToastProvider>
             </LanguageContextProvider>
           </LocationContextProvider>
