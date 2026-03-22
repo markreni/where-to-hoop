@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useLocationValues } from '../contexts/LocationContext'
@@ -9,12 +10,13 @@ import { HoopBadge } from '../components/reusable/HoopBadge'
 import { EnrollmentForm } from '../components/EnrollmentForm'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
-import type { BasketballHoopWithEnrollments, ColorMode, Coordinates } from '../types/types'
+import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
 import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
+import { fetchEnrollments } from '../utils/requests'
 import { Button } from 'react-aria-components'
 
 interface HoopProps {
-  hoop: BasketballHoopWithEnrollments | undefined
+  hoop: BasketballHoop | undefined
 }
 
 // Main Hoop page component
@@ -24,6 +26,12 @@ const Hoop = ({ hoop }: HoopProps) => {
   const userLocation: Coordinates = useLocationValues()
   const { hash } = useLocation()
   const navigate = useNavigate();
+
+  const { data: enrollments = [], isLoading } = useQuery({
+    queryKey: ['enrollments', hoop?.id ?? ''],
+    queryFn: () => fetchEnrollments(hoop?.id ?? ''),
+    enabled: !!hoop,
+  })
 
   useEffect(() => {
     if (hash) {
@@ -53,8 +61,16 @@ const Hoop = ({ hoop }: HoopProps) => {
     )
   }
 
-  const { playingNow } = groupEnrollmentsByTime(hoop.playerEnrollments);
-  const playingNowCount = playingNow.length;
+  if (isLoading) {
+    return (
+      <div className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen flex items-center justify-center">
+        <p className="text-2xl text-text">Loading enrollments...</p>
+      </div>
+    );
+  }
+
+  const { playingNow } = groupEnrollmentsByTime(enrollments)
+  const playingNowCount = playingNow.length
 
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
@@ -145,7 +161,7 @@ const Hoop = ({ hoop }: HoopProps) => {
               />
             </div>
             <PlayersPanel
-                playerEnrollments={hoop.playerEnrollments}
+                playerEnrollments={enrollments}
               />
           </div>
         </div>

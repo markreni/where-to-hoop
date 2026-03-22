@@ -209,6 +209,9 @@
       "inText": "hooping in",
       "minutesShort": "min",
       "joinButton": "Join",
+      "deleteButton": "Cancel",
+      "deleteSuccess": "Enrollment cancelled",
+      "deleteError": "Failed to cancel enrollment",
       "defaultNoteOpen": "Please join me to hoop",
       "defaultNoteSolo": "Prefer to hoop alone this time"
     },

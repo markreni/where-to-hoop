@@ -1,7 +1,7 @@
-import type { BasketballHoop, BasketballHoopWithEnrollments, PlayerEnrollment } from '../types/types'
+import type { BasketballHoop, PlayerEnrollment } from '../types/types'
 import supabase from './supabase'
 
-const fetchHoops = async (): Promise<BasketballHoopWithEnrollments[]> => {
+const fetchHoops = async (): Promise<BasketballHoop[]> => {
   const { data, error } = await supabase
     .from('basketball_hoop')
     .select("*")
@@ -14,7 +14,6 @@ const fetchHoops = async (): Promise<BasketballHoopWithEnrollments[]> => {
 
   return (data ?? []).map(hoop => ({
     ...hoop,
-    playerEnrollments: [],
     coordinates: {
       latitude: hoop.latitude,
       longitude: hoop.longitude
@@ -97,6 +96,29 @@ const deleteHoop = async (id: string): Promise<BasketballHoop> => {
 }
 */
 
+const fetchEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]> => {
+  const { data, error } = await supabase
+    .from('player_enrollment')
+    .select('*')
+    .eq('hoop_id', hoopId)
+
+  if (error) {
+    console.error('Fetch enrollments error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => ({
+    id: row.id,
+    playerId: row.player_id,
+    hoopId: row.hoop_id,
+    arrivalTime: new Date(row.arrival_time),
+    duration: row.duration,
+    playMode: row.play_mode,
+    note: row.note ?? undefined,
+    createdAt: new Date(row.created_at),
+  }))
+}
+
 const insertEnrollment = async (enrollment: Omit<PlayerEnrollment, 'id' | 'createdAt' | 'playerEmail' | 'hoopName'>): Promise<PlayerEnrollment> => {
   const insertPayload = {
     player_id: enrollment.playerId,
@@ -130,6 +152,18 @@ const insertEnrollment = async (enrollment: Omit<PlayerEnrollment, 'id' | 'creat
   }
 }
 
+const deleteEnrollment = async (id: string): Promise<void> => {
+  const { error } = await supabase
+    .from('player_enrollment')
+    .delete()
+    .eq('id', id)
+
+  if (error) {
+    console.error('Delete enrollment error:', error)
+    throw error
+  }
+}
+
 const signUp = async (email: string, password: string, nickname: string) => {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -152,4 +186,4 @@ const signIn = async (email: string, password: string) => {
   return data
 }
 
-export { fetchHoops, insertHoop, insertEnrollment, signUp, signIn }
+export { fetchHoops, insertHoop, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn }

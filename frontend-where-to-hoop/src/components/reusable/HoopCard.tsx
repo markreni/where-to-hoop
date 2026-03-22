@@ -1,5 +1,5 @@
 import type { Dispatch } from "react";
-import type { BasketballHoopWithEnrollments, ColorMode, MapView } from "../../types/types.ts";
+import type { BasketballHoop, ColorMode, MapView } from "../../types/types.ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 //import { Button } from "react-aria-components";
 
 interface HoopCardProps {
-  hoop: BasketballHoopWithEnrollments;
+  hoop: BasketballHoop;
   distance: number;
 }
 const HoopCard = ({ hoop, distance }: HoopCardProps) => {
@@ -49,12 +49,17 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
     navigate(`/hoops/${hoop.id}`);
   };
 
+  /*
   const { playingNow } = useMemo(
       () => groupEnrollmentsByTime(hoop.playerEnrollments),
       [hoop.playerEnrollments]
   );
 
   const playingNowCount = playingNow.length;
+  */
+
+  const playingNow = [{ id: 'placeholder', playerId: 'Player1' }]; // Placeholder until enrollments are implemented
+  const playingNowCount = playingNow.length; // Placeholder until enrollments are implemented
 
   return (
     <div className={`${colorModeContext} h-1/3 sm:h-full w-full flex flex-col justify-start gap-3 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>

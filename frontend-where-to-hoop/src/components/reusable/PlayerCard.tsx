@@ -1,6 +1,10 @@
 import type { ColorMode, PlayerEnrollment } from '../../types/types'
 import { useColorModeValues } from '../../contexts/ColorModeContext'
 import { useTranslation } from '../../hooks/useTranslation'
+import { useAuth } from '../../contexts/AuthContext'
+import { useQueryClient } from '@tanstack/react-query'
+import { useToast } from '../../contexts/ToastContext'
+import { deleteEnrollment } from '../../utils/requests'
 
 // Helper to format time
 const formatTime = (date: Date): string => {
@@ -36,9 +40,23 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
   const isOpenToPlay = enrollment.playMode === 'open'
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+  const { user } = useAuth()
+  const { success, error } = useToast()
+  const queryClient = useQueryClient()
+
+  const isOwner = !!user && user.id === enrollment.playerId
 
   const handleJoin = () => {
     console.log('Joining player:', enrollment.playerId)
+  }
+
+  const handleDelete = () => {
+    deleteEnrollment(enrollment.id).then(async () => {
+      success(t('hoop.playersPanel.deleteSuccess'))
+      await queryClient.invalidateQueries({ queryKey: ['enrollments', enrollment.hoopId] })
+    }).catch(() => {
+      error(t('hoop.playersPanel.deleteError'))
+    })
   }
 
   const noteText = enrollment.note || (isOpenToPlay ? t('hoop.playersPanel.defaultNoteOpen') : t('hoop.playersPanel.defaultNoteSolo'))
@@ -59,13 +77,22 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
           {noteText}
         </p>
       </div>
-      {isOpenToPlay && (
+      {isOwner ? (
         <button
-          onClick={handleJoin}
-          className="shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors cursor-pointer"
+          onClick={handleDelete}
+          className="shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors cursor-pointer"
         >
-          {t('hoop.playersPanel.joinButton')}
+          {t('hoop.playersPanel.deleteButton')}
         </button>
+      ) : (
+        isOpenToPlay && (
+          <button
+            onClick={handleJoin}
+            className="shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors cursor-pointer"
+          >
+            {t('hoop.playersPanel.joinButton')}
+          </button>
+        )
       )}
     </div>
   )

@@ -1,5 +1,5 @@
 import breakpoints from "../assets/style";
-import type { BasketballHoopWithEnrollments, ColorMode, Condition } from "../types/types";
+import type { BasketballHoop, ColorMode, Condition } from "../types/types";
 import { HoopCard } from "./reusable/HoopCard";
 import { useMediaQuery } from 'usehooks-ts'
 import { Link } from "react-router-dom";
@@ -24,7 +24,7 @@ interface FilterState {
 }
 
 interface ListProps {
-  filteredAndSortedHoops: { hoop: BasketballHoopWithEnrollments; distance: number; }[];
+  filteredAndSortedHoops: { hoop: BasketballHoop; distance: number; }[];
   filters: FilterState;
 }
 

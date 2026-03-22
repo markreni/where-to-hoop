@@ -22,14 +22,14 @@ import Info from "./pages/Info.tsx";
 import SignUp from "./pages/SignUp.tsx";
 import SignIn from "./pages/SignIn.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
-import type { BasketballHoopWithEnrollments } from "./types/types.ts";
+import type { BasketballHoop } from "./types/types.ts";
 import { fetchHoops } from "./utils/requests.ts";
 
 
 const App = () => {
   const match = useMatch("/hoops/:id");
 
-  const { data: hoops = [], isLoading } = useQuery<BasketballHoopWithEnrollments[]>({
+  const { data: hoops = [], isLoading } = useQuery<BasketballHoop[]>({
     queryKey: ['hoops'],
     queryFn: fetchHoops,
   })
@@ -37,7 +37,7 @@ const App = () => {
   const hoop = match?.params.id ? hoops.find(h => h.id === match.params.id) : undefined
 
   // Filter hoops to only include those within Helsinki greater area
-  const filteredHoops: BasketballHoopWithEnrollments[] = useMemo(() => {
+  const filteredHoops: BasketballHoop[] = useMemo(() => {
     const [[swLat, swLng], [neLat, neLng]] = helsinkiBounds as [[number, number], [number, number]];
     return hoops.filter(hoop => {
       const { latitude, longitude } = hoop.coordinates;

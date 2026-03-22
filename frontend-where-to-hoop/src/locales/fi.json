@@ -209,6 +209,9 @@
       "inText": "tulee",
       "minutesShort": "min",
       "joinButton": "Liity",
+      "deleteButton": "Peruuta",
+      "deleteSuccess": "Ilmoittautuminen peruutettu",
+      "deleteError": "Ilmoittautumisen peruuttaminen epäonnistui",
       "defaultNoteOpen": "Tule mukaan pelaamaan",
       "defaultNoteSolo": "Haluan heitellä yksin tällä kertaa"
     },
