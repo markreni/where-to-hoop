@@ -1,7 +1,37 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen } from '../test-utils';
+import { render, screen, waitFor } from '../test-utils';
 import Hoop from '../../pages/Hoop';
-import type { BasketballHoopWithEnrollments } from '../../types/types';
+import type { BasketballHoop } from '../../types/types';
+import { fetchEnrollments } from '../../utils/requests';
+
+const mockEnrollments = vi.hoisted(() => [
+  {
+    id: 'enroll-1',
+    playerId: 'user-alice',
+    hoopId: 'test-hoop-1',
+    arrivalTime: new Date(new Date('2024-01-15T12:00:00Z').getTime() - 10 * 60000),
+    duration: 60,
+    playMode: 'open' as const,
+    createdAt: new Date(new Date('2024-01-15T12:00:00Z').getTime() - 15 * 60000),
+  },
+  {
+    id: 'enroll-2',
+    playerId: 'user-bob',
+    hoopId: 'test-hoop-1',
+    arrivalTime: new Date(new Date('2024-01-15T12:00:00Z').getTime() + 20 * 60000),
+    duration: 90,
+    playMode: 'solo' as const,
+    createdAt: new Date(new Date('2024-01-15T12:00:00Z').getTime() - 5 * 60000),
+  },
+]);
+
+vi.mock('../../utils/requests', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../utils/requests')>();
+  return {
+    ...actual,
+    fetchEnrollments: vi.fn().mockResolvedValue(mockEnrollments),
+  };
+});
 
 describe('Hoop Page', () => {
   const fixedNow = new Date('2024-01-15T12:00:00Z');
@@ -15,7 +45,7 @@ describe('Hoop Page', () => {
     vi.useRealTimers();
   });
 
-  const mockHoop: BasketballHoopWithEnrollments = {
+  const mockHoop: BasketballHoop = {
     id: 'test-hoop-1',
     name: 'Central Park Court',
     createdAt: '2024-01-10T10:00:00Z',
@@ -27,26 +57,6 @@ describe('Hoop Page', () => {
     condition: 'excellent',
     isIndoor: false,
     addedBy: 'test@example.com',
-    playerEnrollments: [
-      {
-        id: 'enroll-1',
-        playerId: 'user-alice',
-        hoopId: 'test-hoop-1',
-        arrivalTime: new Date(fixedNow.getTime() - 10 * 60000),
-        duration: 60,
-        playMode: 'open',
-        createdAt: new Date(fixedNow.getTime() - 15 * 60000),
-      },
-      {
-        id: 'enroll-2',
-        playerId: 'user-bob',
-        hoopId: 'test-hoop-1',
-        arrivalTime: new Date(fixedNow.getTime() + 20 * 60000),
-        duration: 90,
-        playMode: 'solo',
-        createdAt: new Date(fixedNow.getTime() - 5 * 60000),
-      },
-    ],
   };
 
   it('renders hoop name', () => {
@@ -91,7 +101,6 @@ describe('Hoop Page', () => {
   // Date badge is currently commented out in the Hoop page
   it.skip('renders date badge with formatted date', () => {
     render(<Hoop hoop={mockHoop} />);
-    // Check that a date is displayed (format may vary by locale)
     const dateBadge = screen.getByText(/Jan 10, 2024|10.*Jan.*2024/);
     expect(dateBadge).toBeInTheDocument();
   });
@@ -113,7 +122,6 @@ describe('Hoop Page', () => {
 
   it('renders back arrow', () => {
     render(<Hoop hoop={mockHoop} />);
-    // BackArrow has aria-label="Go back"
     const backButton = screen.getByRole('button', { name: /go back/i });
     expect(backButton).toBeInTheDocument();
   });
@@ -129,11 +137,33 @@ describe('Hoop Page', () => {
     expect(favoriteIcon).toBeInTheDocument();
   });
 
-  it('shows players from enrollments in PlayersPanel', () => {
+  it('shows players from enrollments in PlayersPanel', async () => {
+    vi.useRealTimers();
+    const now = Date.now();
+    vi.mocked(fetchEnrollments).mockResolvedValueOnce([
+      {
+        id: 'enroll-1',
+        playerId: 'user-alice',
+        hoopId: 'test-hoop-1',
+        arrivalTime: new Date(now - 10 * 60000),
+        duration: 60,
+        playMode: 'open',
+        createdAt: new Date(now - 15 * 60000),
+      },
+      {
+        id: 'enroll-2',
+        playerId: 'user-bob',
+        hoopId: 'test-hoop-1',
+        arrivalTime: new Date(now + 20 * 60000),
+        duration: 90,
+        playMode: 'solo',
+        createdAt: new Date(now - 5 * 60000),
+      },
+    ]);
     render(<Hoop hoop={mockHoop} />);
-    // Alice should be in "Playing Now" section
-    expect(screen.getByText('Playing Now (1)')).toBeInTheDocument();
-    // Bob should be in "Coming Soon" section
+    await waitFor(() => {
+      expect(screen.getByText('Playing Now (1)')).toBeInTheDocument();
+    });
     expect(screen.getByText('Coming Soon (1)')).toBeInTheDocument();
   });
 

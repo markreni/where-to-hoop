@@ -27,7 +27,7 @@ const Hoop = ({ hoop }: HoopProps) => {
   const { hash } = useLocation()
   const navigate = useNavigate();
 
-  const { data: enrollments = [], isLoading } = useQuery({
+  const { data: enrollments = [] } = useQuery({
     queryKey: ['enrollments', hoop?.id ?? ''],
     queryFn: () => fetchEnrollments(hoop?.id ?? ''),
     enabled: !!hoop,
@@ -59,14 +59,6 @@ const Hoop = ({ hoop }: HoopProps) => {
         <Footer />
       </div>
     )
-  }
-
-  if (isLoading) {
-    return (
-      <div className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen flex items-center justify-center">
-        <p className="text-2xl text-text">Loading enrollments...</p>
-      </div>
-    );
   }
 
   const { playingNow } = groupEnrollmentsByTime(enrollments)

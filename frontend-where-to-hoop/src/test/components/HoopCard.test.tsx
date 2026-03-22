@@ -2,9 +2,9 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import { HoopCard } from '../../components/reusable/HoopCard';
-import type { BasketballHoopWithEnrollments } from '../../types/types';
+import type { BasketballHoop, PlayerEnrollment } from '../../types/types';
 
-const mockHoop: BasketballHoopWithEnrollments = {
+const mockHoop: BasketballHoop = {
   id: '11',
   name: 'Central Park Court',
   createdAt: '2024-01-15T10:00:00Z',
@@ -14,26 +14,28 @@ const mockHoop: BasketballHoopWithEnrollments = {
   condition: 'excellent',
   isIndoor: false,
   addedBy: 'test@example.com',
-  playerEnrollments: [
-    { id: 'e1', playerId: 'user-alice', hoopId: '11', arrivalTime: new Date(), duration: 60, playMode: 'open', createdAt: new Date() },
-    { id: 'e2', playerId: 'user-bob', hoopId: '11', arrivalTime: new Date(), duration: 30, playMode: 'solo', createdAt: new Date() },
-    { id: 'e3', playerId: 'user-charlie', hoopId: '11', arrivalTime: new Date(), duration: 45, playMode: 'open', createdAt: new Date() },
-    { id: 'e4', playerId: 'user-david', hoopId: '11', arrivalTime: new Date(), duration: 90, playMode: 'open', createdAt: new Date() },
-    { id: 'e5', playerId: 'user-eve', hoopId: '11', arrivalTime: new Date(), duration: 120, playMode: 'solo', createdAt: new Date() },
-  ],
 };
 
-const mockIndoorHoop: BasketballHoopWithEnrollments = {
+const mockIndoorHoop: BasketballHoop = {
   ...mockHoop,
   name: 'Indoor Gym Court',
   isIndoor: true,
   condition: 'good',
 };
 
+const mockEnrollments: PlayerEnrollment[] = [
+  { id: 'e1', playerId: 'user-alice', hoopId: '11', arrivalTime: new Date(), duration: 60, playMode: 'open', createdAt: new Date() },
+  { id: 'e2', playerId: 'user-bob', hoopId: '11', arrivalTime: new Date(), duration: 30, playMode: 'solo', createdAt: new Date() },
+  { id: 'e3', playerId: 'user-charlie', hoopId: '11', arrivalTime: new Date(), duration: 45, playMode: 'open', createdAt: new Date() },
+  { id: 'e4', playerId: 'user-david', hoopId: '11', arrivalTime: new Date(), duration: 90, playMode: 'open', createdAt: new Date() },
+  { id: 'e5', playerId: 'user-eve', hoopId: '11', arrivalTime: new Date(), duration: 120, playMode: 'solo', createdAt: new Date() },
+];
+
 describe('HoopCard', () => {
   const defaultProps = {
     hoop: mockHoop,
     distance: 2.5,
+    playerEnrollments: mockEnrollments,
   };
 
   beforeEach(() => {
@@ -86,13 +88,12 @@ describe('HoopCard', () => {
 
   it('renders players count', () => {
     render(<HoopCard {...defaultProps} />);
-    // Players badge now shows translated text with count
     expect(screen.getByText(/5 players on court/)).toBeInTheDocument();
   });
 
   it('caps players display at >99 for large numbers', () => {
-    const hoopWithManyPlayers = { ...mockHoop, playerEnrollments: Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerId: `user-${i}`, hoopId: '11', arrivalTime: new Date(), duration: 60, playMode: 'open' as const, createdAt: new Date() })) };
-    render(<HoopCard {...defaultProps} hoop={hoopWithManyPlayers} />);
+    const manyEnrollments = Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerId: `user-${i}`, hoopId: '11', arrivalTime: new Date(), duration: 60, playMode: 'open' as const, createdAt: new Date() }));
+    render(<HoopCard {...defaultProps} playerEnrollments={manyEnrollments} />);
     expect(screen.getByText(/>99/)).toBeInTheDocument();
   });
 
@@ -108,7 +109,6 @@ describe('HoopCard', () => {
     const mapButton = screen.getByRole('button', { name: /map/i });
     await user.click(mapButton);
 
-    // Verify localStorage was updated to 'map'
     expect(localStorage.getItem('mapView')).toBe('map');
   });
 

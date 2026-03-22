@@ -9,7 +9,19 @@ vi.mock('../utils/supabase', () => ({
       select: vi.fn().mockResolvedValue({ data: [], error: null }),
       insert: vi.fn(() => ({
         select: vi.fn(() => ({
-          single: vi.fn().mockResolvedValue({ data: null, error: null }),
+          single: vi.fn().mockResolvedValue({
+            data: {
+              id: 'mock-id',
+              player_id: null,
+              hoop_id: 'test-hoop-1',
+              arrival_time: new Date().toISOString(),
+              duration: 60,
+              play_mode: 'open',
+              note: null,
+              created_at: new Date().toISOString(),
+            },
+            error: null,
+          }),
         })),
       })),
     })),

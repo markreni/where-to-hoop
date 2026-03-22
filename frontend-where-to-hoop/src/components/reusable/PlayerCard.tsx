@@ -64,7 +64,7 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
   return (
     <div className={`${colorModeContext} flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800`}>
       <div className="w-8 h-8 shrink-0 rounded-full bg-first-color flex items-center justify-center text-white text-sm font-medium">
-        {enrollment.playerId?.charAt(0) ?? '?'}
+        {enrollment.playerId?.charAt(0).toUpperCase() ?? '?'}
       </div>
       <div className="flex-1 min-w-0">
         <b><p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
