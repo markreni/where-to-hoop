@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import { insertEnrollment } from '../utils/requests'
+import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
+import { useQueryClient } from '@tanstack/react-query'
 import { Button } from 'react-aria-components'
 import { FaClock, FaUsers, FaUser, FaExclamationCircle } from 'react-icons/fa'
 import type { ColorMode, PlayerEnrollment, PlayMode, TimeSlot } from '../types/types'
@@ -36,6 +40,9 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   const [userEnrollment, setUserEnrollment] = useState<PlayerEnrollment | null>(null)
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+  const { user } = useAuth()
+  const { success, error } = useToast()
+  const queryClient = useQueryClient()
 
   const formatSliderValue = (minutes: number, isArrival: boolean): string => {
     if (isArrival && minutes === 0) return t('hoop.enrollment.now')
@@ -69,20 +76,21 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
     }
   }
 
-  const handleEnroll = () => {
-    const now = new Date()
-    const enrollment: PlayerEnrollment = {
-      id: `user-${Date.now()}`,
-      playerId: "123", // Placeholder player ID, replace with actual user ID from auth context
+  const handleEnrollSubmit = () => {
+    insertEnrollment({
+      playerId: user?.id ?? null,
       hoopId,
       arrivalTime: calculateArrivalTime(),
       duration: durationMinutes,
       playMode,
       ...(note.trim() && { note: note.trim() }),
-      createdAt: now,
-    }
-    console.log('Enrolled with:', enrollment)
-    setUserEnrollment(enrollment)
+    }).then(async (inserted) => {
+      setUserEnrollment(inserted)
+      success(t('hoop.enrollment.success'))
+      await queryClient.invalidateQueries({ queryKey: ['hoops'] })
+    }).catch(() => {
+        error(t('hoop.enrollment.error'))
+    })
   }
 
   const isLaterModeValid = whenMode === 'later' ? (selectedDate !== null && selectedTimeSlot !== null) : true
@@ -280,7 +288,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
       </div>
 
       <Button
-        onPress={handleEnroll}
+        onPress={handleEnrollSubmit}
         isDisabled={!isLaterModeValid}
         className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
           isLaterModeValid
