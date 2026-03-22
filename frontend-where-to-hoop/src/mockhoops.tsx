@@ -1,7 +1,4 @@
 import type { BasketballHoopWithEnrollments } from './types/types';
-import mockPlayers from './mockplayers';
-
-const [alice, bob, charlie, diana, ethan, fiona, mika, tomas, liisa, ville] = mockPlayers;
 
 // Mock data for initial hoops
 const initialHoops: BasketballHoopWithEnrollments[] = [
@@ -28,7 +25,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     playerEnrollments: [
       {
         id: 'enroll-1',
-        player: alice,
+        playerId: 'player-1',
         hoopId: '1',
         arrivalTime: new Date(new Date().getTime() - 10 * 60000), // 10 mins ago
         duration: 60,
@@ -38,7 +35,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-2',
-        player: bob,
+        playerId: 'player-2',
         hoopId: '1',
         arrivalTime: new Date(new Date().getTime() + 20 * 60000), // in 20 mins
         duration: 90,
@@ -47,7 +44,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-later-1',
-        player: mika,
+        playerId: 'player-7',
         hoopId: '1',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 10, 0, 0)), // tomorrow morning
         duration: 90,
@@ -57,7 +54,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-later-2',
-        player: fiona,
+        playerId: 'player-6',
         hoopId: '1',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 48, 17, 0, 0)), // in 2 days, evening
         duration: 60,
@@ -90,7 +87,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     playerEnrollments: [
       {
         id: 'enroll-3',
-        player: charlie,
+        playerId: 'player-3',
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() - 30 * 60000), // 30 mins ago
         duration: 120,
@@ -99,7 +96,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-4',
-        player: diana,
+        playerId: 'player-4',
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() + 10 * 60000), // in 10 mins
         duration: 60,
@@ -108,7 +105,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-5',
-        player: ethan,
+        playerId: 'player-5',
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() + 50 * 60000), // in 50 mins
         duration: 90,
@@ -117,7 +114,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-later-3',
-        player: bob,
+        playerId: 'player-2',
         hoopId: '2',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 12, 0, 0)), // tomorrow afternoon
         duration: 120,
@@ -127,7 +124,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-later-4',
-        player: liisa,
+        playerId: 'player-9',
         hoopId: '2',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 72, 18, 0, 0)), // in 3 days, evening
         duration: 60,
@@ -136,7 +133,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-later-5',
-        player: ville,
+        playerId: 'player-10',
         hoopId: '2',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 168, 9, 0, 0)), // in 1 week, morning
         duration: 90,
@@ -169,7 +166,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     playerEnrollments: [
       {
         id: 'enroll-6',
-        player: fiona,
+        playerId: 'player-6',
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 5 * 60000), // in 5 mins
         duration: 45,
@@ -178,7 +175,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-7',
-        player: ethan,
+        playerId: 'player-5',
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 120 * 60000), // in 120 mins
         duration: 60,
@@ -187,7 +184,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-8',
-        player: alice,
+        playerId: 'player-1',
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() - 20 * 60000), // 20 mins ago
         duration: 30,
@@ -196,7 +193,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-9',
-        player: bob,
+        playerId: 'player-2',
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 200 * 60000), // in 200 mins
         duration: 90,
@@ -205,7 +202,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-10',
-        player: diana,
+        playerId: 'player-4',
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 15 * 60000), // in 15 mins
         duration: 60,
@@ -214,7 +211,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-11',
-        player: ville,
+        playerId: 'player-10',
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago
         duration: 60,
@@ -223,7 +220,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-12',
-        player: charlie,
+        playerId: 'player-3',
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 300 * 60000), // in 300 mins
         duration: 120,
@@ -232,7 +229,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-later-6',
-        player: tomas,
+        playerId: 'player-8',
         hoopId: '3',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 21, 0, 0)), // tomorrow night
         duration: 60,
@@ -242,7 +239,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-later-7',
-        player: liisa,
+        playerId: 'player-9',
         hoopId: '3',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 120, 14, 0, 0)), // in 5 days, afternoon
         duration: 90,
@@ -274,7 +271,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     playerEnrollments: [
       {
         id: 'enroll-13',
-        player: mika,
+        playerId: 'player-7',
         hoopId: '4',
         arrivalTime: new Date(new Date().getTime() - 15 * 60000),
         duration: 45,
@@ -306,7 +303,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     playerEnrollments: [
       {
         id: 'enroll-14',
-        player: tomas,
+        playerId: 'player-8',
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 25 * 60000),
         duration: 90,
@@ -316,7 +313,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-15',
-        player: liisa,
+        playerId: 'player-9',
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 20 * 60000),
         duration: 60,
@@ -325,7 +322,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-16',
-        player: charlie,
+        playerId: 'player-3',
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 15 * 60000),
         duration: 120,
@@ -335,7 +332,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-17',
-        player: diana,
+        playerId: 'player-4',
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 10 * 60000),
         duration: 60,
@@ -344,7 +341,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-18',
-        player: ville,
+        playerId: 'player-10',
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 5 * 60000),
         duration: 90,
@@ -354,7 +351,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
       },
       {
         id: 'enroll-19',
-        player: ethan,
+        playerId: 'player-5',
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 2 * 60000),
         duration: 75,

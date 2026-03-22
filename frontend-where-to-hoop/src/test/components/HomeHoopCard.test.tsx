@@ -1,16 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '../test-utils';
 import { HomeHoopCard } from '../../components/reusable/HomeHoopCard';
-import type { BasketballHoopWithEnrollments, User } from '../../types/types';
-
-const mockUser = (firstName: string): User => ({
-  id: `user-${firstName.toLowerCase()}`,
-  firstName,
-  lastName: '',
-  nickname: '',
-  email: `${firstName.toLowerCase()}@test.com`,
-  favouriteHoops: [],
-});
+import type { BasketballHoopWithEnrollments } from '../../types/types';
 
 const mockHoop: BasketballHoopWithEnrollments = {
   id: '1',
@@ -23,11 +14,11 @@ const mockHoop: BasketballHoopWithEnrollments = {
   isIndoor: false,
   addedBy: 'test@example.com',
   playerEnrollments: [
-    { id: 'e1', player: mockUser('Alice'), hoopId: '1', arrivalTime: new Date(), duration: 60, playMode: 'open', createdAt: new Date() },
-    { id: 'e2', player: mockUser('Bob'), hoopId: '1', arrivalTime: new Date(), duration: 30, playMode: 'solo', createdAt: new Date() },
-    { id: 'e3', player: mockUser('Charlie'), hoopId: '1', arrivalTime: new Date(), duration: 45, playMode: 'open', createdAt: new Date() },
-    { id: 'e4', player: mockUser('David'), hoopId: '1', arrivalTime: new Date(), duration: 90, playMode: 'open', createdAt: new Date() },
-    { id: 'e5', player: mockUser('Eve'), hoopId: '1', arrivalTime: new Date(), duration: 120, playMode: 'solo', createdAt: new Date() },
+    { id: 'e1', playerId: 'user-alice', hoopId: '1', arrivalTime: new Date(), duration: 60, playMode: 'open', createdAt: new Date() },
+    { id: 'e2', playerId: 'user-bob', hoopId: '1', arrivalTime: new Date(), duration: 30, playMode: 'solo', createdAt: new Date() },
+    { id: 'e3', playerId: 'user-charlie', hoopId: '1', arrivalTime: new Date(), duration: 45, playMode: 'open', createdAt: new Date() },
+    { id: 'e4', playerId: 'user-david', hoopId: '1', arrivalTime: new Date(), duration: 90, playMode: 'open', createdAt: new Date() },
+    { id: 'e5', playerId: 'user-eve', hoopId: '1', arrivalTime: new Date(), duration: 120, playMode: 'solo', createdAt: new Date() },
   ],
 };
 
@@ -83,7 +74,7 @@ describe('HomeHoopCard', () => {
   });
 
   it('caps players display at >99 for large numbers', () => {
-    const hoopWithManyPlayers = { ...mockHoop, playerEnrollments: Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, player: mockUser(`Player${i}`), hoopId: '1', arrivalTime: new Date(), duration: 60, playMode: 'open' as const, createdAt: new Date() })) };
+    const hoopWithManyPlayers = { ...mockHoop, playerEnrollments: Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerId: `user-${i}`, hoopId: '1', arrivalTime: new Date(), duration: 60, playMode: 'open' as const, createdAt: new Date() })) };
     render(<HomeHoopCard {...defaultProps} hoop={hoopWithManyPlayers} />);
     // Players badge now shows translated text with count
     expect(screen.getByText(/>99 players on court/)).toBeInTheDocument();

@@ -35,7 +35,11 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>) => {
     added_by: hoop.addedBy
   }
 
-  const { data, error } = await supabase.from('basketball_hoop').insert(insertPayload).select().single()
+  const { data, error } = await supabase
+    .from('basketball_hoop')
+    .insert(insertPayload)
+    .select()
+    .single()
 
   if (error) {
     console.error('Insert error:', error)

@@ -89,9 +89,9 @@ const HoopCard = ({ hoop, distance }: HoopCardProps) => {
                     <div
                       key={enrollment.id}
                       className="w-6 h-6 rounded-full bg-first-color flex items-center justify-center text-white text-xs font-medium ring-2 ring-background"
-                      title={enrollment.player.nickname}
+                      title={enrollment.playerId ?? 'Deleted user'}
                     >
-                      {enrollment.player.nickname.charAt(0)}
+                      {enrollment.playerId?.charAt(0) ?? '?'}
                     </div>
                   ))}
                   {playingNow.length > 5 && (
