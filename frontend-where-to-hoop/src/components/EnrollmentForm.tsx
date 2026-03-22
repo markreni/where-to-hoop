@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { insertEnrollment } from '../utils/requests'
+import { insertEnrollment, deleteEnrollment } from '../utils/requests'
 import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import { useQueryClient } from '@tanstack/react-query'
@@ -100,7 +100,14 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   const isLaterModeValid = whenMode === 'later' ? (selectedDate !== null && selectedTimeSlot !== null) : true
 
   const onCancel = () => {
-    setUserEnrollment(null)
+    if (!userEnrollment) return
+    deleteEnrollment(userEnrollment.id).then(async () => {
+      setUserEnrollment(null)
+      success(t('hoop.playersPanel.deleteSuccess'))
+      await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
+    }).catch(() => {
+      error(t('hoop.playersPanel.deleteError'))
+    })
   }
 
   if (userEnrollment) {

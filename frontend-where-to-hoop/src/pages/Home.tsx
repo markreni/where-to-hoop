@@ -121,6 +121,15 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
           <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black mb-4`}>
             {t('home.intro.welcomePrefix')} <span className={`${colorModeContext} background-text-black text-stroke-adaptive`}>{t('home.intro.wherehoops')}</span>
           </h1>
+          <div className="flex flex-col items-center gap-2 mb-4">
+            <span className={`${colorModeContext} inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-gray-900 border border-first-color/40 text-first-color text-fluid-sm font-medium`}>
+              <MdLocationPin size={14} />
+              {t('home.intro.helsinkiNotice')}
+            </span>
+            <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black opacity-75`}>
+              {t('home.intro.helsinkiMade')}
+            </p>
+          </div>
           <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-3`}>
             {t('home.intro.description')}
           </p>
