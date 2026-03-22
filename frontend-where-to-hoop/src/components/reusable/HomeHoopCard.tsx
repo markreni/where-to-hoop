@@ -1,4 +1,4 @@
-import type { BasketballHoop, ColorMode, MapView } from "../../types/types.ts";
+import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../../types/types.ts";
 import type { FocusableElement } from "@react-types/shared";
 import { useMemo, type Dispatch, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,9 +15,10 @@ import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 interface HomeHoopCardProps {
   hoop: BasketballHoop;
   distance: number;
+  playerEnrollments: PlayerEnrollment[];
 }
 
-export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
+export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCardProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
   const userLocationDispatch = useLocationDispatch();
@@ -50,15 +51,11 @@ export const HomeHoopCard = ({ hoop, distance }: HomeHoopCardProps) => {
     navigate(`/hoops/`);
   };
 
-  /*
   const { playingNow } = useMemo(
-        () => groupEnrollmentsByTime(hoop.playerEnrollments),
-        [hoop.playerEnrollments]
-    );
-
-  const playingNowCount = playingNow.length;
-  */
-  const playingNowCount = 1; // Placeholder until enrollments are implemented
+    () => groupEnrollmentsByTime(playerEnrollments),
+    [playerEnrollments]
+  )
+  const playingNowCount = playingNow.length
 
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full flex-grow-0`}> 

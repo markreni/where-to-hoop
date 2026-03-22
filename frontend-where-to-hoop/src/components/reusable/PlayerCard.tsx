@@ -53,7 +53,7 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
   const handleDelete = () => {
     deleteEnrollment(enrollment.id).then(async () => {
       success(t('hoop.playersPanel.deleteSuccess'))
-      await queryClient.invalidateQueries({ queryKey: ['enrollments', enrollment.hoopId] })
+      await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
     }).catch(() => {
       error(t('hoop.playersPanel.deleteError'))
     })

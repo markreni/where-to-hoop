@@ -246,6 +246,8 @@
       "enroll": "Lähetä ilmoitus",
       "cancel": "Peruuta osallistumiseni",
       "success": "Hienoa! Muut näkevät nyt että olet tulossa.",
+      "error": "Ilmoittautuminen epäonnistui. Yritä uudelleen.",
+      "authError": "Sinun täytyy olla kirjautunut sisään ilmoittautuaksesi.",
       "courtsOpenNote": "Huomioi, että kentät ovat avoimia kaikille"
     }
   },

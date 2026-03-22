@@ -96,6 +96,32 @@ const deleteHoop = async (id: string): Promise<BasketballHoop> => {
 }
 */
 
+const fetchAllEnrollments = async (): Promise<PlayerEnrollment[]> => {
+  // Only fetch enrollments from the last 12 hours onward (max session duration is 12h)
+  const cutoff = new Date(Date.now() - 720 * 60 * 1000).toISOString()
+
+  const { data, error } = await supabase
+    .from('player_enrollment')
+    .select('*')
+    .gte('arrival_time', cutoff)
+
+  if (error) {
+    console.error('Fetch all enrollments error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => ({
+    id: row.id,
+    playerId: row.player_id,
+    hoopId: row.hoop_id,
+    arrivalTime: new Date(row.arrival_time),
+    duration: row.duration,
+    playMode: row.play_mode,
+    note: row.note ?? undefined,
+    createdAt: new Date(row.created_at),
+  }))
+}
+
 const fetchEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]> => {
   const { data, error } = await supabase
     .from('player_enrollment')
@@ -186,4 +212,4 @@ const signIn = async (email: string, password: string) => {
   return data
 }
 
-export { fetchHoops, insertHoop, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn }
+export { fetchHoops, insertHoop, fetchAllEnrollments, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn }

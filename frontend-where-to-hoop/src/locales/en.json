@@ -246,6 +246,8 @@
       "enroll": "Send enrollment",
       "cancel": "Cancel my session",
       "success": "You're all set! Others can now see you're coming.",
+      "error": "Failed to send enrollment. Please try again.",
+      "authError": "You must be signed in to enroll.",
       "courtsOpenNote": "Please note that courts are open to all"
     }
   },

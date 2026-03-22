@@ -87,9 +87,13 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
     }).then(async (inserted) => {
       setUserEnrollment(inserted)
       success(t('hoop.enrollment.success'))
-      await queryClient.invalidateQueries({ queryKey: ['hoops'] })
-    }).catch(() => {
+      await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
+    }).catch((err: { code?: string }) => {
+      if (err.code === '42501') {
+        error(t('hoop.enrollment.authError'))
+      } else {
         error(t('hoop.enrollment.error'))
+      }
     })
   }
 

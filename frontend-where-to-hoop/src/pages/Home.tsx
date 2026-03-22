@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, type Dispatch } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer.tsx";
 import { HomeHoopCard } from "../components/reusable/HomeHoopCard.tsx";
@@ -8,8 +9,9 @@ import { useLocationValues } from "../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import { useTranslation } from "../hooks/useTranslation.ts";
 import { useWeather, isWarmWeather, isRainyWeather, isSnowyWeather, isGoodWeatherForBasketball } from "../hooks/useWeather.ts";
-import type { BasketballHoop, ColorMode, MapView } from "../types/types.ts";
-import haversineDistance from "../utils/functions.ts";
+import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../types/types.ts";
+import haversineDistance, { groupEnrollmentsByTime } from "../utils/functions.ts";
+import { fetchAllEnrollments } from "../utils/requests.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 //import baskethoopImg from "../images/baskethoop.png";
 import { MdLocationPin, MdArrowForward } from "react-icons/md";
@@ -28,6 +30,11 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   useEffect(() => {
       locateUser();
     }, [locateUser]);
+
+  const { data: allEnrollments = [] } = useQuery<PlayerEnrollment[]>({
+    queryKey: ['enrollments'],
+    queryFn: fetchAllEnrollments,
+  })
 
   // Get weather-appropriate encouragement message
   const getEncouragementMessage = () => {
@@ -68,20 +75,34 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         ),
       }))
       .sort((a, b) => a.distance - b.distance);
-  }, [mapCenterValues.latitude, mapCenterValues.longitude]);
+  }, [mapCenterValues.latitude, mapCenterValues.longitude, hoops]);
+
+  const enrollmentsByHoop: Map<string, PlayerEnrollment[]> = useMemo(() => {
+    const map = new Map<string, PlayerEnrollment[]>()
+    for (const enrollment of allEnrollments) {
+      if (!enrollment.hoopId) continue
+      const existing: PlayerEnrollment[] = map.get(enrollment.hoopId) ?? []
+      map.set(enrollment.hoopId, [...existing, enrollment])
+    }
+    return map
+  }, [allEnrollments])
 
   const sortedHoopsWithPlayers: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
     return hoops
-      .map(hoop => ({
-        hoop,
-        distance: haversineDistance(
-          [mapCenterValues.latitude!, mapCenterValues.longitude!],
-          [hoop.coordinates.latitude!, hoop.coordinates.longitude!]
-        ),
-        players: 1 //hoop.playerEnrollments.length,
-      }))
+      .map(hoop => {
+        const hoopEnrollments = enrollmentsByHoop.get(hoop.id) ?? []
+        const { playingNow } = groupEnrollmentsByTime(hoopEnrollments)
+        return {
+          hoop,
+          distance: haversineDistance(
+            [mapCenterValues.latitude!, mapCenterValues.longitude!],
+            [hoop.coordinates.latitude!, hoop.coordinates.longitude!]
+          ),
+          players: playingNow.length,
+        }
+      })
       .sort((a, b) => b.players - a.players);
-  }, []);
+  }, [hoops, enrollmentsByHoop, mapCenterValues.latitude, mapCenterValues.longitude]);
 
   return (
     <div className={`${colorModeContext} padding-for-nav-bar min-h-screen flex flex-col from-second-color to-first-color transition-colors relative overflow-hidden`}>
@@ -138,7 +159,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
           {(mapCenterValues.latitude && mapCenterValues.longitude) ? (
             <Carousel>
               {sortedHoopsWithDistance.map(({ hoop, distance }) => (
-                <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} />
+                <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []} />
               ))}
             </Carousel>
           ) : (
@@ -152,7 +173,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
           </h1>
           <Carousel>
             {sortedHoopsWithPlayers.map(({ hoop, distance}) => (
-              <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} />
+              <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []} />
             ))}
           </Carousel>
         </div>

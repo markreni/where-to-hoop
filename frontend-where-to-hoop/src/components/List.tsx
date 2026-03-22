@@ -1,9 +1,10 @@
 import breakpoints from "../assets/style";
-import type { BasketballHoop, ColorMode, Condition } from "../types/types";
+import type { BasketballHoop, ColorMode, Condition, PlayerEnrollment } from "../types/types";
 import { HoopCard } from "./reusable/HoopCard";
 import { useMediaQuery } from 'usehooks-ts'
 import { Link } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import useLocateUser from "../hooks/useLocateUser";
 import { SearchField } from "./reusable/SearchField";
 import { CiFilter } from "react-icons/ci";
@@ -13,6 +14,7 @@ import { MapLabel } from "./reusable/MapLabel";
 import { conditionOptions, doorOptions } from "../utils/options";
 import { Button } from "react-aria-components";
 import Footer from "./Footer";
+import { fetchAllEnrollments } from "../utils/requests";
 
 interface FilterState {
   selectedConditions: Set<Condition>;
@@ -38,6 +40,21 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
   const locateUser = useLocateUser();
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
+
+  const { data: allEnrollments = [] } = useQuery<PlayerEnrollment[]>({
+    queryKey: ['enrollments'],
+    queryFn: fetchAllEnrollments,
+  });
+
+  const enrollmentsByHoop = useMemo(() => {
+    const map = new Map<string, PlayerEnrollment[]>();
+    for (const enrollment of allEnrollments) {
+      if (!enrollment.hoopId) continue;
+      const existing = map.get(enrollment.hoopId) ?? [];
+      map.set(enrollment.hoopId, [...existing, enrollment]);
+    }
+    return map;
+  }, [allEnrollments]);
 
   useEffect(() => {
     locateUser();
@@ -111,14 +128,14 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
           <div className="grid grid-cols-2 2xl:grid-cols-3 gap-6 max-w-screen-2xl mx-auto">
             {filteredWithSearchHoops.map(({ hoop, distance }) => (
               <Link key={hoop.id} to={`#`}>
-                <HoopCard hoop={hoop} distance={distance} />
+                <HoopCard hoop={hoop} distance={distance} playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []} />
               </Link>
             ))}
           </div>
         ) : (
           <div className="flex flex-col items-center gap-4 w-full max-w-xl mx-auto">
             {filteredWithSearchHoops.map(({ hoop, distance }) => (
-              <HoopCard key={hoop.id} hoop={hoop} distance={distance} />
+              <HoopCard key={hoop.id} hoop={hoop} distance={distance} playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []} />
             ))}
           </div>
         )}
