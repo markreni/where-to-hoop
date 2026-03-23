@@ -155,7 +155,7 @@
     "intro": "Löydä vastauksia yleisimpiin kysymyksiin WhereHoopsin käytöstä.",
     "readyToPlay": {
       "question": "Miten kerron muille, että olen menossa pelaamaan?",
-      "answer": "Paina minkä tahansa kentän kortilla (etusivulla tai kenttälistassa) vihreää \"Valmis pelaamaan\" -nappia.\nTämä vie sinut kentän sivulle, jossa voit ilmoittautua pelisessioon ilmoittautumislomakkeella.\nValitse saapumisaikasi, peliaika ja\nhaluatko pelata muiden kanssa.\nIlmoittautumisesi näkyy kentän \"Kuka pelaa\" -paneelissa, jotta muut pelaajat tietävät sinun olevan paikalla."
+      "answer": "Paina minkä tahansa kentän kortilla (etusivulla tai kenttälistassa) vihreää \"Valmis pelaamaan\" -nappia.\nTämä vie sinut kentän sivulle, jossa voit ilmoittautua pelisessioon ilmoittautumislomakkeella.\nValitse saapumisaikasi, peliaika ja\nhaluatko pelata muiden kanssa.\nIlmoittautumisesi näkyy kentän \"Kuka pelaa\" -paneelissa, jotta muut pelaajat tietävät sinun olevan paikalla.\n\nHuom: voit ilmoittautua kerran per kenttä tänään ja kerran tulevalle päivälle."
     },
     "addCourt": {
       "question": "Miten lisään uuden koripallokentän?",
@@ -250,7 +250,8 @@
       "success": "Hienoa! Muut näkevät nyt että olet tulossa.",
       "error": "Ilmoittautuminen epäonnistui. Yritä uudelleen.",
       "authError": "Sinun täytyy olla kirjautunut sisään ilmoittautuaksesi.",
-      "courtsOpenNote": "Huomioi, että kentät ovat avoimia kaikille"
+      "courtsOpenNote": "Huomioi, että kentät ovat avoimia kaikille",
+      "enrollmentLimitNote": "Voit ilmoittautua kerran per kenttä tänään ja kerran tulevalle päivälle"
     }
   },
   "common": {

@@ -218,7 +218,7 @@ const AddHoop = () => {
         <div className={`${colorModeContext} sticky top-0 z-1001 flex flex-col p-6 border-b border-gray-200 bg-background`}>
           <div className="flex items-center justify-between">
             <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>{t('addHoop.title')}</h2>
-            <InfoLink />
+            <InfoLink sectionId="add-court"/>
           </div>
           {/* Progress indicator */}
           <div className="flex items-center gap-3 mt-3">

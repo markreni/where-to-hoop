@@ -150,6 +150,7 @@ const Hoop = ({ hoop }: HoopProps) => {
               </div>
               <EnrollmentForm
                 hoopId={hoop.id}
+                enrollments={enrollments}
               />
             </div>
             <PlayersPanel

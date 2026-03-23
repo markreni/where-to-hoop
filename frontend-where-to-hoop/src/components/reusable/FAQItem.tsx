@@ -5,13 +5,14 @@ interface FAQItemProps {
   question: string
   answer: string
   icon: React.ReactNode
+  id?: string
 }
 
-const FAQItem = ({ question, answer, icon }: FAQItemProps) => {
+const FAQItem = ({ question, answer, icon, id }: FAQItemProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
 
-  return (  
-  <div className={`${colorModeContext} p-4 rounded-lg bg-gray-100 dark:bg-gray-800`}>
+  return (
+  <div id={id} className={`${colorModeContext} p-4 rounded-lg bg-gray-100 dark:bg-gray-800`}>
     <div className="flex items-start gap-3">
       <div className="text-first-color flex-shrink-0 mt-1">
         {icon}
@@ -20,7 +21,7 @@ const FAQItem = ({ question, answer, icon }: FAQItemProps) => {
         <p className={`${colorModeContext} font-medium background-text mb-2`}>
           {question}
         </p>
-        <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400`}>
+        <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400 whitespace-pre-line`}>
           {answer}
         </p>
       </div>

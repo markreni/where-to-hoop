@@ -42,18 +42,21 @@ const Info = () => {
           {/* FAQ Section */}
           <div className="flex flex-col gap-4 mb-8">
             <FAQItem
+              id="ready-to-play"
               question={t('faq.readyToPlay.question')}
               answer={t('faq.readyToPlay.answer')}
               icon={<FaPlayCircle size={24} />}
             />
 
             <FAQItem
+              id="add-court"
               question={t('faq.addCourt.question')}
               answer={t('faq.addCourt.answer')}
               icon={<FaPlusCircle size={24} />}
             />
 
             <FAQItem
+              id="take-photo"
               question={t('faq.takePhoto.question')}
               answer={t('faq.takePhoto.answer')}
               icon={<FaCamera size={24} />}

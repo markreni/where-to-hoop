@@ -155,7 +155,7 @@
     "intro": "Find answers to common questions about using WhereHoops.",
     "readyToPlay": {
       "question": "How do I let others know I'm going to play?",
-      "answer": "On any court card (on the home page or courts list), tap the green \"Ready to play\" button.\nThis will navigate you to the court's page, then use the enrollment form to sign up for a session.\nChoose your arrival time, how long you'll play, and\nwhether you're open to playing with others.\nYour enrollment will appear on the court's \"Who's Playing\" panel, letting other hoopers know you'll be there."
+      "answer": "On any court card (on the home page or courts list), tap the green \"Ready to play\" button. This will navigate you to the court's page, then use the enrollment form to sign up for a session. Choose your arrival time, how long you'll play, and whether you're open to playing with others. Your enrollment will appear on the court's \"Who's Playing\" panel, letting other hoopers know you'll be there.\n\nNote: you can have one enrollment per court for today and one for a future date."
     },
     "addCourt": {
       "question": "How do I add a new basketball court?",
@@ -250,7 +250,8 @@
       "success": "You're all set! Others can now see you're coming.",
       "error": "Failed to send enrollment. Please try again.",
       "authError": "You must be signed in to enroll.",
-      "courtsOpenNote": "Please note that courts are open to all"
+      "courtsOpenNote": "Please note that courts are open to all",
+      "enrollmentLimitNote": "You can have one enrollment per court for today and one for a future date"
     }
   },
   "common": {

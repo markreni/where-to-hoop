@@ -93,4 +93,9 @@ export const reverseGeocode = async (lat: number, lng: number): Promise<string |
   }
 };
 
+export const isTodayDate = (date: Date): boolean => {
+  const today = new Date()
+  return date.toDateString() === today.toDateString()
+}
+
 export default haversineDistance;

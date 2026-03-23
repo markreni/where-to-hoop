@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { insertEnrollment, deleteEnrollment } from '../utils/requests'
 import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
@@ -14,12 +14,13 @@ import { EnrollmentCalendar } from './reusable/EnrollmentCalendar'
 import InfoLink from './reusable/InfoLink'
 import { TimeSlotPicker } from './reusable/TimeSlotPicker'
 import { getLocalTimeZone } from '@internationalized/date'
-import { getTimeSlotStartHour } from '../utils/functions'
+import { getTimeSlotStartHour, isTodayDate } from '../utils/functions'
 
 type WhenMode = 'today' | 'later'
 
 interface EnrollmentFormProps {
   hoopId: string
+  enrollments: PlayerEnrollment[]
 }
 
 const getMaxArrivalMinutes = (): number => {
@@ -28,7 +29,7 @@ const getMaxArrivalMinutes = (): number => {
   return Math.min(Math.floor(minutesUntilMidnight / 30) * 30, 720)
 }
 
-const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
+const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
   const [whenMode, setWhenMode] = useState<WhenMode>('today')
   const maxArrivalMinutes = getMaxArrivalMinutes()
   const [arrivalMinutes, setArrivalMinutes] = useState(0) // 0-maxArrivalMinutes in 30 min increments
@@ -37,12 +38,34 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   const [durationMinutes, setDurationMinutes] = useState(60) // 30-300 in 30 min increments
   const [playMode, setPlayMode] = useState<PlayMode>('open')
   const [note, setNote] = useState('')
-  const [userEnrollment, setUserEnrollment] = useState<PlayerEnrollment | null>(null)
+  // Local state for optimistic UI after submit (clears once query re-fetches)
+  const [localTodayEnrollment, setLocalTodayEnrollment] = useState<PlayerEnrollment | null>(null)
+  const [localLaterEnrollment, setLocalLaterEnrollment] = useState<PlayerEnrollment | null>(null)
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   const { user } = useAuth()
   const { success, error } = useToast()
   const queryClient = useQueryClient()
+
+  const todayEnrollment: PlayerEnrollment | null =
+    localTodayEnrollment ??
+    enrollments.find(e => e.playerId === user?.id && isTodayDate(e.arrivalTime)) ??
+    null
+
+  const laterEnrollment: PlayerEnrollment | null =
+    localLaterEnrollment ??
+    enrollments.find(e => e.playerId === user?.id && !isTodayDate(e.arrivalTime) && e.arrivalTime > new Date()) ??
+    null
+
+  // Sync local optimistic state with server — clears if enrollment was deleted elsewhere (e.g. PlayerCard)
+  useEffect(() => {
+    if (localTodayEnrollment && !enrollments.some(e => e.id === localTodayEnrollment.id)) {
+      setLocalTodayEnrollment(null)
+    }
+    if (localLaterEnrollment && !enrollments.some(e => e.id === localLaterEnrollment.id)) {
+      setLocalLaterEnrollment(null)
+    }
+  }, [enrollments, localTodayEnrollment, localLaterEnrollment])
 
   const formatSliderValue = (minutes: number, isArrival: boolean): string => {
     if (isArrival && minutes === 0) return t('hoop.enrollment.now')
@@ -85,7 +108,11 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
       playMode,
       ...(note.trim() && { note: note.trim() }),
     }).then(async (inserted) => {
-      setUserEnrollment(inserted)
+      if (whenMode === 'today') {
+        setLocalTodayEnrollment(inserted)
+      } else {
+        setLocalLaterEnrollment(inserted)
+      }
       success(t('hoop.enrollment.success'))
       await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
     }).catch((err: { code?: string }) => {
@@ -98,11 +125,15 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
   }
 
   const isLaterModeValid = whenMode === 'later' ? (selectedDate !== null && selectedTimeSlot !== null) : true
+  const isEnrollEnabled = !!user && isLaterModeValid
 
-  const onCancel = () => {
-    if (!userEnrollment) return
-    deleteEnrollment(userEnrollment.id).then(async () => {
-      setUserEnrollment(null)
+  const onCancel = (enrollment: PlayerEnrollment, mode: WhenMode) => {
+    deleteEnrollment(enrollment.id).then(async () => {
+      if (mode === 'today') {
+        setLocalTodayEnrollment(null)
+      } else {
+        setLocalLaterEnrollment(null)
+      }
       success(t('hoop.playersPanel.deleteSuccess'))
       await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
     }).catch(() => {
@@ -110,31 +141,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
     })
   }
 
-  if (userEnrollment) {
-    return (
-      <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
-        <div className="flex items-center gap-2 mb-4">
-          <FaClock className="text-first-color" />
-          <h3 className={`${colorModeContext} text-fluid-lg font-semibold background-text`}>
-            {t('hoop.enrollment.title')}
-          </h3>
-        </div>
-
-        <div className={`${colorModeContext} bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-lg p-4 mb-4`}>
-          <p className={`${colorModeContext} text-fluid-sm text-green-800 dark:text-green-200`}>
-            {t('hoop.enrollment.success')}
-          </p>
-        </div>
-
-        <Button
-          onPress={onCancel}
-          className={`${colorModeContext} w-full py-3 px-4 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors cursor-pointer`}
-        >
-          {t('hoop.enrollment.cancel')}
-        </Button>
-      </div>
-    )
-  }
+  const activeEnrollment: PlayerEnrollment | null = whenMode === 'today' ? todayEnrollment : laterEnrollment
 
   return (
     <div className={`${colorModeContext} flex flex-col gap-6 bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
@@ -146,7 +153,7 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
               {t('hoop.enrollment.title')}
             </h3>
           </div>
-          <InfoLink />
+          <InfoLink sectionId="ready-to-play" />
         </div>
 
         <div className="flex items-center gap-1.5 mb-4 text-gray-500 dark:text-gray-400">
@@ -181,134 +188,151 @@ const EnrollmentForm = ({ hoopId }: EnrollmentFormProps) => {
         </button>
       </div>
 
-      {whenMode === 'today' ? (
-        /* Arrival time slider - Today mode */
-        <div>
-          <div>
-            <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-              {t('hoop.enrollment.arriveIn')}: <span className="text-first-color">{formatSliderValue(arrivalMinutes, true)}</span>
-            </label>
-            <input
-              type="range"
-              min="0"
-              max={maxArrivalMinutes}
-              step="30"
-              value={arrivalMinutes}
-              onChange={(e) => setArrivalMinutes(Number(e.target.value))}
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
-            />
-            <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
-              <span>{t('hoop.enrollment.now')}</span>
-              <span>{formatSliderValue(maxArrivalMinutes, false)}</span>
-            </div>
-          </div>
-          {/* Duration slider */}
-          <div>
-            <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-              {t('hoop.enrollment.playFor')}: <span className="text-first-color">{formatSliderValue(durationMinutes, false)}</span>
-            </label>
-            <input
-              type="range"
-              min="30"
-              max="720"
-              step="30"
-              value={durationMinutes}
-              onChange={(e) => setDurationMinutes(Number(e.target.value))}
-              className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
-            />
-            <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
-              <span>30{t('hoop.enrollment.minutes')}</span>
-              <span>12{t('hoop.enrollment.hours')}</span>
-            </div>
-          </div>
+      {activeEnrollment ? (
+        /* Already enrolled in this mode */
+        <div className={`${colorModeContext} bg-green-100 dark:bg-green-900/30 border border-green-300 dark:border-green-700 rounded-lg p-4`}>
+          <p className={`${colorModeContext} text-fluid-sm text-green-800 dark:text-green-200 mb-3`}>
+            {t('hoop.enrollment.success')}
+          </p>
+          <Button
+            onPress={() => onCancel(activeEnrollment, whenMode)}
+            className={`${colorModeContext} w-full py-3 px-4 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors cursor-pointer`}
+          >
+            {t('hoop.enrollment.cancel')}
+          </Button>
         </div>
-        
       ) : (
-        /* Calendar and time slot - Later mode */
-        <div>
+        <>
+          {whenMode === 'today' ? (
+            /* Arrival time slider - Today mode */
+            <div>
+              <div>
+                <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+                  {t('hoop.enrollment.arriveIn')}: <span className="text-first-color">{formatSliderValue(arrivalMinutes, true)}</span>
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max={maxArrivalMinutes}
+                  step="30"
+                  value={arrivalMinutes}
+                  onChange={(e) => setArrivalMinutes(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
+                />
+                <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <span>{t('hoop.enrollment.now')}</span>
+                  <span>{formatSliderValue(maxArrivalMinutes, false)}</span>
+                </div>
+              </div>
+              {/* Duration slider */}
+              <div>
+                <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+                  {t('hoop.enrollment.playFor')}: <span className="text-first-color">{formatSliderValue(durationMinutes, false)}</span>
+                </label>
+                <input
+                  type="range"
+                  min="30"
+                  max="720"
+                  step="30"
+                  value={durationMinutes}
+                  onChange={(e) => setDurationMinutes(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-first-color"
+                />
+                <div className="flex justify-between text-fluid-xs text-gray-500 dark:text-gray-400 mt-1">
+                  <span>30{t('hoop.enrollment.minutes')}</span>
+                  <span>12{t('hoop.enrollment.hours')}</span>
+                </div>
+              </div>
+            </div>
+
+          ) : (
+            /* Calendar and time slot - Later mode */
+            <div>
+              <div>
+                <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+                  {t('hoop.enrollment.selectDate')}
+                </label>
+                <EnrollmentCalendar
+                  selectedDate={selectedDate}
+                  onDateChange={setSelectedDate}
+                />
+              </div>
+
+              <div>
+                <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
+                  {t('hoop.enrollment.selectTime')}
+                </label>
+                <TimeSlotPicker
+                  selectedSlot={selectedTimeSlot}
+                  onSlotChange={setSelectedTimeSlot}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Play mode selector */}
           <div>
             <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-              {t('hoop.enrollment.selectDate')}
+              {t('hoop.enrollment.playModeLabel')}
             </label>
-            <EnrollmentCalendar
-              selectedDate={selectedDate}
-              onDateChange={setSelectedDate}
-            />
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                onClick={() => setPlayMode('open')}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
+                  playMode === 'open'
+                    ? 'border-first-color bg-first-color/10 text-first-color'
+                    : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
+                }`}
+              >
+                <FaUsers size={16} />
+                <span className="text-fluid-xs xsm:text-fluid-sm font-medium">{t('hoop.enrollment.openToPlay')}</span>
+              </Button>
+              <Button
+                type="button"
+                onClick={() => setPlayMode('solo')}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
+                  playMode === 'solo'
+                    ? 'border-first-color bg-first-color/10 text-first-color'
+                    : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
+                }`}
+              >
+                <FaUser size={14} />
+                <span className="text-fluid-sm font-medium">{t('hoop.enrollment.soloHooping')}</span>
+              </Button>
+            </div>
           </div>
 
+          {/* Note field */}
           <div>
             <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-              {t('hoop.enrollment.selectTime')}
+              {t('hoop.enrollment.noteLabel')} <span className="text-gray-400 font-normal">({t('hoop.enrollment.optional')})</span>
             </label>
-            <TimeSlotPicker
-              selectedSlot={selectedTimeSlot}
-              onSlotChange={setSelectedTimeSlot}
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value.slice(0, MAX_NOTE_LENGTH))}
+              placeholder={t('hoop.enrollment.notePlaceholder')}
+              rows={2}
+              className={`${colorModeContext} form-input`}
             />
+            <div className="flex justify-end text-fluid-xs text-gray-400 mt-1">
+              {note.length}/{MAX_NOTE_LENGTH}
+            </div>
           </div>
-        </div>
+
+          <Button
+            onPress={handleEnrollSubmit}
+            isDisabled={!isEnrollEnabled}
+            className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
+              isEnrollEnabled
+                ? 'bg-green-500 hover:bg-green-600 cursor-pointer'
+                : 'bg-gray-400 cursor-not-allowed'
+            }`}
+          >
+            {t('hoop.enrollment.enroll')}
+          </Button>
+        </>
       )}
-
-      {/* Play mode selector */}
-      <div>
-        <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-          {t('hoop.enrollment.playModeLabel')}
-        </label>
-        <div className="flex gap-2">
-          <Button
-            type="button"
-            onClick={() => setPlayMode('open')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
-              playMode === 'open'
-                ? 'border-first-color bg-first-color/10 text-first-color'
-                : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
-            }`}
-          >
-            <FaUsers size={16} />
-            <span className="text-fluid-xs xsm:text-fluid-sm font-medium">{t('hoop.enrollment.openToPlay')}</span>
-          </Button>
-          <Button
-            type="button"
-            onClick={() => setPlayMode('solo')}
-            className={`flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-lg border-2 transition-colors cursor-pointer ${
-              playMode === 'solo'
-                ? 'border-first-color bg-first-color/10 text-first-color'
-                : 'border-gray-300 dark:border-gray-600 form-button-text hover:border-gray-400'
-            }`}
-          >
-            <FaUser size={14} />
-            <span className="text-fluid-sm font-medium">{t('hoop.enrollment.soloHooping')}</span>
-          </Button>
-        </div>
-      </div>
-
-      {/* Note field */}
-      <div>
-        <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
-          {t('hoop.enrollment.noteLabel')} <span className="text-gray-400 font-normal">({t('hoop.enrollment.optional')})</span>
-        </label>
-        <textarea
-          value={note}
-          onChange={(e) => setNote(e.target.value.slice(0, MAX_NOTE_LENGTH))}
-          placeholder={t('hoop.enrollment.notePlaceholder')}
-          rows={2}
-          className={`${colorModeContext} form-input`}
-        />
-        <div className="flex justify-end text-fluid-xs text-gray-400 mt-1">
-          {note.length}/{MAX_NOTE_LENGTH}
-        </div>
-      </div>
-
-      <Button
-        onPress={handleEnrollSubmit}
-        isDisabled={!isLaterModeValid}
-        className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
-          isLaterModeValid
-            ? 'bg-green-500 hover:bg-green-600 cursor-pointer'
-            : 'bg-gray-400 cursor-not-allowed'
-        }`}
-      >
-        {t('hoop.enrollment.enroll')}
-      </Button>
     </div>
   )
 }
