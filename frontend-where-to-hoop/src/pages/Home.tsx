@@ -13,6 +13,7 @@ import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../ty
 import haversineDistance, { groupEnrollmentsByTime, groupEnrollmentsByHoop } from "../utils/functions.ts";
 import { fetchAllEnrollments } from "../utils/requests.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
+import useEnrollmentsRealtime from "../hooks/useEnrollmentsRealtime.ts";
 //import baskethoopImg from "../images/baskethoop.png";
 import { MdLocationPin, MdArrowForward } from "react-icons/md";
 import { InteractiveBasketball } from "../components/reusable/InteractiveBasketball.tsx";
@@ -78,6 +79,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   }, [mapCenterValues.latitude, mapCenterValues.longitude, hoops]);
 
   const enrollmentsByHoop = useMemo(() => groupEnrollmentsByHoop(allEnrollments), [allEnrollments])
+  useEnrollmentsRealtime()
 
   const sortedHoopsWithPlayers: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
     return hoops

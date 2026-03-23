@@ -1,12 +1,11 @@
-import { useEffect, useMemo } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
+import { useMemo } from 'react'
 import { FaUser } from 'react-icons/fa'
 import type { ColorMode, PlayerEnrollment } from '../types/types'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { PlayerCard } from './reusable/PlayerCard'
 import { groupEnrollmentsByTime } from '../utils/functions'
-import supabase from '../utils/supabase'
+import useEnrollmentsRealtime from '../hooks/useEnrollmentsRealtime'
   
 // Players panel component
 interface PlayersPanelProps {
@@ -16,24 +15,7 @@ interface PlayersPanelProps {
 const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments }: PlayersPanelProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
-  const queryClient = useQueryClient()
-
-  useEffect(() => {
-    const channel = supabase
-      .channel('public:player_enrollment')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'player_enrollment' },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['enrollments'] })
-        }
-      )
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [queryClient])
+  useEnrollmentsRealtime()
 
   /* 
   // Filter out expired enrollments

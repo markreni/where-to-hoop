@@ -16,6 +16,7 @@ import { Button } from "react-aria-components";
 import Footer from "./Footer";
 import { fetchAllEnrollments } from "../utils/requests";
 import { groupEnrollmentsByHoop } from "../utils/functions";
+import useEnrollmentsRealtime from "../hooks/useEnrollmentsRealtime";
 
 interface FilterState {
   selectedConditions: Set<Condition>;
@@ -48,6 +49,7 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
   });
 
   const enrollmentsByHoop = useMemo(() => groupEnrollmentsByHoop(allEnrollments), [allEnrollments]);
+  useEnrollmentsRealtime();
 
   useEffect(() => {
     locateUser();
