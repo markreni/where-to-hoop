@@ -38,7 +38,7 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
           </div>
           
           <img
-            src={hoop.images.length > 0 ? hoop.images[0].imageName : 'https://via.placeholder.com/150'}
+            src={hoop.images[0].imagePath}
             alt={hoop.name}
             className="w-full h-auto mb-2" 
           />

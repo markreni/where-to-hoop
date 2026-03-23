@@ -59,6 +59,13 @@ vi.mock('../utils/supabase', () => ({
       subscribe: vi.fn(),
     })),
     removeChannel: vi.fn(),
+    storage: {
+      from: vi.fn(() => ({
+        upload: vi.fn().mockResolvedValue({ error: null }),
+        remove: vi.fn().mockResolvedValue({ error: null }),
+        getPublicUrl: vi.fn((path: string) => ({ data: { publicUrl: `https://mock-storage/${path}` } })),
+      })),
+    },
   },
 }));
 

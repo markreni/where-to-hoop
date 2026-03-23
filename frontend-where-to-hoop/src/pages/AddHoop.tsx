@@ -1,5 +1,5 @@
 import { Label, TextField, TextArea, Button } from "react-aria-components";
-import { type BasketballHoop, type ColorMode, type Condition, type ObservationImage } from "../types/types";
+import { type BasketballHoop, type ColorMode, type Condition } from "../types/types";
 import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { useToast } from "../contexts/ToastContext";
@@ -109,7 +109,7 @@ const AddHoop = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
+      const newFiles: File[] = Array.from(e.target.files);
 
       // Check max images limit
       const remainingSlots = MAX_IMAGES - imageFiles.length;
@@ -125,7 +125,7 @@ const AddHoop = () => {
         warning(t('addHoop.errors.imageTooLarge', { size: MAX_IMAGE_SIZE_MB, files: fileNames }));
       }
 
-      let validFiles = newFiles.filter(file => file.size <= MAX_IMAGE_SIZE_BYTES);
+      let validFiles: File[] = newFiles.filter(file => file.size <= MAX_IMAGE_SIZE_BYTES);
 
       // Limit to remaining slots
       if (validFiles.length > remainingSlots) {
@@ -159,18 +159,11 @@ const AddHoop = () => {
       return;
     }
 
-    // Convert images to ObservationImage format
-    const observationImages: ObservationImage[] = imageFiles.map((file, index) => ({
-      id: Date.now() + index,
-      imageName: file.name,
-      addedDate: new Date().toISOString(),
-    }));
-
-    // Reorder so profile image is first
+    // Reorder files so profile image is first
+    const orderedFiles = [...imageFiles];
     if (profileImageIndex > 0) {
-      const profileImage = observationImages[profileImageIndex];
-      observationImages.splice(profileImageIndex, 1);
-      observationImages.unshift(profileImage);
+      const [profileFile] = orderedFiles.splice(profileImageIndex, 1);
+      orderedFiles.unshift(profileFile);
     }
 
     const hoopData: Omit<BasketballHoop, "id"> = {
@@ -180,12 +173,12 @@ const AddHoop = () => {
       condition: formData.condition!,
       isIndoor: formData.isIndoor!,
       createdAt: formData.createdAt,
-      images: observationImages,
+      images: [],
       addedBy: user!.email!,
       //playerEnrollments: [],
     };
 
-    insertHoop(hoopData).then(async (inserted) => {
+    insertHoop(hoopData, orderedFiles).then(async (inserted) => {
       success(t('addHoop.success'));
       await queryClient.invalidateQueries({ queryKey: ['hoops'] });
       navigate(`/hoops/${inserted.id}`);

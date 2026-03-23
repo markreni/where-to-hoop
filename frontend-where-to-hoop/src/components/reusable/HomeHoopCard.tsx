@@ -7,6 +7,7 @@ import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
+import { getHoopImageUrl } from "../../utils/requests.ts";
 import breakpoints from "../../assets/style.ts";
 import { useMediaQuery } from "usehooks-ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
@@ -24,9 +25,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
   const userLocationDispatch = useLocationDispatch();
   const navigate = useNavigate();
   const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
-  const imageSrc = hoop.images.length > 0
-    ? hoop.images[0].imageName
-    : "https://via.placeholder.com/300x200";
+  const imageSrc = hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/300x200';
   const xsm: boolean = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
 
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {

@@ -11,7 +11,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     },
     images: [
       {
-        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        imagePath: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 1,
         addedDate: new Date().toISOString()
       }
@@ -77,7 +77,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     },
     images: [
       {
-        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        imagePath: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 2,
         addedDate: new Date().toISOString()
       }
@@ -162,7 +162,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     },
     images: [
       {
-        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        imagePath: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 3,
         addedDate: new Date().toISOString()
       }
@@ -277,7 +277,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     },
     images: [
       {
-        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        imagePath: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 4,
         addedDate: new Date().toISOString()
       }
@@ -309,7 +309,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     },
     images: [
       {
-        imageName: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
+        imagePath: 'https://basketballengland.co.uk/images/preview/68b1aa03ca261_bosworth-academy-basketball-courts-3-290825142419.webp',
         id: 5,
         addedDate: new Date().toISOString()
       }

@@ -1,4 +1,4 @@
-import type { BasketballHoop, PlayerEnrollment } from '../types/types'
+import type { BasketballHoop, ObservationImage, PlayerEnrollment } from '../types/types'
 import supabase from './supabase'
 
 const fetchHoops = async (): Promise<BasketballHoop[]> => {
@@ -21,7 +21,32 @@ const fetchHoops = async (): Promise<BasketballHoop[]> => {
   }))
 }
 
-const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>) => {
+const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[]) => {
+  const uploadedPaths: string[] = []
+  const uploadedAt = Date.now()
+
+  const observationImages: ObservationImage[] = await Promise.all(
+    imageFiles.map(async (file, index) => {
+      const path = `${hoop.addedBy}/${uploadedAt}-${index}-${file.name}`
+      const { error } = await supabase.storage
+        .from('hoop-images')
+        .upload(path, file)
+      if (error) {
+        // Clean up any files already uploaded before throwing
+        if (uploadedPaths.length > 0) {
+          await supabase.storage.from('hoop-images').remove(uploadedPaths)
+        }
+        throw error
+      }
+      uploadedPaths.push(path)
+      return {
+        id: uploadedAt + index,
+        imagePath: path,
+        addedDate: new Date(uploadedAt).toISOString(),
+      }
+    })
+  )
+
   const insertPayload = {
     name: hoop.name,
     description: hoop.description,
@@ -30,7 +55,7 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>) => {
     latitude: hoop.coordinates.latitude,
     longitude: hoop.coordinates.longitude,
     address: hoop.address ?? null,
-    images: hoop.images?.[0] ?? null,
+    images: observationImages,
     added_by: hoop.addedBy
   }
 
@@ -41,6 +66,8 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>) => {
     .single()
 
   if (error) {
+    // Clean up all uploaded files if DB insert fails
+    await supabase.storage.from('hoop-images').remove(uploadedPaths)
     console.error('Insert error:', error)
     throw error
   }
@@ -216,4 +243,9 @@ const signIn = async (email: string, password: string) => {
   return data
 }
 
-export { fetchHoops, insertHoop, fetchAllEnrollments, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn }
+const getHoopImageUrl = (imagePath: string): string => {
+  const { data } = supabase.storage.from('hoop-images').getPublicUrl(imagePath)
+  return data.publicUrl
+}
+
+export { fetchHoops, insertHoop, fetchAllEnrollments, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl }

@@ -10,7 +10,7 @@ type TimeSlot = 'morning' | 'afternoon' | 'evening' | 'night';
 
 export interface ObservationImage {
   id: number;
-  imageName: string;
+  imagePath: string;
   addedDate: string;
 }
 

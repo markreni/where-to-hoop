@@ -12,6 +12,7 @@ import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
+import { getHoopImageUrl } from "../../utils/requests.ts";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 //import { Button } from "react-aria-components";
 
@@ -74,7 +75,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
       <div className="flex flex-col gap-3">
         <div className="flex justify-start gap-4">
           <img className="rounded-md w-full xsm:w-2/3 h-40 object-cover"
-            src={hoop.images.length > 0 ? hoop.images[0].imageName : 'https://via.placeholder.com/150'}
+            src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/150'}
             alt={hoop.name}
           />
           <div className="flex-col gap-1 items-start justify-around hidden xsm:flex">

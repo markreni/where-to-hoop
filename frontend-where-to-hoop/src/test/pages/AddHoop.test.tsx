@@ -164,7 +164,7 @@ describe('AddHoop', () => {
 
   it('shows 0/5 image count initially', () => {
     render(<AddHoop />);
-    expect(screen.getByText('0/5')).toBeInTheDocument();
+    expect(screen.getByText('0/4')).toBeInTheDocument();
   });
 
   it('resets form when reset button is clicked', async () => {

@@ -12,7 +12,7 @@ import { PlayersPanel } from '../components/PlayersPanel'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
 import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
-import { fetchEnrollments } from '../utils/requests'
+import { fetchEnrollments, getHoopImageUrl } from '../utils/requests'
 import { Button } from 'react-aria-components'
 
 interface HoopProps {
@@ -98,7 +98,7 @@ const Hoop = ({ hoop }: HoopProps) => {
                 {/* Image */}
                 <img
                   className="rounded-lg w-full h-48 sm:h-64 object-cover mb-4"
-                  src={hoop.images.length > 0 ? hoop.images[0].imageName : 'https://via.placeholder.com/400x300'}
+                  src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/400x300'}
                   alt={hoop.name}
                 />
 
