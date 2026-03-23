@@ -16,6 +16,6 @@ const MAX_IMAGES: number = 5;
 const emailDomain: string = "mark.renssi@gmail.com";
 
 // Note length constant for adding enrollment
-const MAX_NOTE_LENGTH = 80
+const MAX_NOTE_LENGTH = 75;
 
 export { centerCoordinates, MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES, helsinkiBounds, MAX_NOTE_LENGTH, emailDomain };

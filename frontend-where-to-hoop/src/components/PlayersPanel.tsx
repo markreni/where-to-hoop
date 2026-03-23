@@ -46,6 +46,7 @@ const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments }: Player
             <PlayerCard
               key={enrollment.id}
               enrollment={enrollment}
+              allEnrollments={playerEnrollments}
             />
           ))}
         </div>

@@ -111,25 +111,23 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
       <div className="flex-grow flex flex-col gap-10 justify-center px-4 sm:px-8 py-8 max-w-4xl mx-auto w-full relative z-10">
         {/* Intro Section */}
         <section className="text-center py-8 sm:py-12">
-
-          <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black mb-4`}>
-            {t('home.intro.welcomePrefix')} <span className={`${colorModeContext} background-text-black text-stroke-adaptive`}>{t('home.intro.wherehoops')}</span>
-          </h1>
-          <div className="flex flex-col items-center gap-2 mb-4">
-            <span className={`${colorModeContext} inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-gray-900 border border-first-color/40 text-first-color text-fluid-sm font-medium`}>
-              <MdLocationPin size={14} />
-              {t('home.intro.helsinkiNotice')}
-            </span>
+          <div className="flex flex-col items-center mb-8">
+            <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black`}>
+              {t('home.intro.welcomePrefix')} <span className={`${colorModeContext} background-text-black text-stroke-adaptive`}>{t('home.intro.wherehoops')}</span>
+            </h1>
             <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black opacity-75`}>
-              {t('home.intro.helsinkiMade')}
+                {t('home.intro.helsinkiMade')}
             </p>
           </div>
-          <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-3`}>
-            {t('home.intro.description')}
-          </p>
-          <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto mb-8`}>
-            {t('home.intro.description2')}
-          </p>
+        
+          <div className="flex flex-col items-center gap-1 gap-3 mb-8">
+            <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto`}>
+              {t('home.intro.description')}
+            </p>
+            <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto`}>
+              {t('home.intro.description2')}
+            </p>
+          </div>
 
           {/* About Link */}
           <Link to="/about" className={`${colorModeContext} inline-flex items-center gap-1 background-text-reverse-black font-small text-fluid-sm hover:underline transition-colors mb-8`}>
@@ -138,11 +136,15 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
           </Link>
 
           {/* Hero Section */}
-          <div className="text-center">
-    
-            <p className={`${colorModeContext} text-fluid-lg background-text max-w-xl mx-auto mb-8`}>
+          <div className="flex flex-col items-center gap-8">
+            <p className={`${colorModeContext} text-fluid-lg background-text max-w-xl mx-auto`}>
               {t('home.hero.subtitle')}
             </p>
+
+            <span className={`${colorModeContext} inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-gray-900 border border-first-color/40 text-first-color text-fluid-sm font-medium`}>
+              <MdLocationPin size={14} />
+              {t('home.intro.helsinkiNotice')}
+            </span>
 
             <Link to="/hoops">
               <button onClick={() => { mapViewDispatch('map') }} 

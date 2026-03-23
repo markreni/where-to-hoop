@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useToast } from '../../contexts/ToastContext'
 import { deleteEnrollment, insertEnrollment } from '../../utils/requests'
 import { Button } from 'react-aria-components'
+import { isTodayDate } from '../../utils/functions'
 
 // Helper to format time
 const formatTime = (date: Date): string => {
@@ -32,9 +33,10 @@ const formatArrivalText = (arrivalTime: Date, t: (key: string) => string): strin
 
 interface PlayerCardProps {
   enrollment: PlayerEnrollment
+  allEnrollments: PlayerEnrollment[]
 }
 
-const PlayerCard = ({ enrollment }: PlayerCardProps) => {
+const PlayerCard = ({ enrollment, allEnrollments }: PlayerCardProps) => {
   const arrivalTime = new Date(enrollment.arrivalTime)
   const endTime = new Date(arrivalTime.getTime() + enrollment.duration * 60 * 1000)
   const now = new Date()
@@ -49,8 +51,14 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
   const isOwner = !!user && user.id === enrollment.playerId
   const [isJoining, setIsJoining] = useState(false)
 
+  const enrollmentIsToday = isTodayDate(arrivalTime)
+  const alreadyEnrolled: boolean = !!user && allEnrollments.some(e =>
+    e.playerId === user.id &&
+    (enrollmentIsToday ? isTodayDate(new Date(e.arrivalTime)) : !isTodayDate(new Date(e.arrivalTime)))
+  )
+
   const handleJoinSubmit = () => {
-    if (!user) return
+    if (!user || alreadyEnrolled) return
     setIsJoining(true)
     insertEnrollment({
       playerId: user.id,
@@ -86,7 +94,7 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
   const noteText = enrollment.note || (isOpenToPlay ? t('hoop.playersPanel.defaultNoteOpen') : t('hoop.playersPanel.defaultNoteSolo'))
 
   return (
-    <div className={`${colorModeContext} flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800`}>
+    <div className={`${colorModeContext} flex items-start gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800`}>
       <div className="w-8 h-8 shrink-0 rounded-full bg-first-color flex items-center justify-center text-white text-sm font-medium">
         {enrollment.playerNickname.charAt(0).toUpperCase()}
       </div>
@@ -97,7 +105,7 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
             : formatArrivalText(arrivalTime, t)
           }
         </p></b>
-        <p className={`${colorModeContext} text-fluid-xs background-text`}>
+        <p className={`${colorModeContext} text-fluid-xs background-text break-words`}>
           {noteText}
         </p>
       </div>
@@ -112,9 +120,9 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
         isOpenToPlay && (
           <Button
             onClick={handleJoinSubmit}
-            isDisabled={!user || isJoining}
+            isDisabled={!user || isJoining || alreadyEnrolled}
             className={`shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full text-white transition-colors ${
-              !user || isJoining
+              !user || isJoining || alreadyEnrolled
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-green-500 hover:bg-green-600 cursor-pointer'
             }`}
