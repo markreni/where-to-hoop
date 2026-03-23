@@ -15,6 +15,7 @@ import { conditionOptions, doorOptions } from "../utils/options";
 import { Button } from "react-aria-components";
 import Footer from "./Footer";
 import { fetchAllEnrollments } from "../utils/requests";
+import { groupEnrollmentsByHoop } from "../utils/functions";
 
 interface FilterState {
   selectedConditions: Set<Condition>;
@@ -46,15 +47,7 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
     queryFn: fetchAllEnrollments,
   });
 
-  const enrollmentsByHoop = useMemo(() => {
-    const map = new Map<string, PlayerEnrollment[]>();
-    for (const enrollment of allEnrollments) {
-      if (!enrollment.hoopId) continue;
-      const existing = map.get(enrollment.hoopId) ?? [];
-      map.set(enrollment.hoopId, [...existing, enrollment]);
-    }
-    return map;
-  }, [allEnrollments]);
+  const enrollmentsByHoop = useMemo(() => groupEnrollmentsByHoop(allEnrollments), [allEnrollments]);
 
   useEffect(() => {
     locateUser();

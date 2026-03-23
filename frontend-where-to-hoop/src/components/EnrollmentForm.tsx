@@ -38,6 +38,8 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
   const [durationMinutes, setDurationMinutes] = useState(60) // 30-300 in 30 min increments
   const [playMode, setPlayMode] = useState<PlayMode>('open')
   const [note, setNote] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isCancelling, setIsCancelling] = useState(false)
   // Local state for optimistic UI after submit (clears once query re-fetches)
   const [localTodayEnrollment, setLocalTodayEnrollment] = useState<PlayerEnrollment | null>(null)
   const [localLaterEnrollment, setLocalLaterEnrollment] = useState<PlayerEnrollment | null>(null)
@@ -106,9 +108,10 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
   }
 
   const handleEnrollSubmit = () => {
+    setIsSubmitting(true)
     insertEnrollment({
-      playerId: user?.id ?? null,
-      playerNickname: user?.user_metadata?.nickname ?? '',
+      playerId: user!.id,
+      playerNickname: user!.user_metadata?.nickname ?? '',
       hoopId,
       arrivalTime: calculateArrivalTime(),
       duration: durationMinutes,
@@ -128,13 +131,16 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
       } else {
         error(t('hoop.enrollment.error'))
       }
+    }).finally(() => {
+      setIsSubmitting(false)
     })
   }
 
   const isLaterModeValid = whenMode === 'later' ? (selectedDate !== null && selectedTimeSlot !== null) : true
-  const isEnrollEnabled = !!user && isLaterModeValid
+  const isEnrollEnabled = !!user && isLaterModeValid && !isSubmitting
 
   const onCancel = (enrollment: PlayerEnrollment, mode: WhenMode) => {
+    setIsCancelling(true)
     deleteEnrollment(enrollment.id).then(async () => {
       if (mode === 'today') {
         setLocalTodayEnrollment(null)
@@ -145,6 +151,8 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
       await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
     }).catch(() => {
       error(t('hoop.playersPanel.deleteError'))
+    }).finally(() => {
+      setIsCancelling(false)
     })
   }
 
@@ -203,7 +211,10 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
           </p>
           <Button
             onPress={() => onCancel(activeEnrollment, whenMode)}
-            className={`${colorModeContext} w-full py-3 px-4 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors cursor-pointer`}
+            isDisabled={isCancelling}
+            className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
+              isCancelling ? 'bg-red-300 cursor-not-allowed' : 'bg-red-500 hover:bg-red-600 cursor-pointer'
+            }`}
           >
             {t('hoop.enrollment.cancel')}
           </Button>

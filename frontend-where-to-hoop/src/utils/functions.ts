@@ -75,6 +75,16 @@ export const groupEnrollmentsByTime = (enrollments: PlayerEnrollment[] = []): {
   return { playingNow, comingSoon, comingLater }
 }
 
+export const groupEnrollmentsByHoop = (enrollments: PlayerEnrollment[]): Map<string, PlayerEnrollment[]> => {
+  const map = new Map<string, PlayerEnrollment[]>()
+  for (const enrollment of enrollments) {
+    if (!enrollment.hoopId) continue
+    const existing = map.get(enrollment.hoopId) ?? []
+    map.set(enrollment.hoopId, [...existing, enrollment])
+  }
+  return map
+}
+
 export const reverseGeocode = async (lat: number, lng: number): Promise<string | null> => {
   try {
     const response = await fetch(
@@ -82,7 +92,7 @@ export const reverseGeocode = async (lat: number, lng: number): Promise<string |
       { headers: { 'Accept-Language': 'en' } }
     );
     if (!response.ok) return null;
-    const data = await response.json();
+    const data = await response.json(); 
     const address = data.address;
     const { road, house_number, city, state, postcode } = address;
     return house_number && road && city && state && postcode

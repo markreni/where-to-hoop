@@ -10,7 +10,7 @@ import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import { useTranslation } from "../hooks/useTranslation.ts";
 import { useWeather, isWarmWeather, isRainyWeather, isSnowyWeather, isGoodWeatherForBasketball } from "../hooks/useWeather.ts";
 import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../types/types.ts";
-import haversineDistance, { groupEnrollmentsByTime } from "../utils/functions.ts";
+import haversineDistance, { groupEnrollmentsByTime, groupEnrollmentsByHoop } from "../utils/functions.ts";
 import { fetchAllEnrollments } from "../utils/requests.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 //import baskethoopImg from "../images/baskethoop.png";
@@ -77,15 +77,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
       .sort((a, b) => a.distance - b.distance);
   }, [mapCenterValues.latitude, mapCenterValues.longitude, hoops]);
 
-  const enrollmentsByHoop: Map<string, PlayerEnrollment[]> = useMemo(() => {
-    const map = new Map<string, PlayerEnrollment[]>()
-    for (const enrollment of allEnrollments) {
-      if (!enrollment.hoopId) continue
-      const existing: PlayerEnrollment[] = map.get(enrollment.hoopId) ?? []
-      map.set(enrollment.hoopId, [...existing, enrollment])
-    }
-    return map
-  }, [allEnrollments])
+  const enrollmentsByHoop = useMemo(() => groupEnrollmentsByHoop(allEnrollments), [allEnrollments])
 
   const sortedHoopsWithPlayers: { hoop: BasketballHoop; distance: number }[] = useMemo(() => {
     return hoops
