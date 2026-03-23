@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { insertEnrollment, deleteEnrollment } from '../utils/requests'
 import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
@@ -41,6 +41,10 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
   // Local state for optimistic UI after submit (clears once query re-fetches)
   const [localTodayEnrollment, setLocalTodayEnrollment] = useState<PlayerEnrollment | null>(null)
   const [localLaterEnrollment, setLocalLaterEnrollment] = useState<PlayerEnrollment | null>(null)
+  const localTodayEnrollmentRef = useRef(localTodayEnrollment)
+  const localLaterEnrollmentRef = useRef(localLaterEnrollment)
+  localTodayEnrollmentRef.current = localTodayEnrollment
+  localLaterEnrollmentRef.current = localLaterEnrollment
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   const { user } = useAuth()
@@ -58,14 +62,16 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
     null
 
   // Sync local optimistic state with server — clears if enrollment was deleted elsewhere (e.g. PlayerCard)
+  // Uses refs so this only triggers when enrollments changes, not when local state changes.
+  // This prevents clearing local state before the query has had a chance to re-fetch.
   useEffect(() => {
-    if (localTodayEnrollment && !enrollments.some(e => e.id === localTodayEnrollment.id)) {
+    if (localTodayEnrollmentRef.current && !enrollments.some(e => e.id === localTodayEnrollmentRef.current!.id)) {
       setLocalTodayEnrollment(null)
     }
-    if (localLaterEnrollment && !enrollments.some(e => e.id === localLaterEnrollment.id)) {
+    if (localLaterEnrollmentRef.current && !enrollments.some(e => e.id === localLaterEnrollmentRef.current!.id)) {
       setLocalLaterEnrollment(null)
     }
-  }, [enrollments, localTodayEnrollment, localLaterEnrollment])
+  }, [enrollments])
 
   const formatSliderValue = (minutes: number, isArrival: boolean): string => {
     if (isArrival && minutes === 0) return t('hoop.enrollment.now')
@@ -102,6 +108,7 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
   const handleEnrollSubmit = () => {
     insertEnrollment({
       playerId: user?.id ?? null,
+      playerNickname: user?.user_metadata?.nickname ?? '',
       hoopId,
       arrivalTime: calculateArrivalTime(),
       duration: durationMinutes,

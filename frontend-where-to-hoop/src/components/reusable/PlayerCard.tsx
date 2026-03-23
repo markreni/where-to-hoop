@@ -1,10 +1,12 @@
+import { useState } from 'react'
 import type { ColorMode, PlayerEnrollment } from '../../types/types'
 import { useColorModeValues } from '../../contexts/ColorModeContext'
 import { useTranslation } from '../../hooks/useTranslation'
 import { useAuth } from '../../contexts/AuthContext'
 import { useQueryClient } from '@tanstack/react-query'
 import { useToast } from '../../contexts/ToastContext'
-import { deleteEnrollment } from '../../utils/requests'
+import { deleteEnrollment, insertEnrollment } from '../../utils/requests'
+import { Button } from 'react-aria-components'
 
 // Helper to format time
 const formatTime = (date: Date): string => {
@@ -45,9 +47,31 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
   const queryClient = useQueryClient()
 
   const isOwner = !!user && user.id === enrollment.playerId
+  const [isJoining, setIsJoining] = useState(false)
 
-  const handleJoin = () => {
-    console.log('Joining player:', enrollment.playerId)
+  const handleJoinSubmit = () => {
+    if (!user) return
+    setIsJoining(true)
+    insertEnrollment({
+      playerId: user.id,
+      playerNickname: user.user_metadata?.nickname ?? '',
+      hoopId: enrollment.hoopId,
+      arrivalTime: enrollment.arrivalTime,
+      duration: enrollment.duration,
+      playMode: enrollment.playMode,
+      note: `Joined ${enrollment.playerNickname}`,
+    }).then(async () => {
+      success(t('hoop.enrollment.success'))
+      await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
+    }).catch((err: { code?: string }) => {
+      if (err.code === '42501') {
+        error(t('hoop.enrollment.authError'))
+      } else {
+        error(t('hoop.enrollment.error'))
+      }
+    }).finally(() => {
+      setIsJoining(false)
+    })
   }
 
   const handleDelete = () => {
@@ -64,7 +88,7 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
   return (
     <div className={`${colorModeContext} flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800`}>
       <div className="w-8 h-8 shrink-0 rounded-full bg-first-color flex items-center justify-center text-white text-sm font-medium">
-        {enrollment.playerId?.charAt(0).toUpperCase() ?? '?'}
+        {enrollment.playerNickname.charAt(0).toUpperCase()}
       </div>
       <div className="flex-1 min-w-0">
         <b><p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
@@ -78,20 +102,25 @@ const PlayerCard = ({ enrollment }: PlayerCardProps) => {
         </p>
       </div>
       {isOwner ? (
-        <button
+        <Button
           onClick={handleDelete}
           className="shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors cursor-pointer"
         >
           {t('hoop.playersPanel.deleteButton')}
-        </button>
+        </Button>
       ) : (
         isOpenToPlay && (
-          <button
-            onClick={handleJoin}
-            className="shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full bg-green-500 hover:bg-green-600 text-white transition-colors cursor-pointer"
+          <Button
+            onClick={handleJoinSubmit}
+            isDisabled={!user || isJoining}
+            className={`shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full text-white transition-colors ${
+              !user || isJoining
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-green-500 hover:bg-green-600 cursor-pointer'
+            }`}
           >
             {t('hoop.playersPanel.joinButton')}
-          </button>
+          </Button>
         )
       )}
     </div>

@@ -12,7 +12,8 @@ vi.mock('../utils/supabase', () => ({
           single: vi.fn().mockResolvedValue({
             data: {
               id: 'mock-id',
-              player_id: null,
+              player_id: 'mock-user-id',
+              player_nickname: 'MockUser',
               hoop_id: 'test-hoop-1',
               arrival_time: new Date().toISOString(),
               duration: 60,
@@ -24,12 +25,40 @@ vi.mock('../utils/supabase', () => ({
           }),
         })),
       })),
+      delete: vi.fn(() => ({
+        eq: vi.fn().mockResolvedValue({ error: null }),
+      })),
     })),
     auth: {
-      getSession: vi.fn().mockResolvedValue({ data: { session: null }, error: null }),
-      onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
+      getSession: vi.fn().mockResolvedValue({
+        data: {
+          session: {
+            user: {
+              id: 'mock-user-id',
+              email: 'mock@example.com',
+              user_metadata: { nickname: 'MockUser' },
+            },
+          },
+        },
+        error: null,
+      }),
+      onAuthStateChange: vi.fn((cb) => {
+        cb('SIGNED_IN', {
+          user: {
+            id: 'mock-user-id',
+            email: 'mock@example.com',
+            user_metadata: { nickname: 'MockUser' },
+          },
+        })
+        return { data: { subscription: { unsubscribe: vi.fn() } } }
+      }),
       signOut: vi.fn().mockResolvedValue({ error: null }),
     },
+    channel: vi.fn(() => ({
+      on: vi.fn().mockReturnThis(),
+      subscribe: vi.fn(),
+    })),
+    removeChannel: vi.fn(),
   },
 }));
 

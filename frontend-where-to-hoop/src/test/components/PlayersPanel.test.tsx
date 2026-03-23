@@ -19,6 +19,7 @@ describe('PlayersPanel', () => {
   const createEnrollment = (overrides: Partial<PlayerEnrollment> = {}): PlayerEnrollment => ({
     id: 'test-1',
     playerId: 'test',
+    playerNickname: 'TestPlayer',
     hoopId: 'hoop-1',
     arrivalTime: fixedNow,
     duration: 60,
@@ -121,7 +122,7 @@ describe('PlayersPanel', () => {
 
   it('displays player initial in avatar', () => {
     const enrollment = createEnrollment({
-      playerId: 'alice',
+      playerNickname: 'Alice',
       arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
       duration: 60,
     });

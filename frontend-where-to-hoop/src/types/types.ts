@@ -35,6 +35,7 @@ interface PlayerEnrollment {
   id: string;
   playerId: string | null; // ID of the player enrolled, can be null if user is deleted
   playerEmail?: string; // Email of the player, used for display if playerId is null
+  playerNickname: string;
   hoopId: string | null; // ID of the hoop they are enrolled in, can be null if hoop is deleted
   hoopName?: string; // Name of the hoop for display purposes if hoopId is deleted
   arrivalTime: Date; // When they plan to arrive

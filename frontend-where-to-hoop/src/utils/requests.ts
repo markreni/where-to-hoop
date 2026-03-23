@@ -113,6 +113,7 @@ const fetchAllEnrollments = async (): Promise<PlayerEnrollment[]> => {
   return (data ?? []).map(row => ({
     id: row.id,
     playerId: row.player_id,
+    playerNickname: row.player_nickname,
     hoopId: row.hoop_id,
     arrivalTime: new Date(row.arrival_time),
     duration: row.duration,
@@ -136,6 +137,7 @@ const fetchEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]> => 
   return (data ?? []).map(row => ({
     id: row.id,
     playerId: row.player_id,
+    playerNickname: row.player_nickname,
     hoopId: row.hoop_id,
     arrivalTime: new Date(row.arrival_time),
     duration: row.duration,
@@ -148,6 +150,7 @@ const fetchEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]> => 
 const insertEnrollment = async (enrollment: Omit<PlayerEnrollment, 'id' | 'createdAt' | 'playerEmail' | 'hoopName'>): Promise<PlayerEnrollment> => {
   const insertPayload = {
     player_id: enrollment.playerId,
+    player_nickname: enrollment.playerNickname,
     hoop_id: enrollment.hoopId,
     arrival_time: enrollment.arrivalTime,
     duration: enrollment.duration,
@@ -169,6 +172,7 @@ const insertEnrollment = async (enrollment: Omit<PlayerEnrollment, 'id' | 'creat
   return {
     id: data.id,
     playerId: data.player_id,
+    playerNickname: data.player_nickname,
     hoopId: data.hoop_id,
     arrivalTime: new Date(data.arrival_time),
     duration: data.duration,

@@ -17,6 +17,7 @@ describe('EnrollmentForm', () => {
 
   const defaultProps = {
     hoopId: 'test-hoop-1',
+    enrollments: [],
   };
 
   it('renders the title', () => {

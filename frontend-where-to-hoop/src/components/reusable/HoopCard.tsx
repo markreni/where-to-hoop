@@ -91,7 +91,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
                       className="w-6 h-6 rounded-full bg-first-color flex items-center justify-center text-white text-xs font-medium ring-2 ring-background"
                       title={enrollment.playerId ?? 'Deleted user'}
                     >
-                      {enrollment.playerId?.charAt(0) ?? '?'}
+                      {enrollment.playerNickname.charAt(0).toUpperCase()}
                     </div>
                   ))}
                   {playingNow.length > 5 && (

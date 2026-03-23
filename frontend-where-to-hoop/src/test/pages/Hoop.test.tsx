@@ -8,6 +8,7 @@ const mockEnrollments = vi.hoisted(() => [
   {
     id: 'enroll-1',
     playerId: 'user-alice',
+    playerNickname: 'Alice',
     hoopId: 'test-hoop-1',
     arrivalTime: new Date(new Date('2024-01-15T12:00:00Z').getTime() - 10 * 60000),
     duration: 60,
@@ -17,6 +18,7 @@ const mockEnrollments = vi.hoisted(() => [
   {
     id: 'enroll-2',
     playerId: 'user-bob',
+    playerNickname: 'Bob',
     hoopId: 'test-hoop-1',
     arrivalTime: new Date(new Date('2024-01-15T12:00:00Z').getTime() + 20 * 60000),
     duration: 90,
@@ -144,6 +146,7 @@ describe('Hoop Page', () => {
       {
         id: 'enroll-1',
         playerId: 'user-alice',
+        playerNickname: 'Alice',
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(now - 10 * 60000),
         duration: 60,
@@ -153,6 +156,7 @@ describe('Hoop Page', () => {
       {
         id: 'enroll-2',
         playerId: 'user-bob',
+        playerNickname: 'Bob',
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(now + 20 * 60000),
         duration: 90,
