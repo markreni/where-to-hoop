@@ -178,7 +178,7 @@ const AddHoop = () => {
       //playerEnrollments: [],
     };
 
-    insertHoop(hoopData, orderedFiles).then(async (inserted) => {
+    insertHoop(hoopData, orderedFiles, user!.id).then(async (inserted) => {
       success(t('addHoop.success'));
       await queryClient.invalidateQueries({ queryKey: ['hoops'] });
       navigate(`/hoops/${inserted.id}`);

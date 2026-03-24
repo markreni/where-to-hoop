@@ -1,18 +1,21 @@
-import { useEffect, useMemo } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useEffect, useMemo, useState } from 'react'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useLocationValues } from '../contexts/LocationContext'
 import { useTranslation } from '../hooks/useTranslation'
+import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import { BackArrow } from '../components/reusable/BackArrow'
 import Footer from '../components/Footer'
 import { HoopBadge } from '../components/reusable/HoopBadge'
 import { EnrollmentForm } from '../components/EnrollmentForm'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
+import { MdDeleteOutline } from 'react-icons/md'
 import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
 import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
-import { fetchEnrollments, getHoopImageUrl } from '../utils/requests'
+import { fetchEnrollments, getHoopImageUrl, deleteHoop } from '../utils/requests'
 import { Button } from 'react-aria-components'
 
 interface HoopProps {
@@ -25,7 +28,11 @@ const Hoop = ({ hoop }: HoopProps) => {
   const { t } = useTranslation()
   const userLocation: Coordinates = useLocationValues()
   const { hash } = useLocation()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const { user } = useAuth()
+  const { success, error } = useToast()
+  const queryClient = useQueryClient()
+  const [deleting, setDeleting] = useState(false)
 
   const { data: enrollments = [] } = useQuery({
     queryKey: ['enrollments', hoop?.id ?? ''],
@@ -64,6 +71,22 @@ const Hoop = ({ hoop }: HoopProps) => {
   const { playingNow } = groupEnrollmentsByTime(enrollments)
   const playingNowCount = playingNow.length
 
+  const isOwner = !!user && user.email === hoop.addedBy
+
+  const handleDelete = async () => {
+    if (!window.confirm(`Delete "${hoop.name}"? This cannot be undone.`)) return
+    setDeleting(true)
+    try {
+      await deleteHoop(hoop.id)
+      queryClient.invalidateQueries({ queryKey: ['hoops'] })
+      success('Hoop deleted')
+      navigate('/hoops')
+    } catch {
+      error('Failed to delete hoop')
+      setDeleting(false)
+    }
+  }
+
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
       <BackArrow />
@@ -83,15 +106,26 @@ const Hoop = ({ hoop }: HoopProps) => {
                         {hoop.name}
                       </h1>
                       <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+                      {isOwner && (
+                        <button
+                          onClick={handleDelete}
+                          disabled={deleting}
+                          className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors disabled:opacity-50"
+                          aria-label="Delete hoop"
+                          title="Delete hoop"
+                        >
+                          <MdDeleteOutline size={26} />
+                        </button>
+                      )}
                     </div>
                     <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
-                    {distance !== null && (
-                      <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
-                        {distance.toFixed(1)} km
-                      </p>
-                    )}
-                    <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address??"No address is specified"}</p>
-                   </div>
+                      {distance !== null && (
+                        <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
+                          {distance.toFixed(1)} km
+                        </p>
+                      )}
+                      <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address??'No address is specified'}</p>
+                    </div>
                   </div>
                 </div>
 
@@ -118,7 +152,7 @@ const Hoop = ({ hoop }: HoopProps) => {
                     text={t(`common.condition.${hoop.condition}`)}
                     tooltip={t('hoops.tooltips.condition')}
                   />
-                  {/* 
+                  {/*
                   <HoopBadge
                     variant="date"
                     text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
@@ -132,8 +166,8 @@ const Hoop = ({ hoop }: HoopProps) => {
                       variant="players"
                       text={
                         playingNowCount === 1
-                        ? t('hoops.players.one')
-                        : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
+                          ? t('hoops.players.one')
+                          : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
                       }
                       showIcon={true}
                       textClassName="responsive-hoopcard-elements-text"
@@ -154,8 +188,8 @@ const Hoop = ({ hoop }: HoopProps) => {
               />
             </div>
             <PlayersPanel
-                playerEnrollments={enrollments}
-              />
+              playerEnrollments={enrollments}
+            />
           </div>
         </div>
       </div>

@@ -4,16 +4,24 @@ import supabase from './supabase'
 const fetchHoops = async (): Promise<BasketballHoop[]> => {
   const { data, error } = await supabase
     .from('basketball_hoop')
-    .select("*")
-    .order('created_at', { ascending: true})
+    .select('*')
+    .order('created_at', { ascending: true })
 
-  if (error) { 
+  if (error) {
     console.error('Fetch error:', error.message)
     throw error
   }
 
   return (data ?? []).map(hoop => ({
-    ...hoop,
+    id: hoop.id,
+    name: hoop.name,
+    description: hoop.description,
+    condition: hoop.condition,
+    isIndoor: hoop.is_indoor,
+    createdAt: hoop.created_at,
+    addedBy: hoop.added_by,
+    address: hoop.address ?? undefined,
+    images: hoop.images ?? [],
     coordinates: {
       latitude: hoop.latitude,
       longitude: hoop.longitude
@@ -21,13 +29,13 @@ const fetchHoops = async (): Promise<BasketballHoop[]> => {
   }))
 }
 
-const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[]) => {
+const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[], userId: string) => {
   const uploadedPaths: string[] = []
   const uploadedAt = Date.now()
 
   const observationImages: ObservationImage[] = await Promise.all(
     imageFiles.map(async (file, index) => {
-      const path = `${hoop.addedBy}/${uploadedAt}-${index}-${file.name}`
+      const path = `${userId}/${uploadedAt}-${index}-${file.name}`
       const { error } = await supabase.storage
         .from('hoop-images')
         .upload(path, file)
@@ -73,8 +81,15 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[]) 
   }
   console.log('Inserted hoop:', data)
   return {
-    ...data,
-    playerEnrollments: [],
+    id: data.id,
+    name: data.name,
+    description: data.description,
+    condition: data.condition,
+    isIndoor: data.is_indoor,
+    createdAt: data.created_at,
+    addedBy: data.added_by,
+    address: data.address ?? undefined,
+    images: data.images ?? [],
     coordinates: {
       latitude: data.latitude,
       longitude: data.longitude
@@ -83,9 +98,9 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[]) 
 }
 /*
 const updateHoop = async (id: string, newDescription: string): Promise<BasketballHoop> => {
-  
+
   const { data, error } = await supabase.from('basketball_hoop').update({ description: newDescription }).eq('id', id).select().single()
-  
+
   if (error) {
     console.error('Update error:', error)
     throw error
@@ -98,30 +113,42 @@ const updateHoop = async (id: string, newDescription: string): Promise<Basketbal
       latitude: data.latitude,
       longitude: data.longitude
     }
-  } 
+  }
 }
 */
 
-/*
 const deleteHoop = async (id: string): Promise<BasketballHoop> => {
-  
   const { data, error } = await supabase.from('basketball_hoop').delete().eq('id', id).select().single()
-  
+
   if (error) {
     console.error('Delete error:', error)
     throw error
   }
-  console.log('Deleted hoop:', data)
+
+  const imagePaths: string[] = (data.images ?? []).map((img: ObservationImage) => img.imagePath)
+  if (imagePaths.length > 0) {
+    const { error: storageError } = await supabase.storage.from('hoop-images').remove(imagePaths)
+    if (storageError) {
+      console.error('Storage cleanup error:', storageError)
+    }
+  }
 
   return {
-    ...data,
+    id: data.id,
+    name: data.name,
+    description: data.description,
+    condition: data.condition,
+    isIndoor: data.is_indoor,
+    createdAt: data.created_at,
+    addedBy: data.added_by,
+    address: data.address ?? undefined,
+    images: data.images ?? [],
     coordinates: {
       latitude: data.latitude,
       longitude: data.longitude
     }
-  } 
+  }
 }
-*/
 
 const fetchAllEnrollments = async (): Promise<PlayerEnrollment[]> => {
   // Only fetch enrollments from the last 12 hours onward (max session duration is 12h)
@@ -248,4 +275,4 @@ const getHoopImageUrl = (imagePath: string): string => {
   return data.publicUrl
 }
 
-export { fetchHoops, insertHoop, fetchAllEnrollments, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl }
+export { fetchHoops, insertHoop, deleteHoop, fetchAllEnrollments, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl }
