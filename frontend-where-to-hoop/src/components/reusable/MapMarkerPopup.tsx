@@ -10,6 +10,7 @@ import { HoopCardButton } from "./HoopCardButton.tsx";
 import type { FocusableElement } from "@react-types/shared/src/dom";
 import breakpoints from "../../assets/style.ts";
 import { useMediaQuery } from "usehooks-ts";
+import { getHoopImageUrl } from "../../utils/requests.ts";
 
 const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
   const mapCenterValues: Coordinates = useLocationValues();
@@ -34,11 +35,11 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
         <div>
           <div className="flex flex-col justify-start items-start sm:justify-between sm:flex-row sm:items-center mb-1.5">
             <strong className="text-fluid-base">{hoop.name}</strong>
-            <span className="text-fluid-sm">{distance.toFixed(1)} km</span>
+            <span className="text-fluid-xs">{distance.toFixed(1)} km</span>
           </div>
           
           <img
-            src={hoop.images[0].imagePath}
+            src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/150'}
             alt={hoop.name}
             className="w-full h-auto mb-2" 
           />

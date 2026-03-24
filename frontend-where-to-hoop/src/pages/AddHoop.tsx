@@ -67,6 +67,10 @@ const AddHoop = () => {
   const { user } = useAuth();
 
   useEffect(() => {
+    handleLocateUser();
+  }, []);
+
+  useEffect(() => {
     const { latitude, longitude } = formData.coordinates;
     if (latitude === null || longitude === null) {
       setAddress(null);
