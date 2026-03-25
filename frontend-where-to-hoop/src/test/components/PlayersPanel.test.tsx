@@ -23,6 +23,7 @@ describe('PlayersPanel', () => {
     hoopId: 'hoop-1',
     arrivalTime: fixedNow,
     duration: 60,
+    expired: false,
     playMode: 'open',
     createdAt: new Date(fixedNow.getTime() - 30 * 60000),
     ...overrides,

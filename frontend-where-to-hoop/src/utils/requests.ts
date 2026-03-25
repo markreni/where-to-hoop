@@ -204,7 +204,7 @@ const fetchAllEnrollments = async (): Promise<PlayerEnrollment[]> => {
   }))
 }
 
-const fetchEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]> => {
+const fetchHoopEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]> => {
   const { data, error } = await supabase
     .from('player_enrollment')
     .select('*')
@@ -304,4 +304,36 @@ const getHoopImageUrl = (imagePath: string): string => {
   return data.publicUrl
 }
 
-export { fetchHoops, insertHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl }
+const fetchFavorites = async (userId: string): Promise<string[]> => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('favourite_hoops')
+    .eq('id', userId)
+    .single()
+
+  if (error) {
+    console.error('Fetch favorites error:', error.message)
+    throw error
+  }
+
+  return (data?.favourite_hoops ?? []) as string[]
+}
+
+const toggleFavoriteRequest = async (userId: string, hoopId: string, add: boolean): Promise<void> => {
+  const current = await fetchFavorites(userId)
+  const updated = add
+    ? [...new Set([...current, hoopId])]
+    : current.filter((id: string) => id !== hoopId)
+
+  const { error } = await supabase
+    .from('users')
+    .update({ favourite_hoops: updated })
+    .eq('id', userId)
+
+  if (error) {
+    console.error('Toggle favorite error:', error.message)
+    throw error
+  }
+}
+
+export { fetchHoops, insertHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest }

@@ -24,11 +24,11 @@ const mockIndoorHoop: BasketballHoop = {
 };
 
 const mockEnrollments: PlayerEnrollment[] = [
-  { id: 'e1', playerId: 'user-alice', playerNickname: 'Alice', hoopId: '11', arrivalTime: new Date(), duration: 60, playMode: 'open', createdAt: new Date() },
-  { id: 'e2', playerId: 'user-bob', playerNickname: 'Bob', hoopId: '11', arrivalTime: new Date(), duration: 30, playMode: 'solo', createdAt: new Date() },
-  { id: 'e3', playerId: 'user-charlie', playerNickname: 'Charlie', hoopId: '11', arrivalTime: new Date(), duration: 45, playMode: 'open', createdAt: new Date() },
-  { id: 'e4', playerId: 'user-david', playerNickname: 'David', hoopId: '11', arrivalTime: new Date(), duration: 90, playMode: 'open', createdAt: new Date() },
-  { id: 'e5', playerId: 'user-eve', playerNickname: 'Eve', hoopId: '11', arrivalTime: new Date(), duration: 120, playMode: 'solo', createdAt: new Date() },
+  { id: 'e1', playerId: 'user-alice', playerNickname: 'Alice', hoopId: '11', arrivalTime: new Date(), duration: 60, expired: false, playMode: 'open', createdAt: new Date() },
+  { id: 'e2', playerId: 'user-bob', playerNickname: 'Bob', hoopId: '11', arrivalTime: new Date(), duration: 30, expired: false, playMode: 'solo', createdAt: new Date() },
+  { id: 'e3', playerId: 'user-charlie', playerNickname: 'Charlie', hoopId: '11', arrivalTime: new Date(), duration: 45, expired: false, playMode: 'open', createdAt: new Date() },
+  { id: 'e4', playerId: 'user-david', playerNickname: 'David', hoopId: '11', arrivalTime: new Date(), duration: 90, expired: false, playMode: 'open', createdAt: new Date() },
+  { id: 'e5', playerId: 'user-eve', playerNickname: 'Eve', hoopId: '11', arrivalTime: new Date(), duration: 120, expired: false, playMode: 'solo', createdAt: new Date() },
 ];
 
 describe('HoopCard', () => {
@@ -92,7 +92,7 @@ describe('HoopCard', () => {
   });
 
   it('caps players display at >99 for large numbers', () => {
-    const manyEnrollments = Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerId: `user-${i}`, playerNickname: `Player${i}`, hoopId: '11', arrivalTime: new Date(), duration: 60, playMode: 'open' as const, createdAt: new Date() }));
+    const manyEnrollments = Array.from({ length: 150 }, (_, i) => ({ id: `e${i}`, playerId: `user-${i}`, playerNickname: `Player${i}`, hoopId: '11', arrivalTime: new Date(), duration: 60, expired: false, playMode: 'open' as const, createdAt: new Date() }));
     render(<HoopCard {...defaultProps} playerEnrollments={manyEnrollments} />);
     expect(screen.getByText(/>99/)).toBeInTheDocument();
   });

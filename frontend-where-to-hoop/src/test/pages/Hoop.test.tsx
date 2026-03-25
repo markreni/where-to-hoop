@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor } from '../test-utils';
 import Hoop from '../../pages/Hoop';
 import type { BasketballHoop } from '../../types/types';
-import { fetchEnrollments } from '../../utils/requests';
+import { fetchHoopEnrollments } from '../../utils/requests';
 
 const mockEnrollments = vi.hoisted(() => [
   {
@@ -12,6 +12,7 @@ const mockEnrollments = vi.hoisted(() => [
     hoopId: 'test-hoop-1',
     arrivalTime: new Date(new Date('2024-01-15T12:00:00Z').getTime() - 10 * 60000),
     duration: 60,
+    expired: false,
     playMode: 'open' as const,
     createdAt: new Date(new Date('2024-01-15T12:00:00Z').getTime() - 15 * 60000),
   },
@@ -22,6 +23,7 @@ const mockEnrollments = vi.hoisted(() => [
     hoopId: 'test-hoop-1',
     arrivalTime: new Date(new Date('2024-01-15T12:00:00Z').getTime() + 20 * 60000),
     duration: 90,
+    expired: false,
     playMode: 'solo' as const,
     createdAt: new Date(new Date('2024-01-15T12:00:00Z').getTime() - 5 * 60000),
   },
@@ -31,7 +33,7 @@ vi.mock('../../utils/requests', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../utils/requests')>();
   return {
     ...actual,
-    fetchEnrollments: vi.fn().mockResolvedValue(mockEnrollments),
+    fetchHoopEnrollments: vi.fn().mockResolvedValue(mockEnrollments),
   };
 });
 
@@ -142,7 +144,7 @@ describe('Hoop Page', () => {
   it('shows players from enrollments in PlayersPanel', async () => {
     vi.useRealTimers();
     const now = Date.now();
-    vi.mocked(fetchEnrollments).mockResolvedValueOnce([
+    vi.mocked(fetchHoopEnrollments).mockResolvedValueOnce([
       {
         id: 'enroll-1',
         playerId: 'user-alice',
@@ -150,6 +152,7 @@ describe('Hoop Page', () => {
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(now - 10 * 60000),
         duration: 60,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(now - 15 * 60000),
       },
@@ -160,6 +163,7 @@ describe('Hoop Page', () => {
         hoopId: 'test-hoop-1',
         arrivalTime: new Date(now + 20 * 60000),
         duration: 90,
+        expired: false,
         playMode: 'solo',
         createdAt: new Date(now - 5 * 60000),
       },

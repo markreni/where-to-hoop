@@ -13,11 +13,12 @@ import { EnrollmentForm } from '../components/EnrollmentForm'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { MiniMap } from '../components/MiniMap'
 import { ImageGallery } from '../components/reusable/ImageGallery'
-import { MdOutlineFavoriteBorder } from 'react-icons/md'
+import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
 import { MdDeleteOutline } from 'react-icons/md'
 import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
 import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
-import { fetchEnrollments, deleteHoop } from '../utils/requests'
+import { fetchHoopEnrollments, deleteHoop } from '../utils/requests'
+import { useFavorites } from '../hooks/useFavorites'
 import { Button } from 'react-aria-components'
 import L from 'leaflet'
 
@@ -33,6 +34,7 @@ const Hoop = ({ hoop }: HoopProps) => {
   const { hash } = useLocation()
   const navigate = useNavigate()
   const { user } = useAuth()
+  const { isFavorited, toggleFavorite } = useFavorites()
   const { success, error } = useToast()
   const queryClient = useQueryClient()
   const [deleting, setDeleting] = useState(false)
@@ -40,7 +42,7 @@ const Hoop = ({ hoop }: HoopProps) => {
 
   const { data: enrollments = [] } = useQuery({
     queryKey: ['enrollments', hoop?.id ?? ''],
-    queryFn: () => fetchEnrollments(hoop?.id ?? ''),
+    queryFn: () => fetchHoopEnrollments(hoop?.id ?? ''),
     enabled: !!hoop,
   })
 
@@ -109,7 +111,11 @@ const Hoop = ({ hoop }: HoopProps) => {
                       <h1 className={`${colorModeContext} text-fluid-xl poppins-bold background-text`}>
                         {hoop.name}
                       </h1>
-                      <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+                      {user && (
+                        isFavorited(hoop.id)
+                          ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+                          : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+                      )}
                       {isOwner && (
                         <button
                           onClick={handleDelete}

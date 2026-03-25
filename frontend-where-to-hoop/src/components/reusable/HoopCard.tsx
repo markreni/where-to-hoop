@@ -7,13 +7,15 @@ import type { FocusableElement } from "@react-types/shared";
 import { useMemo, type MouseEvent } from "react";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
-import { useMediaQuery } from 'usehooks-ts'
-import breakpoints from "../../assets/style.ts";
+import { MdOutlineFavoriteBorder, MdFavorite } from "react-icons/md";
+//import { useMediaQuery } from 'usehooks-ts'
+//import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 import { getHoopImageUrl } from "../../utils/requests.ts";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
+import { useAuth } from "../../contexts/AuthContext.tsx";
+import { useFavorites } from "../../hooks/useFavorites.ts";
 //import { Button } from "react-aria-components";
 
 interface HoopCardProps {
@@ -22,12 +24,14 @@ interface HoopCardProps {
   playerEnrollments: PlayerEnrollment[];
 }
 const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
-  const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
+  //const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
   const colorModeContext: ColorMode = useColorModeValues();
   const userLocationDispatch = useLocationDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
+  const { user } = useAuth();
+  const { isFavorited, toggleFavorite } = useFavorites();
 
   const locateHoop = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
@@ -63,7 +67,11 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
         <div className="flex flex-col">
           <div className="flex items-center justify-start gap-2">
             <strong className="text-fluid-base">{hoop.name}</strong>
-            <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={23} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+            {user && (
+              isFavorited(hoop.id)
+                ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={23} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+                : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={23} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+            )}
           </div>
           <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
             <span className="text-fluid-xs font-extralight">{distance.toFixed(1)} km</span>

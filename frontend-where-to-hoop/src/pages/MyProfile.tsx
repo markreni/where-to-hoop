@@ -4,11 +4,16 @@ import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
+import { useLocationValues } from '../contexts/LocationContext'
 import { BackArrow } from '../components/reusable/BackArrow'
 import { EnrollmentCard } from '../components/reusable/EnrollmentCard'
+import { HoopCard } from '../components/reusable/HoopCard'
 import Footer from '../components/Footer'
-import { fetchUserEnrollments } from '../utils/requests'
-import type { BasketballHoop, ColorMode, PlayerEnrollment } from '../types/types'
+import { fetchUserEnrollments, fetchAllEnrollments } from '../utils/requests'
+import { useFavorites } from '../hooks/useFavorites'
+import { groupEnrollmentsByHoop } from '../utils/functions'
+import haversineDistance from '../utils/functions'
+import type { BasketballHoop, ColorMode, Coordinates, PlayerEnrollment } from '../types/types'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
 
@@ -22,13 +27,24 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const { user } = useAuth()
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+  const userLocation: Coordinates = useLocationValues()
   const [activeTab, setActiveTab] = useState<Tab>('enrollments')
+  const { favoriteIds } = useFavorites()
 
   const { data: enrollments = [], isLoading } = useQuery<PlayerEnrollment[]>({
     queryKey: ['userEnrollments', user?.id],
     queryFn: () => fetchUserEnrollments(user!.id),
     enabled: !!user,
   })
+
+  const { data: allEnrollments = [] } = useQuery<PlayerEnrollment[]>({
+    queryKey: ['allEnrollments'],
+    queryFn: fetchAllEnrollments,
+    enabled: activeTab === 'favorites',
+  })
+
+  const enrollmentsByHoop: Map<string, PlayerEnrollment[]> = groupEnrollmentsByHoop(allEnrollments)
+  const favoriteHoops: BasketballHoop[] = hoops.filter(h => favoriteIds.includes(h.id))
 
   if (!user) return <Navigate to="/signin" replace />
 
@@ -113,7 +129,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                     {past.map(e => <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />)}
                   </div>
                 ) : (
-                  <p className={`${colorModeContext} text-fluid-sm text-gray-400 dark:text-gray-500`}>
+                  <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600`}>
                     {t('myProfile.noPast')}
                   </p>
                 )}
@@ -123,12 +139,35 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
 
           {/* Favorites Tab */}
           {activeTab === 'favorites' && (
-            <div className="flex flex-col items-center justify-center py-16 gap-4">
-              <MdOutlineFavoriteBorder size={48} className="text-first-color opacity-40" />
-              <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
-                {t('myProfile.favoritesPlaceholder')}
-              </p>
-            </div>
+            favoriteHoops.length > 0 ? (
+              <div className="flex flex-col gap-3">
+                {favoriteHoops.map(hoop => {
+                  const distance =
+                    userLocation.latitude != null && userLocation.longitude != null &&
+                    hoop.coordinates.latitude != null && hoop.coordinates.longitude != null
+                      ? haversineDistance(
+                          [userLocation.latitude, userLocation.longitude],
+                          [hoop.coordinates.latitude, hoop.coordinates.longitude]
+                        )
+                      : 0
+                  return (
+                    <HoopCard
+                      key={hoop.id}
+                      hoop={hoop}
+                      distance={distance}
+                      playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []}
+                    />
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-16 gap-4">
+                <MdOutlineFavoriteBorder size={48} className="text-first-color opacity-40" />
+                <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
+                  {t('myProfile.noFavorites')}
+                </p>
+              </div>
+            )
           )}
 
         </div>
