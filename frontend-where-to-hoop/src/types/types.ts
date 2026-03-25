@@ -40,6 +40,7 @@ interface PlayerEnrollment {
   hoopName?: string; // Name of the hoop for display purposes if hoopId is deleted
   arrivalTime: Date; // When they plan to arrive
   duration: number; // How long they plan to play (in minutes)
+  expired: boolean; // Whether the enrollment time has passed
   playMode: PlayMode; // Whether open to play or solo hooping
   note?: string; // Optional note to other players
   createdAt: Date;

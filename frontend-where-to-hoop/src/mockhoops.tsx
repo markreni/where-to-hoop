@@ -30,6 +30,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '1',
         arrivalTime: new Date(new Date().getTime() - 10 * 60000), // 10 mins ago
         duration: 60,
+        expired: false,
         note: 'Looking for some pickup games!',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 15 * 60000), // 15 mins ago
@@ -41,6 +42,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '1',
         arrivalTime: new Date(new Date().getTime() + 20 * 60000), // in 20 mins
         duration: 90,
+        expired: false,
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago
       },
@@ -51,6 +53,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '1',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 10, 0, 0)), // tomorrow morning
         duration: 90,
+        expired: false,
         note: 'Morning workout session, all welcome!',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 2 * 60 * 60000), // 2 hours ago
@@ -62,6 +65,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '1',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 48, 17, 0, 0)), // in 2 days, evening
         duration: 60,
+        expired: false,
         note: 'Looking for 3v3',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 30 * 60000), // 30 mins ago
@@ -96,6 +100,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() - 30 * 60000), // 30 mins ago
         duration: 120,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 40 * 60000), // 40 mins ago
       },
@@ -106,6 +111,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() + 10 * 60000), // in 10 mins
         duration: 60,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 2 * 60000), // 2 mins ago
       },
@@ -116,6 +122,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().getTime() + 50 * 60000), // in 50 mins
         duration: 90,
+        expired: false,
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 1 * 60000), // 1 min ago
       },
@@ -126,6 +133,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 12, 0, 0)), // tomorrow afternoon
         duration: 120,
+        expired: false,
         note: 'Afternoon practice, bring your A-game!',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 4 * 60 * 60000), // 4 hours ago
@@ -137,6 +145,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 72, 18, 0, 0)), // in 3 days, evening
         duration: 60,
+        expired: false,
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 60 * 60000), // 1 hour ago
       },
@@ -147,6 +156,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '2',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 168, 9, 0, 0)), // in 1 week, morning
         duration: 90,
+        expired: false,
         note: 'Weekend morning hoops!',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 12 * 60 * 60000), // 12 hours ago
@@ -181,6 +191,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 5 * 60000), // in 5 mins
         duration: 45,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 3 * 60000), // 3 mins ago
       },
@@ -191,6 +202,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 120 * 60000), // in 120 mins
         duration: 60,
+        expired: false,
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 10 * 60000), // 10 mins ago
       },
@@ -201,6 +213,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() - 20 * 60000), // 20 mins ago
         duration: 30,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 25 * 60000), // 25 mins ago
       },
@@ -211,6 +224,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 200 * 60000), // in 200 mins
         duration: 90,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 15 * 60000), // 15 mins ago
       },
@@ -221,6 +235,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 15 * 60000), // in 15 mins
         duration: 60,
+        expired: false,
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago
       },
@@ -231,6 +246,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() - 5 * 60000), // 5 mins ago
         duration: 60,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 8 * 60000), // 8 mins ago
       },
@@ -241,6 +257,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().getTime() + 300 * 60000), // in 300 mins
         duration: 120,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 20 * 60000), // 20 mins ago
       },
@@ -251,6 +268,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 24, 21, 0, 0)), // tomorrow night
         duration: 60,
+        expired: false,
         note: 'Night session under the lights',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 45 * 60000), // 45 mins ago
@@ -262,6 +280,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '3',
         arrivalTime: new Date(new Date().setHours(new Date().getHours() + 120, 14, 0, 0)), // in 5 days, afternoon
         duration: 90,
+        expired: false,
         note: 'Casual shooting practice',
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 3 * 60 * 60000), // 3 hours ago
@@ -295,6 +314,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '4',
         arrivalTime: new Date(new Date().getTime() - 15 * 60000),
         duration: 45,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 20 * 60000),
       },
@@ -328,6 +348,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 25 * 60000),
         duration: 90,
+        expired: false,
         note: 'Running 5v5, need two more!',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 30 * 60000),
@@ -339,6 +360,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 20 * 60000),
         duration: 60,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 25 * 60000),
       },
@@ -349,6 +371,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 15 * 60000),
         duration: 120,
+        expired: false,
         note: 'Warming up, come join!',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 20 * 60000),
@@ -360,6 +383,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 10 * 60000),
         duration: 60,
+        expired: false,
         playMode: 'solo',
         createdAt: new Date(new Date().getTime() - 15 * 60000),
       },
@@ -370,6 +394,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 5 * 60000),
         duration: 90,
+        expired: false,
         note: 'Shooting drills',
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 10 * 60000),
@@ -381,6 +406,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         hoopId: '5',
         arrivalTime: new Date(new Date().getTime() - 2 * 60000),
         duration: 75,
+        expired: false,
         playMode: 'open',
         createdAt: new Date(new Date().getTime() - 8 * 60000),
       },

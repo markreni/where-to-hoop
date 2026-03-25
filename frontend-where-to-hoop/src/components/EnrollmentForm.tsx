@@ -115,6 +115,7 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
       hoopId,
       arrivalTime: calculateArrivalTime(),
       duration: durationMinutes,
+      expired: false,
       playMode,
       ...(note.trim() && { note: note.trim() }),
     }).then(async (inserted) => {

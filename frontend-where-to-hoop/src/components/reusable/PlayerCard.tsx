@@ -66,6 +66,7 @@ const PlayerCard = ({ enrollment, allEnrollments }: PlayerCardProps) => {
       hoopId: enrollment.hoopId,
       arrivalTime: enrollment.arrivalTime,
       duration: enrollment.duration,
+      expired: enrollment.expired,
       playMode: enrollment.playMode,
       note: `Joined ${enrollment.playerNickname}`,
     }).then(async () => {

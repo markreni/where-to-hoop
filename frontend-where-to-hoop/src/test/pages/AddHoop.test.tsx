@@ -88,7 +88,7 @@ describe('AddHoop', () => {
     const nameInput = screen.getByPlaceholderText('e.g., Central Park Court');
     await user.type(nameInput, 'Test');
 
-    expect(screen.getByText('4/40')).toBeInTheDocument();
+    expect(screen.getByText('4/50')).toBeInTheDocument();
   });
 
   it('renders condition options', () => {
@@ -164,7 +164,7 @@ describe('AddHoop', () => {
 
   it('shows 0/5 image count initially', () => {
     render(<AddHoop />);
-    expect(screen.getByText('0/4')).toBeInTheDocument();
+    expect(screen.getByText('0/3')).toBeInTheDocument();
   });
 
   it('resets form when reset button is clicked', async () => {
