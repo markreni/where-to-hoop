@@ -150,6 +150,31 @@ const deleteHoop = async (id: string): Promise<BasketballHoop> => {
   }
 }
 
+const fetchUserEnrollments = async (userId: string): Promise<PlayerEnrollment[]> => {
+  const { data, error } = await supabase
+    .from('player_enrollment')
+    .select('*')
+    .eq('player_id', userId)
+    .order('arrival_time', { ascending: false })
+
+  if (error) {
+    console.error('Fetch user enrollments error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => ({
+    id: row.id,
+    playerId: row.player_id,
+    playerNickname: row.player_nickname,
+    hoopId: row.hoop_id,
+    arrivalTime: new Date(row.arrival_time),
+    duration: row.duration,
+    playMode: row.play_mode,
+    note: row.note ?? undefined,
+    createdAt: new Date(row.created_at),
+  }))
+}
+
 const fetchAllEnrollments = async (): Promise<PlayerEnrollment[]> => {
   // Only fetch enrollments from the last 12 hours onward (max session duration is 12h)
   const cutoff = new Date(Date.now() - 720 * 60 * 1000).toISOString()
@@ -275,4 +300,4 @@ const getHoopImageUrl = (imagePath: string): string => {
   return data.publicUrl
 }
 
-export { fetchHoops, insertHoop, deleteHoop, fetchAllEnrollments, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl }
+export { fetchHoops, insertHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl }

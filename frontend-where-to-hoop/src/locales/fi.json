@@ -4,7 +4,20 @@
     "addHoop": "Lisää kori",
     "signIn": "Kirjaudu sisään",
     "signUp": "Rekisteröidy",
-    "signOut": "Kirjaudu ulos"
+    "signOut": "Kirjaudu ulos",
+    "myAccount": "Oma tili"
+  },
+  "myProfile": {
+    "enrollmentsTab": "Ilmoittautumiset",
+    "favoritesTab": "Suosikit",
+    "upcomingEnrollments": "Tulevat",
+    "pastEnrollments": "Menneet",
+    "noUpcoming": "Ei tulevia sessioita",
+    "noPast": "Ei menneitä sessioita vielä",
+    "favoritesPlaceholder": "Suosikit tulossa pian",
+    "courtUnknown": "Tuntematon kenttä",
+    "playModeOpen": "Avoin",
+    "playModeSolo": "Solo"
   },
   "home": {
     "nearestCourts": "Lähimmät kentät",

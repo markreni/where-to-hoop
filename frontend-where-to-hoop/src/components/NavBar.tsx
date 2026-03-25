@@ -53,13 +53,21 @@ const NavBar = () => {
                   </Button>
                 </Link>
               ) : (
-                <Button
-                  className={`${colorModeContext} hidden md:flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-first-color hover:text-first-color/70 transition-colors`}
-                  onPress={() => signOut()}
-                >
-                  <IoMdPerson size={18}/>
-                  {t('nav.signOut')}
-                </Button>
+                <>
+                  <Link to="/myprofile">
+                    <Button className={`${colorModeContext} hidden md:flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-first-color hover:text-first-color/70 transition-colors`}>
+                      <IoMdPerson size={18}/>
+                      {t('nav.myAccount')}
+                    </Button>
+                  </Link>
+                  <Button
+                    className={`${colorModeContext} hidden md:flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-first-color hover:text-first-color/70 transition-colors`}
+                    onPress={() => signOut()}
+                  >
+                    <IoMdLogOut size={18}/>
+                    {t('nav.signOut')}
+                  </Button>
+                </>
               )}
             </div>
             { /*
@@ -80,17 +88,25 @@ const NavBar = () => {
                           <IoMdPerson size={22}/>
                           {t('nav.signIn')}
                         </Link>
-                      </MenuItem>          
+                      </MenuItem>
                   ) : (
-                    <MenuItem
-                      className={`${colorModeContext} mb-2 md:mb-0 md:hidden rounded-md background-hover-text-gray background-text-reverse-black`}
-                      onAction={() => signOut()}
-                    >
-                      <span className="flex items-center gap-2">
-                        <IoMdLogOut size={22}/>
-                        {t('nav.signOut')}
-                      </span>
-                    </MenuItem>
+                    <>
+                      <MenuItem className={`${colorModeContext} mb-2 md:hidden rounded-md background-hover-text-gray background-text-reverse-black`}>
+                        <Link to="/myprofile" className="flex items-center gap-2">
+                          <IoMdPerson size={22}/>
+                          {t('nav.myAccount')}
+                        </Link>
+                      </MenuItem>
+                      <MenuItem
+                        className={`${colorModeContext} mb-2 md:mb-0 md:hidden rounded-md background-hover-text-gray background-text-reverse-black`}
+                        onAction={() => signOut()}
+                      >
+                        <span className="flex items-center gap-2">
+                          <IoMdLogOut size={22}/>
+                          {t('nav.signOut')}
+                        </span>
+                      </MenuItem>
+                    </>
                   )}
                   <MenuItem className={`${colorModeContext} ${!user && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/addhoop" className="flex items-center gap-2">
@@ -160,15 +176,23 @@ const NavBar = () => {
                         </Link>
                       </MenuItem>
                   ) : (
-                    <MenuItem
-                      className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}
-                      onAction={() => signOut()}
-                    >
-                      <span className="flex items-center gap-2">
-                        <IoMdLogOut size={22}/>
-                        {t('nav.signOut')}
-                      </span>
-                    </MenuItem>
+                    <>
+                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                        <Link to="/myprofile" className="flex items-center gap-2">
+                          <IoMdPerson size={22}/>
+                          {t('nav.myAccount')}
+                        </Link>
+                      </MenuItem>
+                      <MenuItem
+                        className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}
+                        onAction={() => signOut()}
+                      >
+                        <span className="flex items-center gap-2">
+                          <IoMdLogOut size={22}/>
+                          {t('nav.signOut')}
+                        </span>
+                      </MenuItem>
+                    </>
                   )}
                    <MenuItem className={`${colorModeContext} ${!user && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
                     <Link to="/addhoop" className="flex items-center gap-2">

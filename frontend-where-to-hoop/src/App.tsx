@@ -21,6 +21,7 @@ import Contact from "./pages/Contact.tsx";
 import Info from "./pages/Info.tsx";
 import SignUp from "./pages/SignUp.tsx";
 import SignIn from "./pages/SignIn.tsx";
+import MyProfile from "./pages/MyProfile.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
 import type { BasketballHoop } from "./types/types.ts";
 import { fetchHoops } from "./utils/requests.ts";
@@ -72,6 +73,7 @@ const App = () => {
           <Route path="/faq" element={<Info/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/myprofile" element={<MyProfile hoops={hoops} />} />
         </Routes>
       </div>
     </div>

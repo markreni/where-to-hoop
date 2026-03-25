@@ -2,9 +2,22 @@
   "nav": {
     "showHoops": "Show Hoops",
     "addHoop": "Add Hoop",
-    "signIn": "Sign in",
-    "signUp": "Sign up",
-    "signOut": "Sign out"
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "myAccount": "My Account"
+  },
+  "myProfile": {
+    "enrollmentsTab": "Enrollments",
+    "favoritesTab": "Favorites",
+    "upcomingEnrollments": "Upcoming",
+    "pastEnrollments": "Past",
+    "noUpcoming": "No upcoming sessions",
+    "noPast": "No past sessions yet",
+    "favoritesPlaceholder": "Favorites coming soon",
+    "courtUnknown": "Unknown court",
+    "playModeOpen": "Open",
+    "playModeSolo": "Solo"
   },
   "home": {
     "nearestCourts": "Nearest Courts",
