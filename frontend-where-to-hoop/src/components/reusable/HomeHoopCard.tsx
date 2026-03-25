@@ -82,7 +82,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
               text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
               iconSize={12}
-              showIcon={xsm}
+              showIcon={false} //showIcon={xsm}
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.courtType')}
             />

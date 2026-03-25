@@ -11,7 +11,7 @@ const MAX_NAME_LENGTH: number = 50;
 const MAX_DESCRIPTION_LENGTH: number = 100;
 const MAX_IMAGE_SIZE_MB: number = 5;
 const MAX_IMAGE_SIZE_BYTES: number = MAX_IMAGE_SIZE_MB * 1024 * 1024;
-const MAX_IMAGES: number = 4;
+const MAX_IMAGES: number = 3;
 
 const emailDomain: string = "mark.renssi@gmail.com";
 

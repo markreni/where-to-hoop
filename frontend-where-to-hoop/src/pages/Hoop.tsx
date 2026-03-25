@@ -12,11 +12,12 @@ import { HoopBadge } from '../components/reusable/HoopBadge'
 import { EnrollmentForm } from '../components/EnrollmentForm'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { MiniMap } from '../components/MiniMap'
+import { ImageGallery } from '../components/reusable/ImageGallery'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import { MdDeleteOutline } from 'react-icons/md'
 import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
 import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
-import { fetchEnrollments, getHoopImageUrl, deleteHoop } from '../utils/requests'
+import { fetchEnrollments, deleteHoop } from '../utils/requests'
 import { Button } from 'react-aria-components'
 import L from 'leaflet'
 
@@ -96,7 +97,7 @@ const Hoop = ({ hoop }: HoopProps) => {
       <div className="flex-grow padding-x-for-page padding-b-for-page">
         <div className="max-w-5xl mx-auto">
           {/* Two column layout on desktop */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 xmd:grid-cols-2 gap-6">
             {/* Right column - Players and enrollment */}
             <div className="flex flex-col gap-6">
               {/* Left column - Hoop info */}
@@ -121,71 +122,67 @@ const Hoop = ({ hoop }: HoopProps) => {
                         </button>
                       )}
                     </div>
-                    {/* Description */} {/* distance + address used to be placed */}
-                    <p className={`${colorModeContext} font-thin responsive-hoopcard-elements-text background-text`}>
-                      {hoop.description}
-                    </p>
+                     {/* Badges */}
+                    <div className="flex flex-wrap gap-2">
+                      <HoopBadge
+                        variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
+                        text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
+                        showIcon={true}
+                        textClassName='responsive-hoopcard-elements-text'
+                        tooltip={t('hoops.tooltips.courtType')}
+                      />
+                      <HoopBadge
+                        variant="condition"
+                        textClassName='responsive-hoopcard-elements-text'
+                        condition={hoop.condition}
+                        text={t(`common.condition.${hoop.condition}`)}
+                        tooltip={t('hoops.tooltips.condition')}
+                      />
+                      {/*
+                      <HoopBadge
+                        variant="date"
+                        text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                        showIcon={true}
+                        textClassName='responsive-hoopcard-elements-text'
+                        tooltip={t('hoops.tooltips.dateAdded')}
+                      />
+                      */}
+
+                      <Button className="p-0 cursor-pointer" onPress={() => navigate(`/hoops/${hoop.id}#players`)} aria-label={t('hoops.tooltips.currentPlayers')}>
+                        <HoopBadge
+                          variant="players"
+                          text={
+                            playingNowCount === 1
+                              ? t('hoops.players.one')
+                              : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
+                          }
+                          showIcon={true}
+                          textClassName="responsive-hoopcard-elements-text"
+                          tooltip={t('hoops.tooltips.currentPlayers')}
+                          capitalize={false}
+                        />
+                      </Button>
+                    </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1">
-                  {/* Image */}
-                  <img
-                    className="rounded-lg w-full h-48 sm:h-64 object-cover"
-                    src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/400x300'}
-                    alt={hoop.name}
-                  />
+                <div className="flex flex-col gap-1 mb-3">
+                  {/* Image gallery */}
+                  <ImageGallery images={hoop.images} name={hoop.name} />
 
-                  {/* Badges */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <HoopBadge
-                      variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
-                      text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
-                      showIcon={true}
-                      textClassName='responsive-hoopcard-elements-text'
-                      tooltip={t('hoops.tooltips.courtType')}
-                    />
-                    <HoopBadge
-                      variant="condition"
-                      textClassName='responsive-hoopcard-elements-text'
-                      condition={hoop.condition}
-                      text={t(`common.condition.${hoop.condition}`)}
-                      tooltip={t('hoops.tooltips.condition')}
-                    />
-                    {/*
-                    <HoopBadge
-                      variant="date"
-                      text={new Date(hoop.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
-                      showIcon={true}
-                      textClassName='responsive-hoopcard-elements-text'
-                      tooltip={t('hoops.tooltips.dateAdded')}
-                    />
-                    */}
-
-                    <Button className="p-0 cursor-pointer" onPress={() => navigate(`/hoops/${hoop.id}#players`)} aria-label={t('hoops.tooltips.currentPlayers')}>
-                      <HoopBadge
-                        variant="players"
-                        text={
-                          playingNowCount === 1
-                            ? t('hoops.players.one')
-                            : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
-                        }
-                        showIcon={true}
-                        textClassName="responsive-hoopcard-elements-text"
-                        tooltip={t('hoops.tooltips.currentPlayers')}
-                        capitalize={false}
-                      />
-                    </Button>
-                   </div>
+                  {/* Description */} {/* distance + address used to be placed */}
+                  <p className={`${colorModeContext} font-thin responsive-hoopcard-elements-text background-text`}>
+                    {hoop.description}
+                  </p>
                 </div>
-                
+
                 <div className='flex flex-col gap-0'>
                   <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
-                      <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address??'No address is specified'}</p>
-                       {distance !== null && (
-                      <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
-                        {distance.toFixed(1)} km
-                      </p>
+                    <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address??'No address is specified'}</p>
+                      {distance !== null && (
+                    <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+                      {distance.toFixed(1)} km
+                    </p>
                     )}
                   </div>
 

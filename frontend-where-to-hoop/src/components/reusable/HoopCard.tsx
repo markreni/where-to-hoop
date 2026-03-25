@@ -110,7 +110,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
             <HoopBadge
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
               text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
-              showIcon={xsm}
+              showIcon={false} //showIcon={xsm}
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.courtType')}
             />
