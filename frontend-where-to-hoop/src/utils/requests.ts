@@ -301,6 +301,7 @@ const insertEnrollment = async (enrollment: Omit<PlayerEnrollment, 'id' | 'creat
     arrival_time: enrollment.arrivalTime,
     duration: enrollment.duration,
     play_mode: enrollment.playMode,
+    expired: enrollment.expired,
     note: enrollment.note ?? null,
   }
 

@@ -5,6 +5,7 @@ import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useLocationValues } from '../contexts/LocationContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { useAuth } from '../contexts/AuthContext'
+import useIsAdmin from '../hooks/useIsAdmin'
 import { useToast } from '../contexts/ToastContext'
 import { BackArrow } from '../components/reusable/BackArrow'
 import Footer from '../components/Footer'
@@ -14,7 +15,7 @@ import { PlayersPanel } from '../components/PlayersPanel'
 import { MiniMap } from '../components/MiniMap'
 import { ImageGallery } from '../components/reusable/ImageGallery'
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
-import { MdDeleteOutline } from 'react-icons/md'
+import { MdDeleteOutline, MdEditNote } from 'react-icons/md'
 import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
 import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
 import { fetchHoopEnrollments, deleteHoop } from '../utils/requests'
@@ -34,6 +35,7 @@ const Hoop = ({ hoop }: HoopProps) => {
   const { hash } = useLocation()
   const navigate = useNavigate()
   const { user } = useAuth()
+  const { isAdmin } = useIsAdmin()
   const { isFavorited, toggleFavorite } = useFavorites()
   const { success, error } = useToast()
   const queryClient = useQueryClient()
@@ -77,7 +79,6 @@ const Hoop = ({ hoop }: HoopProps) => {
   const { playingNow } = groupEnrollmentsByTime(enrollments)
   const playingNowCount = playingNow.length
 
-  const isOwner = !!user && user.email === hoop.addedBy
 
   const handleDelete = async () => {
     if (!window.confirm(`Delete "${hoop.name}"? This cannot be undone.`)) return
@@ -101,7 +102,7 @@ const Hoop = ({ hoop }: HoopProps) => {
           {/* Two column layout on desktop */}
           <div className="grid grid-cols-1 xmd:grid-cols-2 gap-6">
             {/* Right column - Players and enrollment */}
-            <div className="flex flex-col gap-6">
+            <div className="relative flex flex-col gap-6">
               {/* Left column - Hoop info */}
               <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
                 {/* Header */}
@@ -116,16 +117,26 @@ const Hoop = ({ hoop }: HoopProps) => {
                           ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
                           : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
                       )}
-                      {isOwner && (
-                        <button
-                          onClick={handleDelete}
-                          disabled={deleting}
-                          className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors disabled:opacity-50"
-                          aria-label="Delete hoop"
-                          title="Delete hoop"
-                        >
-                          <MdDeleteOutline size={26} />
-                        </button>
+                      {isAdmin && (
+                        <div className="absolute right-4 top-4 flex items-center gap-4">
+                          <button
+                            onClick={() => navigate(`/admin/edit/${hoop.id}`)}
+                            className="text-gray-400 hover:text-blue-500 cursor-pointer transition-colors"
+                            aria-label="Edit hoop"
+                            title="Edit hoop"
+                          >
+                            <MdEditNote size={26} />
+                          </button>
+                          <button
+                            onClick={handleDelete}
+                            disabled={deleting}
+                            className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors disabled:opacity-50"
+                            aria-label="Delete hoop"
+                            title="Delete hoop"
+                          >
+                            <MdDeleteOutline size={26} />
+                          </button>
+                        </div>
                       )}
                     </div>
                      {/* Badges */}
