@@ -58,6 +58,7 @@
   },
   "addHoop": {
     "title": "Add Basketball Hoop",
+    "editTitle": "Edit Hoop",
     "name": "Name",
     "namePlaceholder": "e.g., Central Park Court",
     "location": "Location",
@@ -70,9 +71,11 @@
     "outdoor": "Outdoor",
     "indoor": "Indoor",
     "images": "Images",
-    "setProfilePicture": "Click the star to set profile picture",
+    "setProfilePicture": "New images - Click the star to set a new profile picture",
     "profile": "Profile",
     "submit": "Add Hoop",
+    "update": "Update",
+    "cancel": "Cancel",
     "reset": "Reset",
     "required": "required",
     "errors": {
@@ -88,7 +91,9 @@
       "signInRequired": "You must be signed in to add a hoop."
     },
     "success": "Basketball hoop added successfully!",
-    "noAddressFound": "No address found for the selected location."
+    "noAddressFound": "No address found for the selected location.",
+    "currentImages": "Current images",
+    "newImagesHint": "New images — star sets cover among new"
   },
   "hoops": {
     "doorType": "Door Type",

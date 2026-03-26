@@ -1,5 +1,5 @@
 import { Label, TextField, TextArea, Button } from "react-aria-components";
-import { type BasketballHoop, type ColorMode, type Condition } from "../types/types";
+import { type BasketballHoop, type ColorMode, type Condition, type ObservationImage } from "../types/types";
 import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { useToast } from "../contexts/ToastContext";
@@ -15,7 +15,7 @@ import { FaStar, FaRegStar, FaCheckCircle } from "react-icons/fa";
 import InfoLink from "../components/reusable/InfoLink";
 import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES } from "../utils/constants";
 import { reverseGeocode } from "../utils/functions";
-import { insertHoop } from "../utils/requests";
+import { insertHoop, updateHoop, getHoopImageUrl } from "../utils/requests";
 import { useAuth } from "../contexts/AuthContext";
 
 
@@ -41,7 +41,6 @@ const emptyHoop: FormData = {
   isIndoor: null,
   createdAt: new Date().toISOString(),
   addedBy: '',
-  //playerEnrollments: [],
 };
 
 const formatFileSize = (bytes: number): string => {
@@ -50,12 +49,34 @@ const formatFileSize = (bytes: number): string => {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
-const AddHoop = () => {
+const hoopToFormData = (hoop: BasketballHoop): FormData => ({
+  name: hoop.name,
+  images: hoop.images,
+  coordinates: hoop.coordinates,
+  description: hoop.description,
+  condition: hoop.condition,
+  isIndoor: hoop.isIndoor,
+  createdAt: hoop.createdAt,
+  addedBy: hoop.addedBy,
+  address: hoop.address,
+});
+
+interface AddHoopProps {
+  hoop?: BasketballHoop;
+}
+
+const AddHoop = ({ hoop }: AddHoopProps) => {
+  const isEditMode = !!hoop;
   const mapRef = useRef<L.Map | null>(null);
-  const [formData, setFormData] = useState<FormData>(emptyHoop);
+  const [formData, setFormData] = useState<FormData>(isEditMode ? hoopToFormData(hoop) : emptyHoop);
+  // New image files to upload
   const [imageFiles, setImageFiles] = useState<File[]>([]);
-  const [profileImageIndex, setProfileImageIndex] = useState<number>(0);
-  const [address, setAddress] = useState<string | null>(null);
+  // Unified profile index: 0..existingImages.length-1 = existing, existingImages.length.. = new files
+  const [profileIndex, setProfileIndex] = useState<number>(0);
+  // Existing images (edit mode only) — tracks which ones the user has kept
+  const [existingImages, setExistingImages] = useState<ObservationImage[]>(isEditMode ? hoop.images : []);
+  const [removedImagePaths, setRemovedImagePaths] = useState<string[]>([]);
+  const [address, setAddress] = useState<string | null>(hoop?.address ?? null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [loadingAddress, setLoadingAddress] = useState(false);
   const navigate = useNavigate();
@@ -67,7 +88,9 @@ const AddHoop = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    handleLocateUser();
+    if (!isEditMode) {
+      handleLocateUser();
+    }
   }, []);
 
   useEffect(() => {
@@ -86,12 +109,13 @@ const AddHoop = () => {
     });
     return () => { cancelled = true; };
   }, [formData.coordinates.latitude, formData.coordinates.longitude]);
-  
+
+  const totalImageCount = existingImages.length + imageFiles.length;
   const isLocationSelected = formData.coordinates.latitude !== null && formData.coordinates.longitude !== null;
   const isNameFilled = formData.name.trim().length > 0;
   const isConditionSelected = formData.condition !== null;
   const isCourtTypeSelected = formData.isIndoor !== null;
-  const hasProfileImage = imageFiles.length > 0;
+  const hasProfileImage = totalImageCount > 0;
   const isFormValid = isNameFilled && isLocationSelected && isConditionSelected && isCourtTypeSelected && hasProfileImage;
   const completedRequiredFields = (isNameFilled ? 1 : 0) + (isLocationSelected ? 1 : 0) + (isConditionSelected ? 1 : 0) + (isCourtTypeSelected ? 1 : 0) + (hasProfileImage ? 1 : 0);
   const totalRequiredFields = 5;
@@ -115,14 +139,12 @@ const AddHoop = () => {
     if (e.target.files) {
       const newFiles: File[] = Array.from(e.target.files);
 
-      // Check max images limit
-      const remainingSlots = MAX_IMAGES - imageFiles.length;
+      const remainingSlots = MAX_IMAGES - totalImageCount;
       if (remainingSlots <= 0) {
         warning(t('addHoop.errors.maxImages', { count: MAX_IMAGES }));
         return;
       }
 
-      // Filter oversized files
       const oversizedFiles = newFiles.filter(file => file.size > MAX_IMAGE_SIZE_BYTES);
       if (oversizedFiles.length > 0) {
         const fileNames = oversizedFiles.map(f => `${f.name} (${formatFileSize(f.size)})`).join(', ');
@@ -131,7 +153,6 @@ const AddHoop = () => {
 
       let validFiles: File[] = newFiles.filter(file => file.size <= MAX_IMAGE_SIZE_BYTES);
 
-      // Limit to remaining slots
       if (validFiles.length > remainingSlots) {
         warning(t('addHoop.errors.remainingImages', { count: remainingSlots }));
         validFiles = validFiles.slice(0, remainingSlots);
@@ -141,19 +162,30 @@ const AddHoop = () => {
     }
   };
 
-  const removeImage = (index: number) => {
+  const removeNewImage = (index: number) => {
+    const unifiedIndex = existingImages.length + index;
     setImageFiles((prev) => prev.filter((_, i) => i !== index));
-    if (profileImageIndex === index) {
-      setProfileImageIndex(0);
-    } else if (profileImageIndex > index) {
-      setProfileImageIndex((prev) => prev - 1);
-    }
+    setProfileIndex((prev) => {
+      if (prev === unifiedIndex) return 0;
+      if (prev > unifiedIndex) return prev - 1;
+      return prev;
+    });
+  };
+
+  const removeExistingImage = (image: ObservationImage) => {
+    const removedIndex = existingImages.findIndex((img) => img.id === image.id);
+    setExistingImages((prev) => prev.filter((img) => img.id !== image.id));
+    setRemovedImagePaths((prev) => [...prev, image.imagePath]);
+    setProfileIndex((prev) => {
+      if (prev === removedIndex) return 0;
+      if (prev > removedIndex) return prev - 1;
+      return prev;
+    });
   };
 
   const handleHoopSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Validate all required fields
     if (!isFormValid) {
       if (!isNameFilled) error(t('addHoop.errors.enterName'));
       else if (!isLocationSelected) error(t('addHoop.errors.selectLocation'));
@@ -163,47 +195,86 @@ const AddHoop = () => {
       return;
     }
 
-    // Reorder files so profile image is first
-    const orderedFiles = [...imageFiles];
-    if (profileImageIndex > 0) {
-      const [profileFile] = orderedFiles.splice(profileImageIndex, 1);
-      orderedFiles.unshift(profileFile);
-    }
+    if (isEditMode) {
+      // Determine if profile is an existing image or a new file
+      const profileIsExisting = profileIndex < existingImages.length;
+      const profileNewFileIndex = profileIndex - existingImages.length;
 
-    const hoopData: Omit<BasketballHoop, "id"> = {
-      name: formData.name,
-      coordinates: formData.coordinates,
-      description: formData.description,
-      condition: formData.condition!,
-      isIndoor: formData.isIndoor!,
-      createdAt: formData.createdAt,
-      images: [],
-      addedBy: user!.email!,
-      //playerEnrollments: [],
-    };
+      // Reorder so the selected profile image is first in its group
+      const orderedExisting = profileIsExisting
+        ? [existingImages[profileIndex], ...existingImages.filter((_, i) => i !== profileIndex)]
+        : [...existingImages];
+      const orderedNewFiles = !profileIsExisting && imageFiles.length > 1
+        ? [imageFiles[profileNewFileIndex], ...imageFiles.filter((_, i) => i !== profileNewFileIndex)]
+        : [...imageFiles];
 
-    insertHoop(hoopData, orderedFiles, user!.id).then(async (inserted) => {
-      success(t('addHoop.success'));
-      await queryClient.invalidateQueries({ queryKey: ['hoops'] });
-      navigate(`/hoops/${inserted.id}`);
-    }).catch((err: { code?: string }) => {
-      if (err?.code === '42501') {
-        error(t('addHoop.errors.signInRequired'));
-      } else {
-        error(t('addHoop.errors.submitFailed'));
+      updateHoop(
+        hoop.id,
+        {
+          name: formData.name,
+          description: formData.description,
+          condition: formData.condition!,
+          isIndoor: formData.isIndoor!,
+          coordinates: formData.coordinates,
+          address: address ?? undefined,
+        },
+        orderedNewFiles,
+        removedImagePaths,
+        orderedExisting,
+        user!.id,
+        !profileIsExisting,
+      ).then(async () => {
+        success('Hoop updated successfully.');
+        await queryClient.invalidateQueries({ queryKey: ['hoops'] });
+        navigate('/admin');
+      }).catch(() => {
+        error('Failed to update hoop.');
+      });
+
+    } else {
+      // Add mode: reorder files so profile image is first
+      const orderedFiles = [...imageFiles];
+      if (profileIndex > 0) {
+        const [profileFile] = orderedFiles.splice(profileIndex, 1);
+        orderedFiles.unshift(profileFile);
       }
-    });
 
-    //console.log("Form submitted:", hoopData);
-    //console.log("Image files:", imageFiles);
-    
+      const hoopData: Omit<BasketballHoop, "id"> = {
+        name: formData.name,
+        coordinates: formData.coordinates,
+        description: formData.description,
+        condition: formData.condition!,
+        isIndoor: formData.isIndoor!,
+        createdAt: formData.createdAt,
+        address: address ?? undefined,
+        images: [],
+        addedBy: user!.email!,
+      };
+
+      insertHoop(hoopData, orderedFiles, user!.id).then(async (inserted) => {
+        success(t('addHoop.success'));
+        await queryClient.invalidateQueries({ queryKey: ['hoops'] });
+        navigate(`/hoops/${inserted.id}`);
+      }).catch((err: { code?: string }) => {
+        if (err?.code === '42501') {
+          error(t('addHoop.errors.signInRequired'));
+        } else {
+          error(t('addHoop.errors.submitFailed'));
+        }
+      });
+    }
   };
 
   const resetForm = () => {
-    setFormData(emptyHoop);
+    if (isEditMode) {
+      setFormData(hoopToFormData(hoop));
+      setExistingImages(hoop.images);
+      setRemovedImagePaths([]);
+    } else {
+      setFormData(emptyHoop);
+    }
     setImageFiles([]);
-    setProfileImageIndex(0);
-    setAddress(null);
+    setProfileIndex(0);
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
@@ -214,8 +285,10 @@ const AddHoop = () => {
         {/* Header */}
         <div className={`${colorModeContext} sticky top-0 z-1001 flex flex-col p-6 border-b border-gray-200 bg-background`}>
           <div className="flex items-center justify-between">
-            <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>{t('addHoop.title')}</h2>
-            <InfoLink sectionId="add-court"/>
+            <h2 className={`${colorModeContext} text-gray-600 text-fluid-lg font-semibold dark:text-gray-300`}>
+              {isEditMode ? t('addHoop.editTitle') : t('addHoop.title')}
+            </h2>
+            {!isEditMode && <InfoLink sectionId="add-court"/>}
           </div>
           {/* Progress indicator */}
           <div className="flex items-center gap-3 mt-3">
@@ -229,7 +302,7 @@ const AddHoop = () => {
               {completedRequiredFields}/{totalRequiredFields} {t('addHoop.required')}
             </span>
           </div>
-        </div>  
+        </div>
 
         {/* Form */}
         <form onSubmit={handleHoopSubmit} className="flex flex-col p-6 gap-8">
@@ -284,48 +357,12 @@ const AddHoop = () => {
                 <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
                   {address}
                 </span>
-              ) }
+              )}
               {!loadingAddress && !address && (
                 <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
                   {t('addHoop.noAddressFound')}
                 </span>
               )}
-              { /*
-              <div className="grid grid-cols-2 gap-2">
-                <div>
-                  <input
-                    type="number"
-                    required
-                    value={formData.coordinates.latitude ?? ""}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      coordinates: {
-                        ...formData.coordinates,
-                        latitude: Number(e.target.value) ?? null,
-                      },
-                    })}
-                    className={`${colorModeContext} form-input`}
-                    placeholder="Latitude"
-                  />
-                </div>
-                <div>
-                  <input
-                    type="number"
-                    required
-                    value={formData.coordinates.longitude ?? ""}
-                    onChange={(e) => setFormData({
-                      ...formData,
-                      coordinates: {
-                        ...formData.coordinates,
-                        longitude: Number(e.target.value) ?? null,
-                      },
-                    })}
-                    className={`${colorModeContext} form-input`}
-                    placeholder="Longitude"
-                  />
-                </div>
-              </div>
-              */}
             </div>
 
             {/* Description */}
@@ -423,49 +460,105 @@ const AddHoop = () => {
                   )}
                 </div>
                 <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
-                  {imageFiles.length}/{MAX_IMAGES}
+                  {totalImageCount}/{MAX_IMAGES}
                 </span>
               </div>
 
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handleImageChange}
-                className={`${colorModeContext} form-input file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 file:cursor-pointer dark:file:bg-gray-700 dark:hover:file:bg-gray-600 dark:file:text-gray-100`}
-              />
+              {/* Existing images (edit mode) */}
+              {isEditMode && existingImages.length > 0 && (
+                <div className="flex flex-col gap-2 mb-2">
+                  <p className={`${colorModeContext} text-fluid-xs text-gray-600 dark:text-gray-400`}>
+                    {t('addHoop.currentImages')}
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {existingImages.map((img, index) => {
+                      const isProfile = profileIndex === index;
+                      return (
+                      <div
+                        key={img.id}
+                        className={`${colorModeContext} relative rounded-lg overflow-hidden border-2 ${
+                          isProfile ? 'border-first-color' : 'border-gray-200 dark:border-gray-600'
+                        }`}
+                      >
+                        <img
+                          src={getHoopImageUrl(img.imagePath)}
+                          alt={`Image ${index + 1}`}
+                          className="w-full h-32 object-contain"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setProfileIndex(index)}
+                          className={`${colorModeContext} absolute top-2 left-2`}
+                        >
+                          {isProfile ? (
+                            <FaStar className="text-first-color cursor-pointer" size={20} />
+                          ) : (
+                            <FaRegStar className={`${colorModeContext} text-gray-600 cursor-pointer dark:text-gray-300`} size={20} />
+                          )}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => removeExistingImage(img)}
+                          className="absolute top-2 right-2 p-1 rounded-full bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+                        >
+                          <IoMdClose size={16} />
+                        </button>
+                        {isProfile && (
+                          <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-fluid-xs py-1 text-center">
+                            <span className="font-medium">{t('addHoop.profile')}</span>
+                          </div>
+                        )}
+                      </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
+              {/* New image file input */}
+              {totalImageCount < MAX_IMAGES && (
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  onChange={handleImageChange}
+                  className={`${colorModeContext} form-input file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 file:cursor-pointer dark:file:bg-gray-700 dark:hover:file:bg-gray-600 dark:file:text-gray-100`}
+                />
+              )}
+
+              {/* New image previews */}
               {imageFiles.length > 0 && (
-                <div className="flex flex-col gap-2 mt-2">
-                  {imageFiles.length > 1 && (
+                <div className="flex flex-col gap-2">
+                  {imageFiles.length > 0 && (
                   <p className={`${colorModeContext} text-fluid-xs text-gray-600 dark:text-gray-400`}>
                     {t('addHoop.setProfilePicture')}
                   </p>
                   )}
                   <div className="grid grid-cols-2 gap-3">
-                    {imageFiles.map((file, index) => (
+                    {imageFiles.map((file, index) => {
+                      const unifiedIndex = existingImages.length + index;
+                      const isProfile = profileIndex === unifiedIndex;
+                      return (
                       <div
                         key={index}
                         className={`${colorModeContext} relative rounded-lg overflow-hidden border-2 ${
-                          profileImageIndex === index
-                            ? "border-first-color"
-                            : "border-gray-200 dark:border-gray-600"
+                          isProfile ? "border-first-color" : "border-gray-200 dark:border-gray-600"
                         }`}
                       >
                         <img
                           src={URL.createObjectURL(file)}
                           alt={`Preview image ${index + 1}`}
                           className="w-full h-32 object-contain"
-                        />  
-                        
+                        />
+
                         {/* Image star button */}
                         <button
                           type="button"
-                          onClick={() => setProfileImageIndex(index)}
+                          onClick={() => setProfileIndex(unifiedIndex)}
                           className={`${colorModeContext} absolute top-2 left-2`}
                         >
-                          {profileImageIndex === index ? (  
+                          {isProfile ? (
                             <FaStar className="text-first-color cursor-pointer" size={20} />
                           ) : (
                             <FaRegStar className={`${colorModeContext} text-gray-600 cursor-pointer dark:text-gray-300`} size={20} />
@@ -475,7 +568,7 @@ const AddHoop = () => {
                         {/* Image remove button */}
                         <button
                           type="button"
-                          onClick={() => removeImage(index)}
+                          onClick={() => removeNewImage(index)}
                           className="absolute top-2 right-2 p-1 rounded-full bg-red-500 hover:bg-red-600 text-white cursor-pointer"
                         >
                           <IoMdClose size={16} />
@@ -483,14 +576,15 @@ const AddHoop = () => {
 
                         {/* File size badge */}
                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-fluid-xs py-1 text-center">
-                          {profileImageIndex === index ? (
+                          {isProfile ? (
                             <span className="font-medium">{t('addHoop.profile')} • {formatFileSize(file.size)}</span>
                           ) : (
                             formatFileSize(file.size)
                           )}
                         </div>
                       </div>
-                    ))}
+                    );
+                    })}
                   </div>
                 </div>
               )}
@@ -504,14 +598,14 @@ const AddHoop = () => {
               isDisabled={!isFormValid}
               className={`${colorModeContext} flex-1 px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
             >
-              {t('addHoop.submit')}
+              {isEditMode ? t('addHoop.update') : t('addHoop.submit')}
             </Button>
             <Button
               type="button"
-              onPress={resetForm}
+              onPress={isEditMode ? () => navigate('/admin') : resetForm}
               className={`${colorModeContext} flex-1 px-4 py-2 background-hover background-text border border-gray-300 rounded-lg transition-colors dark:border-gray-100`}
             >
-              {t('addHoop.reset')}
+              {isEditMode ? t('addHoop.cancel') : t('addHoop.reset')}
             </Button>
           </div>
         </form>

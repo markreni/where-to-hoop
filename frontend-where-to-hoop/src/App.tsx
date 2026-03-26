@@ -22,6 +22,8 @@ import Info from "./pages/Info.tsx";
 import SignUp from "./pages/SignUp.tsx";
 import SignIn from "./pages/SignIn.tsx";
 import MyProfile from "./pages/MyProfile.tsx";
+import Admin from "./pages/Admin.tsx";
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
 import type { BasketballHoop } from "./types/types.ts";
 import { fetchHoops } from "./utils/requests.ts";
@@ -29,6 +31,7 @@ import { fetchHoops } from "./utils/requests.ts";
 
 const App = () => {
   const match = useMatch("/hoops/:id");
+  const adminEditMatch = useMatch("/admin/edit/:id");
 
   const { data: hoops = [], isLoading } = useQuery<BasketballHoop[]>({
     queryKey: ['hoops'],
@@ -36,6 +39,7 @@ const App = () => {
   })
 
   const hoop = match?.params.id ? hoops.find(h => h.id === match.params.id) : undefined
+  const editHoop = adminEditMatch?.params.id ? hoops.find(h => h.id === adminEditMatch.params.id) : undefined
 
   // Filter hoops to only include those within Helsinki greater area
   const filteredHoops: BasketballHoop[] = useMemo(() => {
@@ -74,6 +78,8 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/myprofile" element={<MyProfile hoops={hoops} />} />
+          <Route path="/admin" element={<ProtectedAdminRoute><Admin hoops={hoops} /></ProtectedAdminRoute>} />
+          <Route path="/admin/edit/:id" element={<ProtectedAdminRoute><AddHoop hoop={editHoop} /></ProtectedAdminRoute>} />
         </Routes>
       </div>
     </div>

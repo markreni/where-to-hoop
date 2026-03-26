@@ -96,26 +96,90 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[], 
     }
   }
 }
-/*
-const updateHoop = async (id: string, newDescription: string): Promise<BasketballHoop> => {
+const updateHoop = async (
+  id: string,
+  fields: { name: string; description: string; condition: string; isIndoor: boolean; coordinates: { latitude: number | null; longitude: number | null }; address?: string | null },
+  newImageFiles: File[],
+  removedImagePaths: string[],
+  keptImages: ObservationImage[],
+  userId: string,
+  profileIsNewImage: boolean = false
+): Promise<BasketballHoop> => {
+  const uploadedPaths: string[] = []
+  const uploadedAt = Date.now()
 
-  const { data, error } = await supabase.from('basketball_hoop').update({ description: newDescription }).eq('id', id).select().single()
+  // Upload new images
+  const newObservationImages: ObservationImage[] = await Promise.all(
+    newImageFiles.map(async (file, index) => {
+      const path = `${userId}/${uploadedAt}-${index}-${file.name}`
+      const { error } = await supabase.storage.from('hoop-images').upload(path, file)
+      if (error) {
+        if (uploadedPaths.length > 0) {
+          await supabase.storage.from('hoop-images').remove(uploadedPaths)
+        }
+        throw error
+      }
+      uploadedPaths.push(path)
+      return {
+        id: uploadedAt + index,
+        imagePath: path,
+        addedDate: new Date(uploadedAt).toISOString(),
+      }
+    })
+  )
+
+  // Delete removed images from storage
+  if (removedImagePaths.length > 0) {
+    const { error: storageError } = await supabase.storage.from('hoop-images').remove(removedImagePaths)
+    if (storageError) {
+      console.error('Storage remove error:', storageError)
+    }
+  }
+
+  const updatedImages = profileIsNewImage
+    ? [...newObservationImages, ...keptImages]
+    : [...keptImages, ...newObservationImages]
+
+  const { data, error } = await supabase
+    .from('basketball_hoop')
+    .update({
+      name: fields.name,
+      description: fields.description,
+      condition: fields.condition,
+      is_indoor: fields.isIndoor,
+      latitude: fields.coordinates.latitude,
+      longitude: fields.coordinates.longitude,
+      address: fields.address ?? null,
+      images: updatedImages,
+    })
+    .eq('id', id)
+    .select()
+    .single()
 
   if (error) {
+    if (uploadedPaths.length > 0) {
+      await supabase.storage.from('hoop-images').remove(uploadedPaths)
+    }
     console.error('Update error:', error)
     throw error
   }
-  console.log('Updated hoop:', data)
 
   return {
-    ...data,
+    id: data.id,
+    name: data.name,
+    description: data.description,
+    condition: data.condition,
+    isIndoor: data.is_indoor,
+    createdAt: data.created_at,
+    addedBy: data.added_by,
+    address: data.address ?? undefined,
+    images: data.images ?? [],
     coordinates: {
       latitude: data.latitude,
-      longitude: data.longitude
-    }
+      longitude: data.longitude,
+    },
   }
 }
-*/
 
 const deleteHoop = async (id: string): Promise<BasketballHoop> => {
   const { data, error } = await supabase.from('basketball_hoop').delete().eq('id', id).select().single()
@@ -336,4 +400,4 @@ const toggleFavoriteRequest = async (userId: string, hoopId: string, add: boolea
   }
 }
 
-export { fetchHoops, insertHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest }
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest }

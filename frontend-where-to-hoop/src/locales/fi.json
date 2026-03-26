@@ -58,6 +58,7 @@
   },
   "addHoop": {
     "title": "Lisää koripallokori",
+    "editTitle": "Muokkaa koria",
     "name": "Nimi",
     "namePlaceholder": "esim. Keskuspuiston kenttä",
     "location": "Sijainti",
@@ -70,9 +71,11 @@
     "outdoor": "Ulkona",
     "indoor": "Sisällä",
     "images": "Kuvat",
-    "setProfilePicture": "Klikkaa tähteä asettaaksesi profiilikuvan",
+    "setProfilePicture": "Uudet kuvat - Klikkaa tähteä asettaaksesi uuden profiilikuvan",
     "profile": "Profiili",
     "submit": "Lisää kori",
+    "update": "Päivitä",
+    "cancel": "Peruuta",
     "reset": "Tyhjennä",
     "required": "pakollinen",
     "errors": {
@@ -88,7 +91,9 @@
       "signInRequired": "Sinun täytyy olla kirjautuneena lisätäksesi korin."
     },
     "success": "Koripallokori lisätty onnistuneesti!",
-    "noAddressFound": "Osoitetta ei löytynyt valitulle sijainnille."
+    "noAddressFound": "Osoitetta ei löytynyt valitulle sijainnille.",
+    "currentImages": "Nykyiset kuvat",
+    "newImagesHint": "Uudet kuvat — tähti asettaa kansikuvan uusista"
   },
   "hoops": {
     "doorType": "Tyyppi",

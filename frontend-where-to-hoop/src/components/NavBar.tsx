@@ -14,6 +14,8 @@ import breakpoints from "../assets/style.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 import { IoMdPerson, IoMdPersonAdd, IoMdLogOut } from "react-icons/io";
 import { useAuth } from "../contexts/AuthContext.tsx";
+import useIsAdmin from "../hooks/useIsAdmin.ts";
+import { MdAdminPanelSettings } from "react-icons/md";
 
 
 const NavBar = () => {
@@ -22,6 +24,7 @@ const NavBar = () => {
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
   const { user, signOut } = useAuth();
+  const { isAdmin } = useIsAdmin();
   
   return (
     <div className={`${colorModeContext} fixed z-402 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
@@ -109,10 +112,18 @@ const NavBar = () => {
                     </>
                   )}
                   {user && (
-                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                    <MenuItem className={`${colorModeContext} ${isAdmin && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
                       <Link to="/addhoop" className="flex items-center gap-2">
                         <GiBasketballBasket size={22}/>
                         {t('nav.addHoop')}
+                      </Link>
+                    </MenuItem>
+                  )}
+                  {isAdmin && (
+                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                      <Link to="/admin" className="flex items-center gap-2">
+                        <MdAdminPanelSettings size={22}/>
+                        Admin
                       </Link>
                     </MenuItem>
                   )}
@@ -197,10 +208,18 @@ const NavBar = () => {
                     </>
                   )}
                   {user && (
-                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                    <MenuItem className={`${colorModeContext} ${isAdmin && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
                       <Link to="/addhoop" className="flex items-center gap-2">
                         <GiBasketballBasket size={22}/>
                         {t('nav.addHoop')}
+                      </Link>
+                    </MenuItem>
+                  )}
+                  {isAdmin && (
+                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                      <Link to="/admin" className="flex items-center gap-2">
+                        <MdAdminPanelSettings size={22}/>
+                        Admin
                       </Link>
                     </MenuItem>
                   )}
