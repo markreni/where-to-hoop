@@ -108,12 +108,14 @@ const NavBar = () => {
                       </MenuItem>
                     </>
                   )}
-                  <MenuItem className={`${colorModeContext} ${!user && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                    <Link to="/addhoop" className="flex items-center gap-2">
-                      <GiBasketballBasket size={22}/>
-                      {t('nav.addHoop')}
-                    </Link>
-                  </MenuItem>
+                  {user && (
+                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                      <Link to="/addhoop" className="flex items-center gap-2">
+                        <GiBasketballBasket size={22}/>
+                        {t('nav.addHoop')}
+                      </Link>
+                    </MenuItem>
+                  )}
                   {!user && (
                     <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
                       <Link to="/signup" className="flex items-center gap-2">
@@ -121,7 +123,7 @@ const NavBar = () => {
                          {t('nav.signUp')}
                       </Link>
                     </MenuItem>
-                  )}  
+                  )}
                 </Menu>
               </Popover>
             </MenuTrigger>
@@ -194,19 +196,21 @@ const NavBar = () => {
                       </MenuItem>
                     </>
                   )}
-                   <MenuItem className={`${colorModeContext} ${!user && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                    <Link to="/addhoop" className="flex items-center gap-2">
-                      <GiBasketballBasket size={22}/>
-                      {t('nav.addHoop')}
-                    </Link>
-                  </MenuItem>
+                  {user && (
+                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                      <Link to="/addhoop" className="flex items-center gap-2">
+                        <GiBasketballBasket size={22}/>
+                        {t('nav.addHoop')}
+                      </Link>
+                    </MenuItem>
+                  )}
                   {!user && (
-                  <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                    <Link to="/signup" className="flex items-center gap-2">
-                      <IoMdPersonAdd size={22}/>
-                      {t('nav.signUp')}
-                    </Link>
-                  </MenuItem>
+                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                      <Link to="/signup" className="flex items-center gap-2">
+                        <IoMdPersonAdd size={22}/>
+                        {t('nav.signUp')}
+                      </Link>
+                    </MenuItem>
                   )}
                 </Menu>
               </Popover>

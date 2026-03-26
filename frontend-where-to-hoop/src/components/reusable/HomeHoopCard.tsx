@@ -58,7 +58,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
 
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full flex-grow-0`}> 
-      <div className="relative w-full h-40 sm:h-48 lg:h-56 bg-gray-100 dark:bg-gray-800">
+      <div className="relative w-full h-40 sm:h-48 lg:h-64 bg-gray-100 dark:bg-gray-800">
         <div className="absolute top-2 right-2 z-10 mt-auto">
           <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-base" />
         </div>

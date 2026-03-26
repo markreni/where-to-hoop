@@ -46,6 +46,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
       },
     });
     mapViewDispatch('map');
+    navigate('/hoops');
   };
 
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
