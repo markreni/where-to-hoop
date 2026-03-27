@@ -5,7 +5,19 @@
     "signIn": "Kirjaudu sisään",
     "signUp": "Rekisteröidy",
     "signOut": "Kirjaudu ulos",
-    "myAccount": "Oma tili"
+    "myAccount": "Oma tili",
+    "players": "Pelaajat"
+  },
+  "players": {
+    "title": "Pelaajat",
+    "search": "Etsi pelaajan nimimerkillä...",
+    "noResults": "Pelaajia ei löydy"
+  },
+  "playerProfile": {
+    "notFound": "Pelaajaa ei löydy",
+    "recentSessions": "Viimeisimmät sessiot",
+    "noSessions": "Ei sessioita vielä",
+    "playedAt": "Pelasi kentällä"
   },
   "myProfile": {
     "enrollmentsTab": "Ilmoittautumiset",
@@ -15,6 +27,10 @@
     "noUpcoming": "Ei tulevia sessioita",
     "noPast": "Ei menneitä sessioita vielä",
     "noFavorites": "Ei suosikkikenttiä vielä",
+    "followingTab": "Seurattavat",
+    "noFollowing": "Et seuraa ketään vielä",
+    "follow": "Seuraa",
+    "unfollow": "Lopeta seuraaminen",
     "courtUnknown": "Tuntematon kenttä",
     "playModeOpen": "Avoin",
     "playModeSolo": "Solo"
@@ -98,7 +114,7 @@
   "hoops": {
     "doorType": "Tyyppi",
     "courtCondition": "Kunto",
-    "searchPlaceholder": "Etsi kenttiä",
+    "searchPlaceholder": "Etsi kenttiä...",
     "hoopcardPlayingNow": "Pelaamassa nyt",
     "hoopcardMapButton": "Kartalla",
     "hoopcardReadyToPlayButton": "Valmis pelaamaan",

@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useMediaQuery } from 'usehooks-ts'
 import { Logo } from "./reusable/Logo.tsx";
 import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components';
 import { FiAlignJustify } from "react-icons/fi";
+import { FaSearch } from "react-icons/fa";
 import { GiBasketballBasket } from "react-icons/gi";
 import { MdLocationPin } from "react-icons/md";
 import { DarkModeToggle } from "./reusable/DarkModeToggle.tsx";
@@ -13,6 +15,7 @@ import type { ColorMode } from "../types/types.ts";
 import breakpoints from "../assets/style.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 import { IoMdPerson, IoMdPersonAdd, IoMdLogOut } from "react-icons/io";
+import { FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext.tsx";
 import useIsAdmin from "../hooks/useIsAdmin.ts";
 import { MdAdminPanelSettings } from "react-icons/md";
@@ -25,6 +28,15 @@ const NavBar = () => {
   const { t } = useTranslation();
   const { user, signOut } = useAuth();
   const { isAdmin } = useIsAdmin();
+  const navigate = useNavigate();
+  const [playerSearch, setPlayerSearch] = useState('');
+
+  const handlePlayerSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && playerSearch.trim()) {
+      navigate(`/players?q=${encodeURIComponent(playerSearch.trim())}`)
+      setPlayerSearch('')
+    }
+  }
   
   return (
     <div className={`${colorModeContext} fixed z-402 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
@@ -36,6 +48,19 @@ const NavBar = () => {
             </Link>
             <DarkModeToggle />
           </div>
+          
+          <div className={`hidden lg:flex flex-1 items-center gap-2 px-3 py-1.5 rounded-lg bg-background border border-third-color/30 dark:border-white/10 focus-within:ring-2 focus-within:ring-gray-400 transition-shadow mx-4`}>
+            <FaSearch size={13} className="text-gray-400 shrink-0" />
+            <input
+              type="text"
+              placeholder={t('players.search')}
+              value={playerSearch}
+              onChange={e => setPlayerSearch(e.target.value)}
+              onKeyDown={handlePlayerSearch}
+              className={`${colorModeContext} flex-1 bg-transparent outline-none text-fluid-sm background-text placeholder:text-gray-400 dark:placeholder:text-gray-500 placeholder:text-xs`}
+            />
+          </div>
+          
           <div className="flex-center gap-6">
             <LanguageToggle />
             <div className="flex-center gap-4">
@@ -98,6 +123,12 @@ const NavBar = () => {
                         <Link to="/myprofile" className="flex items-center gap-2">
                           <IoMdPerson size={22}/>
                           {t('nav.myAccount')}
+                        </Link>
+                      </MenuItem>
+                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                        <Link to="/players" className="flex items-center gap-2">
+                          <FaUserCircle size={22}/>
+                          {t('nav.players')}
                         </Link>
                       </MenuItem>
                       <MenuItem
@@ -194,6 +225,12 @@ const NavBar = () => {
                         <Link to="/myprofile" className="flex items-center gap-2">
                           <IoMdPerson size={22}/>
                           {t('nav.myAccount')}
+                        </Link>
+                      </MenuItem>
+                       <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                        <Link to="/players" className="flex items-center gap-2">
+                          <FaUserCircle size={22}/>
+                          {t('nav.players')}
                         </Link>
                       </MenuItem>
                       <MenuItem

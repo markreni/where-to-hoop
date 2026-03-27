@@ -28,7 +28,13 @@ interface User {
   //preferredPlayTimes: TimeSlot[]; // When they usually play
   //playModePreference: PlayMode; // Whether they prefer open play or solo hooping
   favouriteHoops: string[]; // IDs of their favorite hoops
+  following: string[]; // IDs of players this user follows
   //enrolments: PlayerEnrollment[]; // Hoops they are currently enrolled in
+}
+
+interface PublicProfile {
+  id: string;
+  nickname: string;
 }
 // Player enrollment types
 interface PlayerEnrollment {
@@ -79,7 +85,7 @@ type LocationSource = 'user' | 'hoop';
 // Language type
 type Language = 'en' | 'fi';
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, User, PlayerEnrollment, PlayMode, TimeSlot, BasketballHoopWithEnrollments };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, User, PlayerEnrollment, PlayMode, TimeSlot, BasketballHoopWithEnrollments, PublicProfile };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 

@@ -3,10 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import {
   Routes,
   Route,
-  //Link,
-  //Navigate,
-  //useParams,
-  //useNavigate,
   useMatch,
 } from "react-router-dom";
 import NavBar from './components/NavBar.tsx';
@@ -22,6 +18,8 @@ import Info from "./pages/Info.tsx";
 import SignUp from "./pages/SignUp.tsx";
 import SignIn from "./pages/SignIn.tsx";
 import MyProfile from "./pages/MyProfile.tsx";
+import Players from "./pages/Players.tsx";
+import PlayerProfile from "./pages/PlayerProfile.tsx";
 import Admin from "./pages/Admin.tsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
@@ -78,6 +76,8 @@ const App = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/myprofile" element={<MyProfile hoops={hoops} />} />
+          <Route path="/players" element={<Players />} />
+          <Route path="/players/:nickname" element={<PlayerProfile hoops={hoops} />} />
           <Route path="/admin" element={<ProtectedAdminRoute><Admin hoops={hoops} /></ProtectedAdminRoute>} />
           <Route path="/admin/edit/:id" element={<ProtectedAdminRoute><AddHoop hoop={editHoop} /></ProtectedAdminRoute>} />
         </Routes>

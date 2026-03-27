@@ -1,4 +1,4 @@
-import type { BasketballHoop, ObservationImage, PlayerEnrollment } from '../types/types'
+import type { BasketballHoop, ObservationImage, PlayerEnrollment, PublicProfile } from '../types/types'
 import supabase from './supabase'
 
 const fetchHoops = async (): Promise<BasketballHoop[]> => {
@@ -401,4 +401,81 @@ const toggleFavoriteRequest = async (userId: string, hoopId: string, add: boolea
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest }
+const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('id, nickname')
+    .order('nickname', { ascending: true })
+
+  if (error) {
+    console.error('Fetch all players error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname }))
+}
+
+const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('id, nickname')
+    .ilike('nickname', nickname)
+    .single()
+
+  if (error) {
+    console.error('Fetch player by nickname error:', error.message)
+    throw error
+  }
+
+  return { id: data.id, nickname: data.nickname }
+}
+
+const fetchFollowing = async (userId: string): Promise<string[]> => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('following')
+    .eq('id', userId)
+    .single()
+
+  if (error) {
+    console.error('Fetch following error:', error.message)
+    throw error
+  }
+
+  return (data?.following ?? []) as string[]
+}
+
+const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> => {
+  if (userIds.length === 0) return []
+
+  const { data, error } = await supabase
+    .from('users')
+    .select('id, nickname')
+    .in('id', userIds)
+
+  if (error) {
+    console.error('Fetch public profiles error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname }))
+}
+
+const toggleFollowRequest = async (userId: string, targetId: string, add: boolean): Promise<void> => {
+  const current = await fetchFollowing(userId)
+  const updated = add
+    ? [...new Set([...current, targetId])]
+    : current.filter((id: string) => id !== targetId)
+
+  const { error } = await supabase
+    .from('users')
+    .update({ following: updated })
+    .eq('id', userId)
+
+  if (error) {
+    console.error('Toggle follow error:', error.message)
+    throw error
+  }
+}
+
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, fetchPlayerByNickname }

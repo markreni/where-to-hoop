@@ -129,6 +129,11 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
             </p>
           </div>
 
+          {/* Tagline */}
+          <p className={`${colorModeContext} text-fluid-base background-text-reverse-black font-medium mb-4`}>
+            No AI but Real Connections
+          </p>
+
           {/* About Link */}
           <Link to="/about" className={`${colorModeContext} inline-flex items-center gap-1 background-text-reverse-black font-small text-fluid-sm hover:underline transition-colors mb-8`}>
             <MdArrowForward size={16} />

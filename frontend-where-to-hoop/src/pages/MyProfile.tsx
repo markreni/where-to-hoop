@@ -8,20 +8,23 @@ import { useLocationValues } from '../contexts/LocationContext'
 import { BackArrow } from '../components/reusable/BackArrow'
 import { EnrollmentCard } from '../components/reusable/EnrollmentCard'
 import { HoopCard } from '../components/reusable/HoopCard'
+import { FollowingPlayerCard } from '../components/reusable/FollowingPlayerCard'
 import Footer from '../components/Footer'
 import { fetchUserEnrollments, fetchAllEnrollments } from '../utils/requests'
 import { useFavorites } from '../hooks/useFavorites'
+import { useFollowing } from '../hooks/useFollowing'
 import { groupEnrollmentsByHoop } from '../utils/functions'
 import haversineDistance from '../utils/functions'
 import type { BasketballHoop, ColorMode, Coordinates, PlayerEnrollment } from '../types/types'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
+import { FaUserCircle } from 'react-icons/fa'
 
 interface MyProfileProps {
   hoops: BasketballHoop[]
 }
 
-type Tab = 'enrollments' | 'favorites'
+type Tab = 'enrollments' | 'favorites' | 'following'
 
 const MyProfile = ({ hoops }: MyProfileProps) => {
   const { user } = useAuth()
@@ -30,6 +33,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const userLocation: Coordinates = useLocationValues()
   const [activeTab, setActiveTab] = useState<Tab>('enrollments')
   const { favoriteIds } = useFavorites()
+  const { followingProfiles, isLoading: isLoadingFollowing } = useFollowing()
 
   const { data: enrollments = [], isLoading } = useQuery<PlayerEnrollment[]>({
     queryKey: ['userEnrollments', user?.id],
@@ -95,6 +99,17 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             >
               <MdOutlineFavoriteBorder size={16} />
               {t('myProfile.favoritesTab')}
+            </button>
+            <button
+              onClick={() => setActiveTab('following')}
+              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-fluid-sm font-medium transition-colors ${
+                activeTab === 'following'
+                  ? `${colorModeContext} bg-first-color background-text-reverse-black`
+                  : `${colorModeContext} background-text hover:text-first-color`
+              }`}
+            >
+              <FaUserCircle size={16} />
+              {t('myProfile.followingTab')}
             </button>
           </div>
 
@@ -165,6 +180,26 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 <MdOutlineFavoriteBorder size={48} className="text-first-color opacity-40" />
                 <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
                   {t('myProfile.noFavorites')}
+                </p>
+              </div>
+            )
+          )}
+
+          {/* Following Tab */}
+          {activeTab === 'following' && (
+            isLoadingFollowing ? (
+              <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
+            ) : followingProfiles.length > 0 ? (
+              <div className="flex flex-col gap-3">
+                {followingProfiles.map(profile => (
+                  <FollowingPlayerCard key={profile.id} profile={profile} />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-16 gap-4">
+                <FaUserCircle size={48} className="text-first-color opacity-40" />
+                <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
+                  {t('myProfile.noFollowing')}
                 </p>
               </div>
             )
