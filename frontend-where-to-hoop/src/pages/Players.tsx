@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { BackArrow } from '../components/reusable/BackArrow'
-import { SearchField } from '../components/reusable/SearchField'
+import { SearchFilter } from '../components/reusable/SearchFilter'
 import { PublicPlayerCard } from '../components/reusable/PublicPlayerCard'
 import Footer from '../components/Footer'
 import { fetchAllPlayers } from '../utils/requests'
@@ -37,7 +37,7 @@ const Players = () => {
           </h1>
 
           <div className="mb-4">
-            <SearchField
+            <SearchFilter
               placeholder={t('players.search')}
               value={search}
               onChange={setSearch}

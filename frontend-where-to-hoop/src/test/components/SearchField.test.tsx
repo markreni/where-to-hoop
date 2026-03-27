@@ -1,12 +1,12 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
-import { SearchField } from '../../components/reusable/SearchField';
+import { SearchFilter } from '../../components/reusable/SearchFilter';
 
 describe('SearchField', () => {
   it('renders with placeholder text', () => {
     render(
-      <SearchField
+      <SearchFilter
         placeholder="Search hoops..."
         value=""
         onChange={() => {}}
@@ -17,7 +17,7 @@ describe('SearchField', () => {
 
   it('renders with label when provided', () => {
     render(
-      <SearchField
+      <SearchFilter
         label="Search"
         placeholder="Search..."
         value=""
@@ -29,7 +29,7 @@ describe('SearchField', () => {
 
   it('does not render label when not provided', () => {
     render(
-      <SearchField
+      <SearchFilter
         placeholder="Search..."
         value=""
         onChange={() => {}}
@@ -40,7 +40,7 @@ describe('SearchField', () => {
 
   it('displays the current value', () => {
     render(
-      <SearchField
+      <SearchFilter
         placeholder="Search..."
         value="basketball"
         onChange={() => {}}
@@ -54,7 +54,7 @@ describe('SearchField', () => {
     const handleChange = vi.fn();
 
     render(
-      <SearchField
+      <SearchFilter
         placeholder="Search..."
         value=""
         onChange={handleChange}
@@ -70,7 +70,7 @@ describe('SearchField', () => {
 
   it('renders search icon', () => {
     const { container } = render(
-      <SearchField
+      <SearchFilter
         placeholder="Search..."
         value=""
         onChange={() => {}}
@@ -83,7 +83,7 @@ describe('SearchField', () => {
 
   it('has accessible search label', () => {
     render(
-      <SearchField
+      <SearchFilter
         placeholder="Search..."
         value=""
         onChange={() => {}}

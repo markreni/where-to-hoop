@@ -74,7 +74,7 @@ describe('List', () => {
 
   it('renders search field', () => {
     render(<List {...defaultProps} />);
-    expect(screen.getByPlaceholderText('Find hoops')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Find hoops...')).toBeInTheDocument();
   });
 
   it('renders filter button', () => {
@@ -86,7 +86,7 @@ describe('List', () => {
     const user = userEvent.setup();
     render(<List {...defaultProps} />);
 
-    const searchInput = screen.getByPlaceholderText('Find hoops');
+    const searchInput = screen.getByPlaceholderText('Find hoops...');
     await user.type(searchInput, 'Central');
 
     expect(screen.getByText('Central Park Court')).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe('List', () => {
     const user = userEvent.setup();
     render(<List {...defaultProps} />);
 
-    const searchInput = screen.getByPlaceholderText('Find hoops');
+    const searchInput = screen.getByPlaceholderText('Find hoops...');
     await user.type(searchInput, 'Central');
     await user.clear(searchInput);
 
@@ -109,7 +109,7 @@ describe('List', () => {
     const user = userEvent.setup();
     render(<List {...defaultProps} />);
 
-    const searchInput = screen.getByPlaceholderText('Find hoops');
+    const searchInput = screen.getByPlaceholderText('Find hoops...');
     await user.type(searchInput, 'central');
 
     expect(screen.getByText('Central Park Court')).toBeInTheDocument();
@@ -133,7 +133,7 @@ describe('List', () => {
     const user = userEvent.setup();
     render(<List {...defaultProps} />);
 
-    const searchInput = screen.getByPlaceholderText('Find hoops');
+    const searchInput = screen.getByPlaceholderText('Find hoops...');
     await user.type(searchInput, 'nonexistent');
 
     expect(screen.queryByText('Central Park Court')).not.toBeInTheDocument();

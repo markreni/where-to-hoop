@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import useLocateUser from "../hooks/useLocateUser";
-import { SearchField } from "./reusable/SearchField";
+import { SearchFilter } from "./reusable/SearchFilter";
 import { CiFilter } from "react-icons/ci";
 import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useTranslation } from "../hooks/useTranslation";
@@ -87,7 +87,7 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
       <div className="sticky top-0 px-3">
         <div className="flex items-center justify-end gap-1 xsm:gap-2 sm:gap-4 max-w-screen-2xl mx-auto">
           <div className="w-5/9 sm:w-2/3">
-            <SearchField
+            <SearchFilter
               placeholder={t('hoops.searchPlaceholder')}
               value={searchTerm}
               onChange={setSearchTerm}

@@ -142,7 +142,7 @@ describe('Hoops', () => {
     const toggleButton = screen.getByRole('button', { name: 'List' });
     await user.click(toggleButton);
 
-    expect(screen.getByPlaceholderText('Find hoops')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Find hoops...')).toBeInTheDocument();
   });
 
   it('renders filter button in list view', async () => {
@@ -165,7 +165,7 @@ describe('Hoops', () => {
     await user.click(toggleButton);
 
     // Type in search
-    const searchInput = screen.getByPlaceholderText('Find hoops');
+    const searchInput = screen.getByPlaceholderText('Find hoops...');
     await user.type(searchInput, 'Central');
 
     // Only Central Park Court should be visible

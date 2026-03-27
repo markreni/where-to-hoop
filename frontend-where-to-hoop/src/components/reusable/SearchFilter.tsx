@@ -10,7 +10,7 @@ import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import type { ColorMode } from "../../types/types.ts";
 
 
-interface SearchFieldProps extends AriaSearchFieldProps {
+interface SearchFilterProps extends AriaSearchFieldProps {
   label?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
   placeholder?: string;
@@ -18,7 +18,7 @@ interface SearchFieldProps extends AriaSearchFieldProps {
   onChange: (value: string) => void;
 }
 
-const SearchField = ({ label, errorMessage, placeholder, value, onChange }: SearchFieldProps) => {
+const SearchFilter = ({ label, errorMessage, placeholder, value, onChange }: SearchFilterProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
   
   return (
@@ -52,5 +52,5 @@ const SearchField = ({ label, errorMessage, placeholder, value, onChange }: Sear
   );
 }
 
-export { SearchField };
-export type { SearchFieldProps };
+export { SearchFilter };
+export type { SearchFilterProps };

@@ -3,7 +3,7 @@ import { FaUser } from 'react-icons/fa'
 import type { ColorMode, PlayerEnrollment } from '../types/types'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
-import { PlayerCard } from './reusable/PlayerCard'
+import { PlayerPanelCard } from './reusable/PlayerPanelCard'
 import { groupEnrollmentsByTime } from '../utils/functions'
 import useEnrollmentsRealtime from '../hooks/useEnrollmentsRealtime'
   
@@ -43,7 +43,7 @@ const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments }: Player
         </h4>
         <div className="flex flex-col gap-2">
           {enrollments.map(enrollment => (
-            <PlayerCard
+            <PlayerPanelCard
               key={enrollment.id}
               enrollment={enrollment}
               allEnrollments={playerEnrollments}

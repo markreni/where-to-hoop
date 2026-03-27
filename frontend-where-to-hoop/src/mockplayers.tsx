@@ -7,6 +7,7 @@ const mockPlayers: User[] = [
     lastName: 'Korhonen',
     nickname: 'Ace',
     email: 'alice.korhonen@email.com',
+    following: [],
     favouriteHoops: ['1', '3'],
   },
   {
@@ -15,6 +16,7 @@ const mockPlayers: User[] = [
     lastName: 'Virtanen',
     nickname: 'Bobby',
     email: 'bob.virtanen@email.com',
+    following: [],
     favouriteHoops: ['1'],
   },
   {
@@ -23,6 +25,7 @@ const mockPlayers: User[] = [
     lastName: 'Mäkinen',
     nickname: 'Chuck',
     email: 'charlie.makinen@email.com',
+    following: [],
     favouriteHoops: ['2'],
   },
   {
@@ -31,6 +34,7 @@ const mockPlayers: User[] = [
     lastName: 'Laine',
     nickname: 'Di',
     email: 'diana.laine@email.com',
+    following: [],
     favouriteHoops: ['2', '5'],
   },
   {
@@ -39,6 +43,7 @@ const mockPlayers: User[] = [
     lastName: 'Niemi',
     nickname: 'E',
     email: 'ethan.niemi@email.com',
+    following: [],
     favouriteHoops: ['2', '3'],
   },
   {
@@ -47,6 +52,7 @@ const mockPlayers: User[] = [
     lastName: 'Heikkinen',
     nickname: 'Fi',
     email: 'fiona.heikkinen@email.com',
+    following: [],
     favouriteHoops: ['3'],
   },
   {
@@ -55,6 +61,7 @@ const mockPlayers: User[] = [
     lastName: 'Järvinen',
     nickname: 'Mikke',
     email: 'mika.jarvinen@email.com',
+    following: [],
     favouriteHoops: ['4', '1'],
   },
   {
@@ -63,6 +70,7 @@ const mockPlayers: User[] = [
     lastName: 'Lehtonen',
     nickname: 'Tommy',
     email: 'tomas.lehtonen@email.com',
+    following: [],
     favouriteHoops: ['5'],
   },
   {
@@ -71,6 +79,7 @@ const mockPlayers: User[] = [
     lastName: 'Salminen',
     nickname: 'Lii',
     email: 'liisa.salminen@email.com',
+    following: [],
     favouriteHoops: ['5', '2'],
   },
   {
@@ -79,6 +88,7 @@ const mockPlayers: User[] = [
     lastName: 'Koskinen',
     nickname: 'V',
     email: 'ville.koskinen@email.com',
+    following: [],
     favouriteHoops: ['5', '3'],
   },
 ];

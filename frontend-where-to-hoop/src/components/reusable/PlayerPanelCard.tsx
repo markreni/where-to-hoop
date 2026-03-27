@@ -31,12 +31,12 @@ const formatArrivalText = (arrivalTime: Date, t: (key: string) => string): strin
   }
 }
 
-interface PlayerCardProps {
+interface PlayerPanelCardProps {
   enrollment: PlayerEnrollment
   allEnrollments: PlayerEnrollment[]
 }
 
-const PlayerCard = ({ enrollment, allEnrollments }: PlayerCardProps) => {
+const PlayerPanelCard = ({ enrollment, allEnrollments }: PlayerPanelCardProps) => {
   const arrivalTime = new Date(enrollment.arrivalTime)
   const endTime = new Date(arrivalTime.getTime() + enrollment.duration * 60 * 1000)
   const now = new Date()
@@ -136,5 +136,5 @@ const PlayerCard = ({ enrollment, allEnrollments }: PlayerCardProps) => {
   )
 }
 
-export { PlayerCard }
-export type { PlayerCardProps }
+export { PlayerPanelCard }
+export type { PlayerPanelCardProps }
