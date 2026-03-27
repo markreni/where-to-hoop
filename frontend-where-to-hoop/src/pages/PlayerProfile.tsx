@@ -9,7 +9,7 @@ import Footer from '../components/Footer'
 import { EnrollmentCard } from '../components/reusable/EnrollmentCard'
 import { fetchPlayerByNickname, fetchUserEnrollments } from '../utils/requests'
 import type { BasketballHoop, ColorMode, PlayerEnrollment, PublicProfile } from '../types/types'
-import { FaUserCircle } from 'react-icons/fa'
+import { FaUserCircle, FaLock } from 'react-icons/fa'
 
 interface PlayerProfileProps {
   hoops: BasketballHoop[]
@@ -71,25 +71,38 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                 )}
               </div>
 
-              {/* Recent Sessions */}
-              <section>
-                <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
-                  {t('playerProfile.recentSessions')}
-                </h2>
-                {isLoadingEnrollments ? (
-                  <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
-                ) : recentEnrollments.length > 0 ? (
-                  <div className="flex flex-col gap-3">
-                    {recentEnrollments.map(e => (
-                      <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className={`${colorModeContext} text-fluid-sm background-text`}>
-                    {t('playerProfile.noSessions')}
+              {/* Private profile lock */}
+              {!profile.public && !isOwnProfile ? (
+                <div className="flex flex-col items-center justify-center py-16 gap-3">
+                  <FaLock size={36} className="text-first-color opacity-40" />
+                  <p className={`${colorModeContext} text-fluid-base font-medium background-text text-center`}>
+                    {t('playerProfile.privateProfile')}
                   </p>
-                )}
-              </section>
+                  <p className={`${colorModeContext} text-fluid-sm text-gray-400 dark:text-gray-500 text-center max-w-xs`}>
+                    {t('playerProfile.privateProfileSub')}
+                  </p>
+                </div>
+              ) : (
+                /* Recent Sessions */
+                <section>
+                  <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
+                    {t('playerProfile.recentSessions')}
+                  </h2>
+                  {isLoadingEnrollments ? (
+                    <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
+                  ) : recentEnrollments.length > 0 ? (
+                    <div className="flex flex-col gap-3">
+                      {recentEnrollments.map(e => (
+                        <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />
+                      ))}
+                    </div>
+                  ) : (
+                    <p className={`${colorModeContext} text-fluid-sm background-text`}>
+                      {t('playerProfile.noSessions')}
+                    </p>
+                  )}
+                </section>
+              )}
             </>
           )}
 

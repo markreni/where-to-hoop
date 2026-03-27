@@ -342,11 +342,11 @@ const deleteEnrollment = async (id: string): Promise<void> => {
   }
 }
 
-const signUp = async (email: string, password: string, nickname: string) => {
+const signUp = async (email: string, password: string, nickname: string, isPublic: boolean) => {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { nickname } },
+    options: { data: { nickname, public: isPublic } },
   })
   if (error) {
     console.error('Sign up error:', error.message)
@@ -404,7 +404,8 @@ const toggleFavoriteRequest = async (userId: string, hoopId: string, add: boolea
 const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname')
+    .select('id, nickname, public')
+    .eq('public', true)
     .order('nickname', { ascending: true })
 
   if (error) {
@@ -412,13 +413,13 @@ const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
     throw error
   }
 
-  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname }))
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public }))
 }
 
 const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> => {
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname')
+    .select('id, nickname, public')
     .ilike('nickname', nickname)
     .single()
 
@@ -427,7 +428,7 @@ const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> =
     throw error
   }
 
-  return { id: data.id, nickname: data.nickname }
+  return { id: data.id, nickname: data.nickname, public: data.public }
 }
 
 const fetchFollowing = async (userId: string): Promise<string[]> => {
@@ -450,7 +451,7 @@ const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> 
 
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname')
+    .select('id, nickname, public')
     .in('id', userIds)
 
   if (error) {
@@ -458,7 +459,7 @@ const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> 
     throw error
   }
 
-  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname }))
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public }))
 }
 
 const toggleFollowRequest = async (userId: string, targetId: string, add: boolean): Promise<void> => {
