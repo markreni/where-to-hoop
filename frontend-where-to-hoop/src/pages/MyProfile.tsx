@@ -4,18 +4,20 @@ import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
+import { useToast } from '../contexts/ToastContext'
 import { useLocationValues } from '../contexts/LocationContext'
 import { BackArrow } from '../components/reusable/BackArrow'
 import { EnrollmentCard } from '../components/reusable/EnrollmentCard'
 import { HoopCard } from '../components/reusable/HoopCard'
 import { FollowingPlayerCard } from '../components/reusable/FollowingPlayerCard'
 import Footer from '../components/Footer'
-import { fetchUserEnrollments, fetchAllEnrollments } from '../utils/requests'
+import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility } from '../utils/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { useFollowing } from '../hooks/useFollowing'
 import { groupEnrollmentsByHoop } from '../utils/functions'
 import haversineDistance from '../utils/functions'
 import type { BasketballHoop, ColorMode, Coordinates, PlayerEnrollment } from '../types/types'
+import { ProfileVisibilityToggle } from '../components/reusable/ProfileVisibilityToggle'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
 import { FaUserCircle } from 'react-icons/fa'
@@ -30,8 +32,11 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const { user } = useAuth()
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+  const { success, error } = useToast()
   const userLocation: Coordinates = useLocationValues()
   const [activeTab, setActiveTab] = useState<Tab>('enrollments')
+  const [isPublic, setIsPublic] = useState<boolean>(user?.user_metadata?.public ?? false)
+  const [isSaving, setIsSaving] = useState(false)
   const { favoriteIds } = useFavorites()
   const { followingProfiles, isLoading: isLoadingFollowing } = useFollowing()
 
@@ -49,6 +54,21 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
 
   const enrollmentsByHoop: Map<string, PlayerEnrollment[]> = groupEnrollmentsByHoop(allEnrollments)
   const favoriteHoops: BasketballHoop[] = hoops.filter(h => favoriteIds.includes(h.id))
+
+  const handleVisibilityToggle = async () => {
+    const next = !isPublic
+    setIsPublic(next)
+    setIsSaving(true)
+    try {
+      await updateProfileVisibility(user!.id, next)
+      success(t('myProfile.visibilityUpdated'))
+    } catch {
+      setIsPublic(!next)
+      error(t('myProfile.visibilityUpdateFailed'))
+    } finally {
+      setIsSaving(false)
+    }
+  }
 
   if (!user) return <Navigate to="/signin" replace />
 
@@ -71,9 +91,22 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-black`}>
               {user.user_metadata?.nickname ?? user.email}
             </h1>
-            <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black`}>
+            <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black mb-4`}>
               {user.email}
             </p>
+
+            {/* Profile visibility toggle */}
+            <div className="bg-background/60 p-4 rounded-lg border border-black/30 dark:border-white/30 mb-6">
+              <ProfileVisibilityToggle
+                label={t('myProfile.profileVisibility')}
+                hint={t('myProfile.profileVisibilityHint')}
+                isChecked={!isPublic}
+                onChange={handleVisibilityToggle}
+                disabled={isSaving}
+                statusText={isPublic ? t('myProfile.statusPublic') : t('myProfile.statusPrivate')}
+                statusClassName={isPublic ? 'text-first-color' : 'text-gray-400 dark:text-gray-500'}
+              />
+            </div>
           </div>
 
           {/* Tabs */}

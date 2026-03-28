@@ -12,6 +12,7 @@ frontend-where-to-hoop/bower_components
 frontend-where-to-hoop/node_modules
 frontend-where-to-hoop/coverage/
 frontend-where-to-hoop/dist/
+frontend-where-to-hoop/src/images/
 
 *.sublime*
 

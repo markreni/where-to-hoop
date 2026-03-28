@@ -342,6 +342,25 @@ const deleteEnrollment = async (id: string): Promise<void> => {
   }
 }
 
+const updateProfileVisibility = async (userId: string, isPublic: boolean): Promise<void> => {
+  const { error: dbError } = await supabase
+    .from('users')
+    .update({ public: isPublic })
+    .eq('id', userId)
+
+  if (dbError) {
+    console.error('Update profile visibility error:', dbError.message)
+    throw dbError
+  }
+
+  const { error: authError } = await supabase.auth.updateUser({ data: { public: isPublic } })
+
+  if (authError) {
+    console.error('Update auth metadata error:', authError.message)
+    throw authError
+  }
+}
+
 const signUp = async (email: string, password: string, nickname: string, isPublic: boolean) => {
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -479,4 +498,4 @@ const toggleFollowRequest = async (userId: string, targetId: string, add: boolea
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, fetchPlayerByNickname }
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, fetchPlayerByNickname }

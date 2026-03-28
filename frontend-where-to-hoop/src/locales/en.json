@@ -53,6 +53,7 @@
     "publicProfileHint": "Let others find you in the players directory and view your recent sessions",
     "statusPublic": "Public — visible to everyone",
     "statusPrivate": "Private — only you can see your sessions",
+    "publicRecommended": "Profile visibility can be changed later",
     "submit": "Create account",
     "submitting": "Creating account…",
     "alreadyHaveAccount": "Already have an account?",
@@ -74,7 +75,13 @@
     "unfollow": "Unfollow",
     "courtUnknown": "Unknown court",
     "playModeOpen": "Open",
-    "playModeSolo": "Solo"
+    "playModeSolo": "Solo",
+    "profileVisibility": "Public profile",
+    "profileVisibilityHint": "Let others find you in the players directory",
+    "statusPublic": "Public — visible to everyone",
+    "statusPrivate": "Private — only you can see your sessions",
+    "visibilityUpdated": "Profile visibility updated",
+    "visibilityUpdateFailed": "Failed to update profile visibility"
   },
   "home": {
     "nearestCourts": "Nearest Courts",

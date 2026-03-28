@@ -53,6 +53,7 @@
     "publicProfileHint": "Anna muiden löytää sinut pelaajahakemistosta ja nähdä viimeisimmät sessiot",
     "statusPublic": "Julkinen — kaikki voivat nähdä profiilisi",
     "statusPrivate": "Yksityinen — vain sinä näet sessiot",
+    "publicRecommended": "Profiilin näkyvyyden voi muuttaa myöhemmin",
     "submit": "Luo tili",
     "submitting": "Luodaan tiliä…",
     "alreadyHaveAccount": "Onko sinulla jo tili?",
@@ -74,7 +75,13 @@
     "unfollow": "Lopeta seuraaminen",
     "courtUnknown": "Tuntematon kenttä",
     "playModeOpen": "Avoin",
-    "playModeSolo": "Solo"
+    "playModeSolo": "Solo",
+    "profileVisibility": "Julkinen profiili",
+    "profileVisibilityHint": "Anna muiden löytää sinut pelaajahakemistosta",
+    "statusPublic": "Julkinen — kaikki voivat nähdä profiilisi",
+    "statusPrivate": "Yksityinen — vain sinä näet sessiot",
+    "visibilityUpdated": "Profiilin näkyvyys päivitetty",
+    "visibilityUpdateFailed": "Profiilin näkyvyyden päivitys epäonnistui"
   },
   "home": {
     "nearestCourts": "Lähimmät kentät",

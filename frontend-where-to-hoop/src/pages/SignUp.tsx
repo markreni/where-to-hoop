@@ -8,6 +8,8 @@ import Footer from "../components/Footer";
 import type { ColorMode } from "../types/types";
 import { signUp } from "../utils/requests";
 import { useTranslation } from "../hooks/useTranslation";
+import { ProfileVisibilityToggle } from "../components/reusable/ProfileVisibilityToggle";
+import { FaExclamationCircle } from "react-icons/fa";
 
 const SignUp = () => {
   const colorModeContext: ColorMode = useColorModeValues();
@@ -19,7 +21,7 @@ const SignUp = () => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
+  const [isPublic, setIsPublic] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const passwordsMatch = password === confirmPassword;
@@ -125,26 +127,19 @@ const SignUp = () => {
             </TextField>
 
             {/* Public/Private profile toggle */}
-            <div className="flex flex-col gap-2">
-              <label className="flex items-center justify-between gap-4 cursor-pointer">
-                <div className="flex flex-col gap-0.5">
-                  <span className={`${colorModeContext} text-fluid-sm font-medium background-text`}>
-                    {t('signUp.publicProfile')}
-                  </span>
-                  <span className={`${colorModeContext} text-fluid-xs text-gray-400 dark:text-gray-500`}>
-                    {t('signUp.publicProfileHint')}
-                  </span>
-                </div>
-                <div
-                  onClick={() => setIsPublic(p => !p)}
-                  className={`relative shrink-0 w-12 h-6 rounded-full transition-colors duration-200 ${isPublic ? 'bg-first-color' : 'bg-gray-300 dark:bg-gray-600'}`}
-                >
-                  <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${isPublic ? 'translate-x-6' : 'translate-x-0'}`} />
-                </div>
-              </label>
-              <p className={`text-fluid-xs font-medium ${isPublic ? 'text-first-color' : 'text-gray-400 dark:text-gray-500'}`}>
-                {isPublic ? t('signUp.statusPublic') : t('signUp.statusPrivate')}
-              </p>
+            
+            <ProfileVisibilityToggle
+              label={t('signUp.publicProfile')}
+              hint={t('signUp.publicProfileHint')}
+              isChecked={!isPublic}
+              onChange={() => setIsPublic(p => !p)}
+              statusText={isPublic ? t('signUp.statusPublic') : t('signUp.statusPrivate')}
+              statusClassName={isPublic ? 'text-first-color' : 'text-gray-400 dark:text-gray-500'}
+            />
+
+            <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400">
+              <FaExclamationCircle size={12} />
+              <span className="text-fluid-xs">{t('signUp.publicRecommended')}</span>
             </div>
 
             <Button
