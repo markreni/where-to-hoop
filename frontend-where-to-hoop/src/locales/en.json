@@ -21,6 +21,10 @@
     "privateProfile": "This profile is private",
     "privateProfileSub": "This player has chosen to keep their profile private."
   },
+  "notFound": {
+    "message": "Oops! This page doesn't exist.",
+    "backHome": "Back to home"
+  },
   "signIn": {
     "title": "Sign in",
     "emailLabel": "Email",

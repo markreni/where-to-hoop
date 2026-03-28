@@ -21,6 +21,7 @@ import MyProfile from "./pages/MyProfile.tsx";
 import Players from "./pages/Players.tsx";
 import PlayerProfile from "./pages/PlayerProfile.tsx";
 import Admin from "./pages/Admin.tsx";
+import NotFound from "./pages/NotFound.tsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
 import type { BasketballHoop } from "./types/types.ts";
@@ -80,6 +81,7 @@ const App = () => {
           <Route path="/players/:nickname" element={<PlayerProfile hoops={hoops} />} />
           <Route path="/admin" element={<ProtectedAdminRoute><Admin hoops={hoops} /></ProtectedAdminRoute>} />
           <Route path="/admin/edit/:id" element={<ProtectedAdminRoute><AddHoop hoop={editHoop} /></ProtectedAdminRoute>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>

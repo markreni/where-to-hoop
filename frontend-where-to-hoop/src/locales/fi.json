@@ -21,6 +21,10 @@
     "privateProfile": "Tämä profiili on yksityinen",
     "privateProfileSub": "Tämä pelaaja on päättänyt pitää profiilinsa yksityisenä."
   },
+  "notFound": {
+    "message": "Hups! Tätä sivua ei ole olemassa.",
+    "backHome": "Takaisin etusivulle"
+  },
   "signIn": {
     "title": "Kirjaudu sisään",
     "emailLabel": "Sähköposti",
