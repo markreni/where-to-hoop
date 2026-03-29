@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
-import { fetchFollowing, fetchPublicProfiles, toggleFollowRequest } from '../utils/requests'
+import { fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchOutgoingFollowRequestIds } from '../utils/requests'
 import type { PublicProfile } from '../types/types'
 
 const useFollowing = () => {
@@ -13,6 +13,12 @@ const useFollowing = () => {
     enabled: !!user,
   })
 
+  const { data: requestedIds = [], isLoading: isLoadingRequested } = useQuery<string[]>({
+    queryKey: ['followRequests', user?.id],
+    queryFn: () => fetchOutgoingFollowRequestIds(user!.id),
+    enabled: !!user,
+  })
+
   const { data: followingProfiles = [], isLoading: isLoadingProfiles } = useQuery<PublicProfile[]>({
     queryKey: ['followingProfiles', followingIds],
     queryFn: () => fetchPublicProfiles(followingIds),
@@ -20,8 +26,8 @@ const useFollowing = () => {
   })
 
   const mutation = useMutation({
-    mutationFn: ({ targetId, add }: { targetId: string; add: boolean }) =>
-      toggleFollowRequest(user!.id, targetId, add),
+    mutationFn: ({ targetId, add, targetIsPublic }: { targetId: string; add: boolean; targetIsPublic: boolean }) =>
+      toggleFollowRequest(user!.id, targetId, add, targetIsPublic),
     onMutate: async ({ targetId, add }) => {
       await queryClient.cancelQueries({ queryKey: ['following', user?.id] })
       const previous = queryClient.getQueryData<string[]>(['following', user?.id])
@@ -41,21 +47,26 @@ const useFollowing = () => {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['following', user?.id] })
       queryClient.invalidateQueries({ queryKey: ['followingProfiles'] })
+      queryClient.invalidateQueries({ queryKey: ['followRequests', user?.id] })
     },
   })
 
   const isFollowing = (targetId: string) => followingIds.includes(targetId)
+  const isRequested = (targetId: string) => requestedIds.includes(targetId)
 
-  const toggleFollow = (targetId: string) => {
+  const toggleFollow = (targetId: string, targetIsPublic: boolean) => {
     if (!user) return
-    mutation.mutate({ targetId, add: !isFollowing(targetId) })
+    const add = !isFollowing(targetId) && !isRequested(targetId)
+    mutation.mutate({ targetId, add, targetIsPublic })
   }
 
   return {
     followingIds,
+    requestedIds,
     followingProfiles,
-    isLoading: isLoadingIds || isLoadingProfiles,
+    isLoading: isLoadingIds || isLoadingProfiles || isLoadingRequested,
     isFollowing,
+    isRequested,
     toggleFollow,
   }
 }

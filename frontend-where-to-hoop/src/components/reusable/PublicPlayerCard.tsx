@@ -14,7 +14,7 @@ const PublicPlayerCard = ({ profile }: PublicPlayerCardProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   const { user } = useAuth()
-  const { isFollowing, toggleFollow } = useFollowing()
+  const { isFollowing, isRequested, toggleFollow } = useFollowing()
 
   const isOwnProfile = user?.id === profile.id
   const initials = profile.nickname.charAt(0).toUpperCase()
@@ -37,14 +37,18 @@ const PublicPlayerCard = ({ profile }: PublicPlayerCardProps) => {
 
       {!isOwnProfile && user && (
         <button
-          onClick={() => toggleFollow(profile.id)}
+          onClick={() => toggleFollow(profile.id, profile.public)}
           className={`shrink-0 px-3 py-1 rounded-md border text-fluid-xs font-medium transition-all hover:scale-105 ${
             isFollowing(profile.id)
               ? `${colorModeContext} border-first-color text-first-color bg-transparent hover:bg-first-color/10`
               : `${colorModeContext} border-first-color bg-first-color text-white hover:bg-second-color`
           }`}
         >
-          {isFollowing(profile.id) ? t('myProfile.unfollow') : t('myProfile.follow')}
+          {isFollowing(profile.id)
+            ? t('myProfile.unfollow')
+            : isRequested(profile.id)
+              ? t('myProfile.requested')
+              : t('myProfile.follow')}
         </button>
       )}
     </div>

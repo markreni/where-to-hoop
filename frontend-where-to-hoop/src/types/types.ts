@@ -72,6 +72,17 @@ interface BasketballHoopWithEnrollments extends BasketballHoop {
     playerEnrollments: PlayerEnrollment[];
   }
 
+type FollowRequestType = 'pending' | 'accepted' | 'rejected'; // keep 'rejected' for future cooldown implementation
+
+interface FollowRequest {
+  id: string
+  fromUserId: string
+  fromUserNickname: string
+  toUserId: string
+  status: FollowRequestType
+  createdAt: Date
+}
+
 // Toast types
 type ToastType = 'success' | 'error' | 'info' | 'warning';
 
@@ -87,7 +98,7 @@ type LocationSource = 'user' | 'hoop';
 // Language type
 type Language = 'en' | 'fi';
 
-export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, User, PlayerEnrollment, PlayMode, TimeSlot, BasketballHoopWithEnrollments, PublicProfile };
+export type { BasketballHoop, Condition, Coordinates, ColorMode, MapView, ToastType, Language, LocationSource, User, PlayerEnrollment, PlayMode, TimeSlot, BasketballHoopWithEnrollments, PublicProfile, FollowRequest };
 
 // type Popularity = 'popular' | 'average' | 'quiet';
 

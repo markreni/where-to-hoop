@@ -1,4 +1,4 @@
-import type { BasketballHoop, ObservationImage, PlayerEnrollment, PublicProfile } from '../types/types'
+import type { BasketballHoop, ObservationImage, PlayerEnrollment, PublicProfile, FollowRequest } from '../types/types'
 import supabase from './supabase'
 
 const fetchHoops = async (): Promise<BasketballHoop[]> => {
@@ -453,19 +453,32 @@ const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> =
   return { id: data.id, nickname: data.nickname, public: data.public }
 }
 
+const removeFollower = async (userId: string, targetId: string): Promise<void> => {
+  // database has trigger to delete follow request when a follower is removed, so we only need to delete from followers table here
+  const { error } = await supabase
+    .from('followers')
+    .delete()
+    .eq('follower_id', userId)
+    .eq('following_id', targetId)
+
+  if (error) {
+    console.error('Delete follow error:', error.message)
+    throw error
+  }
+}
+
 const fetchFollowing = async (userId: string): Promise<string[]> => {
   const { data, error } = await supabase
-    .from('users')
-    .select('following')
-    .eq('id', userId)
-    .single()
+    .from('followers')
+    .select('following_id')
+    .eq('follower_id', userId)
 
   if (error) {
     console.error('Fetch following error:', error.message)
     throw error
   }
 
-  return (data?.following ?? []) as string[]
+  return (data ?? []).map(row => row.following_id)
 }
 
 const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> => {
@@ -484,21 +497,125 @@ const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> 
   return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public }))
 }
 
-const toggleFollowRequest = async (userId: string, targetId: string, add: boolean): Promise<void> => {
-  const current = await fetchFollowing(userId)
-  const updated = add
-    ? [...new Set([...current, targetId])]
-    : current.filter((id: string) => id !== targetId)
-
+const sendFollowRequest = async (fromId: string, toId: string): Promise<void> => {
   const { error } = await supabase
-    .from('users')
-    .update({ following: updated })
-    .eq('id', userId)
+    .from('follow_requests')
+    .insert({ from_user_id: fromId, to_user_id: toId })
 
   if (error) {
-    console.error('Toggle follow error:', error.message)
+    console.error('Send follow request error:', error.message)
     throw error
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, fetchPlayerByNickname }
+const cancelFollowRequest = async (fromId: string, toId: string): Promise<void> => {
+  const { error } = await supabase
+    .from('follow_requests')
+    .delete()
+    .eq('from_user_id', fromId)
+    .eq('to_user_id', toId)
+    .eq('status', 'pending')
+
+  if (error) {
+    console.error('Cancel follow request error:', error.message)
+    throw error
+  }
+}
+
+const fetchIncomingFollowRequests = async (userId: string): Promise<FollowRequest[]> => {
+  const { data, error } = await supabase
+    .from('follow_requests')
+    .select('id, from_user_id, to_user_id, status, created_at')
+    .eq('to_user_id', userId)
+    .eq('status', 'pending')
+
+  if (error) {
+    console.error('Fetch incoming follow requests error:', error.message)
+    throw error
+  }
+
+  if (!data || data.length === 0) return []
+
+  const profiles = await fetchPublicProfiles(data.map(r => r.from_user_id))
+  const nicknameMap = Object.fromEntries(profiles.map(p => [p.id, p.nickname]))
+
+  return data.map(row => ({
+    id: row.id,
+    fromUserId: row.from_user_id,
+    fromUserNickname: nicknameMap[row.from_user_id] ?? 'Unknown',
+    toUserId: row.to_user_id,
+    status: row.status,
+    createdAt: new Date(row.created_at),
+  }))
+}
+
+const fetchOutgoingFollowRequestIds = async (userId: string): Promise<string[]> => {
+  const { data, error } = await supabase
+    .from('follow_requests')
+    .select('to_user_id')
+    .eq('from_user_id', userId)
+    .eq('status', 'pending')
+
+  if (error) {
+    console.error('Fetch outgoing follow requests error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => row.to_user_id)
+}
+
+const acceptFollowRequest = async (requestId: string): Promise<void> => {
+  // database has trigger to insert into followers table when follow request status is updated to accepted, so we only need to update the request status here
+  const { error } = await supabase
+    .from('follow_requests')
+    .update({ status: 'accepted' })
+    .eq('id', requestId)
+
+  if (error) {
+    console.error('Accept follow request error:', error.message)
+    throw error
+  }
+}
+
+const rejectFollowRequest = async (requestId: string): Promise<void> => {
+  const { error } = await supabase
+    .from('follow_requests')
+    .delete()
+    .eq('id', requestId)
+
+  if (error) {
+    console.error('Reject follow request error:', error.message)
+    throw error
+  }
+}
+
+const toggleFollowRequest = async (userId: string, targetId: string, add: boolean, targetIsPublic: boolean): Promise<void> => {
+  if (add) {
+    if (targetIsPublic) {
+      const { error } = await supabase
+        .from('followers')
+        .insert({ follower_id: userId, following_id: targetId })
+      if (error) {
+        console.error('Insert follow error:', error.message)
+        throw error
+      }
+    } else {
+      await sendFollowRequest(userId, targetId)
+    }
+  } else {
+    const { data } = await supabase
+      .from('followers')
+      .select('id')
+      .eq('follower_id', userId)
+      .eq('following_id', targetId)
+      .maybeSingle()
+
+    if (data) {
+      await removeFollower(userId, targetId)
+    } else {
+      await cancelFollowRequest(userId, targetId)
+    }
+  }
+}
+
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest }

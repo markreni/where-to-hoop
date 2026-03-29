@@ -20,7 +20,7 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
   const { user } = useAuth()
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
-  const { isFollowing, toggleFollow } = useFollowing()
+  const { isFollowing, isRequested, toggleFollow } = useFollowing()
 
   const { data: profile, isLoading: isLoadingProfile, isError } = useQuery<PublicProfile>({
     queryKey: ['player', nickname],
@@ -35,6 +35,7 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
   })
 
   const isOwnProfile = !!user && !!profile && user.id === profile.id
+  const canViewProfile = isOwnProfile || profile?.public || (!!profile && isFollowing(profile.id))
 
   const recentEnrollments = [...enrollments]
     .sort((a, b) => b.arrivalTime.getTime() - a.arrivalTime.getTime())
@@ -64,15 +65,19 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                 </div>
                 {!isOwnProfile && user && (
                   <button
-                    onClick={() => toggleFollow(profile.id)}
+                    onClick={() => toggleFollow(profile.id, profile.public)}
                     className={`${colorModeContext} shrink-0 px-4 py-2 rounded-lg border-2 background-text-reverse-black text-fluid-sm background-reverse-border bg-black/30 hover:bg-black/50 font-medium transition-all dark:bg-white/30 dark:hover:bg-white/50`}>
-                    {isFollowing(profile.id) ? t('myProfile.unfollow') : t('myProfile.follow')}
+                    {isFollowing(profile.id)
+                      ? t('myProfile.unfollow')
+                      : isRequested(profile.id)
+                        ? t('myProfile.requested')
+                        : t('myProfile.follow')}
                   </button>
                 )}
               </div>
 
               {/* Private profile lock */}
-              {!profile.public && !isOwnProfile ? (
+              {!canViewProfile ? (
                 <div className="flex flex-col items-center justify-center py-16 gap-3">
                   <FaLock size={36} className="text-first-color opacity-40" />
                   <p className={`${colorModeContext} text-fluid-base font-medium background-text text-center`}>

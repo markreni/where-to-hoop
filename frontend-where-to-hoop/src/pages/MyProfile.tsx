@@ -10,23 +10,24 @@ import { BackArrow } from '../components/reusable/BackArrow'
 import { EnrollmentCard } from '../components/reusable/EnrollmentCard'
 import { HoopCard } from '../components/reusable/HoopCard'
 import { FollowingPlayerCard } from '../components/reusable/FollowingPlayerCard'
+import { RequestCard } from '../components/reusable/RequestCard'
 import Footer from '../components/Footer'
-import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility } from '../utils/requests'
+import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests } from '../utils/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { useFollowing } from '../hooks/useFollowing'
 import { groupEnrollmentsByHoop } from '../utils/functions'
 import haversineDistance from '../utils/functions'
-import type { BasketballHoop, ColorMode, Coordinates, PlayerEnrollment } from '../types/types'
+import type { BasketballHoop, ColorMode, Coordinates, FollowRequest, PlayerEnrollment } from '../types/types'
 import { ProfileVisibilityToggle } from '../components/reusable/ProfileVisibilityToggle'
 import { MdOutlineFavoriteBorder } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
-import { FaUserCircle } from 'react-icons/fa'
+import { FaUserCircle, FaUserPlus } from 'react-icons/fa'
 
 interface MyProfileProps {
   hoops: BasketballHoop[]
 }
 
-type Tab = 'enrollments' | 'favorites' | 'following'
+type Tab = 'enrollments' | 'favorites' | 'following' | 'requests'
 
 const MyProfile = ({ hoops }: MyProfileProps) => {
   const { user } = useAuth()
@@ -39,6 +40,12 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const [isSaving, setIsSaving] = useState(false)
   const { favoriteIds } = useFavorites()
   const { followingProfiles, isLoading: isLoadingFollowing } = useFollowing()
+
+  const { data: followRequests = [], isLoading: isLoadingRequests } = useQuery<FollowRequest[]>({
+    queryKey: ['incomingFollowRequests', user?.id],
+    queryFn: () => fetchIncomingFollowRequests(user!.id),
+    enabled: !!user && !isPublic,
+  })
 
   const { data: enrollments = [], isLoading } = useQuery<PlayerEnrollment[]>({
     queryKey: ['userEnrollments', user?.id],
@@ -58,6 +65,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const handleVisibilityToggle = async () => {
     const next = !isPublic
     setIsPublic(next)
+    if (next && activeTab === 'requests') setActiveTab('enrollments')
     setIsSaving(true)
     try {
       await updateProfileVisibility(user!.id, next)
@@ -144,6 +152,24 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               <FaUserCircle size={16} />
               {t('myProfile.followingTab')}
             </button>
+            {!isPublic && (
+              <button
+                onClick={() => setActiveTab('requests')}
+                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-fluid-sm font-medium transition-colors relative ${
+                  activeTab === 'requests'
+                    ? `${colorModeContext} bg-first-color background-text-reverse-black`
+                    : `${colorModeContext} background-text hover:text-first-color`
+                }`}
+              >
+                <FaUserPlus size={16} />
+                {t('myProfile.requestsTab')}
+                {followRequests.length > 0 && (
+                  <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    {followRequests.length}
+                  </span>
+                )}
+              </button>
+            )}
           </div>
 
           {/* Enrollments Tab */}
@@ -233,6 +259,29 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 <FaUserCircle size={48} className="text-first-color opacity-40" />
                 <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
                   {t('myProfile.noFollowing')}
+                </p>
+              </div>
+            )
+          )}
+
+          {/* Requests Tab */}
+          {activeTab === 'requests' && (
+            isLoadingRequests ? (
+              <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
+            ) : followRequests.length > 0 ? (
+              <div className="flex flex-col gap-3">
+                {followRequests.map(req => (
+                  <RequestCard
+                    key={req.id}
+                    request={req}
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-16 gap-4">
+                <FaUserPlus size={48} className="text-first-color opacity-40" />
+                <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
+                  {t('myProfile.noRequests')}
                 </p>
               </div>
             )
