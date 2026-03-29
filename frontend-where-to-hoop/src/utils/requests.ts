@@ -242,12 +242,14 @@ const fetchUserEnrollments = async (userId: string): Promise<PlayerEnrollment[]>
 
 const fetchAllEnrollments = async (): Promise<PlayerEnrollment[]> => {
   // Only fetch enrollments from the last 12 hours onward (max session duration is 12h)
-  const cutoff = new Date(Date.now() - 720 * 60 * 1000).toISOString()
+
+  // NOT NEEDED when cron job is implemented
+  // const cutoff = new Date(Date.now() - 720 * 60 * 1000).toISOString().  add below -> .gte('arrival_time', cutoff)
 
   const { data, error } = await supabase
     .from('player_enrollment')
     .select('*')
-    .gte('arrival_time', cutoff)
+    .eq('expired', false)
 
   if (error) {
     console.error('Fetch all enrollments error:', error.message)
@@ -273,6 +275,7 @@ const fetchHoopEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]>
     .from('player_enrollment')
     .select('*')
     .eq('hoop_id', hoopId)
+    .eq('expired', false)
 
   if (error) {
     console.error('Fetch enrollments error:', error.message)

@@ -64,7 +64,7 @@ interface BasketballHoop {
   description: string;
   condition: Condition;
   isIndoor: boolean;
-  addedBy: string; // email of the user who added the hoop
+  addedBy: string; // nickname of the user who added the hoop
   //playerEnrollments: PlayerEnrollment[]; // Number of players currently at the court
 };
 

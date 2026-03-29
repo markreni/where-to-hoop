@@ -248,7 +248,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
         createdAt: formData.createdAt,
         address: address ?? undefined,
         images: [],
-        addedBy: user!.email!,
+        addedBy: user!.user_metadata?.nickname ?? 'Unknown',
       };
 
       insertHoop(hoopData, orderedFiles, user!.id).then(async (inserted) => {
