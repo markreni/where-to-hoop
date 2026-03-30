@@ -18,11 +18,11 @@ interface SearchFilterProps extends AriaSearchFieldProps {
   onChange: (value: string) => void;
 }
 
-const SearchFilter = ({ label, errorMessage, placeholder, value, onChange }: SearchFilterProps) => {
+const SearchFilter = ({ label, errorMessage, placeholder, value, onChange, ...props }: SearchFilterProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
-  
+
   return (
-    <AriaSearchField aria-label='search' className="w-full flex flex-col">
+    <AriaSearchField aria-label='search' className="w-full flex flex-col" {...props}>
       {label && (
         <Label className={`${colorModeContext} text-sm background-text`}>
           {label}

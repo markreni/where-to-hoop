@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from 'usehooks-ts'
 import { Logo } from "./reusable/Logo.tsx";
 import { Button, Menu, MenuItem, MenuTrigger, Popover } from 'react-aria-components';
 import { FiAlignJustify } from "react-icons/fi";
-import { FaSearch } from "react-icons/fa";
+import { SearchFilter } from "./reusable/SearchFilter.tsx";
 import { GiBasketballBasket } from "react-icons/gi";
-import { MdLocationPin } from "react-icons/md";
+import { MdLocationPin, MdPersonSearch } from "react-icons/md";
 import { DarkModeToggle } from "./reusable/DarkModeToggle.tsx";
 import { LanguageToggle } from "./reusable/LanguageToggle.tsx";
 import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
@@ -29,11 +29,36 @@ const NavBar = () => {
   const { user, signOut } = useAuth();
   const { isAdmin } = useIsAdmin();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [playerSearch, setPlayerSearch] = useState('');
 
-  const handlePlayerSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && playerSearch.trim()) {
-      navigate(`/players?q=${encodeURIComponent(playerSearch.trim())}`)
+  const isOnPlayersPage = location.pathname === '/players';
+
+  useEffect(() => {
+    if (isOnPlayersPage) setPlayerSearch('');
+  }, [isOnPlayersPage]);
+  const navbarSearchValue = isOnPlayersPage ? (searchParams.get('q') ?? '') : playerSearch;
+
+  const handleNavbarSearchChange = (value: string) => {
+    if (isOnPlayersPage) {
+      setSearchParams(prev => {
+        const next = new URLSearchParams(prev);
+        if (value.trim()) {
+          next.set('q', value);
+        } else {
+          next.delete('q');
+        }
+        return next;
+      }, { replace: true });
+    } else {
+      setPlayerSearch(value);
+    }
+  };
+
+  const handlePlayerSearchSubmit = (value: string) => {
+    if (!isOnPlayersPage && value.trim()) {
+      navigate(`/players?q=${encodeURIComponent(value.trim())}`)
       setPlayerSearch('')
     }
   }
@@ -50,15 +75,12 @@ const NavBar = () => {
             <LanguageToggle />
           </div>
           
-          <div className={`hidden xl:flex flex-1 items-center gap-2 px-3 py-1.5 rounded-lg bg-background border border-third-color/30 dark:border-white/10 focus-within:ring-2 focus-within:ring-gray-400 transition-shadow mx-4`}>
-            <FaSearch size={13} className="text-gray-400 shrink-0" />
-            <input
-              type="text"
+          <div className="hidden xl:flex flex-1 mx-4">
+            <SearchFilter
               placeholder={t('players.search')}
-              value={playerSearch}
-              onChange={e => setPlayerSearch(e.target.value)}
-              onKeyDown={handlePlayerSearch}
-              className={`${colorModeContext} flex-1 bg-transparent outline-none text-fluid-sm background-text placeholder:text-gray-400 dark:placeholder:text-gray-500 placeholder:text-xs`}
+              value={navbarSearchValue}
+              onChange={handleNavbarSearchChange}
+              onSubmit={handlePlayerSearchSubmit}
             />
           </div>
           
@@ -125,20 +147,18 @@ const NavBar = () => {
                       </MenuItem>
                   ) : (
                     <>
+                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                        <Link to="/players#find-friend" className="flex items-center gap-2">
+                          <MdPersonSearch size={22}/>
+                          {t('nav.findFriend')}
+                        </Link>
+                      </MenuItem>
                       <MenuItem className={`${colorModeContext} mb-2 lg:hidden rounded-md background-hover-text-gray background-text-reverse-black`}>
                         <Link to="/myprofile" className="flex items-center gap-2">
                           <IoMdPerson size={22}/>
                           {t('nav.myAccount')}
                         </Link>
                       </MenuItem>
-                      {/*
-                      <MenuItem className={`${colorModeContext} mb-2 hidden rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/players" className="flex items-center gap-2">
-                          <FaUserCircle size={22}/>
-                          {t('nav.players')}
-                        </Link>
-                      </MenuItem>
-                      */}
                       <MenuItem
                         className={`${colorModeContext} mb-2 lg:hidden rounded-md background-hover-text-gray background-text-reverse-black`}
                         onAction={() => signOut()}
@@ -229,6 +249,12 @@ const NavBar = () => {
                       </MenuItem>
                   ) : (
                     <>
+                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                        <Link to="/players#find-friend" className="flex items-center gap-2">
+                          <MdPersonSearch size={22}/>
+                          {t('nav.findFriend')}
+                        </Link>
+                      </MenuItem>
                       <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
                         <Link to="/myprofile" className="flex items-center gap-2">
                           <IoMdPerson size={22}/>

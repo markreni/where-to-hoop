@@ -17,8 +17,20 @@ const Players = () => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   const { user } = useAuth()
-  const [searchParams] = useSearchParams()
-  const [search, setSearch] = useState(searchParams.get('q') ?? '')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const search = searchParams.get('q') ?? ''
+
+  const setSearch = (value: string) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev);
+      if (value.trim()) {
+        next.set('q', value);
+      } else {
+        next.delete('q');
+      }
+      return next;
+    }, { replace: true });
+  }
   const [findQuery, setFindQuery] = useState('')
 
   const { data: players = [], isLoading } = useQuery<PublicProfile[]>({
@@ -72,7 +84,7 @@ const Players = () => {
           )}
 
           {/* Find any player section */}
-          <div className="mt-8 pt-6 border-t border-black/10 dark:border-white/10">
+          <div id="find-friend" className="mt-8 pt-6 border-t border-black/10 dark:border-white/10">
             <div className="flex items-center gap-2 mb-1">
               <h2 className={`${colorModeContext} text-fluid-base font-semibold background-text-black`}>
                 {t('players.findPlayer')}
