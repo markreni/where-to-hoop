@@ -47,9 +47,10 @@ const NavBar = () => {
               <Logo/>
             </Link>
             <DarkModeToggle />
+            <LanguageToggle />
           </div>
           
-          <div className={`hidden lg:flex flex-1 items-center gap-2 px-3 py-1.5 rounded-lg bg-background border border-third-color/30 dark:border-white/10 focus-within:ring-2 focus-within:ring-gray-400 transition-shadow mx-4`}>
+          <div className={`hidden xl:flex flex-1 items-center gap-2 px-3 py-1.5 rounded-lg bg-background border border-third-color/30 dark:border-white/10 focus-within:ring-2 focus-within:ring-gray-400 transition-shadow mx-4`}>
             <FaSearch size={13} className="text-gray-400 shrink-0" />
             <input
               type="text"
@@ -61,9 +62,14 @@ const NavBar = () => {
             />
           </div>
           
-          <div className="flex-center gap-6">
-            <LanguageToggle />
-            <div className="flex-center gap-4">
+          <div className="flex-center gap-4">
+            <Link to="/players" className="xl:hidden">
+              <Button className={`${colorModeContext} flex items-center gap-2 px-2.5 py-1 rounded-md border border-first-color text-first-color font-medium hover:bg-first-color hover:text-white dark:hover:text-black transition-colors tracking-normal`}>
+                <FaUserCircle size={18}/>
+                {t('nav.players')}
+              </Button>
+            </Link>
+            <div className="flex-center gap-4 shrink-0">
               <Link to="/hoops">
                 <Button
                   className={`${colorModeContext} flex items-center gap-2 px-4 py-2 rounded-md bg-first-color main-color-hover first-color-text font-medium transition-colors tracking-normal`}
@@ -75,7 +81,7 @@ const NavBar = () => {
               </Link>
               {!user ? (
                 <Link to="/signin">
-                  <Button className={`${colorModeContext} hidden md:flex items-center gap-2 px-3 py-1.5 rounded-md border border-first-color text-first-color text-fluid-sm font-medium hover:bg-first-color hover:text-white dark:hover:text-black transition-colors`}>
+                  <Button className={`${colorModeContext} hidden md:flex items-center gap-2 px-2 py-1 rounded-md border border-first-color text-first-color text-fluid-sm font-medium hover:bg-first-color hover:text-white dark:hover:text-black transition-colors`}>
                     <IoMdPerson size={18}/>
                     {t('nav.signIn')}
                   </Button>
@@ -83,13 +89,13 @@ const NavBar = () => {
               ) : (
                 <>
                   <Link to="/myprofile">
-                    <Button className={`${colorModeContext} hidden md:flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-first-color hover:text-first-color/70 transition-colors`}>
+                    <Button className={`${colorModeContext} hidden lg:flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-first-color hover:text-first-color/70 transition-colors`}>
                       <IoMdPerson size={18}/>
                       {t('nav.myAccount')}
                     </Button>
                   </Link>
                   <Button
-                    className={`${colorModeContext} hidden md:flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-first-color hover:text-first-color/70 transition-colors`}
+                    className={`${colorModeContext} hidden lg:flex items-center gap-1.5 px-2 py-1 rounded-md text-xs text-first-color hover:text-first-color/70 transition-colors`}
                     onPress={() => signOut()}
                   >
                     <IoMdLogOut size={18}/>
@@ -119,20 +125,22 @@ const NavBar = () => {
                       </MenuItem>
                   ) : (
                     <>
-                      <MenuItem className={`${colorModeContext} mb-2 md:hidden rounded-md background-hover-text-gray background-text-reverse-black`}>
+                      <MenuItem className={`${colorModeContext} mb-2 lg:hidden rounded-md background-hover-text-gray background-text-reverse-black`}>
                         <Link to="/myprofile" className="flex items-center gap-2">
                           <IoMdPerson size={22}/>
                           {t('nav.myAccount')}
                         </Link>
                       </MenuItem>
-                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
+                      {/*
+                      <MenuItem className={`${colorModeContext} mb-2 hidden rounded-md background-hover-text-gray background-text-reverse-black`}>
                         <Link to="/players" className="flex items-center gap-2">
                           <FaUserCircle size={22}/>
                           {t('nav.players')}
                         </Link>
                       </MenuItem>
+                      */}
                       <MenuItem
-                        className={`${colorModeContext} mb-2 md:mb-0 md:hidden rounded-md background-hover-text-gray background-text-reverse-black`}
+                        className={`${colorModeContext} mb-2 lg:hidden rounded-md background-hover-text-gray background-text-reverse-black`}
                         onAction={() => signOut()}
                       >
                         <span className="flex items-center gap-2">

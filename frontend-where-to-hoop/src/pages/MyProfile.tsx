@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
 import { useColorModeValues } from '../contexts/ColorModeContext'
@@ -12,14 +12,14 @@ import { HoopCard } from '../components/reusable/HoopCard'
 import { FollowingPlayerCard } from '../components/reusable/FollowingPlayerCard'
 import { RequestCard } from '../components/reusable/RequestCard'
 import Footer from '../components/Footer'
-import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests } from '../utils/requests'
+import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers } from '../utils/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { useFollowing } from '../hooks/useFollowing'
 import { groupEnrollmentsByHoop } from '../utils/functions'
 import haversineDistance from '../utils/functions'
-import type { BasketballHoop, ColorMode, Coordinates, FollowRequest, PlayerEnrollment } from '../types/types'
+import type { BasketballHoop, ColorMode, Coordinates, FollowRequest, PlayerEnrollment, PublicProfile } from '../types/types'
 import { ProfileVisibilityToggle } from '../components/reusable/ProfileVisibilityToggle'
-import { MdOutlineFavoriteBorder } from 'react-icons/md'
+import { MdOutlineFavoriteBorder, MdExpandMore, MdExpandLess } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
 import { FaUserCircle, FaUserPlus } from 'react-icons/fa'
 
@@ -38,6 +38,13 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('enrollments')
   const [isPublic, setIsPublic] = useState<boolean>(user?.user_metadata?.public ?? false)
   const [isSaving, setIsSaving] = useState(false)
+  const [followersOpen, setFollowersOpen] = useState(false)
+
+  const { data: followers = [] } = useQuery<PublicProfile[]>({
+    queryKey: ['followers', user?.id],
+    queryFn: () => fetchFollowers(user!.id),
+    enabled: !!user,
+  })
   const { favoriteIds } = useFavorites()
   const { followingProfiles, isLoading: isLoadingFollowing } = useFollowing()
 
@@ -99,9 +106,38 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-black`}>
               {user.user_metadata?.nickname ?? user.email}
             </h1>
-            <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black mb-4`}>
-              {user.email}
-            </p>
+            {/* Email + Followers dropdown */}
+            <div className="flex items-start justify-between mb-4">
+              <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black`}>
+                {user.email}
+              </p>
+              <div className="relative">
+                <button
+                  onClick={() => setFollowersOpen(o => !o)}
+                  className={`${colorModeContext} flex items-center gap-1 text-fluid-sm background-text-black hover:text-first-color transition-colors`}
+                >
+                  {followersOpen ? <MdExpandLess size={18} /> : <MdExpandMore size={18} />}
+                  {t('myProfile.followers')} ({followers.length})
+                </button>
+                {followersOpen && (
+                  <div className={`${colorModeContext} absolute right-0 top-full mt-1 z-10 min-w-40 max-h-48 overflow-y-auto bg-background border border-black/20 dark:border-white/20 rounded-lg shadow-lg p-2 flex flex-col gap-1`}>
+                    {followers.length > 0 ? followers.map(f => (
+                      <Link
+                        key={f.id}
+                        to={`/players/${f.nickname.toLowerCase()}`}
+                        className={`${colorModeContext} text-fluid-sm background-text hover:text-first-color transition-colors px-2 py-1 rounded hover:bg-black/5 dark:hover:bg-white/5`}
+                      >
+                        {f.nickname}
+                      </Link>
+                    )) : (
+                      <p className={`${colorModeContext} text-fluid-sm text-gray-400 dark:text-gray-500 px-2 py-1`}>
+                        {t('myProfile.noFollowers')}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
 
             {/* Profile visibility toggle */}
             <div className="bg-background/60 p-4 rounded-lg border border-black/30 dark:border-white/30 mb-6">

@@ -35,6 +35,12 @@ const PublicPlayerCard = ({ profile }: PublicPlayerCardProps) => {
         <MdArrowForward size={14} className="text-first-color opacity-0 group-hover:opacity-60 transition-opacity shrink-0" />
       </Link>
 
+      {isOwnProfile && (
+        <span className="shrink-0 px-2 py-0.5 rounded-full text-fluid-xs font-medium bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400">
+          {t('players.you')}
+        </span>
+      )}
+
       {!isOwnProfile && user && (
         <button
           onClick={() => toggleFollow(profile.id, profile.public)}

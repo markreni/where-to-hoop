@@ -10,8 +10,14 @@
   },
   "players": {
     "title": "Pelaajat",
-    "search": "Etsi pelaajan nimimerkillä...",
-    "noResults": "Pelaajia ei löydy"
+    "search": "Suodata pelaajan nimimerkillä...",
+    "noResults": "Pelaajia ei löydy",
+    "findPlayer": "Etsi pelaaja",
+    "findPlayerHint": "Etsi mitä tahansa pelaajaa, myös yksityisiä profiileja",
+    "findPlayerPlaceholder": "Etsi nimimerkillä...",
+    "findPlayerNoResults": "Pelaajia ei löydy",
+    "signInToSearch": "Kirjaudu sisään etsiäksesi pelaajia",
+    "you": "Sinä"
   },
   "playerProfile": {
     "notFound": "Pelaajaa ei löydy",
@@ -71,6 +77,8 @@
     "noFavorites": "Ei suosikkikenttiä vielä",
     "followingTab": "Seurattavat",
     "noFollowing": "Et seuraa ketään vielä",
+    "followers": "Seuraajat",
+    "noFollowers": "Ei vielä seuraajia",
     "follow": "Seuraa",
     "unfollow": "Lopeta seuraaminen",
     "requested": "Pyydetty",

@@ -53,7 +53,7 @@ const App = () => {
   if (isLoading) {
     return (
       <div className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen flex items-center justify-center">
-        <p className="text-2xl text-text">Loading hoops...</p>
+        <p className="text-2xl text-text animate-bounce">Loading...</p>
       </div>
     );
   }

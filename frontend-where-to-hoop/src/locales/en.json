@@ -10,8 +10,14 @@
   },
   "players": {
     "title": "Players",
-    "search": "Search by player's nickname...",
-    "noResults": "No players found"
+    "search": "Filter by player's nickname...",
+    "noResults": "No players found",
+    "findPlayer": "Find any player",
+    "findPlayerHint": "Search for any player, including private profiles",
+    "findPlayerPlaceholder": "Search by nickname...",
+    "findPlayerNoResults": "No players found",
+    "signInToSearch": "Sign in to search for any player",
+    "you": "You"
   },
   "playerProfile": {
     "notFound": "Player not found",
@@ -71,6 +77,8 @@
     "noFavorites": "No favorite courts yet",
     "followingTab": "Following",
     "noFollowing": "You're not following anyone yet",
+    "followers": "Followers",
+    "noFollowers": "No followers yet",
     "follow": "Follow",
     "unfollow": "Unfollow",
     "requested": "Requested",

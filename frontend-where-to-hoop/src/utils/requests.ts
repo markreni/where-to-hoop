@@ -438,6 +438,22 @@ const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
   return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public }))
 }
 
+const searchAllPlayersByNickname = async (query: string): Promise<PublicProfile[]> => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('id, nickname, public')
+    .ilike('nickname', `%${query}%`)
+    .order('nickname', { ascending: true })
+    .limit(20)
+
+  if (error) {
+    console.error('Search all players error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public }))
+}
+
 const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> => {
   const { data, error } = await supabase
     .from('users')
@@ -465,6 +481,22 @@ const removeFollower = async (userId: string, targetId: string): Promise<void> =
     console.error('Delete follow error:', error.message)
     throw error
   }
+}
+
+const fetchFollowers = async (userId: string): Promise<PublicProfile[]> => {
+  const { data, error } = await supabase
+    .from('followers')
+    .select('follower_id')
+    .eq('following_id', userId)
+
+  if (error) {
+    console.error('Fetch followers error:', error.message)
+    throw error
+  }
+
+  if (!data || data.length === 0) return []
+
+  return fetchPublicProfiles(data.map(row => row.follower_id))
 }
 
 const fetchFollowing = async (userId: string): Promise<string[]> => {
@@ -618,4 +650,4 @@ const toggleFollowRequest = async (userId: string, targetId: string, add: boolea
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest }
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest }
