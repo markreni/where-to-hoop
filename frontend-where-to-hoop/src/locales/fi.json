@@ -7,7 +7,8 @@
     "signOut": "Kirjaudu ulos",
     "myAccount": "Oma tili",
     "findFriend": "Löydä kaveri",
-    "players": "Pelaajat"
+    "players": "Pelaajat",
+    "searchPlayers": "Etsi julkista pelaajaa..."
   },
   "players": {
     "title": "Pelaaja näkymä",

@@ -77,7 +77,7 @@ const NavBar = () => {
           
           <div className="hidden xl:flex flex-1 mx-4">
             <SearchFilter
-              placeholder={t('players.search')}
+              placeholder={t('nav.searchPlayers')}
               value={navbarSearchValue}
               onChange={handleNavbarSearchChange}
               onSubmit={handlePlayerSearchSubmit}
@@ -148,7 +148,7 @@ const NavBar = () => {
                   ) : (
                     <>
                       <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/players#find-friend" className="flex items-center gap-2">
+                        <Link to="/search-players" className="flex items-center gap-2">
                           <MdPersonSearch size={22}/>
                           {t('nav.findFriend')}
                         </Link>
@@ -250,7 +250,7 @@ const NavBar = () => {
                   ) : (
                     <>
                       <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/players#find-friend" className="flex items-center gap-2">
+                        <Link to="/search-players" className="flex items-center gap-2">
                           <MdPersonSearch size={22}/>
                           {t('nav.findFriend')}
                         </Link>

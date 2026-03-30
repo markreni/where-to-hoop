@@ -19,6 +19,7 @@ import SignUp from "./pages/SignUp.tsx";
 import SignIn from "./pages/SignIn.tsx";
 import MyProfile from "./pages/MyProfile.tsx";
 import Players from "./pages/Players.tsx";
+import SearchPlayers from "./pages/SearchPlayers.tsx";
 import PlayerProfile from "./pages/PlayerProfile.tsx";
 import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
@@ -78,6 +79,7 @@ const App = () => {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/myprofile" element={<MyProfile hoops={hoops} />} />
           <Route path="/players" element={<Players />} />
+          <Route path="/search-players" element={<SearchPlayers />} />
           <Route path="/players/:nickname" element={<PlayerProfile hoops={hoops} />} />
           <Route path="/admin" element={<ProtectedAdminRoute><Admin hoops={hoops} /></ProtectedAdminRoute>} />
           <Route path="/admin/edit/:id" element={<ProtectedAdminRoute><AddHoop hoop={editHoop} /></ProtectedAdminRoute>} />
