@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Label, TextField, Button } from "react-aria-components";
 import { useNavigate, Link } from "react-router-dom";
 import { useColorModeValues } from "../contexts/ColorModeContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import { BackArrow } from "../components/reusable/BackArrow";
 import Footer from "../components/Footer";
@@ -11,6 +12,7 @@ import { useTranslation } from "../hooks/useTranslation";
 
 const SignIn = () => {
   const colorModeContext: ColorMode = useColorModeValues();
+  const { user } = useAuth();
   const { success, error } = useToast();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -42,58 +44,72 @@ const SignIn = () => {
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
       <BackArrow />
       <div className="flex-grow padding-x-for-page padding-b-for-page flex items-center justify-center">
-        <div className={`${colorModeContext} w-full max-w-md bg-background rounded-lg shadow-xl p-6 sm:p-8`}>
-          <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text mb-6`}>
-            {t('signIn.title')}
-          </h1>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-            {/* Email */}
-            <TextField isRequired className="flex flex-col gap-1">
-              <Label className={`${colorModeContext} text-fluid-sm background-text`}>
-                {t('signIn.emailLabel')} *
-              </Label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={`${colorModeContext} form-input bg-background`}
-                placeholder={t('signIn.emailPlaceholder')}
-                autoComplete="email"
-              />
-            </TextField>
-
-            {/* Password */}
-            <TextField isRequired className="flex flex-col gap-1">
-              <Label className={`${colorModeContext} text-fluid-sm background-text`}>
-                {t('signIn.passwordLabel')} *
-              </Label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={`${colorModeContext} form-input bg-background`}
-                placeholder={t('signIn.passwordPlaceholder')}
-                autoComplete="current-password"
-              />
-            </TextField>
-
-            <Button
-              type="submit"
-              isDisabled={!isFormValid || isSubmitting}
-              className={`${colorModeContext} mt-2 px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
+        {user ? (
+          <div className={`${colorModeContext} w-full max-w-md bg-background rounded-lg shadow-xl p-6 sm:p-8 text-center`}>
+            <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text mb-4`}>
+              {t('signIn.alreadySignedIn')}
+            </h1>
+            <Link
+              to="/myprofile"
+              className={`${colorModeContext} inline-block px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors`}
             >
-              {isSubmitting ? t('signIn.submitting') : t('signIn.submit')}
-            </Button>
-          </form>
-
-          <p className={`${colorModeContext} text-fluid-sm background-text mt-6 text-center`}>
-            {t('signIn.noAccount')}{" "}
-            <Link to="/signup" className="text-first-color hover:underline">
-              {t('signIn.signUp')}
+              {t('signIn.goToProfile')}
             </Link>
-          </p>
-        </div>
+          </div>
+        ) : (
+          <div className={`${colorModeContext} w-full max-w-md bg-background rounded-lg shadow-xl p-6 sm:p-8`}>
+            <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text mb-6`}>
+              {t('signIn.title')}
+            </h1>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              {/* Email */}
+              <TextField isRequired className="flex flex-col gap-1">
+                <Label className={`${colorModeContext} text-fluid-sm background-text`}>
+                  {t('signIn.emailLabel')} *
+                </Label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className={`${colorModeContext} form-input bg-background`}
+                  placeholder={t('signIn.emailPlaceholder')}
+                  autoComplete="email"
+                />
+              </TextField>
+
+              {/* Password */}
+              <TextField isRequired className="flex flex-col gap-1">
+                <Label className={`${colorModeContext} text-fluid-sm background-text`}>
+                  {t('signIn.passwordLabel')} *
+                </Label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className={`${colorModeContext} form-input bg-background`}
+                  placeholder={t('signIn.passwordPlaceholder')}
+                  autoComplete="current-password"
+                />
+              </TextField>
+
+              <Button
+                type="submit"
+                isDisabled={!isFormValid || isSubmitting}
+                className={`${colorModeContext} mt-2 px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors disabled:opacity-50 disabled:cursor-not-allowed`}
+              >
+                {isSubmitting ? t('signIn.submitting') : t('signIn.submit')}
+              </Button>
+            </form>
+
+            <p className={`${colorModeContext} text-fluid-sm background-text mt-6 text-center`}>
+              {t('signIn.noAccount')}{" "}
+              <Link to="/signup" className="text-first-color hover:underline">
+                {t('signIn.signUp')}
+              </Link>
+            </p>
+          </div>
+        )}
       </div>
       <Footer />
     </div>

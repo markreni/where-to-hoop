@@ -44,7 +44,9 @@
     "welcomeBack": "Tervetuloa takaisin!",
     "failed": "Kirjautuminen epäonnistui.",
     "noAccount": "Eikö sinulla ole tiliä?",
-    "signUp": "Rekisteröidy"
+    "signUp": "Rekisteröidy",
+    "alreadySignedIn": "Olet jo kirjautunut sisään.",
+    "goToProfile": "Siirry profiiliin"
   },
   "signUp": {
     "title": "Rekisteröidy",
@@ -67,7 +69,9 @@
     "alreadyHaveAccount": "Onko sinulla jo tili?",
     "signIn": "Kirjaudu sisään",
     "accountCreated": "Tili luotu! Tarkista sähköpostisi vahvistaaksesi tilin.",
-    "failed": "Rekisteröityminen epäonnistui."
+    "failed": "Rekisteröityminen epäonnistui.",
+    "alreadySignedUp": "Sinulla on jo tili.",
+    "goToProfile": "Siirry profiiliin"
   },
   "myProfile": {
     "enrollmentsTab": "Ilmoittautumiset",

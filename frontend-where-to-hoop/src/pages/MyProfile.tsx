@@ -157,48 +157,48 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
           <div className={`${colorModeContext} flex gap-1 p-1 bg-third-color/20 dark:bg-white/10 rounded-lg mb-6`}>
             <button
               onClick={() => setActiveTab('enrollments')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-fluid-sm font-medium transition-colors ${
+              className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'enrollments'
                   ? `${colorModeContext} bg-first-color background-text-reverse-black`
                   : `${colorModeContext} background-text hover:text-first-color`
               }`}
             >
               <GiBasketballBasket size={16} />
-              {t('myProfile.enrollmentsTab')}
+              <span className="text-[10px] sm:text-fluid-sm">{t('myProfile.enrollmentsTab')}</span>
             </button>
             <button
               onClick={() => setActiveTab('favorites')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-fluid-sm font-medium transition-colors ${
+              className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'favorites'
                   ? `${colorModeContext} bg-first-color background-text-reverse-black`
                   : `${colorModeContext} background-text hover:text-first-color`
               }`}
             >
               <MdOutlineFavoriteBorder size={16} />
-              {t('myProfile.favoritesTab')}
+              <span className="text-[10px] sm:text-fluid-sm">{t('myProfile.favoritesTab')}</span>
             </button>
             <button
               onClick={() => setActiveTab('following')}
-              className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-fluid-sm font-medium transition-colors ${
+              className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'following'
                   ? `${colorModeContext} bg-first-color background-text-reverse-black`
                   : `${colorModeContext} background-text hover:text-first-color`
               }`}
             >
               <FaUserCircle size={16} />
-              {t('myProfile.followingTab')}
+              <span className="text-[10px] sm:text-fluid-sm">{t('myProfile.followingTab')}</span>
             </button>
             {!isPublic && (
               <button
                 onClick={() => setActiveTab('requests')}
-                className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-fluid-sm font-medium transition-colors relative ${
+                className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors relative ${
                   activeTab === 'requests'
                     ? `${colorModeContext} bg-first-color background-text-reverse-black`
                     : `${colorModeContext} background-text hover:text-first-color`
                 }`}
               >
                 <FaUserPlus size={16} />
-                {t('myProfile.requestsTab')}
+                <span className="text-[10px] sm:text-fluid-sm">{t('myProfile.requestsTab')}</span>
                 {followRequests.length > 0 && (
                   <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
                     {followRequests.length}

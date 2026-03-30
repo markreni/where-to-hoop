@@ -44,7 +44,9 @@
     "welcomeBack": "Welcome back!",
     "failed": "Sign in failed.",
     "noAccount": "Don't have an account?",
-    "signUp": "Sign up"
+    "signUp": "Sign up",
+    "alreadySignedIn": "You are already signed in.",
+    "goToProfile": "Go to profile"
   },
   "signUp": {
     "title": "Sign up",
@@ -67,7 +69,9 @@
     "alreadyHaveAccount": "Already have an account?",
     "signIn": "Sign in",
     "accountCreated": "Account created! Check your email to confirm your account.",
-    "failed": "Sign up failed."
+    "failed": "Sign up failed.",
+    "alreadySignedUp": "You already have an account.",
+    "goToProfile": "Go to profile"
   },
   "myProfile": {
     "enrollmentsTab": "Enrollments",
