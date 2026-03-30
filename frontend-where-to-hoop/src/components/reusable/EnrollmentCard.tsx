@@ -35,7 +35,7 @@ const EnrollmentCard = ({ enrollment, hoops }: EnrollmentCardProps) => {
         {enrollment.hoopId ? (
           <Link
             to={`/hoops/${enrollment.hoopId}`}
-            className="text-first-color hover:underline font-medium text-fluid-sm leading-tight"
+            className="text-first-color hover:text-second-color font-medium text-fluid-base leading-tight"
           >
             {hoopName}
           </Link>

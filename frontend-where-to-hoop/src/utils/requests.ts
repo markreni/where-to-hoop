@@ -650,4 +650,46 @@ const toggleFollowRequest = async (userId: string, targetId: string, add: boolea
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest }
+const fetchExpiredEnrollmentCount = async (userId: string): Promise<number> => {
+  const { count, error } = await supabase
+    .from('player_enrollment')
+    .select('*', { count: 'exact', head: true })
+    .eq('player_id', userId)
+    .eq('expired', true)
+
+  if (error) {
+    console.error('Fetch expired enrollment count error:', error.message)
+    throw error
+  }
+
+  return count ?? 0
+}
+
+const fetchActiveEnrollments = async (userId: string): Promise<PlayerEnrollment[]> => {
+  const { data, error } = await supabase
+    .from('player_enrollment')
+    .select('*')
+    .eq('player_id', userId)
+    .eq('expired', false)
+    .order('arrival_time', { ascending: true })
+
+  if (error) {
+    console.error('Fetch active enrollments error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => ({
+    id: row.id,
+    playerId: row.player_id,
+    playerNickname: row.player_nickname,
+    hoopId: row.hoop_id,
+    arrivalTime: new Date(row.arrival_time),
+    duration: row.duration,
+    expired: row.expired,
+    playMode: row.play_mode,
+    note: row.note ?? undefined,
+    createdAt: new Date(row.created_at),
+  }))
+}
+
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments }

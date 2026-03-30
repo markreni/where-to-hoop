@@ -7,9 +7,10 @@ import { useFollowing } from '../hooks/useFollowing'
 import { BackArrow } from '../components/reusable/BackArrow'
 import Footer from '../components/Footer'
 import { EnrollmentCard } from '../components/reusable/EnrollmentCard'
-import { fetchPlayerByNickname, fetchUserEnrollments } from '../utils/requests'
+import { fetchPlayerByNickname, fetchActiveEnrollments, fetchExpiredEnrollmentCount, fetchFollowers } from '../utils/requests'
 import type { BasketballHoop, ColorMode, PlayerEnrollment, PublicProfile } from '../types/types'
-import { FaUserCircle, FaLock } from 'react-icons/fa'
+import { FaUserCircle, FaLock, FaUsers } from 'react-icons/fa'
+import { GiBasketballBasket } from 'react-icons/gi'
 
 interface PlayerProfileProps {
   hoops: BasketballHoop[]
@@ -28,18 +29,26 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
     enabled: !!nickname,
   })
 
-  const { data: enrollments = [], isLoading: isLoadingEnrollments } = useQuery<PlayerEnrollment[]>({
-    queryKey: ['userEnrollments', profile?.id],
-    queryFn: () => fetchUserEnrollments(profile!.id),
+  const { data: upcomingEnrollments = [], isLoading: isLoadingEnrollments } = useQuery<PlayerEnrollment[]>({
+    queryKey: ['activeEnrollments', profile?.id],
+    queryFn: () => fetchActiveEnrollments(profile!.id),
+    enabled: !!profile,
+  })
+
+  const { data: timesPlayed = 0 } = useQuery<number>({
+    queryKey: ['expiredEnrollmentCount', profile?.id],
+    queryFn: () => fetchExpiredEnrollmentCount(profile!.id),
+    enabled: !!profile,
+  })
+
+  const { data: followers = [] } = useQuery<PublicProfile[]>({
+    queryKey: ['followers', profile?.id],
+    queryFn: () => fetchFollowers(profile!.id),
     enabled: !!profile,
   })
 
   const isOwnProfile = !!user && !!profile && user.id === profile.id
   const canViewProfile = isOwnProfile || profile?.public || (!!profile && isFollowing(profile.id))
-
-  const recentEnrollments = [...enrollments]
-    .sort((a, b) => b.arrivalTime.getTime() - a.arrivalTime.getTime())
-    .slice(0, 10)
 
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
@@ -62,6 +71,7 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                   <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-reverse-black truncate`}>
                     {profile.nickname}
                   </h1>
+                  
                 </div>
                 {!isOwnProfile && user && (
                   <button
@@ -76,6 +86,18 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                 )}
               </div>
 
+              {/* Stats */}
+              <div className={`${colorModeContext} flex items-center gap-6 mb-8 text-fluid-sm background-text-reverse-black opacity-70`}>
+                <div className="flex items-center gap-1.5">
+                  <FaUsers size={14} />
+                  <span>{t('playerProfile.followers', { count: followers.length })}</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <GiBasketballBasket size={14} />
+                  <span>{t('playerProfile.timesPlayed', { count: timesPlayed })}</span>
+                </div>
+              </div>
+
               {/* Private profile lock */}
               {!canViewProfile ? (
                 <div className="flex flex-col items-center justify-center py-16 gap-3">
@@ -88,22 +110,22 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                   </p>
                 </div>
               ) : (
-                /* Recent Sessions */
+                /* Upcoming / Ongoing Sessions */
                 <section>
                   <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
-                    {t('playerProfile.recentSessions')}
+                    {t('playerProfile.upcomingSessions')}
                   </h2>
                   {isLoadingEnrollments ? (
                     <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
-                  ) : recentEnrollments.length > 0 ? (
+                  ) : upcomingEnrollments.length > 0 ? (
                     <div className="flex flex-col gap-3">
-                      {recentEnrollments.map(e => (
+                      {upcomingEnrollments.map(e => (
                         <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />
                       ))}
                     </div>
                   ) : (
                     <p className={`${colorModeContext} text-fluid-sm background-text`}>
-                      {t('playerProfile.noSessions')}
+                      {t('playerProfile.noUpcomingSessions')}
                     </p>
                   )}
                 </section>

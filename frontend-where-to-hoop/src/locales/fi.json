@@ -23,9 +23,11 @@
   },
   "playerProfile": {
     "notFound": "Pelaajaa ei löydy",
-    "recentSessions": "Viimeisimmät sessiot",
-    "noSessions": "Ei sessioita vielä",
+    "upcomingSessions": "Tulevat sessiot",
+    "noUpcomingSessions": "Ei tulevia sessioita",
     "playedAt": "Pelasi kentällä",
+    "followers": "{{count}} seuraajaa",
+    "timesPlayed": "{{count}} sessiota pelattu",
     "privateProfile": "Tämä profiili on yksityinen",
     "privateProfileSub": "Tämä pelaaja on päättänyt pitää profiilinsa yksityisenä."
   },

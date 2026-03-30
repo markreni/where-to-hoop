@@ -23,9 +23,11 @@
   },
   "playerProfile": {
     "notFound": "Player not found",
-    "recentSessions": "Recent Sessions",
-    "noSessions": "No sessions yet",
+    "upcomingSessions": "Upcoming Sessions",
+    "noUpcomingSessions": "No upcoming sessions",
     "playedAt": "Played at",
+    "followers": "{{count}} followers",
+    "timesPlayed": "{{count}} sessions played",
     "privateProfile": "This profile is private",
     "privateProfileSub": "This player has chosen to keep their profile private."
   },
