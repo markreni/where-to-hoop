@@ -6,7 +6,6 @@ import { BackArrow } from '../components/reusable/BackArrow'
 import { SearchFilter } from '../components/reusable/SearchFilter'
 import { PublicPlayerCard } from '../components/reusable/PublicPlayerCard'
 import Footer from '../components/Footer'
-import FindFriendSection from '../components/FindFriendSection'
 import { fetchAllPlayers } from '../utils/requests'
 import type { ColorMode, PublicProfile } from '../types/types'
 import { FaUserCircle } from 'react-icons/fa'
@@ -72,8 +71,6 @@ const Players = () => {
               </p>
             </div>
           )}
-
-          <FindFriendSection />
 
         </div>
       </div>
