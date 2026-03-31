@@ -138,63 +138,67 @@ const NavBar = () => {
               <Button>
                 <FiAlignJustify size={28} className="text-first-color dark:text-yellow-400"/>
               </Button>
-              <Popover className="w-24/25 xsm:w-1/3 sm:w-1/4 xmd:1/5 pr-6">
-                <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
-                  {!user ? (
-                      <MenuItem className={`${colorModeContext} md:hidden mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/signin" className="flex items-center gap-2">
-                          <IoMdPerson size={22}/>
-                          {t('nav.signIn')}
-                        </Link>
-                      </MenuItem>
-                  ) : (
-                    <>
-                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/search-players" className="flex items-center gap-2">
-                          <MdPersonSearch size={22}/>
-                          {t('nav.findFriend')}
-                        </Link>
-                      </MenuItem>
-                      <MenuItem className={`${colorModeContext} mb-2 lg:hidden rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/myprofile" className="flex items-center gap-2">
-                          <IoMdPerson size={22}/>
-                          {t('nav.myAccount')}
-                        </Link>
-                      </MenuItem>
-                      <MenuItem
-                        className={`${colorModeContext} mb-2 lg:hidden rounded-md background-hover-text-gray background-text-reverse-black`}
-                        onAction={() => signOut()}
-                      >
-                        <span className="flex items-center gap-2">
-                          <IoMdLogOut size={22}/>
-                          {t('nav.signOut')}
-                        </span>
-                      </MenuItem>
-                    </>
-                  )}
+              <Popover className="w-56 pr-6">
+                <Menu className={`${colorModeContext} bg-background rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-3`}>
                   {user && (
-                    <MenuItem className={`${colorModeContext} ${isAdmin && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
+                    <MenuItem className={`${colorModeContext} mb-1 rounded-md background-hover background-text-black`}>
                       <Link to="/addhoop" className="flex items-center gap-2">
-                        <GiBasketballBasket size={22}/>
+                        <GiBasketballBasket size={18}/>
                         {t('nav.addHoop')}
                       </Link>
                     </MenuItem>
                   )}
-                  {isAdmin && (
-                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                      <Link to="/admin" className="flex items-center gap-2">
-                        <MdAdminPanelSettings size={22}/>
-                        Admin
+
+                  {user && (
+                    <MenuItem className={`${colorModeContext} mb-1 rounded-md background-hover background-text-black`}>
+                      <Link to="/search-players" className="flex items-center gap-2">
+                        <MdPersonSearch size={18}/>
+                        {t('nav.findFriend')}
                       </Link>
                     </MenuItem>
                   )}
-                  {!user && (
-                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                      <Link to="/signup" className="flex items-center gap-2">
-                         <IoMdPersonAdd size={22}/>
-                         {t('nav.signUp')}
-                      </Link>
-                    </MenuItem>
+
+                  {!user ? (
+                    <>
+                      <MenuItem className={`${colorModeContext} md:hidden mb-1 rounded-md background-hover background-text-black`}>
+                        <Link to="/signin" className="flex items-center gap-2">
+                          <IoMdPerson size={18}/>
+                          {t('nav.signIn')}
+                        </Link>
+                      </MenuItem>
+                      <MenuItem className={`${colorModeContext} rounded-md background-hover background-text-black`}>
+                        <Link to="/signup" className="flex items-center gap-2">
+                          <IoMdPersonAdd size={18}/>
+                          {t('nav.signUp')}
+                        </Link>
+                      </MenuItem>
+                    </>
+                  ) : (
+                    <>
+                      <MenuItem className={`${colorModeContext} mb-1 lg:hidden rounded-md background-hover background-text-black`}>
+                        <Link to="/myprofile" className="flex items-center gap-2">
+                          <IoMdPerson size={18}/>
+                          {t('nav.myAccount')}
+                        </Link>
+                      </MenuItem>
+                      {isAdmin && (
+                        <MenuItem className={`${colorModeContext} mb-1 lg:mb-0 rounded-md background-hover background-text-black`}>
+                          <Link to="/admin" className="flex items-center gap-2">
+                            <MdAdminPanelSettings size={18}/>
+                            {t('nav.drawer.admin')}
+                          </Link>
+                        </MenuItem>
+                      )}
+                      <MenuItem
+                        className={`${colorModeContext} mt-3 lg:hidden rounded-md background-hover text-first-color`}
+                        onAction={() => signOut()}
+                      >
+                        <span className="flex items-center gap-2">
+                          <IoMdLogOut size={18}/>
+                          {t('nav.signOut')}
+                        </span>
+                      </MenuItem>
+                    </>
                   )}
                 </Menu>
               </Popover>

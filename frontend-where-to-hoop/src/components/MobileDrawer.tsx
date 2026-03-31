@@ -147,7 +147,7 @@ const MobileDrawer = ({ isOpen, onClose }: MobileDrawerProps) => {
                 <DrawerItem
                   to="/admin"
                   icon={<MdAdminPanelSettings size={22} />}
-                  label="Admin"
+                  label={t("nav.drawer.admin")}
                 />
               )}
             </>

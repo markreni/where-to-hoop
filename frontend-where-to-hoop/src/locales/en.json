@@ -12,7 +12,8 @@
     "drawer": {
       "explore": "Explore",
       "community": "Community",
-      "account": "Account"
+      "account": "Account",
+      "admin": "Admin"
     }
   },
   "players": {

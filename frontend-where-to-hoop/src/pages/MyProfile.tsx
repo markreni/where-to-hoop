@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
@@ -22,6 +22,8 @@ import { ProfileVisibilityToggle } from '../components/reusable/ProfileVisibilit
 import { MdOutlineFavoriteBorder, MdExpandMore, MdExpandLess } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
 import { FaUserCircle, FaUserPlus } from 'react-icons/fa'
+import { Button } from 'react-aria-components'
+import { useOnClickOutside } from 'usehooks-ts'
 
 interface MyProfileProps {
   hoops: BasketballHoop[]
@@ -39,6 +41,8 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const [isPublic, setIsPublic] = useState<boolean>(user?.user_metadata?.public ?? false)
   const [isSaving, setIsSaving] = useState(false)
   const [followersOpen, setFollowersOpen] = useState(false)
+  const followersRef = useRef<HTMLDivElement>(null)
+  useOnClickOutside(followersRef as React.RefObject<HTMLElement>, () => setFollowersOpen(false))
 
   const { data: followers = [] } = useQuery<PublicProfile[]>({
     queryKey: ['followers', user?.id],
@@ -111,14 +115,14 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black`}>
                 {user.email}
               </p>
-              <div className="relative">
-                <button
+              <div className="relative" ref={followersRef}>
+                <Button
                   onClick={() => setFollowersOpen(o => !o)}
                   className={`${colorModeContext} flex items-center gap-1 text-fluid-sm background-text-black hover:text-first-color transition-colors`}
                 >
                   {followersOpen ? <MdExpandLess size={18} /> : <MdExpandMore size={18} />}
                   {t('myProfile.followers')} ({followers.length})
-                </button>
+                </Button>
                 {followersOpen && (
                   <div className={`${colorModeContext} absolute right-0 top-full mt-1 z-10 min-w-40 max-h-48 overflow-y-auto bg-background border border-black/20 dark:border-white/20 rounded-lg shadow-lg p-2 flex flex-col gap-1`}>
                     {followers.length > 0 ? followers.map(f => (

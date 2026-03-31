@@ -12,7 +12,8 @@
     "drawer": {
       "explore": "Selaa",
       "community": "Yhteisö",
-      "account": "Tili"
+      "account": "Tili",
+      "admin": "Ylläpito"
     }
   },
   "players": {

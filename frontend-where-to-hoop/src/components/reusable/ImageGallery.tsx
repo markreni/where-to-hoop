@@ -119,7 +119,7 @@ export const ImageGallery = ({ images, name }: ImageGalleryProps) => {
 
           {/* Image + side arrows */}
           <div
-            className="flex items-center gap-4 w-full max-w-4xl px-4"
+            className="relative flex items-center justify-center w-full max-w-4xl px-4"
             onClick={e => e.stopPropagation()}
           >
             {images.length > 1 && (
@@ -127,7 +127,7 @@ export const ImageGallery = ({ images, name }: ImageGalleryProps) => {
                 onClick={lightboxPrev}
                 disabled={lightboxIndex === 0}
                 aria-label="Previous image"
-                className={`${colorModeContext} p-2 rounded-full bg-white/10 text-white transition-all flex-shrink-0 ${
+                className={`${colorModeContext} absolute left-2 z-10 p-2 rounded-full bg-white/10 text-white transition-all ${
                   lightboxIndex === 0 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-white/25'
                 }`}
               >
@@ -138,7 +138,7 @@ export const ImageGallery = ({ images, name }: ImageGalleryProps) => {
             <img
               src={getHoopImageUrl(images[lightboxIndex].imagePath)}
               alt={`${name} ${lightboxIndex + 1}`}
-              className="flex-1 max-h-[80vh] w-full object-contain rounded-lg"
+              className="max-h-[80vh] max-w-full object-contain rounded-lg"
             />
 
             {images.length > 1 && (
@@ -146,7 +146,7 @@ export const ImageGallery = ({ images, name }: ImageGalleryProps) => {
                 onClick={lightboxNext}
                 disabled={lightboxIndex === images.length - 1}
                 aria-label="Next image"
-                className={`${colorModeContext} p-2 rounded-full bg-white/10 text-white transition-all flex-shrink-0 ${
+                className={`${colorModeContext} absolute right-2 z-10 p-2 rounded-full bg-white/10 text-white transition-all ${
                   lightboxIndex === images.length - 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-white/25'
                 }`}
               >
