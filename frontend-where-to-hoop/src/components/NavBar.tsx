@@ -19,6 +19,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useAuth } from "../contexts/AuthContext.tsx";
 import useIsAdmin from "../hooks/useIsAdmin.ts";
 import { MdAdminPanelSettings } from "react-icons/md";
+import MobileDrawer from "./MobileDrawer.tsx";
 
 
 const NavBar = () => {
@@ -32,6 +33,7 @@ const NavBar = () => {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [playerSearch, setPlayerSearch] = useState('');
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const isOnPlayersPage = location.pathname === '/players';
 
@@ -64,7 +66,7 @@ const NavBar = () => {
   }
   
   return (
-    <div className={`${colorModeContext} fixed z-402 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
+    <div className={`${colorModeContext} fixed z-1002 left-0 right-0 top-0 bg-background p-4 shadow-md`}>
       {sm ? (
         <div className="nav-bar">
           <div className="flex-center gap-2">
@@ -226,85 +228,10 @@ const NavBar = () => {
             <div className="hidden xsm:block">
               <LanguageToggle />
             </div>
-            <MenuTrigger>
-              <Button>
-                <FiAlignJustify size={28} className="text-first-color dark:text-yellow-400"/>
-              </Button>
-              <Popover className="w-24/25 sm:w-full pr-6">
-                <Menu className={"bg-second-color text-white rounded-md shadow-lg p-2"}>
-                  <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                    <Link to="/hoops" className="flex items-center gap-2">
-                      <Button onClick={() => locateUser()}>
-                        <MdLocationPin size={22}/>
-                      </Button>
-                      {t('nav.showHoops')}
-                    </Link>
-                  </MenuItem>
-                  {!user ? (
-                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/signin" className="flex items-center gap-2">
-                          <IoMdPerson size={22}/>
-                          {t('nav.signIn')}
-                        </Link>
-                      </MenuItem>
-                  ) : (
-                    <>
-                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/search-players" className="flex items-center gap-2">
-                          <MdPersonSearch size={22}/>
-                          {t('nav.findFriend')}
-                        </Link>
-                      </MenuItem>
-                      <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/myprofile" className="flex items-center gap-2">
-                          <IoMdPerson size={22}/>
-                          {t('nav.myAccount')}
-                        </Link>
-                      </MenuItem>
-                       <MenuItem className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}>
-                        <Link to="/players" className="flex items-center gap-2">
-                          <FaUserCircle size={22}/>
-                          {t('nav.players')}
-                        </Link>
-                      </MenuItem>
-                      <MenuItem
-                        className={`${colorModeContext} mb-2 rounded-md background-hover-text-gray background-text-reverse-black`}
-                        onAction={() => signOut()}
-                      >
-                        <span className="flex items-center gap-2">
-                          <IoMdLogOut size={22}/>
-                          {t('nav.signOut')}
-                        </span>
-                      </MenuItem>
-                    </>
-                  )}
-                  {user && (
-                    <MenuItem className={`${colorModeContext} ${isAdmin && 'mb-2'} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                      <Link to="/addhoop" className="flex items-center gap-2">
-                        <GiBasketballBasket size={22}/>
-                        {t('nav.addHoop')}
-                      </Link>
-                    </MenuItem>
-                  )}
-                  {isAdmin && (
-                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                      <Link to="/admin" className="flex items-center gap-2">
-                        <MdAdminPanelSettings size={22}/>
-                        Admin
-                      </Link>
-                    </MenuItem>
-                  )}
-                  {!user && (
-                    <MenuItem className={`${colorModeContext} rounded-md background-hover-text-gray background-text-reverse-black`}>
-                      <Link to="/signup" className="flex items-center gap-2">
-                        <IoMdPersonAdd size={22}/>
-                        {t('nav.signUp')}
-                      </Link>
-                    </MenuItem>
-                  )}
-                </Menu>
-              </Popover>
-            </MenuTrigger>
+            <Button onPress={() => setDrawerOpen(true)}>
+              <FiAlignJustify size={28} className={"text-first-color"} />
+            </Button>
+            <MobileDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
           </div>
         </div>
       )}

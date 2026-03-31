@@ -8,7 +8,12 @@
     "myAccount": "Oma tili",
     "findFriend": "Löydä kaveri",
     "players": "Pelaajat",
-    "searchPlayers": "Etsi julkista pelaajaa..."
+    "searchPlayers": "Etsi julkista pelaajaa...",
+    "drawer": {
+      "explore": "Selaa",
+      "community": "Yhteisö",
+      "account": "Tili"
+    }
   },
   "players": {
     "title": "Pelaaja näkymä",

@@ -8,7 +8,12 @@
     "myAccount": "My Account",
     "findFriend": "Find Friend",
     "players": "Players",
-    "searchPlayers": "Look for a public player..."
+    "searchPlayers": "Look for a public player...",
+    "drawer": {
+      "explore": "Explore",
+      "community": "Community",
+      "account": "Account"
+    }
   },
   "players": {
     "title": "Players Dashboard",
