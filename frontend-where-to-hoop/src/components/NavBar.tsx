@@ -141,7 +141,7 @@ const NavBar = () => {
               <Popover className="w-56 pr-6">
                 <Menu className={`${colorModeContext} bg-background rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 p-3`}>
                   {user && (
-                    <MenuItem className={`${colorModeContext} mb-1 rounded-md background-hover background-text-black`}>
+                    <MenuItem className={`${colorModeContext} mb-1.5 rounded-md background-hover background-text-black`}>
                       <Link to="/addhoop" className="flex items-center gap-2">
                         <GiBasketballBasket size={18}/>
                         {t('nav.addHoop')}
@@ -150,7 +150,7 @@ const NavBar = () => {
                   )}
 
                   {user && (
-                    <MenuItem className={`${colorModeContext} mb-1 rounded-md background-hover background-text-black`}>
+                    <MenuItem className={`${colorModeContext} mb-1.5 rounded-md background-hover background-text-black`}>
                       <Link to="/search-players" className="flex items-center gap-2">
                         <MdPersonSearch size={18}/>
                         {t('nav.findFriend')}
@@ -160,13 +160,13 @@ const NavBar = () => {
 
                   {!user ? (
                     <>
-                      <MenuItem className={`${colorModeContext} md:hidden mb-1 rounded-md background-hover background-text-black`}>
+                      <MenuItem className={`${colorModeContext} md:hidden mb-1.5 rounded-md background-hover background-text-black`}>
                         <Link to="/signin" className="flex items-center gap-2">
                           <IoMdPerson size={18}/>
                           {t('nav.signIn')}
                         </Link>
                       </MenuItem>
-                      <MenuItem className={`${colorModeContext} rounded-md background-hover background-text-black`}>
+                      <MenuItem className={`${colorModeContext} mb-1.5 rounded-md background-hover background-text-black`}>
                         <Link to="/signup" className="flex items-center gap-2">
                           <IoMdPersonAdd size={18}/>
                           {t('nav.signUp')}
@@ -175,14 +175,14 @@ const NavBar = () => {
                     </>
                   ) : (
                     <>
-                      <MenuItem className={`${colorModeContext} mb-1 lg:hidden rounded-md background-hover background-text-black`}>
+                      <MenuItem className={`${colorModeContext} mb-1.5 lg:hidden rounded-md background-hover background-text-black`}>
                         <Link to="/myprofile" className="flex items-center gap-2">
                           <IoMdPerson size={18}/>
                           {t('nav.myAccount')}
                         </Link>
                       </MenuItem>
                       {isAdmin && (
-                        <MenuItem className={`${colorModeContext} mb-1 lg:mb-0 rounded-md background-hover background-text-black`}>
+                        <MenuItem className={`${colorModeContext} mb-1.5 lg:mb-0 rounded-md background-hover background-text-black`}>
                           <Link to="/admin" className="flex items-center gap-2">
                             <MdAdminPanelSettings size={18}/>
                             {t('nav.drawer.admin')}
@@ -190,7 +190,7 @@ const NavBar = () => {
                         </MenuItem>
                       )}
                       <MenuItem
-                        className={`${colorModeContext} mt-3 lg:hidden rounded-md background-hover text-first-color`}
+                        className={`${colorModeContext} mt-4 lg:hidden rounded-md background-hover text-first-color`}
                         onAction={() => signOut()}
                       >
                         <span className="flex items-center gap-2">

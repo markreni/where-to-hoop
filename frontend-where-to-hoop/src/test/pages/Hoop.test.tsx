@@ -132,7 +132,7 @@ describe('Hoop Page', () => {
 
   it('renders footer', () => {
     render(<Hoop hoop={mockHoop} />);
-    expect(screen.getByText(/WhereHoops/)).toBeInTheDocument();
+    expect(screen.getByText(/WhereHoopz/)).toBeInTheDocument();
   });
 
   it('displays favorite icon', () => {

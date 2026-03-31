@@ -68,7 +68,7 @@ describe('Home', () => {
 
   it('renders copyright in footer', () => {
     render(<Home hoops={initialHoops} />);
-    expect(screen.getByText(/WhereHoops\. All rights reserved\./)).toBeInTheDocument();
+    expect(screen.getByText(/WhereHoopz\. All rights reserved\./)).toBeInTheDocument();
   });
 });
 

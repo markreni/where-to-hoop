@@ -119,12 +119,12 @@
     "enableLocation": "Salli sijainnin käyttö nähdäksesi lähimmät kentät",
     "intro": {
       "welcomePrefix": "Tervetuloa",
-      "wherehoops": "WhereHoopsiin",
+      "wherehoops": "WhereHoopziin",
       "description": "Koripallon ystäviltä, koripallon ystäville.",
-      "description2": "WhereHoops on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja tutustumaan muiden alueesi pelaajien kanssa.",
+      "description2": "WhereHoopz on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja tutustumaan muiden alueesi pelaajien kanssa.",
       "helsinkiNotice": "Tällä hetkellä saatavilla ainoastaan Helsingissä",
       "helsinkiMade": "Paikallinen sovellus, innovoitu Helsingissä",
-      "aboutLink": "Lue lisää yhteisöstämme ja arvoistamme"
+      "aboutLink": "Lisää yhteisöstämme ja arvoistamme"
     },
     "hero": {
       "tagline": "Aloitetaan pelit",
@@ -213,11 +213,11 @@
     "privacy": "Tietosuoja",
     "contact": "Yhteystiedot",
     "faq": "FAQ",
-    "copyright": "WhereHoops. Kaikki oikeudet pidätetään."
+    "copyright": "WhereHoopz. Kaikki oikeudet pidätetään."
   },
   "about": {
-    "title": "Tietoja WhereHoopsista",
-    "intro": "Koripallon ystäviltä, koripallon ystäville. WhereHoops on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja yhdistymään muiden pelaajien kanssa alueellasi.",
+    "title": "Tietoja WhereHoopzista",
+    "intro": "Koripallon ystäviltä, koripallon ystäville. WhereHoopz on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja yhdistymään muiden pelaajien kanssa alueellasi.",
     "intro2": "Etsitpä sitten nopeaa yksin harjoittelua tai kilpailuhenkistä pickup-peliä, teemme helpoksi löytää kenttiä, nähdä reaaliaikaisen pelaaja-aktiivisuuden ja liittyä mukaan peliin. Missiomme on tuoda pelaajat yhteen ja tehdä jokaisesta kentästä koti.",
     "whatYouCanDo": "Mitä voit tehdä",
     "findCourts": "Löydä kenttiä läheltäsi",
@@ -240,7 +240,7 @@
     "imagesLicensing": "Kuvat ja lisensointi",
     "imagesLicensingText": "Lataamalla kuvia koripallokentistä vahvistat, että sinulla on oikeus jakaa ne. Kuvat näytetään julkisesti sivustolla auttaakseen muita käyttäjiä tunnistamaan kenttiä. Jos haluat kuvan poistettavan, ota meihin yhteyttä ja käsittelemme pyyntösi viipymättä.",
     "locationData": "Sijaintitiedot",
-    "locationDataText": "WhereHoops käyttää laitteesi sijaintia (luvallasi) näyttääkseen lähellä olevia kenttiä ja laskeakseen etäisyyksiä. Nämä sijaintitiedot käsitellään paikallisesti selaimessasi eikä niitä tallenneta palvelimillemme. Voit poistaa sijaintipalvelut käytöstä milloin tahansa selaimen asetuksista.",
+    "locationDataText": "WhereHoopz käyttää laitteesi sijaintia (luvallasi) näyttääkseen lähellä olevia kenttiä ja laskeakseen etäisyyksiä. Nämä sijaintitiedot käsitellään paikallisesti selaimessasi eikä niitä tallenneta palvelimillemme. Voit poistaa sijaintipalvelut käytöstä milloin tahansa selaimen asetuksista.",
     "dataRetention": "Tietojen säilytys ja poisto",
     "dataRetentionText": "Voit pyytää lisäämiesi kenttätietojen poistamista ottamalla meihin yhteyttä. Pyynnöt käsitellään kohtuullisessa ajassa. Joitakin koottuja tilastoja voi säilyä anonymisoidussa muodossa.",
     "contact": "Yhteystiedot",
@@ -263,8 +263,8 @@
     "Mark": "Mark :)"
   },
   "faq": {
-    "title": "WhereHoopsin käyttöohjeet",
-    "intro": "Löydä vastauksia yleisimpiin kysymyksiin WhereHoopsin käytöstä.",
+    "title": "WhereHoopzin käyttöohjeet",
+    "intro": "Löydä vastauksia yleisimpiin kysymyksiin WhereHoopzin käytöstä.",
     "readyToPlay": {
       "question": "Miten kerron muille, että olen menossa pelaamaan?",
       "answer": "Paina minkä tahansa kentän kortilla (etusivulla tai kenttälistassa) vihreää \"Valmis pelaamaan\" -nappia.\nTämä vie sinut kentän sivulle, jossa voit ilmoittautua pelisessioon ilmoittautumislomakkeella.\nValitse saapumisaikasi, peliaika ja\nhaluatko pelata muiden kanssa.\nIlmoittautumisesi näkyy kentän \"Kuka pelaa\" -paneelissa, jotta muut pelaajat tietävät sinun olevan paikalla.\n\nHuom: voit ilmoittautua kerran per kenttä tänään ja kerran tulevalle päivälle."

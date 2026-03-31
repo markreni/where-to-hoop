@@ -119,12 +119,12 @@
     "enableLocation": "Enable location access to see the nearest courts",
     "intro": {
       "welcomePrefix": "Welcome to",
-      "wherehoops": "WhereHoops",
+      "wherehoops": "WhereHoopz",
       "description": "From basketball lovers, for basketball lovers.",
-      "description2": "WhereHoops is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
+      "description2": "WhereHoopz is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
       "helsinkiNotice": "Currently only available in Helsinki, Finland",
       "helsinkiMade": "A local app, made in Helsinki",
-      "aboutLink": "Find out more about our community and core values"
+      "aboutLink": "More on our community and values"
     },
     "hero": {
       "tagline": "Game On",
@@ -213,11 +213,11 @@
     "privacy": "Privacy",
     "contact": "Contact",
     "faq": "FAQ",
-    "copyright": "WhereHoops. All rights reserved."
+    "copyright": "WhereHoopz. All rights reserved."
   },
   "about": {
-    "title": "About WhereHoops",
-    "intro": "From basketball lovers, for basketball lovers. WhereHoops is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
+    "title": "About WhereHoopz",
+    "intro": "From basketball lovers, for basketball lovers. WhereHoopz is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
     "intro2": "Whether you're looking for a quick solo session or a competitive pickup game, we make it easy to find courts, see real-time player activity, and join the action. Our mission is to bring hoopers together and make every court feel like home.",
     "whatYouCanDo": "What You Can Do",
     "findCourts": "Find Courts Near You",
@@ -240,7 +240,7 @@
     "imagesLicensing": "Images & Licensing",
     "imagesLicensingText": "By uploading photos of basketball courts, you confirm you have the right to share them. Images are displayed publicly on the site to help other users identify courts. If you need an image removed, contact us and we will handle your request promptly.",
     "locationData": "Location Data",
-    "locationDataText": "WhereHoops uses your device location (with your permission) to show nearby courts and calculate distances. This location data is processed locally in your browser and is not stored on our servers. You can disable location access at any time through your browser settings.",
+    "locationDataText": "WhereHoopz uses your device location (with your permission) to show nearby courts and calculate distances. This location data is processed locally in your browser and is not stored on our servers. You can disable location access at any time through your browser settings.",
     "dataRetention": "Data Retention & Deletion",
     "dataRetentionText": "You can request deletion of any court data you've submitted by contacting us. Requests are processed within a reasonable timeframe. Some aggregated statistics may remain in anonymized form.",
     "contact": "Contact",
@@ -263,8 +263,8 @@
     "Mark": "Mark :)"
   },
   "faq": {
-    "title": "How to Use WhereHoops",
-    "intro": "Find answers to common questions about using WhereHoops.",
+    "title": "How to Use WhereHoopz",
+    "intro": "Find answers to common questions about using WhereHoopz.",
     "readyToPlay": {
       "question": "How do I let others know I'm going to play?",
       "answer": "On any court card (on the home page or courts list), tap the green \"Ready to play\" button. This will navigate you to the court's page, then use the enrollment form to sign up for a session. Choose your arrival time, how long you'll play, and whether you're open to playing with others. Your enrollment will appear on the court's \"Who's Playing\" panel, letting other hoopers know you'll be there.\n\nNote: you can have one enrollment per court for today and one for a future date."

@@ -28,7 +28,6 @@ interface User {
   //preferredPlayTimes: TimeSlot[]; // When they usually play
   //playModePreference: PlayMode; // Whether they prefer open play or solo hooping
   favouriteHoops: string[]; // IDs of their favorite hoops
-  following: string[]; // IDs of players this user follows
   public: boolean; // Whether the profile is publicly visible
   //enrolments: PlayerEnrollment[]; // Hoops they are currently enrolled in
 }

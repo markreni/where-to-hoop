@@ -40,7 +40,7 @@ describe('Footer', () => {
 
   it('renders copyright text', () => {
     render(<Footer />);
-    expect(screen.getByText(/WhereHoops\. All rights reserved\./)).toBeInTheDocument();
+    expect(screen.getByText(/WhereHoopz\. All rights reserved\./)).toBeInTheDocument();
   });
 
   it('renders copyright year', () => {
