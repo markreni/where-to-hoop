@@ -366,6 +366,14 @@
       "enrollmentLimitNote": "You can have one enrollment per court for today and one for a future date"
     }
   },
+  "profile": {
+    "uploadSuccess": "Profile photo updated",
+    "uploadError": "Failed to upload photo",
+    "removeSuccess": "Profile photo removed",
+    "removeError": "Failed to remove photo",
+    "removeImage": "Remove photo",
+    "imageTooLarge": "Image must be under {{size}}MB"
+  },
   "common": {
     "all": "All",
     "indoor": "Indoor",

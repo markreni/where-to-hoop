@@ -9,6 +9,7 @@ const mockPlayers: User[] = [
     email: 'alice.korhonen@email.com',
     public: true,
     favouriteHoops: ['1', '3'],
+    profileImage: null
   },
   {
     id: 'player-2',
@@ -18,6 +19,7 @@ const mockPlayers: User[] = [
     email: 'bob.virtanen@email.com',
     public: true,
     favouriteHoops: ['1'],
+    profileImage: null
   },
   {
     id: 'player-3',
@@ -27,6 +29,7 @@ const mockPlayers: User[] = [
     email: 'charlie.makinen@email.com',
     public: true,
     favouriteHoops: ['2'],
+    profileImage: null
   },
   {
     id: 'player-4',
@@ -36,6 +39,7 @@ const mockPlayers: User[] = [
     email: 'diana.laine@email.com',
     public: true,
     favouriteHoops: ['2', '5'],
+    profileImage: null
   },
   {
     id: 'player-5',
@@ -45,6 +49,7 @@ const mockPlayers: User[] = [
     email: 'ethan.niemi@email.com',
     public: true,
     favouriteHoops: ['2', '3'],
+    profileImage: null
   },
   {
     id: 'player-6',
@@ -54,6 +59,7 @@ const mockPlayers: User[] = [
     email: 'fiona.heikkinen@email.com',
     public: true,
     favouriteHoops: ['3'],
+    profileImage: null
   },
   {
     id: 'player-7',
@@ -63,6 +69,7 @@ const mockPlayers: User[] = [
     email: 'mika.jarvinen@email.com',
     public: true,
     favouriteHoops: ['4', '1'],
+    profileImage: null
   },
   {
     id: 'player-8',
@@ -72,6 +79,7 @@ const mockPlayers: User[] = [
     email: 'tomas.lehtonen@email.com',
     public: true,
     favouriteHoops: ['5'],
+    profileImage: null
   },
   {
     id: 'player-9',
@@ -81,6 +89,7 @@ const mockPlayers: User[] = [
     email: 'liisa.salminen@email.com',
     public: true,
     favouriteHoops: ['5', '2'],
+    profileImage: null
   },
   {
     id: 'player-10',
@@ -90,6 +99,7 @@ const mockPlayers: User[] = [
     email: 'ville.koskinen@email.com',
     public: true,
     favouriteHoops: ['5', '3'],
+    profileImage: null
   },
 ];
 

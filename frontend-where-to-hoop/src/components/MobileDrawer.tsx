@@ -11,6 +11,8 @@ import useLocateUser from "../hooks/useLocateUser.ts";
 import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import type { ColorMode } from "../types/types.ts";
 import { DrawerItem } from "./reusable/DrawerItem.tsx";
+import ProfileCircle from "./reusable/ProfileCircle.tsx";
+import { getProfileImageUrl } from "../utils/requests.ts";
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -44,14 +46,10 @@ const MobileDrawer = ({ isOpen, onClose }: MobileDrawerProps) => {
 
   if (!isOpen) return null;
 
-  const nickname = user?.user_metadata?.nickname ?? user?.email ?? "";
+  const nickname = user?.user_metadata?.nickname ?? "Anonymous";
   const email = user?.email ?? "";
-  const initials = nickname
-    .split(" ")
-    .map((w: string) => w[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
+  const profileImage = user?.user_metadata?.profile_image ?? null;
+  const profileImageUrl = profileImage ? getProfileImageUrl(profileImage.imagePath) : undefined;
 
   const handleSignOut = () => {
     signOut();
@@ -80,9 +78,7 @@ const MobileDrawer = ({ isOpen, onClose }: MobileDrawerProps) => {
         {user && (
           <div className={`${colorModeContext} px-6 pt-6 pb-4 border-b border-gray-200 dark:border-gray-700`}>
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold text-sm shrink-0">
-                {initials}
-              </div>
+              <ProfileCircle name={nickname} imageUrl={profileImageUrl} />
               <div className="min-w-0">
                 <p className={`${colorModeContext} font-semibold text-sm background-text-black truncate`}>
                   {nickname}

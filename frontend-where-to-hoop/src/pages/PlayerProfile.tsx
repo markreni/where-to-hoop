@@ -7,9 +7,10 @@ import { useFollowing } from '../hooks/useFollowing'
 import { BackArrow } from '../components/reusable/BackArrow'
 import Footer from '../components/Footer'
 import { EnrollmentCard } from '../components/reusable/EnrollmentCard'
-import { fetchPlayerByNickname, fetchActiveEnrollments, fetchExpiredEnrollmentCount, fetchFollowers } from '../utils/requests'
+import { fetchPlayerByNickname, fetchActiveEnrollments, fetchExpiredEnrollmentCount, fetchFollowers, getProfileImageUrl } from '../utils/requests'
 import type { BasketballHoop, ColorMode, PlayerEnrollment, PublicProfile } from '../types/types'
-import { FaUserCircle, FaLock, FaUsers } from 'react-icons/fa'
+import { FaLock, FaUsers } from 'react-icons/fa'
+import ProfileCircle from '../components/reusable/ProfileCircle'
 import { GiBasketballBasket } from 'react-icons/gi'
 
 interface PlayerProfileProps {
@@ -65,8 +66,12 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
           ) : (
             <>
               {/* Header */}
-              <div className="flex items-center gap-4 mb-8">
-                <FaUserCircle size={64} className={`${colorModeContext} background-text-reverse-black transition-opacity shrink-0`} />
+              <div className="flex items-center gap-4 mb-4">
+                <ProfileCircle
+                  name={profile.nickname}
+                  imageUrl={profile.profileImage ? getProfileImageUrl(profile.profileImage.imagePath) : undefined}
+                  size="xl"
+                />
                 <div className="flex-1 min-w-0">
                   <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-reverse-black truncate`}>
                     {profile.nickname}

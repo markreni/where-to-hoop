@@ -1,4 +1,4 @@
-import type { BasketballHoop, ObservationImage, PlayerEnrollment, PublicProfile, FollowRequest } from '../types/types'
+import type { BasketballHoop, ObservationImage, PlayerEnrollment, PublicProfile, FollowRequest, ProfileImage } from '../types/types'
 import supabase from './supabase'
 
 const fetchHoops = async (): Promise<BasketballHoop[]> => {
@@ -391,6 +391,100 @@ const getHoopImageUrl = (imagePath: string): string => {
   return data.publicUrl
 }
 
+const getProfileImageUrl = (imagePath: string): string => {
+  const { data } = supabase.storage.from('profile-images').getPublicUrl(imagePath)
+  return data.publicUrl
+}
+
+const uploadProfileImage = async (userId: string, file: File, oldImage: ProfileImage | null): Promise<ProfileImage> => {
+  const timestamp = Date.now()
+  const oldImagePath: string | undefined = oldImage?.imagePath
+  const path = `${userId}/profile-${timestamp}-${file.name}`
+
+  const { error: uploadError } = await supabase.storage
+    .from('profile-images')
+    .upload(path, file)
+
+  if (uploadError) {
+    console.error('Profile image upload error:', uploadError.message)
+    throw uploadError
+  }
+
+  const profileImage: ProfileImage = {
+    imagePath: path,
+    uploadedAt: new Date(timestamp).toISOString(),
+  }
+
+  const { error: dbError } = await supabase
+    .from('users')
+    .update({ profile_image: profileImage })
+    .eq('id', userId)
+
+  if (dbError) {
+    await supabase.storage.from('profile-images').remove([path])
+    console.error('Update profile image in DB error:', dbError.message)
+    throw dbError
+  }
+
+  const { error: authError } = await supabase.auth.updateUser({ data: { profile_image: profileImage } })
+
+  if (authError) {
+    // Roll back: remove from storage and revert DB to previous state
+    await supabase.storage.from('profile-images').remove([path])
+    if (oldImagePath) {
+      const oldProfileImage: ProfileImage = { imagePath: oldImagePath, uploadedAt: oldImage?.uploadedAt ?? new
+  Date().toISOString() }
+      await supabase.from('users').update({ profile_image: oldProfileImage }).eq('id', userId)
+    } else {
+      await supabase.from('users').update({ profile_image: null }).eq('id', userId)
+    }
+    console.error('Update auth metadata profile image error:', authError.message)
+    throw authError
+  }
+
+  // Clean up old image after successful update
+  if (oldImagePath) {
+    const { error: removeError } = await supabase.storage.from('profile-images').remove([oldImagePath])
+    if (removeError) {
+      console.error('Remove old profile image error:', removeError.message)
+    }
+  }
+
+  return profileImage
+}
+
+const removeProfileImage = async (userId: string, image: ProfileImage | null): Promise<void> => {
+  const imagePath: string | undefined = image?.imagePath
+  // Update DB and auth first, then delete from storage last.
+  // If DB/auth fails, the file stays in storage and state remains consistent.
+  const { error: dbError } = await supabase
+    .from('users')
+    .update({ profile_image: null })
+    .eq('id', userId)
+
+  if (dbError) {
+    console.error('Remove profile image from DB error:', dbError.message)
+    throw dbError
+  }
+
+  const { error: authError } = await supabase.auth.updateUser({ data: { profile_image: null } })
+
+  if (authError) {
+    // Roll back DB to keep state consistent
+    await supabase.from('users').update({ profile_image: { imagePath, uploadedAt: image?.uploadedAt ?? new
+  Date().toISOString() } }).eq('id', userId)
+    console.error('Remove profile image from auth error:', authError.message)
+    throw authError
+  }
+
+  if (imagePath) {
+    const { error: storageError } = await supabase.storage.from('profile-images').remove([imagePath])
+    if (storageError) {
+      console.error('Remove profile image from storage error:', storageError.message)
+    }
+  }
+}
+
 const fetchFavorites = async (userId: string): Promise<string[]> => {
   const { data, error } = await supabase
     .from('users')
@@ -426,7 +520,7 @@ const toggleFavoriteRequest = async (userId: string, hoopId: string, add: boolea
 const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, public')
+    .select('id, nickname, public, profile_image')
     .eq('public', true)
     .order('nickname', { ascending: true })
 
@@ -435,13 +529,13 @@ const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
     throw error
   }
 
-  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public }))
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null }))
 }
 
 const searchAllPlayersByNickname = async (query: string): Promise<PublicProfile[]> => {
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, public')
+    .select('id, nickname, public, profile_image')
     .ilike('nickname', `%${query}%`)
     .order('nickname', { ascending: true })
     .limit(20)
@@ -451,13 +545,13 @@ const searchAllPlayersByNickname = async (query: string): Promise<PublicProfile[
     throw error
   }
 
-  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public }))
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null }))
 }
 
 const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> => {
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, public')
+    .select('id, nickname, public, profile_image')
     .ilike('nickname', nickname)
     .single()
 
@@ -466,7 +560,7 @@ const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> =
     throw error
   }
 
-  return { id: data.id, nickname: data.nickname, public: data.public }
+  return { id: data.id, nickname: data.nickname, public: data.public, profileImage: data.profile_image ?? null }
 }
 
 const removeFollower = async (userId: string, targetId: string): Promise<void> => {
@@ -518,7 +612,7 @@ const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> 
 
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, public')
+    .select('id, nickname, public, profile_image')
     .in('id', userIds)
 
   if (error) {
@@ -526,7 +620,7 @@ const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> 
     throw error
   }
 
-  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public }))
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null }))
 }
 
 const sendFollowRequest = async (fromId: string, toId: string): Promise<void> => {
@@ -692,4 +786,4 @@ const fetchActiveEnrollments = async (userId: string): Promise<PlayerEnrollment[
   }))
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments }
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments }

@@ -12,13 +12,14 @@ import { HoopCard } from '../components/reusable/HoopCard'
 import { FollowingPlayerCard } from '../components/reusable/FollowingPlayerCard'
 import { RequestCard } from '../components/reusable/RequestCard'
 import Footer from '../components/Footer'
-import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers } from '../utils/requests'
+import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers, getProfileImageUrl } from '../utils/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { useFollowing } from '../hooks/useFollowing'
 import { groupEnrollmentsByHoop } from '../utils/functions'
 import haversineDistance from '../utils/functions'
-import type { BasketballHoop, ColorMode, Coordinates, FollowRequest, PlayerEnrollment, PublicProfile } from '../types/types'
+import type { BasketballHoop, ColorMode, Coordinates, FollowRequest, PlayerEnrollment, ProfileImage, PublicProfile } from '../types/types'
 import { ProfileVisibilityToggle } from '../components/reusable/ProfileVisibilityToggle'
+import ProfileImageUpload from '../components/reusable/ProfileImageUpload'
 import { MdOutlineFavoriteBorder, MdExpandMore, MdExpandLess } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
 import { FaUserCircle, FaUserPlus } from 'react-icons/fa'
@@ -91,6 +92,10 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
 
   if (!user) return <Navigate to="/signin" replace />
 
+  const nickname = user.user_metadata?.nickname ?? "Anonymous"
+  const profileImage: ProfileImage | null = user.user_metadata?.profile_image ?? null
+  const profileImageUrl = profileImage ? getProfileImageUrl(profileImage.imagePath) : undefined
+
   const now = new Date()
   const upcoming: PlayerEnrollment[] = enrollments
     .filter(e => e.arrivalTime >= now)
@@ -100,46 +105,58 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
     .sort((a, b) => b.arrivalTime.getTime() - a.arrivalTime.getTime())
 
   return (
-    <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
+    <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col relative`}>
       <BackArrow />
+      {/* Followers dropdown */}
+      <div className="absolute right-3 lg:right-5 top-24">
+        <div className="relative" ref={followersRef}>
+          <Button
+            onClick={() => setFollowersOpen(o => !o)}
+            className={`${colorModeContext} flex items-center gap-1 text-fluid-sm background-text-black hover:text-first-color transition-colors`}
+            >
+              {followersOpen ? <MdExpandLess size={18} /> : <MdExpandMore size={18} />}
+              {t('myProfile.followers')} ({followers.length})
+          </Button>
+          {followersOpen && (
+            <div className={`${colorModeContext} absolute right-0 top-full mt-1 z-10 min-w-40 max-h-48 overflow-y-auto bg-background border border-black/20 dark:border-white/20 rounded-lg shadow-lg p-2 flex flex-col gap-1`}>
+              {followers.length > 0 ? followers.map(f => (
+               <Link
+                  key={f.id}
+                  to={`/players/${f.nickname.toLowerCase()}`}
+                  className={`${colorModeContext} text-fluid-sm background-text hover:text-first-color transition-colors px-2 py-1 rounded hover:bg-black/5 dark:hover:bg-white/5`}
+                  >
+                  {f.nickname}
+                 </Link>
+              )) : (
+                  <p className={`${colorModeContext} text-fluid-sm text-gray-400 dark:text-gray-500 px-2 py-1`}>
+                    {t('myProfile.noFollowers')}
+                  </p>
+                )}
+            </div>
+          )}
+        </div>
+      </div>
       <div className="flex-grow padding-x-for-page padding-b-for-page">
         <div className="max-w-2xl mx-auto">
 
           {/* Header */}
           <div className="mb-6">
-            <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-black`}>
-              {user.user_metadata?.nickname ?? user.email}
-            </h1>
-            {/* Email + Followers dropdown */}
-            <div className="flex items-start justify-between mb-4">
-              <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black`}>
-                {user.email}
-              </p>
-              <div className="relative" ref={followersRef}>
-                <Button
-                  onClick={() => setFollowersOpen(o => !o)}
-                  className={`${colorModeContext} flex items-center gap-1 text-fluid-sm background-text-black hover:text-first-color transition-colors`}
-                >
-                  {followersOpen ? <MdExpandLess size={18} /> : <MdExpandMore size={18} />}
-                  {t('myProfile.followers')} ({followers.length})
-                </Button>
-                {followersOpen && (
-                  <div className={`${colorModeContext} absolute right-0 top-full mt-1 z-10 min-w-40 max-h-48 overflow-y-auto bg-background border border-black/20 dark:border-white/20 rounded-lg shadow-lg p-2 flex flex-col gap-1`}>
-                    {followers.length > 0 ? followers.map(f => (
-                      <Link
-                        key={f.id}
-                        to={`/players/${f.nickname.toLowerCase()}`}
-                        className={`${colorModeContext} text-fluid-sm background-text hover:text-first-color transition-colors px-2 py-1 rounded hover:bg-black/5 dark:hover:bg-white/5`}
-                      >
-                        {f.nickname}
-                      </Link>
-                    )) : (
-                      <p className={`${colorModeContext} text-fluid-sm text-gray-400 dark:text-gray-500 px-2 py-1`}>
-                        {t('myProfile.noFollowers')}
-                      </p>
-                    )}
-                  </div>
-                )}
+            <div className="flex items-center justify-start gap-4 mb-3">
+              <ProfileImageUpload
+                imageUrl={profileImageUrl}
+                userName={nickname}
+                userId={user.id}
+                image={profileImage}
+                onImageUpdated={() => {}}
+              />
+              {/* Nickname + Email */}
+              <div className='flex flex-col items-start gap-0'>
+                <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-black`}>
+                  {nickname}
+                </h1>
+                 <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black`}>
+                  {user.email}
+                </p>
               </div>
             </div>
 

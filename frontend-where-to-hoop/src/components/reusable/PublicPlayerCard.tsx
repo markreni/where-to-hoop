@@ -5,6 +5,8 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useFollowing } from '../../hooks/useFollowing'
 import type { ColorMode, PublicProfile } from '../../types/types'
 import { MdArrowForward } from 'react-icons/md'
+import ProfileCircle from './ProfileCircle'
+import { getProfileImageUrl } from '../../utils/requests'
 
 interface PublicPlayerCardProps {
   profile: PublicProfile
@@ -17,13 +19,14 @@ const PublicPlayerCard = ({ profile }: PublicPlayerCardProps) => {
   const { isFollowing, isRequested, toggleFollow } = useFollowing()
 
   const isOwnProfile = user?.id === profile.id
-  const initials = profile.nickname.charAt(0).toUpperCase()
 
   return (
     <div className={`${colorModeContext} flex items-center gap-3 p-3 rounded-lg bg-background shadow-sm border border-third-color/20 dark:border-white/10`}>
-      <div className="w-10 h-10 rounded-full bg-first-color flex items-center justify-center text-white font-medium text-fluid-sm shrink-0">
-        {initials}
-      </div>
+      <ProfileCircle
+        name={profile.nickname}
+        imageUrl={profile.profileImage ? getProfileImageUrl(profile.profileImage.imagePath) : undefined}
+        size="sm"
+      />
 
       <Link
         to={`/players/${profile.nickname.toLowerCase()}`}

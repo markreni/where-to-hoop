@@ -366,6 +366,14 @@
       "enrollmentLimitNote": "Voit ilmoittautua kerran per kenttä tänään ja kerran tulevalle päivälle"
     }
   },
+  "profile": {
+    "uploadSuccess": "Profiilikuva päivitetty",
+    "uploadError": "Kuvan lataus epäonnistui",
+    "removeSuccess": "Profiilikuva poistettu",
+    "removeError": "Kuvan poisto epäonnistui",
+    "removeImage": "Poista kuva",
+    "imageTooLarge": "Kuvan koko saa olla enintään {{size}}MB"
+  },
   "common": {
     "all": "Kaikki",
     "indoor": "Sisäkenttä",
