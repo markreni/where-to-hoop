@@ -12,7 +12,9 @@ import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import type { ColorMode } from "../types/types.ts";
 import { DrawerItem } from "./reusable/DrawerItem.tsx";
 import ProfileCircle from "./reusable/ProfileCircle.tsx";
-import { getProfileImageUrl } from "../utils/requests.ts";
+import { useQuery } from "@tanstack/react-query";
+import { getProfileImageUrl, fetchUserProfileImage } from "../utils/requests.ts";
+import type { ProfileImage } from "../types/types.ts";
 
 interface MobileDrawerProps {
   isOpen: boolean;
@@ -48,7 +50,11 @@ const MobileDrawer = ({ isOpen, onClose }: MobileDrawerProps) => {
 
   const nickname = user?.user_metadata?.nickname ?? "Anonymous";
   const email = user?.email ?? "";
-  const profileImage = user?.user_metadata?.profile_image ?? null;
+  const { data: profileImage = null } = useQuery<ProfileImage | null>({
+    queryKey: ['userProfileImage', user?.id],
+    queryFn: () => fetchUserProfileImage(user!.id),
+    enabled: !!user,
+  });
   const profileImageUrl = profileImage ? getProfileImageUrl(profileImage.imagePath) : undefined;
 
   const handleSignOut = () => {

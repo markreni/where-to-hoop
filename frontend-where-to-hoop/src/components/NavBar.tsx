@@ -166,7 +166,7 @@ const NavBar = () => {
                           {t('nav.signIn')}
                         </Link>
                       </MenuItem>
-                      <MenuItem className={`${colorModeContext} mb-1.5 rounded-md background-hover background-text-black`}>
+                      <MenuItem className={`${colorModeContext} rounded-md background-hover background-text-black`}>
                         <Link to="/signup" className="flex items-center gap-2">
                           <IoMdPersonAdd size={18}/>
                           {t('nav.signUp')}

@@ -13,7 +13,7 @@ interface ProfileImageUploadProps {
   userName: string;
   userId: string;
   image: ProfileImage | null;
-  onImageUpdated: (profileImage: ProfileImage | null) => void;
+  onImageUpdated: () => void;
 }
 
 const ProfileImageUpload = ({ imageUrl, userName, userId, image, onImageUpdated }: ProfileImageUploadProps) => {
@@ -42,8 +42,8 @@ const ProfileImageUpload = ({ imageUrl, userName, userId, image, onImageUpdated 
 
     setIsUploading(true);
     try {
-      const profileImage = await uploadProfileImage(userId, file, image);
-      onImageUpdated(profileImage);
+      await uploadProfileImage(userId, file, image);
+      onImageUpdated();
       success(t("profile.uploadSuccess"));
     } catch {
       error(t("profile.uploadError"));
@@ -59,7 +59,7 @@ const ProfileImageUpload = ({ imageUrl, userName, userId, image, onImageUpdated 
     setIsUploading(true);
     try {
       await removeProfileImage(userId, image);
-      onImageUpdated(null);
+      onImageUpdated();
       success(t("profile.removeSuccess"));
     } catch {
       error(t("profile.removeError"));

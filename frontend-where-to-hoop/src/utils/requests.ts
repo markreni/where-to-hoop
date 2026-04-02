@@ -786,4 +786,68 @@ const fetchActiveEnrollments = async (userId: string): Promise<PlayerEnrollment[
   }))
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments }
+const fetchUserProfileImage = async (userId: string): Promise<ProfileImage | null> => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('profile_image')
+    .eq('id', userId)
+    .single()
+
+  if (error) {
+    console.error('Fetch user profile image error:', error.message)
+    throw error
+  }
+
+  return data?.profile_image ?? null
+}
+
+interface UserWithProfileImage {
+  id: string
+  nickname: string
+  profileImage: ProfileImage
+}
+
+const fetchUsersWithProfileImages = async (): Promise<UserWithProfileImage[]> => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('id, nickname, profile_image')
+    .not('profile_image', 'is', null)
+    .order('nickname', { ascending: true })
+
+  if (error) {
+    console.error('Fetch users with profile images error:', error.message)
+    throw error
+  }
+
+  return (data ?? []).map(row => ({
+    id: row.id,
+    nickname: row.nickname,
+    profileImage: row.profile_image,
+  }))
+}
+
+const adminRemoveProfileImage = async (userId: string, imagePath: string): Promise<void> => {
+  const { data, error: dbError } = await supabase
+    .from('users')
+    .update({ profile_image: null })
+    .eq('id', userId)
+    .select('id')
+
+  if (dbError) {
+    console.error('Admin remove profile image from DB error:', dbError.message)
+    throw dbError
+  }
+
+  if (!data || data.length === 0) {
+    throw new Error('Profile image update failed — no rows affected. Check RLS policies.')
+  }
+
+  const { error: storageError } = await supabase.storage.from('profile-images').remove([imagePath])
+  if (storageError) {
+    console.error('Admin remove profile image from storage error:', storageError.message)
+  }
+}
+
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
+
+export type { UserWithProfileImage }

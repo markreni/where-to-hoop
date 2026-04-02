@@ -367,6 +367,30 @@
       "enrollmentLimitNote": "You can have one enrollment per court for today and one for a future date"
     }
   },
+  "admin": {
+    "hoopsTab": "Hoops",
+    "profileImagesTab": "Profile Images",
+    "hoopsTotal": "{{count}} hoops total",
+    "profileImagesTotal": "{{count}} profile images",
+    "image": "Image",
+    "name": "Name",
+    "condition": "Condition",
+    "type": "Type",
+    "addedBy": "Added by",
+    "created": "Created",
+    "player": "Player",
+    "uploadedAt": "Uploaded",
+    "actions": "Actions",
+    "indoor": "Indoor",
+    "outdoor": "Outdoor",
+    "confirmDelete": "Delete?",
+    "noHoops": "No hoops found.",
+    "noProfileImages": "No profile images found.",
+    "hoopDeleted": "\"{{name}}\" deleted.",
+    "hoopDeleteFailed": "Failed to delete hoop.",
+    "profileImageDeleted": "Profile image deleted.",
+    "profileImageDeleteFailed": "Failed to delete profile image."
+  },
   "profile": {
     "uploadSuccess": "Profile photo updated",
     "uploadError": "Failed to upload photo",

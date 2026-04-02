@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
@@ -12,7 +12,7 @@ import { HoopCard } from '../components/reusable/HoopCard'
 import { FollowingPlayerCard } from '../components/reusable/FollowingPlayerCard'
 import { RequestCard } from '../components/reusable/RequestCard'
 import Footer from '../components/Footer'
-import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers, getProfileImageUrl } from '../utils/requests'
+import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers, getProfileImageUrl, fetchUserProfileImage } from '../utils/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { useFollowing } from '../hooks/useFollowing'
 import { groupEnrollmentsByHoop } from '../utils/functions'
@@ -33,6 +33,7 @@ type Tab = 'enrollments' | 'favorites' | 'following' | 'requests'
 
 const MyProfile = ({ hoops }: MyProfileProps) => {
   const { user } = useAuth()
+  const queryClient = useQueryClient()
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   const { success, error } = useToast()
@@ -88,7 +89,11 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   if (!user) return <Navigate to="/signin" replace />
 
   const nickname = user.user_metadata?.nickname ?? "Anonymous"
-  const profileImage: ProfileImage | null = user.user_metadata?.profile_image ?? null
+  const { data: profileImage = null } = useQuery<ProfileImage | null>({
+    queryKey: ['userProfileImage', user.id],
+    queryFn: () => fetchUserProfileImage(user.id),
+  })
+  // const profileImage: ProfileImage | null = user.user_metadata?.profile_image ?? null <- this was used before implementing admin profile image deletion, leaving it here in case we want to revert back to using metadata for profile images
   const profileImageUrl = profileImage ? getProfileImageUrl(profileImage.imagePath) : undefined
 
   const now = new Date()
@@ -113,7 +118,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 userName={nickname}
                 userId={user.id}
                 image={profileImage}
-                onImageUpdated={() => {}}
+                onImageUpdated={() => queryClient.invalidateQueries({ queryKey: ['userProfileImage', user.id] })}
               />
               {/* Nickname + Email */}
               <div className='flex flex-col items-start gap-0'>

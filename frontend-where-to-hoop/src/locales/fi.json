@@ -367,6 +367,30 @@
       "enrollmentLimitNote": "Voit ilmoittautua kerran per kenttä tänään ja kerran tulevalle päivälle"
     }
   },
+  "admin": {
+    "hoopsTab": "Korit",
+    "profileImagesTab": "Profiilikuvat",
+    "hoopsTotal": "{{count}} koria yhteensä",
+    "profileImagesTotal": "{{count}} profiilikuvaa",
+    "image": "Kuva",
+    "name": "Nimi",
+    "condition": "Kunto",
+    "type": "Tyyppi",
+    "addedBy": "Lisääjä",
+    "created": "Luotu",
+    "player": "Pelaaja",
+    "uploadedAt": "Ladattu",
+    "actions": "Toiminnot",
+    "indoor": "Sisällä",
+    "outdoor": "Ulkona",
+    "confirmDelete": "Poista?",
+    "noHoops": "Koreja ei löytynyt.",
+    "noProfileImages": "Profiilikuvia ei löytynyt.",
+    "hoopDeleted": "\"{{name}}\" poistettu.",
+    "hoopDeleteFailed": "Korin poisto epäonnistui.",
+    "profileImageDeleted": "Profiilikuva poistettu.",
+    "profileImageDeleteFailed": "Profiilikuvan poisto epäonnistui."
+  },
   "profile": {
     "uploadSuccess": "Profiilikuva päivitetty",
     "uploadError": "Kuvan lataus epäonnistui",
