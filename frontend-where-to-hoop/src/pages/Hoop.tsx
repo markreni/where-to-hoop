@@ -107,7 +107,7 @@ const Hoop = ({ hoop }: HoopProps) => {
               <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
                 {/* Header */}
                 <div className="flex justify-between items-start gap-2 mb-4">
-                  <div>
+                  <div className="flex flex-col gap-0.5">
                     <div className="flex items-center gap-3">
                       <h1 className={`${colorModeContext} text-fluid-xl poppins-bold background-text`}>
                         {hoop.name}
@@ -118,7 +118,7 @@ const Hoop = ({ hoop }: HoopProps) => {
                           : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
                       )}
                       {isAdmin && (
-                        <div className="absolute right-4 top-4 flex items-center gap-4">
+                        <div className="absolute right-2 top-2 flex items-center gap-3 xsm:gap-6">
                           <button
                             onClick={() => navigate(`/admin/edit/${hoop.id}`)}
                             className="text-gray-400 hover:text-blue-500 cursor-pointer transition-colors"

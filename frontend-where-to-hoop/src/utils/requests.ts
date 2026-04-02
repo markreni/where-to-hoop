@@ -826,6 +826,9 @@ const fetchUsersWithProfileImages = async (): Promise<UserWithProfileImage[]> =>
   }))
 }
 
+// Note: this clears profile_image from the DB and storage but NOT from the target user's auth metadata,
+// because supabase.auth.updateUser() can only update the currently logged-in user.
+// This is fine — no code reads profile images from auth metadata. The stale reference gets overwritten on the user's next upload.
 const adminRemoveProfileImage = async (userId: string, imagePath: string): Promise<void> => {
   const { data, error: dbError } = await supabase
     .from('users')

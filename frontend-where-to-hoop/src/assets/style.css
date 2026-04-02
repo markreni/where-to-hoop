@@ -336,7 +336,7 @@
     @apply flex items-center justify-between gap-4 h-9;
   }
   .hoop-card-icon {
-    @apply flex items-center justify-center px-2 py-0.5 gap-2 text-sm rounded;
+    @apply flex items-center justify-center px-2 py-0.5 gap-1 text-sm rounded;
   }
   .hoop-card-button-green {
     @apply bg-green-500 hover:bg-green-600;
