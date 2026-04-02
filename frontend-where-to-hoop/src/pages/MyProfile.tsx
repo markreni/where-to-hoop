@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
@@ -20,11 +20,10 @@ import haversineDistance from '../utils/functions'
 import type { BasketballHoop, ColorMode, Coordinates, FollowRequest, PlayerEnrollment, ProfileImage, PublicProfile } from '../types/types'
 import { ProfileVisibilityToggle } from '../components/reusable/ProfileVisibilityToggle'
 import ProfileImageUpload from '../components/reusable/ProfileImageUpload'
-import { MdOutlineFavoriteBorder, MdExpandMore, MdExpandLess } from 'react-icons/md'
+import FollowersDropdown from '../components/FollowersDropdown'
+import { MdOutlineFavoriteBorder, MdArrowForward } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
 import { FaUserCircle, FaUserPlus } from 'react-icons/fa'
-import { Button } from 'react-aria-components'
-import { useOnClickOutside } from 'usehooks-ts'
 
 interface MyProfileProps {
   hoops: BasketballHoop[]
@@ -41,10 +40,6 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('enrollments')
   const [isPublic, setIsPublic] = useState<boolean>(user?.user_metadata?.public ?? false)
   const [isSaving, setIsSaving] = useState(false)
-  const [followersOpen, setFollowersOpen] = useState(false)
-  const followersRef = useRef<HTMLDivElement>(null)
-  useOnClickOutside(followersRef as React.RefObject<HTMLElement>, () => setFollowersOpen(false))
-
   const { data: followers = [] } = useQuery<PublicProfile[]>({
     queryKey: ['followers', user?.id],
     queryFn: () => fetchFollowers(user!.id),
@@ -105,37 +100,8 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
     .sort((a, b) => b.arrivalTime.getTime() - a.arrivalTime.getTime())
 
   return (
-    <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col relative`}>
+    <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
       <BackArrow />
-      {/* Followers dropdown */}
-      <div className="absolute right-3 lg:right-5 top-24">
-        <div className="relative" ref={followersRef}>
-          <Button
-            onClick={() => setFollowersOpen(o => !o)}
-            className={`${colorModeContext} flex items-center gap-1 text-fluid-sm background-text-black hover:text-first-color transition-colors`}
-            >
-              {followersOpen ? <MdExpandLess size={18} /> : <MdExpandMore size={18} />}
-              {t('myProfile.followers')} ({followers.length})
-          </Button>
-          {followersOpen && (
-            <div className={`${colorModeContext} absolute right-0 top-full mt-1 z-10 min-w-40 max-h-48 overflow-y-auto bg-background border border-black/20 dark:border-white/20 rounded-lg shadow-lg p-2 flex flex-col gap-1`}>
-              {followers.length > 0 ? followers.map(f => (
-               <Link
-                  key={f.id}
-                  to={`/players/${f.nickname.toLowerCase()}`}
-                  className={`${colorModeContext} text-fluid-sm background-text hover:text-first-color transition-colors px-2 py-1 rounded hover:bg-black/5 dark:hover:bg-white/5`}
-                  >
-                  {f.nickname}
-                 </Link>
-              )) : (
-                  <p className={`${colorModeContext} text-fluid-sm text-gray-400 dark:text-gray-500 px-2 py-1`}>
-                    {t('myProfile.noFollowers')}
-                  </p>
-                )}
-            </div>
-          )}
-        </div>
-      </div>
       <div className="flex-grow padding-x-for-page padding-b-for-page">
         <div className="max-w-2xl mx-auto">
 
@@ -161,7 +127,10 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             </div>
 
             {/* Profile visibility toggle */}
-            <div className="bg-background/60 p-4 rounded-lg border border-black/30 dark:border-white/30 mb-6">
+            <div className="bg-background/60 p-4 rounded-lg border border-black/30 dark:border-white/30 mb-6 relative">
+            <div className="absolute -top-25 right-0">
+              <FollowersDropdown followers={followers} />
+            </div>
               <ProfileVisibilityToggle
                 label={t('myProfile.profileVisibility')}
                 hint={t('myProfile.profileVisibilityHint')}
@@ -172,6 +141,16 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 statusClassName={isPublic ? 'text-first-color' : 'text-gray-400 dark:text-gray-500'}
               />
             </div>
+
+            {/* View public profile link */}
+            <Link
+              to={`/players/${nickname.toLowerCase()}`}
+              className={`${colorModeContext} group flex items-center justify-center gap-2 w-full py-3 text-fluid-sm font-medium background-text transition-colors rounded-lg border border-black/20 dark:border-white/20`}
+            >
+              <FaUserCircle size={16} />
+              {t('myProfile.viewPublicProfile')}
+              <MdArrowForward size={16} className={`${colorModeContext} background-text opacity-0 group-hover:opacity-60 transition-opacity`} />
+            </Link>
           </div>
 
           {/* Tabs */}

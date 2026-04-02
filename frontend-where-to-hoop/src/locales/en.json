@@ -111,7 +111,8 @@
     "statusPublic": "Public — profile visible to everyone + anyone can follow",
     "statusPrivate": "Private — profile hidden + control who can follow",
     "visibilityUpdated": "Profile visibility updated",
-    "visibilityUpdateFailed": "Failed to update profile visibility"
+    "visibilityUpdateFailed": "Failed to update profile visibility",
+    "viewPublicProfile": "View my player profile"
   },
   "home": {
     "nearestCourts": "Nearest Courts",

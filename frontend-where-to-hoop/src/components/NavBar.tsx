@@ -150,7 +150,7 @@ const NavBar = () => {
                   )}
 
                   {user && (
-                    <MenuItem className={`${colorModeContext} mb-1.5 rounded-md background-hover background-text-black`}>
+                    <MenuItem className={`${colorModeContext} mb-1.5 ${!isAdmin && 'lg:mb-0'} rounded-md background-hover background-text-black`}>
                       <Link to="/search-players" className="flex items-center gap-2">
                         <MdPersonSearch size={18}/>
                         {t('nav.findFriend')}

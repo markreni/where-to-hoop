@@ -111,7 +111,8 @@
     "statusPublic": "Julkinen — profiili näkyy kaikille + kuka tahansa voi seurata",
     "statusPrivate": "Yksityinen — profiili piilotettu + hallitse kuka voi seurata",
     "visibilityUpdated": "Profiilin näkyvyys päivitetty",
-    "visibilityUpdateFailed": "Profiilin näkyvyyden päivitys epäonnistui"
+    "visibilityUpdateFailed": "Profiilin näkyvyyden päivitys epäonnistui",
+    "viewPublicProfile": "Näytä oma pelaajaprofiili"
   },
   "home": {
     "nearestCourts": "Lähimmät kentät",
