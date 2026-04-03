@@ -214,7 +214,7 @@ const Hoop = ({ hoop }: HoopProps) => {
 
                   {/* Location map */}
                   <MiniMap
-                    formData={{ ...hoop, condition: hoop.condition, isIndoor: hoop.isIndoor }}
+                    coordinates={hoop.coordinates}
                     mapRef={mapRef}
                     readOnly
                   />

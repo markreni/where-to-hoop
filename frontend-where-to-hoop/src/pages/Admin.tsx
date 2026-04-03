@@ -149,7 +149,7 @@ const Admin = ({ hoops }: { hoops: BasketballHoop[] }) => {
 
                           {/* Name */}
                           <td className="px-4 py-3">
-                            <span className={`${colorModeContext} background-text font-medium`}>{hoop.name}</span>
+                            <Link to={`/hoops/${hoop.id}`} className={`${colorModeContext} background-text font-medium hover:!text-first-color transition-colors`}>{hoop.name}</Link>
                             {hoop.address && (
                               <p className="text-gray-400 text-xs mt-0.5 line-clamp-1">{hoop.address}</p>
                             )}
@@ -284,7 +284,7 @@ const Admin = ({ hoops }: { hoops: BasketballHoop[] }) => {
                           <td className="px-4 py-3">
                             <Link
                               to={`/players/${user.nickname.toLowerCase()}`}
-                              className={`${colorModeContext} background-text font-medium hover:text-first-color transition-colors`}
+                              className={`${colorModeContext} background-text font-medium hover:!text-first-color transition-colors`}
                             >
                               {user.nickname}
                             </Link>

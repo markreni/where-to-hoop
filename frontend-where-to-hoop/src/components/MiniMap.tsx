@@ -6,17 +6,10 @@ import { centerCoordinates } from "../utils/constants";
 import { useLocationValues } from "../contexts/LocationContext";
 import { MapController } from "./reusable/MapController";
 
-// MiniMap only needs coordinates from form data
-interface MiniMapFormData {
-  coordinates: Coordinates;
-  [key: string]: unknown;
-}
-
 interface MiniMapProps {
-  formData: MiniMapFormData;
+  coordinates: Coordinates;
   mapRef: React.RefObject<L.Map | null>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setFormData?: React.Dispatch<React.SetStateAction<any>>;
+  onCoordinatesChange?: (coordinates: Coordinates) => void;
   readOnly?: boolean;
 }
 
@@ -29,28 +22,22 @@ const pinIcon = L.divIcon({
 
 const DraggableMarker = ({
   position,
-  formData,
-  setFormData,
+  onCoordinatesChange,
 }: {
   position: LatLngTuple
-  formData: MiniMapFormData
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setFormData: React.Dispatch<React.SetStateAction<any>>
+  onCoordinatesChange: (coordinates: Coordinates) => void
 }) => {
   const eventHandlers = {
     dragend(e: LeafletEvent) {
       const marker = e.target
       const latLng = marker.getLatLng()
-      setFormData({
-        ...formData,
-        coordinates: { latitude: Number(latLng.lat), longitude: Number(latLng.lng) },
-      })
+      onCoordinatesChange({ latitude: Number(latLng.lat), longitude: Number(latLng.lng) })
     },
   }
   return <Marker position={position} draggable eventHandlers={eventHandlers} icon={pinIcon} />
 }
 
-const MiniMap = ({ formData, setFormData, mapRef, readOnly = false }: MiniMapProps) => {
+const MiniMap = ({ coordinates, onCoordinatesChange, mapRef, readOnly = false }: MiniMapProps) => {
   const mapCenterValues: Coordinates = useLocationValues()
 
   const centerPosition: LatLngTuple = (mapCenterValues.latitude && mapCenterValues.longitude)
@@ -58,8 +45,8 @@ const MiniMap = ({ formData, setFormData, mapRef, readOnly = false }: MiniMapPro
     : centerCoordinates
 
   const markerPosition: LatLngTuple | null =
-    formData.coordinates.latitude !== null && formData.coordinates.longitude !== null
-      ? [formData.coordinates.latitude, formData.coordinates.longitude]
+    coordinates.latitude !== null && coordinates.longitude !== null
+      ? [coordinates.latitude, coordinates.longitude]
       : null
 
   return (
@@ -78,7 +65,7 @@ const MiniMap = ({ formData, setFormData, mapRef, readOnly = false }: MiniMapPro
         {markerPosition && (
           readOnly
             ? <Marker position={markerPosition} icon={pinIcon} />
-            : <DraggableMarker position={markerPosition} formData={formData} setFormData={setFormData!} />
+            : <DraggableMarker position={markerPosition} onCoordinatesChange={onCoordinatesChange!} />
         )}
       </MapContainer>
     </div>

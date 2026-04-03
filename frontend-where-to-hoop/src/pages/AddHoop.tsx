@@ -348,7 +348,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
                   <FaCheckCircle className="text-green-500" size={16} />
                 )}
               </div>
-              <MiniMap formData={formData} setFormData={setFormData} mapRef={mapRef} />
+              <MiniMap coordinates={formData.coordinates} onCoordinatesChange={(coords) => setFormData(prev => ({ ...prev, coordinates: coords }))} mapRef={mapRef} />
               <Button
                 type="button"
                 onPress={handleLocateUser}
