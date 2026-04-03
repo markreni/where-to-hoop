@@ -15,7 +15,7 @@ import { FaStar, FaRegStar, FaCheckCircle } from "react-icons/fa";
 import InfoLink from "../components/reusable/InfoLink";
 import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES } from "../utils/constants";
 import { reverseGeocode } from "../utils/functions";
-import { insertHoop, updateHoop, getHoopImageUrl } from "../utils/requests";
+import { insertHoop, updateHoop, getHoopImageUrl } from "../services/requests";
 import { useAuth } from "../contexts/AuthContext";
 import { useLanguage } from "../contexts/LanguageContext";
 

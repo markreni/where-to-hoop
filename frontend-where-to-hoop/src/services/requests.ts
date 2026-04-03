@@ -1,5 +1,5 @@
 import type { BasketballHoop, ObservationImage, PlayerEnrollment, PublicProfile, FollowRequest, ProfileImage } from '../types/types'
-import supabase from './supabase'
+import supabase from '../utils/supabase'
 
 const fetchHoops = async (): Promise<BasketballHoop[]> => {
   const { data, error } = await supabase

@@ -14,7 +14,7 @@ import { MapLabel } from "./reusable/MapLabel";
 import { conditionOptions, doorOptions } from "../utils/options";
 import { Button } from "react-aria-components";
 import Footer from "./Footer";
-import { fetchAllEnrollments } from "../utils/requests";
+import { fetchAllEnrollments } from "../services/requests";
 import { groupEnrollmentsByHoop } from "../utils/functions";
 import useEnrollmentsRealtime from "../hooks/useEnrollmentsRealtime";
 

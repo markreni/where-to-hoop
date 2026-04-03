@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { MdCameraAlt } from "react-icons/md";
 import ProfileCircle from "./ProfileCircle";
-import { uploadProfileImage, removeProfileImage } from "../../utils/requests";
+import { uploadProfileImage, removeProfileImage } from "../../services/requests";
 import { useToast } from "../../contexts/ToastContext";
 import { useTranslation } from "../../hooks/useTranslation";
 import { MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB } from "../../utils/constants";

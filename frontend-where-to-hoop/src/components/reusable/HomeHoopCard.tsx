@@ -7,7 +7,7 @@ import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
-import { getHoopImageUrl } from "../../utils/requests.ts";
+import { getHoopImageUrl } from "../../services/requests.ts";
 //import breakpoints from "../../assets/style.ts";
 //import { useMediaQuery } from "usehooks-ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";

@@ -11,7 +11,7 @@ import { useTranslation } from "../hooks/useTranslation.ts";
 import { useWeather, isWarmWeather, isRainyWeather, isSnowyWeather, isGoodWeatherForBasketball } from "../hooks/useWeather.ts";
 import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../types/types.ts";
 import haversineDistance, { groupEnrollmentsByTime, groupEnrollmentsByHoop } from "../utils/functions.ts";
-import { fetchAllEnrollments } from "../utils/requests.ts";
+import { fetchAllEnrollments } from "../services/requests.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 import useEnrollmentsRealtime from "../hooks/useEnrollmentsRealtime.ts";
 //import baskethoopImg from "../images/baskethoop.png";

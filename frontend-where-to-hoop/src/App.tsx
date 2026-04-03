@@ -26,7 +26,7 @@ import NotFound from "./pages/NotFound.tsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
 import { helsinkiBounds } from "./utils/constants.ts";
 import type { BasketballHoop } from "./types/types.ts";
-import { fetchHoops } from "./utils/requests.ts";
+import { fetchHoops } from "./services/requests.ts";
 
 
 const App = () => {

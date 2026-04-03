@@ -3,7 +3,7 @@ import { useAuth } from '../../contexts/AuthContext'
 import { useColorModeValues } from '../../contexts/ColorModeContext'
 import { useToast } from '../../contexts/ToastContext'
 import { useTranslation } from '../../hooks/useTranslation'
-import { acceptFollowRequest, rejectFollowRequest } from '../../utils/requests'
+import { acceptFollowRequest, rejectFollowRequest } from '../../services/requests'
 import type { ColorMode, FollowRequest } from '../../types/types'
 
 interface RequestCardProps {

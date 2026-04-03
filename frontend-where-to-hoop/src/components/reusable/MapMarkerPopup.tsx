@@ -10,7 +10,7 @@ import { HoopCardButton } from "./HoopCardButton.tsx";
 import type { FocusableElement } from "@react-types/shared/src/dom";
 import breakpoints from "../../assets/style.ts";
 import { useMediaQuery } from "usehooks-ts";
-import { getHoopImageUrl } from "../../utils/requests.ts";
+import { getHoopImageUrl } from "../../services/requests.ts";
 
 const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
   const mapCenterValues: Coordinates = useLocationValues();

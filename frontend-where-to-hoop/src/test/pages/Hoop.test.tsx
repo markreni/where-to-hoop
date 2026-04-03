@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor } from '../test-utils';
 import Hoop from '../../pages/Hoop';
 import type { BasketballHoop } from '../../types/types';
-import { fetchHoopEnrollments } from '../../utils/requests';
+import { fetchHoopEnrollments } from '../../services/requests';
 
 const mockEnrollments = vi.hoisted(() => [
   {
@@ -29,8 +29,8 @@ const mockEnrollments = vi.hoisted(() => [
   },
 ]);
 
-vi.mock('../../utils/requests', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../utils/requests')>();
+vi.mock('../../services/requests', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../services/requests')>();
   return {
     ...actual,
     fetchHoopEnrollments: vi.fn().mockResolvedValue(mockEnrollments),

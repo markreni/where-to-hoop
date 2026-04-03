@@ -7,7 +7,7 @@ import { useToast } from "../contexts/ToastContext";
 import { BackArrow } from "../components/reusable/BackArrow";
 import Footer from "../components/Footer";
 import type { ColorMode } from "../types/types";
-import { signIn } from "../utils/requests";
+import { signIn } from "../services/requests";
 import { useTranslation } from "../hooks/useTranslation";
 
 const SignIn = () => {

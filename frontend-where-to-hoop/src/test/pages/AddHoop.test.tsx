@@ -5,16 +5,11 @@ import AddHoop from '../../pages/AddHoop';
 
 // Mock MiniMap component (uses Leaflet)
 vi.mock('../../components/MiniMap', () => ({
-  MiniMap: ({ setFormData }: { setFormData: (fn: (prev: any) => any) => void }) => (
+  MiniMap: ({ onCoordinatesChange }: { onCoordinatesChange: (coords: { latitude: number; longitude: number }) => void }) => (
     <div data-testid="mini-map">
       <button
         type="button"
-        onClick={() =>
-          setFormData((prev: any) => ({
-            ...prev,
-            coordinates: { latitude: 60.1699, longitude: 24.9384 },
-          }))
-        }
+        onClick={() => onCoordinatesChange({ latitude: 60.1699, longitude: 24.9384 })}
       >
         Set Location
       </button>

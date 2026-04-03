@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
-import { fetchFavorites, toggleFavoriteRequest } from '../utils/requests'
+import { fetchFavorites, toggleFavoriteRequest } from '../services/requests'
 
 const useFavorites = () => {
   const { user } = useAuth()

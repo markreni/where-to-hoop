@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
-import { fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchOutgoingFollowRequestIds } from '../utils/requests'
+import { fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchOutgoingFollowRequestIds } from '../services/requests'
 import type { PublicProfile } from '../types/types'
 
 const useFollowing = () => {

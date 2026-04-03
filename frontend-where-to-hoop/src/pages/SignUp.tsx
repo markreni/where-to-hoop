@@ -7,7 +7,7 @@ import { useToast } from "../contexts/ToastContext";
 import { BackArrow } from "../components/reusable/BackArrow";
 import Footer from "../components/Footer";
 import type { ColorMode } from "../types/types";
-import { signUp } from "../utils/requests";
+import { signUp } from "../services/requests";
 import { useTranslation } from "../hooks/useTranslation";
 import { ProfileVisibilityToggle } from "../components/reusable/ProfileVisibilityToggle";
 import { FaExclamationCircle } from "react-icons/fa";

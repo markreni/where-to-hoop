@@ -13,7 +13,7 @@ import { MdOutlineFavoriteBorder, MdFavorite } from "react-icons/md";
 //import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
-import { getHoopImageUrl } from "../../utils/requests.ts";
+import { getHoopImageUrl } from "../../services/requests.ts";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 import { useAuth } from "../../contexts/AuthContext.tsx";
 import { useFavorites } from "../../hooks/useFavorites.ts";

@@ -6,7 +6,7 @@ import { useFollowing } from '../../hooks/useFollowing'
 import type { ColorMode, PublicProfile } from '../../types/types'
 import { MdArrowForward } from 'react-icons/md'
 import ProfileCircle from './ProfileCircle'
-import { getProfileImageUrl } from '../../utils/requests'
+import { getProfileImageUrl } from '../../services/requests'
 
 interface PublicPlayerCardProps {
   profile: PublicProfile

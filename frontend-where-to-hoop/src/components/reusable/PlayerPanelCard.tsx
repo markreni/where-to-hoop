@@ -5,7 +5,7 @@ import { useTranslation } from '../../hooks/useTranslation'
 import { useAuth } from '../../contexts/AuthContext'
 import { useQueryClient } from '@tanstack/react-query'
 import { useToast } from '../../contexts/ToastContext'
-import { deleteEnrollment, insertEnrollment } from '../../utils/requests'
+import { deleteEnrollment, insertEnrollment } from '../../services/requests'
 import { Button } from 'react-aria-components'
 import { isTodayDate } from '../../utils/functions'
 

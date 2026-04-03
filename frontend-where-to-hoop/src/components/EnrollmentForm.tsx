@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { insertEnrollment, deleteEnrollment } from '../utils/requests'
+import { insertEnrollment, deleteEnrollment } from '../services/requests'
 import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import { useQueryClient } from '@tanstack/react-query'

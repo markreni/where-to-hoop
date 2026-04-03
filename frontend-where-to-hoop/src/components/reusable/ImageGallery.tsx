@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { IoArrowBackSharp, IoArrowForwardSharp } from 'react-icons/io5'
 import { IoMdClose } from 'react-icons/io'
 import { useColorModeValues } from '../../contexts/ColorModeContext'
-import { getHoopImageUrl } from '../../utils/requests'
+import { getHoopImageUrl } from '../../services/requests'
 import type { ObservationImage } from '../../types/types'
 
 interface ImageGalleryProps {
