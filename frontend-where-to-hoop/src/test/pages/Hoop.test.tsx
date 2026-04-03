@@ -57,7 +57,7 @@ describe('Hoop Page', () => {
       { id: 1, imagePath: 'https://example.com/court.jpg', addedDate: '2024-01-10' },
     ],
     coordinates: { latitude: 60.1699, longitude: 24.9384 },
-    description: 'Great outdoor court with good lighting and two hoops',
+    description: { fi: '', en: 'Great outdoor court with good lighting and two hoops' },
     condition: 'excellent',
     isIndoor: false,
     isPaid: false,

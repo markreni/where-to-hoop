@@ -16,7 +16,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         addedDate: new Date().toISOString()
       }
     ],
-    description: 'Great outdoor court with two hoops',
+    description: { fi: 'Hieno ulkokenttä kahdella korilla', en: 'Great outdoor court with two hoops' },
     address: 'Central Park 11, 00530, Helsinki',
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'good',
@@ -87,7 +87,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         addedDate: new Date().toISOString()
       }
     ],
-    description: 'Indoor court, well maintained',
+    description: { fi: 'Sisäkenttä, hyvin hoidettu', en: 'Indoor court, well maintained' },
     address: 'Downtown Center 5, 00100, Helsinki',
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'excellent',
@@ -179,7 +179,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         addedDate: new Date().toISOString()
       }
     ],
-    description: 'Single hoop near the river',
+    description: { fi: 'Yksittäinen kori joen lähellä', en: 'Single hoop near the river' },
     address: 'Riverside Park 7, 00550, Helsinki',
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'fair',
@@ -304,7 +304,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         addedDate: new Date().toISOString()
       }
     ],
-    description: 'Neighborhood court with one hoop, popular with locals',
+    description: { fi: 'Naapuruston kenttä yhdellä korilla, paikallisten suosikki', en: 'Neighborhood court with one hoop, popular with locals' },
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'poor',
     isIndoor: false,
@@ -338,7 +338,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
         addedDate: new Date().toISOString()
       }
     ],
-    description: 'Indoor hall with two full-size courts and great lighting',
+    description: { fi: 'Sisähalli kahdella täysikokoisella kentällä ja hyvällä valaistuksella', en: 'Indoor hall with two full-size courts and great lighting' },
     address: 'Töölönkatu 42, 00250, Helsinki',
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'excellent',

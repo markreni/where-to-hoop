@@ -1,5 +1,5 @@
 import { Label, TextField, TextArea, Button } from "react-aria-components";
-import { type BasketballHoop, type ColorMode, type Condition, type ObservationImage } from "../types/types";
+import { type BasketballHoop, type ColorMode, type Condition, type Language, type ObservationImage } from "../types/types";
 import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useTranslation } from "../hooks/useTranslation";
 import { useToast } from "../contexts/ToastContext";
@@ -17,6 +17,7 @@ import { MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_S
 import { reverseGeocode } from "../utils/functions";
 import { insertHoop, updateHoop, getHoopImageUrl } from "../utils/requests";
 import { useAuth } from "../contexts/AuthContext";
+import { useLanguage } from "../contexts/LanguageContext";
 
 
 const conditionConfig: Record<Condition, { color: string; labelKey: string }> = {
@@ -27,7 +28,8 @@ const conditionConfig: Record<Condition, { color: string; labelKey: string }> = 
 };
 
 
-type FormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor" | "isPaid"> & {
+type FormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor" | "isPaid" | "description"> & {
+  description: string;
   condition: Condition | null;
   isIndoor: boolean | null;
   isPaid: boolean | null;
@@ -51,11 +53,11 @@ const formatFileSize = (bytes: number): string => {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
-const hoopToFormData = (hoop: BasketballHoop): FormData => ({
+const hoopToFormData = (hoop: BasketballHoop, language: Language): FormData => ({
   name: hoop.name,
   images: hoop.images,
   coordinates: hoop.coordinates,
-  description: hoop.description,
+  description: hoop.description[language] || hoop.description.en || hoop.description.fi,
   condition: hoop.condition,
   isIndoor: hoop.isIndoor,
   isPaid: hoop.isPaid,
@@ -70,8 +72,9 @@ interface AddHoopProps {
 
 const AddHoop = ({ hoop }: AddHoopProps) => {
   const isEditMode = !!hoop;
+  const language = useLanguage();
   const mapRef = useRef<L.Map | null>(null);
-  const [formData, setFormData] = useState<FormData>(isEditMode ? hoopToFormData(hoop) : emptyHoop);
+  const [formData, setFormData] = useState<FormData>(() => isEditMode ? hoopToFormData(hoop, language) : emptyHoop);
   // New image files to upload
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   // Unified profile index: 0..existingImages.length-1 = existing, existingImages.length.. = new files
@@ -217,7 +220,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
         hoop.id,
         {
           name: formData.name,
-          description: formData.description,
+          description: { ...hoop.description, [language]: formData.description } as { fi: string; en: string },
           condition: formData.condition!,
           isIndoor: formData.isIndoor!,
           isPaid: formData.isPaid!,
@@ -248,7 +251,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
       const hoopData: Omit<BasketballHoop, "id"> = {
         name: formData.name,
         coordinates: formData.coordinates,
-        description: formData.description,
+        description: { fi: '', en: '', [language]: formData.description },
         condition: formData.condition!,
         isIndoor: formData.isIndoor!,
         isPaid: formData.isPaid!,
@@ -274,7 +277,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
 
   const resetForm = () => {
     if (isEditMode) {
-      setFormData(hoopToFormData(hoop));
+      setFormData(hoopToFormData(hoop, language));
       setExistingImages(hoop.images);
       setRemovedImagePaths([]);
     } else {

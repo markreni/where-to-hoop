@@ -66,7 +66,7 @@ interface BasketballHoop {
   images: ObservationImage[];
   coordinates: Coordinates;
   address?: string;
-  description: string;
+  description: { fi: string; en: string };
   condition: Condition;
   isIndoor: boolean;
   isPaid: boolean;

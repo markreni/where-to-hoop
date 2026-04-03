@@ -99,9 +99,10 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[], 
     }
   }
 }
+
 const updateHoop = async (
   id: string,
-  fields: { name: string; description: string; condition: string; isIndoor: boolean; isPaid: boolean; coordinates: { latitude: number | null; longitude: number | null }; address?: string | null },
+  fields: { name: string; description: { fi: string; en: string }; condition: string; isIndoor: boolean; isPaid: boolean; coordinates: { latitude: number | null; longitude: number | null }; address?: string | null },
   newImageFiles: File[],
   removedImagePaths: string[],
   keptImages: ObservationImage[],

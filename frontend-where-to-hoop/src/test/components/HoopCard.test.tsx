@@ -10,7 +10,7 @@ const mockHoop: BasketballHoop = {
   createdAt: '2024-01-15T10:00:00Z',
   images: [{ id: 1, imagePath: 'https://example.com/court.jpg', addedDate: '2024-01-15' }],
   coordinates: { latitude: 60.1699, longitude: 24.9384 },
-  description: 'Great outdoor court with good lighting',
+  description: { fi: '', en: 'Great outdoor court with good lighting' },
   condition: 'excellent',
   isIndoor: false,
   isPaid: false,

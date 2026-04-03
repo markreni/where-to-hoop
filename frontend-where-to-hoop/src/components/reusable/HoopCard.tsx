@@ -2,6 +2,7 @@ import type { Dispatch } from "react";
 import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../../types/types.ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
+import { useLanguage } from "../../contexts/LanguageContext.tsx";
 import { useNavigate } from "react-router-dom";
 import type { FocusableElement } from "@react-types/shared";
 import { useMemo, type MouseEvent } from "react";
@@ -26,6 +27,7 @@ interface HoopCardProps {
 const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
   //const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
   const colorModeContext: ColorMode = useColorModeValues();
+  const language = useLanguage();
   const userLocationDispatch = useLocationDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -88,7 +90,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
             alt={hoop.name}
           />
           <div className="flex-col gap-1 items-start justify-around hidden xsm:flex">
-            <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description}</p>
+            <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>
             {playingNow.length > 0 && (
               <div className="flex items-center justify-start gap-x-2 gap-y-1 mt-1 flex-wrap">
                 <span className="text-fluid-xs text-gray-500 dark:text-gray-400">
@@ -158,7 +160,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
         </div>
       </div>
       <div className="flex justify-between items-center xsm:hidden gap-2">
-        <p className="w-1/2 font-thin responsive-hoopcard-elements-text">{hoop.description}</p>   
+        <p className="w-1/2 font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>   
         <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
       </div>
     </div>                        

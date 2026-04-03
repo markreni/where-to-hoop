@@ -19,7 +19,7 @@ const createMockHoop = (id: string, latitude: number | null, longitude: number |
   createdAt: '2024-01-15T10:00:00Z',
   images: [],
   coordinates: { latitude, longitude },
-  description: 'Test court description',
+  description: { fi: '', en: 'Test court description' },
   condition: 'good',
   isIndoor: false,
   isPaid: false,
@@ -148,7 +148,7 @@ describe('Helsinki Bounds Filter', () => {
         {
           ...createMockHoop('1', 60.1699, 24.9384),
           name: 'Special Court',
-          description: 'A very special court',
+          description: { fi: '', en: 'A very special court' },
           condition: 'excellent' as const,
           isIndoor: true,
         },

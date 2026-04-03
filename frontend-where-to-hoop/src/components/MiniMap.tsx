@@ -1,22 +1,22 @@
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import type { LatLngTuple, LeafletEvent } from "leaflet";
 import L from "leaflet";
-import type { BasketballHoop, Coordinates, Condition } from "../types/types";
+import type { Coordinates } from "../types/types";
 import { centerCoordinates } from "../utils/constants";
 import { useLocationValues } from "../contexts/LocationContext";
 import { MapController } from "./reusable/MapController";
 
-// Flexible form data type that allows null values during form input
-type MiniMapFormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor" | "isPaid"> & {
-  condition: Condition | null;
-  isIndoor: boolean | null;
-  isPaid: boolean | null;
-};
+// MiniMap only needs coordinates from form data
+interface MiniMapFormData {
+  coordinates: Coordinates;
+  [key: string]: unknown;
+}
 
 interface MiniMapProps {
   formData: MiniMapFormData;
   mapRef: React.RefObject<L.Map | null>;
-  setFormData?: React.Dispatch<React.SetStateAction<MiniMapFormData>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setFormData?: React.Dispatch<React.SetStateAction<any>>;
   readOnly?: boolean;
 }
 
@@ -34,7 +34,8 @@ const DraggableMarker = ({
 }: {
   position: LatLngTuple
   formData: MiniMapFormData
-  setFormData: React.Dispatch<React.SetStateAction<MiniMapFormData>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setFormData: React.Dispatch<React.SetStateAction<any>>
 }) => {
   const eventHandlers = {
     dragend(e: LeafletEvent) {

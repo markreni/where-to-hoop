@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useLocationValues } from '../contexts/LocationContext'
 import { useTranslation } from '../hooks/useTranslation'
+import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
 import useIsAdmin from '../hooks/useIsAdmin'
 import { useToast } from '../contexts/ToastContext'
@@ -31,6 +32,7 @@ interface HoopProps {
 const Hoop = ({ hoop }: HoopProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+  const language = useLanguage()
   const userLocation: Coordinates = useLocationValues()
   const { hash } = useLocation()
   const navigate = useNavigate()
@@ -196,7 +198,7 @@ const Hoop = ({ hoop }: HoopProps) => {
 
                   {/* Description */} {/* distance + address used to be placed */}
                   <p className={`${colorModeContext} font-thin responsive-hoopcard-elements-text background-text`}>
-                    {hoop.description}
+                    {hoop.description[language] || hoop.description.en || hoop.description.fi}
                   </p>
                 </div>
 
