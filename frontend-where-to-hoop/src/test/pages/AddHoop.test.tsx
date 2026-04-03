@@ -50,6 +50,7 @@ describe('AddHoop', () => {
     expect(screen.getByText(/Location \*/)).toBeInTheDocument();
     expect(screen.getByText(/Condition \*/)).toBeInTheDocument();
     expect(screen.getByText(/Court Type \*/)).toBeInTheDocument();
+    expect(screen.getByText(/Court Access \*/)).toBeInTheDocument();
     expect(screen.getByText(/Images \*/)).toBeInTheDocument();
   });
 
@@ -65,9 +66,9 @@ describe('AddHoop', () => {
     expect(submitButton).toBeDisabled();
   });
 
-  it('shows progress indicator starting at 0/5', () => {
+  it('shows progress indicator starting at 0/6', () => {
     render(<AddHoop />);
-    expect(screen.getByText('0/5 required')).toBeInTheDocument();
+    expect(screen.getByText('0/6 required')).toBeInTheDocument();
   });
 
   it('updates name field and shows progress', async () => {
@@ -78,7 +79,7 @@ describe('AddHoop', () => {
     await user.type(nameInput, 'Test Court');
 
     expect(screen.getByDisplayValue('Test Court')).toBeInTheDocument();
-    expect(screen.getByText('1/5 required')).toBeInTheDocument();
+    expect(screen.getByText('1/6 required')).toBeInTheDocument();
   });
 
   it('shows character count for name field', async () => {
@@ -107,7 +108,7 @@ describe('AddHoop', () => {
     await user.click(excellentButton);
 
     // Should show check mark and update progress
-    expect(screen.getByText('1/5 required')).toBeInTheDocument();
+    expect(screen.getByText('1/6 required')).toBeInTheDocument();
   });
 
   it('renders court type options', () => {
@@ -123,7 +124,7 @@ describe('AddHoop', () => {
     const outdoorButton = screen.getByRole('button', { name: /Outdoor/i });
     await user.click(outdoorButton);
 
-    expect(screen.getByText('1/5 required')).toBeInTheDocument();
+    expect(screen.getByText('1/6 required')).toBeInTheDocument();
   });
 
   it('selects indoor court type when clicked', async () => {
@@ -133,7 +134,7 @@ describe('AddHoop', () => {
     const indoorButton = screen.getByRole('button', { name: /Indoor/i });
     await user.click(indoorButton);
 
-    expect(screen.getByText('1/5 required')).toBeInTheDocument();
+    expect(screen.getByText('1/6 required')).toBeInTheDocument();
   });
 
   it('renders Use Current Location button', () => {
@@ -182,7 +183,7 @@ describe('AddHoop', () => {
 
     // Form should be cleared
     expect(screen.queryByDisplayValue('Test Court')).not.toBeInTheDocument();
-    expect(screen.getByText('0/5 required')).toBeInTheDocument();
+    expect(screen.getByText('0/6 required')).toBeInTheDocument();
   });
 
   it('updates location via mock map', async () => {
@@ -194,7 +195,7 @@ describe('AddHoop', () => {
     await user.click(setLocationButton);
 
     // Progress should update
-    expect(screen.getByText('1/5 required')).toBeInTheDocument();
+    expect(screen.getByText('1/6 required')).toBeInTheDocument();
   });
 
   it('renders back arrow button', () => {
@@ -227,9 +228,13 @@ describe('AddHoop', () => {
     const file = new File(['test'], 'test.jpg', { type: 'image/jpeg' });
     await user.upload(fileInput, file);
 
-    // All 5 fields should be filled
+    // Select court access
+    const freeButton = screen.getByRole('button', { name: /Free/i });
+    await user.click(freeButton);
+
+    // All 6 fields should be filled
     await waitFor(() => {
-      expect(screen.getByText('5/5 required')).toBeInTheDocument();
+      expect(screen.getByText('6/6 required')).toBeInTheDocument();
     });
 
     // Submit button should be enabled

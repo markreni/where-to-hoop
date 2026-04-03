@@ -13,6 +13,7 @@ const mockHoop: BasketballHoop = {
   description: 'Great outdoor court with good lighting',
   condition: 'excellent',
   isIndoor: false,
+  isPaid: false,
   addedBy: 'test@example.com',
 };
 

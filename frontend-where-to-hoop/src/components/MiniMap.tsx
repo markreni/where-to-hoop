@@ -7,9 +7,10 @@ import { useLocationValues } from "../contexts/LocationContext";
 import { MapController } from "./reusable/MapController";
 
 // Flexible form data type that allows null values during form input
-type MiniMapFormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor"> & {
+type MiniMapFormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor" | "isPaid"> & {
   condition: Condition | null;
   isIndoor: boolean | null;
+  isPaid: boolean | null;
 };
 
 interface MiniMapProps {

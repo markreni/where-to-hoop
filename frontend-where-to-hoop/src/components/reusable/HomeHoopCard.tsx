@@ -58,7 +58,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
 
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full flex-grow-0`}> 
-      <div className="relative w-full h-40 sm:h-48 lg:h-64 bg-gray-100 dark:bg-gray-800">
+      <div className="relative w-full h-44 xsm:h-52 sm:h-60 md:h-68 lg:h-76 bg-gray-100 dark:bg-gray-800">
         <div className="absolute top-2 right-2 z-10 mt-auto">
           <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-base" />
         </div>
@@ -82,7 +82,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
               text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
               iconSize={12}
-              showIcon={false} //showIcon={xsm}
+              showIcon={true} //showIcon={xsm}
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.courtType')}
             />
@@ -94,12 +94,20 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
               tooltip={t('hoops.tooltips.condition')}
             />
             <HoopBadge
+              variant={hoop.isPaid ? 'paid' : 'free'}
+              text={hoop.isPaid ? t('common.paid') : t('common.free')}
+              showIcon={true}
+              textClassName="responsive-hoopcard-elements-text"
+              tooltip={t('hoops.tooltips.courtAccess')}
+            />
+            <HoopBadge
               variant="players"
               text={
                 playingNowCount === 1 
                 ? t('hoops.players.one') 
                 : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
               }
+              showIcon={true}
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.currentPlayers')}
               capitalize={false}

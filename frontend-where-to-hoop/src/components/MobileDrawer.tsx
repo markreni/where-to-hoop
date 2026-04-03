@@ -46,8 +46,6 @@ const MobileDrawer = ({ isOpen, onClose }: MobileDrawerProps) => {
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   const nickname = user?.user_metadata?.nickname ?? "Anonymous";
   const email = user?.email ?? "";
   const { data: profileImage = null } = useQuery<ProfileImage | null>({
@@ -56,6 +54,8 @@ const MobileDrawer = ({ isOpen, onClose }: MobileDrawerProps) => {
     enabled: !!user,
   });
   const profileImageUrl = profileImage ? getProfileImageUrl(profileImage.imagePath) : undefined;
+
+  if (!isOpen) return null;
 
   const handleSignOut = () => {
     signOut();

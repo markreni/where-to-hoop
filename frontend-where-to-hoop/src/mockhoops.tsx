@@ -21,6 +21,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'good',
     isIndoor: false,
+    isPaid: false,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {
@@ -91,6 +92,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'excellent',
     isIndoor: true,
+    isPaid: true,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {
@@ -182,6 +184,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'fair',
     isIndoor: false,
+    isPaid: false,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {
@@ -305,6 +308,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'poor',
     isIndoor: false,
+    isPaid: false,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {
@@ -339,6 +343,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     addedBy: 'mark_renssi@hotmail.com',
     condition: 'excellent',
     isIndoor: true,
+    isPaid: true,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {

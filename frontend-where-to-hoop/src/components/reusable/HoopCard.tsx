@@ -119,7 +119,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
             <HoopBadge
               variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
               text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
-              showIcon={false} //showIcon={xsm}
+              showIcon={true} //showIcon={xsm}
               textClassName="responsive-hoopcard-elements-text"
               tooltip={t('hoops.tooltips.courtType')}
             />
@@ -130,6 +130,13 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
                 text={t(`common.condition.${hoop.condition}`)}
                 textClassName="responsive-hoopcard-elements-text"
                 tooltip={t('hoops.tooltips.condition')}
+              />
+            <HoopBadge
+                variant={hoop.isPaid ? 'paid' : 'free'}
+                text={hoop.isPaid ? t('common.paid') : t('common.free')}
+                showIcon={true}
+                textClassName="responsive-hoopcard-elements-text"
+                tooltip={t('hoops.tooltips.courtAccess')}
               />
         
             {/*

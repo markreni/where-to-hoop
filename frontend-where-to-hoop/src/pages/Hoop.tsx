@@ -155,6 +155,13 @@ const Hoop = ({ hoop }: HoopProps) => {
                         text={t(`common.condition.${hoop.condition}`)}
                         tooltip={t('hoops.tooltips.condition')}
                       />
+                      <HoopBadge
+                        variant={hoop.isPaid ? 'paid' : 'free'}
+                        text={hoop.isPaid ? t('common.paid') : t('common.free')}
+                        showIcon={true}
+                        textClassName='responsive-hoopcard-elements-text'
+                        tooltip={t('hoops.tooltips.courtAccess')}
+                      />
                       {/*
                       <HoopBadge
                         variant="date"

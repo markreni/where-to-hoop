@@ -159,7 +159,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
   const showRightFade = currentIndex < itemCount - 1 || dragOffset > 0;
 
   return (
-    <div className={`relative max-w-xl xsm:max-w-lg lg:max-w-2xl mx-auto ${className}`}>
+    <div className={`relative mx-auto max-w-md xsm:max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl ${className}`}>
       {/* Carousel track */}
       <div
         ref={containerRef}
@@ -214,7 +214,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             onClick={goPrev}
             disabled={currentIndex === 0}
             aria-label="Previous slide"
-            className={`${colorModeContext} hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-background background-text transition-all z-10 ${
+            className={`${colorModeContext} hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 p-2 rounded-full bg-background background-text transition-all z-10 ${
               currentIndex === 0
                 ? 'opacity-40 cursor-not-allowed'
                 : 'background-hover hover:scale-110'
@@ -226,7 +226,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             onClick={goNext}
             disabled={currentIndex === itemCount - 1}
             aria-label="Next slide"
-            className={`${colorModeContext} hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-background background-text transition-all z-10 ${
+            className={`${colorModeContext} hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 p-2 rounded-full bg-background background-text transition-all z-10 ${
               currentIndex === itemCount - 1
                 ? 'opacity-40 cursor-not-allowed'
                 : 'background-hover hover:scale-110'
@@ -245,7 +245,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             onClick={goPrev}
             disabled={currentIndex === 0}
             aria-label="Previous slide"
-            className={`${colorModeContext} sm:hidden p-2 rounded-full bg-background background-text transition-all ${
+            className={`${colorModeContext} md:hidden p-2 rounded-full bg-background background-text transition-all ${
               currentIndex === 0
                 ? 'opacity-40 cursor-not-allowed'
                 : 'background-hover-gray active:scale-95'
@@ -277,7 +277,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
             onClick={goNext}
             disabled={currentIndex === itemCount - 1}
             aria-label="Next slide"
-            className={`${colorModeContext} sm:hidden p-2 rounded-full bg-background background-text transition-all ${
+            className={`${colorModeContext} md:hidden p-2 rounded-full bg-background background-text transition-all ${
               currentIndex === itemCount - 1
                 ? 'opacity-40 cursor-not-allowed'
                 : 'background-hover-gray active:scale-95'

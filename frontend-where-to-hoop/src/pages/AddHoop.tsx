@@ -9,7 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { MiniMap } from "../components/MiniMap";
 import useLocateUser from "../hooks/useLocateUser";
 import { BackArrow } from "../components/reusable/BackArrow";
-import { MdOutlineMyLocation } from "react-icons/md";
+import { MdOutlineMyLocation, MdMoneyOff, MdAttachMoney } from "react-icons/md";
 import { IoMdClose } from "react-icons/io";
 import { FaStar, FaRegStar, FaCheckCircle } from "react-icons/fa";
 import InfoLink from "../components/reusable/InfoLink";
@@ -27,9 +27,10 @@ const conditionConfig: Record<Condition, { color: string; labelKey: string }> = 
 };
 
 
-type FormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor"> & {
+type FormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor" | "isPaid"> & {
   condition: Condition | null;
   isIndoor: boolean | null;
+  isPaid: boolean | null;
 };
 
 const emptyHoop: FormData = {
@@ -39,6 +40,7 @@ const emptyHoop: FormData = {
   description: '',
   condition: null,
   isIndoor: null,
+  isPaid: null,
   createdAt: new Date().toISOString(),
   addedBy: '',
 };
@@ -56,6 +58,7 @@ const hoopToFormData = (hoop: BasketballHoop): FormData => ({
   description: hoop.description,
   condition: hoop.condition,
   isIndoor: hoop.isIndoor,
+  isPaid: hoop.isPaid,
   createdAt: hoop.createdAt,
   addedBy: hoop.addedBy,
   address: hoop.address,
@@ -115,10 +118,11 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
   const isNameFilled = formData.name.trim().length > 0;
   const isConditionSelected = formData.condition !== null;
   const isCourtTypeSelected = formData.isIndoor !== null;
+  const isCourtAccessSelected = formData.isPaid !== null;
   const hasProfileImage = totalImageCount > 0;
-  const isFormValid = isNameFilled && isLocationSelected && isConditionSelected && isCourtTypeSelected && hasProfileImage;
-  const completedRequiredFields = (isNameFilled ? 1 : 0) + (isLocationSelected ? 1 : 0) + (isConditionSelected ? 1 : 0) + (isCourtTypeSelected ? 1 : 0) + (hasProfileImage ? 1 : 0);
-  const totalRequiredFields = 5;
+  const isFormValid = isNameFilled && isLocationSelected && isConditionSelected && isCourtTypeSelected && isCourtAccessSelected && hasProfileImage;
+  const completedRequiredFields = (isNameFilled ? 1 : 0) + (isLocationSelected ? 1 : 0) + (isConditionSelected ? 1 : 0) + (isCourtTypeSelected ? 1 : 0) + (isCourtAccessSelected ? 1 : 0) + (hasProfileImage ? 1 : 0);
+  const totalRequiredFields = 6;
 
   const handleLocateUser = () => {
     locateUser({
@@ -191,6 +195,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
       else if (!isLocationSelected) error(t('addHoop.errors.selectLocation'));
       else if (!isConditionSelected) error(t('addHoop.errors.selectCondition'));
       else if (!isCourtTypeSelected) error(t('addHoop.errors.selectCourtType'));
+      else if (!isCourtAccessSelected) error(t('addHoop.errors.selectCourtAccess'));
       else if (!hasProfileImage) error(t('addHoop.errors.addImage'));
       return;
     }
@@ -215,6 +220,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
           description: formData.description,
           condition: formData.condition!,
           isIndoor: formData.isIndoor!,
+          isPaid: formData.isPaid!,
           coordinates: formData.coordinates,
           address: address ?? undefined,
         },
@@ -245,6 +251,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
         description: formData.description,
         condition: formData.condition!,
         isIndoor: formData.isIndoor!,
+        isPaid: formData.isPaid!,
         createdAt: formData.createdAt,
         address: address ?? undefined,
         images: [],
@@ -306,7 +313,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
 
         {/* Form */}
         <form onSubmit={handleHoopSubmit} className="flex flex-col p-6 gap-8">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3.5">
             {/* Name */}
             <TextField isRequired className={"flex flex-col gap-2"}>
               <div className="flex items-center gap-2">
@@ -448,6 +455,42 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
               </div>
             </div>
 
+            {/* Free/Paid */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <Label className={`${colorModeContext} block text-fluid-sm background-text`}>
+                  {t('addHoop.courtAccess')} *
+                </Label>
+                {isCourtAccessSelected && (
+                  <FaCheckCircle className="text-green-500" size={16} />
+                )}
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, isPaid: false })}
+                  className={`${colorModeContext} flex-1 py-2 px-4 rounded-lg text-fluid-sm font-medium transition-colors cursor-pointer flex-center gap-2 ${
+                    formData.isPaid === false
+                      ? "bg-first-color background-text-reverse-black"
+                      : `${colorModeContext} bg-gray-100 form-button-text hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700`
+                  }`}
+                >
+                  <MdMoneyOff size={20} /> {t('addHoop.free')}
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => setFormData({ ...formData, isPaid: true })}
+                  className={`${colorModeContext} flex-1 py-2 px-4 rounded-lg text-fluid-sm font-medium transition-colors cursor-pointer flex-center gap-2 ${
+                    formData.isPaid === true
+                      ? 'bg-first-color background-text-reverse-black'
+                      : `${colorModeContext} bg-gray-100 form-button-text hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700`
+                  }`}
+                >
+                  <MdAttachMoney size={20} /> {t('addHoop.paid')}
+                </Button>
+              </div>
+            </div>
+
           {/* Image Upload */}
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
@@ -485,7 +528,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
                           alt={`Image ${index + 1}`}
                           className="w-full h-32 object-contain"
                         />
-                        <button
+                        <Button
                           type="button"
                           onClick={() => setProfileIndex(index)}
                           className={`${colorModeContext} absolute top-2 left-2`}
@@ -495,14 +538,14 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
                           ) : (
                             <FaRegStar className={`${colorModeContext} text-gray-600 cursor-pointer dark:text-gray-300`} size={20} />
                           )}
-                        </button>
-                        <button
+                        </Button>
+                        <Button
                           type="button"
                           onClick={() => removeExistingImage(img)}
                           className="absolute top-2 right-2 p-1 rounded-full bg-red-500 hover:bg-red-600 text-white cursor-pointer"
                         >
                           <IoMdClose size={16} />
-                        </button>
+                        </Button>
                         {isProfile && (
                           <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-fluid-xs py-1 text-center">
                             <span className="font-medium">{t('addHoop.profile')}</span>
@@ -553,7 +596,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
                         />
 
                         {/* Image star button */}
-                        <button
+                        <Button
                           type="button"
                           onClick={() => setProfileIndex(unifiedIndex)}
                           className={`${colorModeContext} absolute top-2 left-2`}
@@ -563,16 +606,16 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
                           ) : (
                             <FaRegStar className={`${colorModeContext} text-gray-600 cursor-pointer dark:text-gray-300`} size={20} />
                           )}
-                        </button>
+                        </Button>
 
                         {/* Image remove button */}
-                        <button
+                        <Button
                           type="button"
                           onClick={() => removeNewImage(index)}
                           className="absolute top-2 right-2 p-1 rounded-full bg-red-500 hover:bg-red-600 text-white cursor-pointer"
                         >
                           <IoMdClose size={16} />
-                        </button>
+                        </Button>
 
                         {/* File size badge */}
                         <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-fluid-xs py-1 text-center">

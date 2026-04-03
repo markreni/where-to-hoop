@@ -60,6 +60,7 @@ describe('Hoop Page', () => {
     description: 'Great outdoor court with good lighting and two hoops',
     condition: 'excellent',
     isIndoor: false,
+    isPaid: false,
     addedBy: 'test@example.com',
   };
 
