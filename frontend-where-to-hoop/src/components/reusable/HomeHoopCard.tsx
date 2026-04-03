@@ -77,34 +77,36 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
           <span className={`${colorModeContext} text-fluid-xs background-text pr-2 xsm:pr-7`}>{t(`${hoop.address??"No address is specified"}`)}</span>
         </div>
         <div className="flex flex-col xsm:flex-row items-start xsm:items-center justify-between gap-3">
-          <div className="flex items-center gap-2 mb-2 flex-wrap">
-            <HoopBadge
-              variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
-              text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
-              iconSize={12}
-              showIcon={true} //showIcon={xsm}
-              textClassName="responsive-hoopcard-elements-text"
-              tooltip={t('hoops.tooltips.courtType')}
-            />
-            <HoopBadge
-              variant="condition"
-              condition={hoop.condition}
-              text={t(`common.condition.${hoop.condition}`)}
-              textClassName="responsive-hoopcard-elements-text"
-              tooltip={t('hoops.tooltips.condition')}
-            />
-            <HoopBadge
-              variant={hoop.isPaid ? 'paid' : 'free'}
-              text={hoop.isPaid ? t('common.paid') : t('common.free')}
-              showIcon={true}
-              textClassName="responsive-hoopcard-elements-text"
-              tooltip={t('hoops.tooltips.courtAccess')}
-            />
+          <div className="flex flex-col gap-2 mb-2">
+            <div className="flex items-center gap-2 flex-wrap">
+              <HoopBadge
+                variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
+                text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
+                iconSize={12}
+                showIcon={true} //showIcon={xsm}
+                textClassName="responsive-hoopcard-elements-text"
+                tooltip={t('hoops.tooltips.courtType')}
+              />
+              <HoopBadge
+                variant="condition"
+                condition={hoop.condition}
+                text={t(`common.condition.${hoop.condition}`)}
+                textClassName="responsive-hoopcard-elements-text"
+                tooltip={t('hoops.tooltips.condition')}
+              />
+              <HoopBadge
+                variant={hoop.isPaid ? 'paid' : 'free'}
+                text={hoop.isPaid ? t('common.paid') : t('common.free')}
+                showIcon={true}
+                textClassName="responsive-hoopcard-elements-text"
+                tooltip={t('hoops.tooltips.courtAccess')}
+              />
+            </div>
             <HoopBadge
               variant="players"
               text={
-                playingNowCount === 1 
-                ? t('hoops.players.one') 
+                playingNowCount === 1
+                ? t('hoops.players.one')
                 : t('hoops.players.other', { count: playingNowCount > 99 ? '>99' : playingNowCount })
               }
               showIcon={true}

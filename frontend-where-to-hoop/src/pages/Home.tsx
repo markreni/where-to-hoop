@@ -156,7 +156,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
           </div>
         </section>
 
-        <div className="space-y-10">
+        <div className="space-y-10 w-full">
           <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-8 text-center`}>
             {t('home.nearestCourts')}
           </h1>
@@ -184,7 +184,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         </div>
 
         {/* Encouragement Section */}
-          <section ref={encouragementRef} className={`${colorModeContext} relative mt-12 p-6 rounded-xl bg-gray-100 dark:bg-black text-center overflow-hidden`}>
+          <section ref={encouragementRef} className={`${colorModeContext} relative mt-10 p-6 rounded-xl bg-gray-100 dark:bg-black text-center overflow-hidden`}>
             {/* Weather widget - right corner on larger screens */}
             <div className="hidden sm:block sm:absolute sm:top-4 sm:right-4">
               <WeatherWidget />

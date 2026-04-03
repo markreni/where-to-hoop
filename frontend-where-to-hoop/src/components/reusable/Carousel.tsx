@@ -196,7 +196,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
           {children.map((child, index) => (
             <div
               key={index}
-              className="w-full flex-shrink-0 px-3"
+              className="w-full flex-shrink-0 px-2"
               role="group"
               aria-roledescription="slide"
               aria-label={`${index + 1} of ${itemCount}`}
