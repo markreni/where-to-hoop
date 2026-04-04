@@ -19,6 +19,7 @@ const fetchHoops = async (): Promise<BasketballHoop[]> => {
     condition: hoop.condition,
     isIndoor: hoop.is_indoor,
     isPaid: hoop.is_paid,
+    isVerified: hoop.is_verified,
     createdAt: hoop.created_at,
     addedBy: hoop.added_by,
     address: hoop.address ?? undefined,
@@ -89,6 +90,7 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[], 
     condition: data.condition,
     isIndoor: data.is_indoor,
     isPaid: data.is_paid,
+    isVerified: data.is_verified,
     createdAt: data.created_at,
     addedBy: data.added_by,
     address: data.address ?? undefined,
@@ -176,6 +178,7 @@ const updateHoop = async (
     condition: data.condition,
     isIndoor: data.is_indoor,
     isPaid: data.is_paid,
+    isVerified: data.is_verified,
     createdAt: data.created_at,
     addedBy: data.added_by,
     address: data.address ?? undefined,
@@ -210,6 +213,7 @@ const deleteHoop = async (id: string): Promise<BasketballHoop> => {
     condition: data.condition,
     isIndoor: data.is_indoor,
     isPaid: data.is_paid,
+    isVerified: data.is_verified,
     createdAt: data.created_at,
     addedBy: data.added_by,
     address: data.address ?? undefined,
@@ -858,6 +862,18 @@ const adminRemoveProfileImage = async (userId: string, imagePath: string): Promi
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
+const toggleHoopVerification = async (id: string, isVerified: boolean): Promise<void> => {
+  const { error } = await supabase
+    .from('basketball_hoop')
+    .update({ is_verified: isVerified })
+    .eq('id', id)
+
+  if (error) {
+    console.error('Toggle verification error:', error)
+    throw error
+  }
+}
+
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
 
 export type { UserWithProfileImage }

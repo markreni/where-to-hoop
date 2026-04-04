@@ -23,6 +23,7 @@ const createMockHoop = (id: string, latitude: number | null, longitude: number |
   condition: 'good',
   isIndoor: false,
   isPaid: false,
+  isVerified: false,
   addedBy: 'test@example.com',
   playerEnrollments: [],
 });

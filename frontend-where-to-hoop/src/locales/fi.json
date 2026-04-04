@@ -211,7 +211,8 @@
       "condition": "Kentän kunto",
       "dateAdded": "Lisäyspäivä",
       "currentPlayers": "Pelaajia kentällä",
-      "addToFavorites": "Lisää suosikkeihin"
+      "addToFavorites": "Lisää suosikkeihin",
+      "verified": "Ylläpitäjän vahvistama kenttä"
     }
   },
   "footer": {
@@ -283,6 +284,10 @@
       "question": "Miten otan hyvän kuvan kentästä?",
       "answer": "Parhaan tuloksen saat: 1) Sisällytä kori ja taustalevy selkeästi kuvaan. 2) Näytä kentän pinta, jotta muut näkevät kunnon. 3) Ota kuvia päivänvalossa paremman näkyvyyden vuoksi. 4) Kuvaa erityispiirteet kuten valaistus, penkit tai useammat korit. 5) Vältä kuvia, joissa näkyy ihmisten kasvoja yksityisyyden vuoksi."
     },
+    "verified": {
+      "question": "Mitä vihreä vahvistettu-merkki tarkoittaa?",
+      "answer": "Vihreä vahvistettu-merkki tarkoittaa, että ylläpitäjä on henkilökohtaisesti varmistanut kentän tietojen paikkansapitävyyden — joko vierailemalla kentällä tai tarkistamalla lähetetyt tiedot. Kentät ilman merkkiä ovat yhteisön lisäämiä, eikä niitä ole välttämättä vielä tarkastettu."
+    },
     "conditionTitle": "Miten arvioin kentän kunnon?",
     "conditionIntro": "Kun lisäät kentän, valitse kunto, joka vastaa parhaiten näkemääsi:",
     "conditions": {
@@ -336,7 +341,7 @@
       "defaultNoteSolo": "Haluan heitellä yksin tällä kertaa"
     },
     "enrollment": {
-      "title": "Ilmoittaudu pelaamaan",
+      "title": "Ilmoittaudu kentälle",
       "whenLabel": "Milloin",
       "today": "Tänään",
       "later": "Myöhemmin",
@@ -363,7 +368,7 @@
       "noteLabel": "Viesti muille",
       "notePlaceholder": "esim. Etsin avoimia pelejä, en malta odottaa että pääsee kentälle!",
       "optional": "valinnainen",
-      "enroll": "Lähetä ilmoitus",
+      "enroll": "Ilmoittaudu pelaamaan",
       "cancel": "Peruuta osallistumiseni",
       "success": "Hienoa! Muut näkevät nyt että olet tulossa.",
       "error": "Ilmoittautuminen epäonnistui. Yritä uudelleen.",
@@ -396,7 +401,12 @@
     "hoopDeleted": "\"{{name}}\" poistettu.",
     "hoopDeleteFailed": "Korin poisto epäonnistui.",
     "profileImageDeleted": "Profiilikuva poistettu.",
-    "profileImageDeleteFailed": "Profiilikuvan poisto epäonnistui."
+    "profileImageDeleteFailed": "Profiilikuvan poisto epäonnistui.",
+    "verify": "Vahvista kenttä",
+    "unverify": "Poista vahvistus",
+    "hoopVerified": "\"{{name}}\" vahvistettu.",
+    "hoopUnverified": "\"{{name}}\" vahvistus poistettu.",
+    "hoopVerifyFailed": "Vahvistuksen päivitys epäonnistui."
   },
   "profile": {
     "uploadSuccess": "Profiilikuva päivitetty",
@@ -412,6 +422,7 @@
     "outdoor": "Ulkokenttä",
     "free": "Ilmainen",
     "paid": "Maksullinen",
+    "verified": "Vahvistettu",
     "showlist": "Lista",
     "showmap": "Kartta",
     "condition": {

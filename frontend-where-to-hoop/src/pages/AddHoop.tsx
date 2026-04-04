@@ -28,7 +28,7 @@ const conditionConfig: Record<Condition, { color: string; labelKey: string }> = 
 };
 
 
-type FormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor" | "isPaid" | "description"> & {
+type FormData = Omit<BasketballHoop, "id" | "condition" | "isIndoor" | "isPaid" | "isVerified" | "description"> & {
   description: string;
   condition: Condition | null;
   isIndoor: boolean | null;
@@ -255,6 +255,7 @@ const AddHoop = ({ hoop }: AddHoopProps) => {
         condition: formData.condition!,
         isIndoor: formData.isIndoor!,
         isPaid: formData.isPaid!,
+        isVerified: false,
         createdAt: formData.createdAt,
         address: address ?? undefined,
         images: [],

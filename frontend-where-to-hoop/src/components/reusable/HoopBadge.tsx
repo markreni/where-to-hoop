@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 import type { Condition } from "../../types/types.ts";
 import { conditionColorSelector } from "../../utils/options.tsx";
-import { IoSunnyOutline, IoHomeOutline, IoPeopleOutline } from "react-icons/io5";
+import { IoSunnyOutline, IoHomeOutline, IoPeopleOutline, IoCheckmarkCircle } from "react-icons/io5";
 import { MdOutlineDateRange, MdMoneyOff, MdAttachMoney } from "react-icons/md";
 
-type BadgeVariant = 'indoor' | 'outdoor' | 'condition' | 'date' | 'players' | 'free' | 'paid';
+type BadgeVariant = 'indoor' | 'outdoor' | 'condition' | 'date' | 'players' | 'free' | 'paid' | 'verified';
 
 interface HoopBadgeProps {
   variant: BadgeVariant;
@@ -26,6 +26,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   players: 'bg-purple-100 text-purple-700',
   free: 'bg-green-100 text-green-700',
   paid: 'bg-red-100 text-red-700',
+  verified: 'bg-green-100 text-green-700',
 };
 
 const defaultIcons: Record<Exclude<BadgeVariant, 'condition'>, (size: number) => ReactNode> = {
@@ -35,6 +36,7 @@ const defaultIcons: Record<Exclude<BadgeVariant, 'condition'>, (size: number) =>
   players: (size) => <IoPeopleOutline size={size} />,
   free: (size) => <MdMoneyOff size={size} />,
   paid: (size) => <MdAttachMoney size={size} />,
+  verified: (size) => <IoCheckmarkCircle size={size} />,
 };
 
 const HoopBadge = ({

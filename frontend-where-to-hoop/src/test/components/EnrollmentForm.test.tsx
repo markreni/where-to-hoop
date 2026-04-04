@@ -22,7 +22,7 @@ describe('EnrollmentForm', () => {
 
   it('renders the title', () => {
     render(<EnrollmentForm {...defaultProps} />);
-    expect(screen.getByText('Enroll to play')).toBeInTheDocument();
+    expect(screen.getByText('Check in and play')).toBeInTheDocument();
   });
 
   it('renders arrival time slider', () => {
@@ -37,7 +37,7 @@ describe('EnrollmentForm', () => {
 
   it('renders enroll button', () => {
     render(<EnrollmentForm {...defaultProps} />);
-    expect(screen.getByRole('button', { name: /send enrollment/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /check in/i })).toBeInTheDocument();
   });
 
   it('shows "Now" for arrival time when slider is at 0', () => {
@@ -81,7 +81,7 @@ describe('EnrollmentForm', () => {
     const user = userEvent.setup();
     render(<EnrollmentForm {...defaultProps} />);
 
-    const enrollButton = screen.getByRole('button', { name: /send enrollment/i });
+    const enrollButton = screen.getByRole('button', { name: /check in/i });
     await user.click(enrollButton);
 
     await waitFor(() => {
@@ -94,7 +94,7 @@ describe('EnrollmentForm', () => {
     const user = userEvent.setup();
     render(<EnrollmentForm {...defaultProps} />);
 
-    const enrollButton = screen.getByRole('button', { name: /send enrollment/i });
+    const enrollButton = screen.getByRole('button', { name: /check in/i });
     await user.click(enrollButton);
 
     await waitFor(() => {
@@ -108,7 +108,7 @@ describe('EnrollmentForm', () => {
     render(<EnrollmentForm {...defaultProps} />);
 
     // Enroll first
-    const enrollButton = screen.getByRole('button', { name: /send enrollment/i });
+    const enrollButton = screen.getByRole('button', { name: /check in/i });
     await user.click(enrollButton);
 
     // Wait for the cancel button to appear and click it
@@ -120,7 +120,7 @@ describe('EnrollmentForm', () => {
     await user.click(cancelButton);
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: /send enrollment/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /check in/i })).toBeInTheDocument();
     });
   });
 
@@ -275,7 +275,7 @@ describe('EnrollmentForm', () => {
       const laterButton = getLaterToggle();
       await user.click(laterButton);
 
-      const enrollButton = screen.getByRole('button', { name: /send enrollment/i });
+      const enrollButton = screen.getByRole('button', { name: /check in/i });
       // Button should be disabled (has bg-gray-400 class or isDisabled)
       expect(enrollButton.className).toContain('bg-gray-400');
     });

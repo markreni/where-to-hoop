@@ -211,7 +211,8 @@
       "condition": "Court condition",
       "dateAdded": "Date added",
       "currentPlayers": "Number of players at court",
-      "addToFavorites": "Add to favorites"
+      "addToFavorites": "Add to favorites",
+      "verified": "Court details verified by admin"
     }
   },
   "footer": {
@@ -283,6 +284,10 @@
       "question": "How do I take a good court photo?",
       "answer": "For the best results: 1) Include the hoop and backboard clearly in the shot. 2) Show the court surface so others can see the condition. 3) Take photos during daylight for better visibility. 4) Capture any unique features like lighting, benches, or multiple hoops. 5) Avoid photos with people's faces for privacy."
     },
+    "verified": {
+      "question": "What does the green verified badge mean?",
+      "answer": "The green verified badge means that an admin has personally confirmed the court details are accurate — either by visiting the court in person or by verifying the submitted information. Courts without the badge are community-submitted and may not yet have been reviewed."
+    },
     "conditionTitle": "How do I rate a court's condition?",
     "conditionIntro": "When adding a court, select the condition that best matches what you see:",
     "conditions": {
@@ -336,7 +341,7 @@
       "defaultNoteSolo": "Prefer to hoop alone this time"
     },
     "enrollment": {
-      "title": "Enroll to play",
+      "title": "Check in and play",
       "whenLabel": "When",
       "today": "Today",
       "later": "Later",
@@ -363,7 +368,7 @@
       "noteLabel": "Note to others",
       "notePlaceholder": "e.g., Looking for some open games, can't wait to hoop!",
       "optional": "optional",
-      "enroll": "Send enrollment",
+      "enroll": "Check in",
       "cancel": "Cancel my session",
       "success": "You're all set! Others can now see you're coming.",
       "error": "Failed to send enrollment. Please try again.",
@@ -396,7 +401,12 @@
     "hoopDeleted": "\"{{name}}\" deleted.",
     "hoopDeleteFailed": "Failed to delete hoop.",
     "profileImageDeleted": "Profile image deleted.",
-    "profileImageDeleteFailed": "Failed to delete profile image."
+    "profileImageDeleteFailed": "Failed to delete profile image.",
+    "verify": "Verify hoop",
+    "unverify": "Remove verification",
+    "hoopVerified": "\"{{name}}\" verified.",
+    "hoopUnverified": "\"{{name}}\" verification removed.",
+    "hoopVerifyFailed": "Failed to update verification."
   },
   "profile": {
     "uploadSuccess": "Profile photo updated",
@@ -412,6 +422,7 @@
     "outdoor": "Outdoor",
     "free": "Free",
     "paid": "Paid",
+    "verified": "Verified",
     "showlist": "List",
     "showmap": "Map",
     "condition": {

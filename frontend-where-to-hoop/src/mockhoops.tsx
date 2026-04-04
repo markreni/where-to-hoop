@@ -22,6 +22,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     condition: 'good',
     isIndoor: false,
     isPaid: false,
+    isVerified: false,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {
@@ -93,6 +94,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     condition: 'excellent',
     isIndoor: true,
     isPaid: true,
+    isVerified: true,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {
@@ -185,6 +187,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     condition: 'fair',
     isIndoor: false,
     isPaid: false,
+    isVerified: false,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {
@@ -309,6 +312,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     condition: 'poor',
     isIndoor: false,
     isPaid: false,
+    isVerified: false,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {
@@ -344,6 +348,7 @@ const initialHoops: BasketballHoopWithEnrollments[] = [
     condition: 'excellent',
     isIndoor: true,
     isPaid: true,
+    isVerified: true,
     createdAt: new Date().toISOString(),
     playerEnrollments: [
       {

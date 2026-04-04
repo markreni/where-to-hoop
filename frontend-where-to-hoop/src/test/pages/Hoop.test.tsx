@@ -61,6 +61,7 @@ describe('Hoop Page', () => {
     condition: 'excellent',
     isIndoor: false,
     isPaid: false,
+    isVerified: false,
     addedBy: 'test@example.com',
   };
 
@@ -117,7 +118,7 @@ describe('Hoop Page', () => {
 
   it('renders EnrollmentForm component', () => {
     render(<Hoop hoop={mockHoop} />);
-    expect(screen.getByText('Enroll to play')).toBeInTheDocument();
+    expect(screen.getByText('Check in and play')).toBeInTheDocument();
   });
 
   it('shows "Hoop not found" when hoop is undefined', () => {
@@ -143,8 +144,10 @@ describe('Hoop Page', () => {
   });
 
   it('shows players from enrollments in PlayersPanel', async () => {
-    vi.useRealTimers();
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(new Date('2024-06-15T12:00:00'));
     const now = Date.now();
+
     vi.mocked(fetchHoopEnrollments).mockResolvedValueOnce([
       {
         id: 'enroll-1',
@@ -174,6 +177,7 @@ describe('Hoop Page', () => {
       expect(screen.getByText('Playing Now (1)')).toBeInTheDocument();
     });
     expect(screen.getByText('Coming Soon (1)')).toBeInTheDocument();
+    vi.useRealTimers();
   });
 
   it('renders different condition badges correctly', () => {

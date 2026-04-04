@@ -14,6 +14,7 @@ const mockHoop: BasketballHoop = {
   condition: 'excellent',
   isIndoor: false,
   isPaid: false,
+  isVerified: false,
   addedBy: 'test@example.com',
 };
 

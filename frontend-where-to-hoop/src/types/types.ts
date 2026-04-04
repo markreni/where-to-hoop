@@ -70,6 +70,7 @@ interface BasketballHoop {
   condition: Condition;
   isIndoor: boolean;
   isPaid: boolean;
+  isVerified: boolean;
   addedBy: string; // nickname of the user who added the hoop
   //playerEnrollments: PlayerEnrollment[]; // Number of players currently at the court
 };

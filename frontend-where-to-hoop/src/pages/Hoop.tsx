@@ -99,12 +99,33 @@ const Hoop = ({ hoop }: HoopProps) => {
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
       <BackArrow />
+      {isAdmin && (
+        <div className={`${colorModeContext} fixed z-1002 top-20 right-2 flex items-center gap-1 bg-background rounded-full shadow-md px-2 py-1 border-2 border-label-component`}>
+          <Button
+            onClick={() => navigate(`/admin/edit/${hoop.id}`)}
+            className={`${colorModeContext} p-1.5 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/70 cursor-pointer transition-colors`}
+            aria-label="Edit hoop"
+            //title="Edit hoop"
+          >
+            <MdEditNote size={22} />
+          </Button>
+          <Button
+            onClick={handleDelete}
+            isDisabled={deleting}
+            className={`${colorModeContext} p-1.5 rounded-full bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/70 cursor-pointer transition-colors disabled:opacity-50`}
+            aria-label="Delete hoop"
+            //title="Delete hoop"
+          >
+            <MdDeleteOutline size={22} />
+          </Button>
+        </div>
+      )}
       <div className="flex-grow padding-x-for-page padding-b-for-page">
         <div className="max-w-5xl mx-auto">
           {/* Two column layout on desktop */}
           <div className="grid grid-cols-1 xmd:grid-cols-2 gap-6">
             {/* Right column - Players and enrollment */}
-            <div className="relative flex flex-col gap-6">
+            <div className="flex flex-col gap-6">
               {/* Left column - Hoop info */}
               <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
                 {/* Header */}
@@ -118,27 +139,6 @@ const Hoop = ({ hoop }: HoopProps) => {
                         isFavorited(hoop.id)
                           ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
                           : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
-                      )}
-                      {isAdmin && (
-                        <div className="absolute right-2 top-2 flex items-center gap-3 xsm:gap-6">
-                          <button
-                            onClick={() => navigate(`/admin/edit/${hoop.id}`)}
-                            className="text-gray-400 hover:text-blue-500 cursor-pointer transition-colors"
-                            aria-label="Edit hoop"
-                            title="Edit hoop"
-                          >
-                            <MdEditNote size={26} />
-                          </button>
-                          <button
-                            onClick={handleDelete}
-                            disabled={deleting}
-                            className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors disabled:opacity-50"
-                            aria-label="Delete hoop"
-                            title="Delete hoop"
-                          >
-                            <MdDeleteOutline size={26} />
-                          </button>
-                        </div>
                       )}
                     </div>
                      {/* Badges */}
@@ -164,6 +164,15 @@ const Hoop = ({ hoop }: HoopProps) => {
                         textClassName='responsive-hoopcard-elements-text'
                         tooltip={t('hoops.tooltips.courtAccess')}
                       />
+                      {hoop.isVerified && (
+                        <HoopBadge
+                          variant="verified"
+                          text={t('common.verified')}
+                          showIcon={true}
+                          textClassName='responsive-hoopcard-elements-text'
+                          tooltip={t('hoops.tooltips.verified')}
+                        />
+                      )}
                       {/*
                       <HoopBadge
                         variant="date"

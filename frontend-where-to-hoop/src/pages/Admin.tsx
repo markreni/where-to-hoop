@@ -4,11 +4,11 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { useToast } from '../contexts/ToastContext'
-import { deleteHoop, getHoopImageUrl, getProfileImageUrl, fetchUsersWithProfileImages, adminRemoveProfileImage } from '../services/requests'
+import { deleteHoop, toggleHoopVerification, getHoopImageUrl, getProfileImageUrl, fetchUsersWithProfileImages, adminRemoveProfileImage } from '../services/requests'
 import type { UserWithProfileImage } from '../services/requests'
 import { BackArrow } from '../components/reusable/BackArrow'
 import type { BasketballHoop, ColorMode } from '../types/types'
-import { MdEdit, MdDelete, MdCheck, MdClose } from 'react-icons/md'
+import { MdEdit, MdDelete, MdCheck, MdClose, MdVerified } from 'react-icons/md'
 import { MdAdminPanelSettings } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
 import { FaUserCircle } from 'react-icons/fa'
@@ -36,6 +36,16 @@ const Admin = ({ hoops }: { hoops: BasketballHoop[] }) => {
     queryFn: fetchUsersWithProfileImages,
     enabled: activeTab === 'profileImages',
   })
+
+  const handleToggleVerification = async (hoop: BasketballHoop) => {
+    try {
+      await toggleHoopVerification(hoop.id, !hoop.isVerified)
+      await queryClient.invalidateQueries({ queryKey: ['hoops'] })
+      success(hoop.isVerified ? t('admin.hoopUnverified', { name: hoop.name }) : t('admin.hoopVerified', { name: hoop.name }))
+    } catch {
+      error(t('admin.hoopVerifyFailed'))
+    }
+  }
 
   const handleDelete = async (hoop: BasketballHoop) => {
     setDeletingId(hoop.id)
@@ -206,6 +216,19 @@ const Admin = ({ hoops }: { hoops: BasketballHoop[] }) => {
                                 </>
                               ) : (
                                 <>
+                                  <span title={hoop.isVerified ? t('admin.unverify') : t('admin.verify')}>
+                                    <Button
+                                      onClick={() => handleToggleVerification(hoop)}
+                                      className={`${colorModeContext} p-1.5 rounded-lg transition-colors ${
+                                        hoop.isVerified
+                                          ? 'bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/70'
+                                          : 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600'
+                                      }`}
+                                      aria-label={hoop.isVerified ? t('admin.unverify') : t('admin.verify')}
+                                    >
+                                      <MdVerified size={16} />
+                                    </Button>
+                                  </span>
                                   <Button
                                     onClick={() => navigate(`/admin/edit/${hoop.id}`)}
                                     className={`${colorModeContext} p-1.5 rounded-lg bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-900/70 transition-colors`}

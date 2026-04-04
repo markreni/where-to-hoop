@@ -7,7 +7,7 @@ import { BackArrow } from "../components/reusable/BackArrow"
 import { FAQItem } from "../components/reusable/FAQItem"
 import { ConditionCard } from "../components/reusable/ConditionCard"
 import Footer from "../components/Footer"
-import { FaQuestionCircle, FaCamera, FaPlusCircle, FaPlayCircle } from "react-icons/fa"
+import { FaQuestionCircle, FaCamera, FaPlusCircle, FaPlayCircle, FaCheckCircle } from "react-icons/fa"
 
 const Info = () => {
   const colorModeContext: ColorMode = useColorModeValues()
@@ -60,6 +60,13 @@ const Info = () => {
               question={t('faq.takePhoto.question')}
               answer={t('faq.takePhoto.answer')}
               icon={<FaCamera size={24} />}
+            />
+
+            <FAQItem
+              id="verified-badge"
+              question={t('faq.verified.question')}
+              answer={t('faq.verified.answer')}
+              icon={<FaCheckCircle size={24} className="text-green-500" />}
             />
           </div>
 

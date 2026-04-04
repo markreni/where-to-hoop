@@ -101,6 +101,15 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
                 textClassName="responsive-hoopcard-elements-text"
                 tooltip={t('hoops.tooltips.courtAccess')}
               />
+              {hoop.isVerified && (
+                <HoopBadge
+                  variant="verified"
+                  text={t('common.verified')}
+                  showIcon={true}
+                  textClassName="responsive-hoopcard-elements-text"
+                  tooltip={t('hoops.tooltips.verified')}
+                />
+              )}
             </div>
             <HoopBadge
               variant="players"
