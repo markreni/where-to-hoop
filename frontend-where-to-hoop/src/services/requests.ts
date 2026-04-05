@@ -376,6 +376,30 @@ const updateProfileVisibility = async (userId: string, isPublic: boolean): Promi
 }
 
 const signUp = async (email: string, password: string, nickname: string, isPublic: boolean) => {
+  if (nickname.trim().length < 3) {
+    throw new Error('Nickname must be at least 3 characters')
+  }
+
+  const { data: nicknameTaken, error: nicknameError } = await supabase
+    .rpc('check_nickname_exists', { check_nickname: nickname.trim() })
+
+    /*
+    const { data: existing } = await supabase
+    .from('users')
+    .select('id')
+    .ilike('nickname', nickname.trim())
+    .maybeSingle()
+    */
+
+  if (nicknameError) {
+    console.error('Nickname check error:', nicknameError.message)
+    throw nicknameError
+  }
+
+  if (nicknameTaken) {
+    throw new Error('Nickname is already taken')
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -383,6 +407,9 @@ const signUp = async (email: string, password: string, nickname: string, isPubli
   })
   if (error) {
     console.error('Sign up error:', error.message)
+    if (error.status === 429) {
+      throw new Error('Too many attempts. Please wait a moment and try again.')
+    }
     throw error
   }
   return data

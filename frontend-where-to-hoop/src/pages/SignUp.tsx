@@ -27,9 +27,10 @@ const SignUp = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const passwordsMatch = password === confirmPassword;
+  const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
   const isFormValid =
-    email.trim().length > 0 &&
-    nickname.trim().length > 0 &&
+    isValidEmail &&
+    nickname.trim().length > 2 &&
     password.length >= 6 &&
     passwordsMatch;
 
@@ -82,10 +83,17 @@ const SignUp = () => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className={`${colorModeContext} form-input bg-background`}
+                  className={`${colorModeContext} form-input bg-background ${
+                    email.length > 0 && !isValidEmail
+                      ? "border-red-500 focus:ring-red-500"
+                      : ""
+                  }`}
                   placeholder={t('signUp.emailPlaceholder')}
                   autoComplete="email"
                 />
+                {email.length > 0 && !isValidEmail && (
+                  <p className="text-red-500 text-fluid-xs">{t('signUp.emailInvalid')}</p>
+                )}
               </TextField>
 
               {/* Nickname */}
@@ -97,11 +105,18 @@ const SignUp = () => {
                   type="text"
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
-                  className={`${colorModeContext} form-input bg-background`}
+                  className={`${colorModeContext} form-input bg-background ${
+                    nickname.length > 0 && nickname.trim().length < 3
+                      ? "border-red-500 focus:ring-red-500"
+                      : ""
+                  }`}
                   placeholder={t('signUp.nicknamePlaceholder')}
                   autoComplete="username"
                   maxLength={30}
                 />
+                {nickname.length > 0 && nickname.trim().length < 3 && (
+                  <p className="text-red-500 text-fluid-xs">{t('signUp.nicknameTooShort')}</p>
+                )}
               </TextField>
 
               {/* Password */}
@@ -113,10 +128,17 @@ const SignUp = () => {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className={`${colorModeContext} form-input bg-background`}
+                  className={`${colorModeContext} form-input bg-background ${
+                    password.length > 0 && password.length < 6
+                      ? "border-red-500 focus:ring-red-500"
+                      : ""
+                  }`}
                   placeholder={t('signUp.passwordPlaceholder')}
                   autoComplete="new-password"
                 />
+                {password.length > 0 && password.length < 6 && (
+                  <p className="text-red-500 text-fluid-xs">{t('signUp.passwordTooShort')}</p>
+                )}
               </TextField>
 
               {/* Confirm Password */}

@@ -7,9 +7,9 @@ const helsinkiBounds: LatLngBoundsExpression = [
   [60.5, 25.5],  // Northeast corner (Sipoo/Porvoo area)
 ];
 // Validation constants for adding a new hoop
-const MAX_NAME_LENGTH: number = 50;
-const MAX_DESCRIPTION_LENGTH: number = 100;
-const MAX_IMAGE_SIZE_MB: number = 5;
+const MAX_NAME_LENGTH: number = 20;
+const MAX_DESCRIPTION_LENGTH: number = 120;
+const MAX_IMAGE_SIZE_MB: number = 3; // 3 MB
 const MAX_IMAGE_SIZE_BYTES: number = MAX_IMAGE_SIZE_MB * 1024 * 1024;
 const MAX_IMAGES: number = 3;
 

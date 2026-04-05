@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { User } from '@supabase/supabase-js';
+import { useNavigate } from 'react-router';
 import supabase from '../utils/supabase';
 
 interface AuthContextValue {
@@ -11,6 +12,7 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
 
   const fetchSession = async () => {
     const { data } = await supabase.auth.getSession();
@@ -20,6 +22,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const signOut = async () => {
     await supabase.auth.signOut();
+    navigate('/');
   };
 
   useEffect(() => {
