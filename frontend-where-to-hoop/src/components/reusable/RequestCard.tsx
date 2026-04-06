@@ -5,6 +5,7 @@ import { useToast } from '../../contexts/ToastContext'
 import { useTranslation } from '../../hooks/useTranslation'
 import { acceptFollowRequest, rejectFollowRequest } from '../../services/requests'
 import type { ColorMode, FollowRequest } from '../../types/types'
+import { Button } from 'react-aria-components'
 
 interface RequestCardProps {
   request: FollowRequest
@@ -22,6 +23,7 @@ const RequestCard = ({ request }: RequestCardProps) => {
       await acceptFollowRequest(request.id)
       success(t('myProfile.acceptSuccess'))
       queryClient.invalidateQueries({ queryKey: ['incomingFollowRequests', user?.id] })
+      queryClient.invalidateQueries({ queryKey: ['followers', user?.id] })
     } catch {
       error(t('myProfile.requestError'))
     }
@@ -48,18 +50,18 @@ const RequestCard = ({ request }: RequestCardProps) => {
         </p>
       </div>
       <div className="flex gap-2 shrink-0">
-        <button
+        <Button
           onClick={handleAccept}
           className="px-3 py-1 text-fluid-xs font-medium rounded-full bg-first-color text-white hover:bg-second-color transition-colors cursor-pointer"
         >
           {t('myProfile.accept')}
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={handleDecline}
           className="px-3 py-1 text-fluid-xs font-medium rounded-full bg-gray-300 dark:bg-gray-600 background-text hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors cursor-pointer"
         >
           {t('myProfile.decline')}
-        </button>
+        </Button>
       </div>
     </div>
   )

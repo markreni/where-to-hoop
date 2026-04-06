@@ -238,6 +238,7 @@
 
   --color-background: #ffffff;
 
+  --breakpoint-2xsm: 360px; /* 22.5rem */
   --breakpoint-xsm: 480px; /* 30rem */
   --breakpoint-sm: 640px; /* 40rem */
   --breakpoint-md: 768px; /* 48rem */

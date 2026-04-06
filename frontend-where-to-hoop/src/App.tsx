@@ -53,7 +53,7 @@ const App = () => {
 
   if (isLoading) {
     return (
-      <div className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen flex items-center justify-center">
+      <div className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen min-w-[340px] flex items-center justify-center">
         <p className="text-2xl text-text animate-bounce">Loading...</p>
       </div>
     );
@@ -61,7 +61,7 @@ const App = () => {
 
   return (
     <div
-      className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen overflow-hidden relative"
+      className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen min-w-[340px] overflow-hidden relative"
     >
       <NavBar />
       <ToastContainer />

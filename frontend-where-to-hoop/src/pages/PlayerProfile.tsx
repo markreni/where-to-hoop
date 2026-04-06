@@ -110,7 +110,7 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                   <p className={`${colorModeContext} text-fluid-base font-medium background-text text-center`}>
                     {t('playerProfile.privateProfile')}
                   </p>
-                  <p className={`${colorModeContext} text-fluid-sm text-gray-400 dark:text-gray-500 text-center max-w-xs`}>
+                  <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-900 text-center max-w-xs`}>
                     {t('playerProfile.privateProfileSub')}
                   </p>
                 </div>

@@ -18,6 +18,7 @@ import useEnrollmentsRealtime from "../hooks/useEnrollmentsRealtime.ts";
 import { MdLocationPin, MdArrowForward } from "react-icons/md";
 import { InteractiveBasketball } from "../components/reusable/InteractiveBasketball.tsx";
 import { useMapViewDispatch } from "../contexts/MapViewContext.tsx";
+import { Button } from "react-aria-components";
 
 const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const colorModeContext: ColorMode = useColorModeValues();
@@ -147,11 +148,11 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
             </span>
 
             <Link to="/hoops">
-              <button onClick={() => { mapViewDispatch('map') }} 
-                  className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg border-2 shadow-2xl border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
+              <Button onClick={() => { mapViewDispatch('map') }} 
+                  className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg w-max border-2 shadow-2xl border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
                 <MdLocationPin size={24}/>
                 {t('home.hero.ctaButton')}
-              </button>
+              </Button>
             </Link>
           </div>
         </section>
