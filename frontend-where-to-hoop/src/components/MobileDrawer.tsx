@@ -11,7 +11,7 @@ import useLocateUser from "../hooks/useLocateUser.ts";
 import { useColorModeValues } from "../contexts/ColorModeContext.tsx";
 import type { ColorMode } from "../types/types.ts";
 import { DrawerItem } from "./reusable/DrawerItem.tsx";
-import ProfileCircle from "./reusable/ProfileCircle.tsx";
+import { ProfileCircle } from "./reusable/ProfileCircle.tsx";
 import { useQuery } from "@tanstack/react-query";
 import { getProfileImageUrl, fetchUserProfileImage } from "../services/requests.ts";
 import type { ProfileImage } from "../types/types.ts";

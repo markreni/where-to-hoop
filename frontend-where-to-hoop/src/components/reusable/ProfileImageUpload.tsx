@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MdCameraAlt } from "react-icons/md";
-import ProfileCircle from "./ProfileCircle";
+import { ProfileCircle } from "./ProfileCircle";
 import ProfileImageCropper from "./ProfileImageCropper";
 import { uploadProfileImage, removeProfileImage } from "../../services/requests";
 import { useToast } from "../../contexts/ToastContext";

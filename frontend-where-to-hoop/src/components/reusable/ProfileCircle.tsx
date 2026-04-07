@@ -47,4 +47,4 @@ const ProfileCircle = ({ name, imageUrl, size = 'md' }: ProfileCircleProps) => {
   );
 };
 
-export default ProfileCircle;
+export { ProfileCircle };

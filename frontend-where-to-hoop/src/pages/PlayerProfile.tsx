@@ -10,7 +10,7 @@ import { EnrollmentCard } from '../components/reusable/EnrollmentCard'
 import { fetchPlayerByNickname, fetchActiveEnrollments, fetchExpiredEnrollmentCount, fetchFollowers, getProfileImageUrl } from '../services/requests'
 import type { BasketballHoop, ColorMode, PlayerEnrollment, PublicProfile } from '../types/types'
 import { FaLock, FaUsers } from 'react-icons/fa'
-import ProfileCircle from '../components/reusable/ProfileCircle'
+import { ProfileCircle } from '../components/reusable/ProfileCircle'
 import { GiBasketballBasket } from 'react-icons/gi'
 
 interface PlayerProfileProps {
