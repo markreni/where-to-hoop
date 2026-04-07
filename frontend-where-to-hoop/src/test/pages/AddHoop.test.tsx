@@ -84,7 +84,7 @@ describe('AddHoop', () => {
     const nameInput = screen.getByPlaceholderText('e.g., Central Park Court');
     await user.type(nameInput, 'Test');
 
-    expect(screen.getByText('4/50')).toBeInTheDocument();
+    expect(screen.getByText('4/20')).toBeInTheDocument();
   });
 
   it('renders condition options', () => {

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { User } from '@supabase/supabase-js';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import supabase from '../utils/supabase';
 
 interface AuthContextValue {
