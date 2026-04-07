@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import Cropper, { type Area } from "react-easy-crop";
-import { Button } from "react-aria-components";
+import { Button, Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { useTranslation } from "../../hooks/useTranslation";
 
 interface ProfileImageCropperProps {
@@ -82,63 +82,71 @@ const ProfileImageCropper = ({ imageSrc, onCancel, onSave, onError, isSaving }: 
   };
 
   return (
-    <div
+    <ModalOverlay
+      isOpen
+      onOpenChange={(open) => {
+        // Triggered by Escape key or programmatic close. Ignore while uploading
+        // so the user can't lose work mid-request.
+        if (!open && !isSaving) onCancel();
+      }}
+      isDismissable={false}
       className="fixed inset-0 z-[9999] bg-black/85 flex flex-col items-center justify-center p-4"
-      onClick={(e) => e.stopPropagation()}
     >
-      <div className="relative w-full max-w-md h-[60vh] bg-black rounded-lg overflow-hidden">
-        <Cropper
-          image={imageSrc}
-          crop={crop}
-          zoom={zoom}
-          aspect={1}
-          cropShape="round"
-          showGrid={false}
-          onCropChange={setCrop}
-          onZoomChange={setZoom}
-          onCropComplete={onCropComplete}
-        />
-      </div>
+      <Modal className="w-full max-w-md flex flex-col gap-4 outline-none">
+        <Dialog aria-label={t("profile.cropDialogLabel")} className="flex flex-col gap-4 outline-none">
+          <div className="relative w-full h-[60vh] bg-black rounded-lg overflow-hidden">
+            <Cropper
+              image={imageSrc}
+              crop={crop}
+              zoom={zoom}
+              aspect={1}
+              cropShape="round"
+              showGrid={false}
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={onCropComplete}
+            />
+          </div>
 
-      <div className="w-full max-w-md mt-4 flex flex-col gap-4">
-        <label className="flex items-center gap-3 text-white text-fluid-sm">
-          <span className="min-w-12">{t("profile.zoom")}</span>
-          <input
-            type="range"
-            min={1}
-            max={3}
-            step={0.01}
-            value={zoom}
-            onChange={(e) => setZoom(Number(e.target.value))}
-            className="flex-1 accent-first-color"
-            aria-label={t("profile.zoom")}
-          />
-        </label>
+          <label className="flex items-center gap-3 text-white text-fluid-sm">
+            <span className="min-w-12">{t("profile.zoom")}</span>
+            <input
+              type="range"
+              min={1}
+              max={3}
+              step={0.01}
+              value={zoom}
+              onChange={(e) => setZoom(Number(e.target.value))}
+              className="flex-1 accent-first-color"
+              aria-label={t("profile.zoom")}
+            />
+          </label>
 
-        <div className="flex gap-3 justify-end">
-          <Button
-            type="button"
-            onClick={onCancel}
-            isDisabled={isSaving}
-            className="px-4 py-2 rounded-lg border border-white/30 text-white hover:bg-white/10 transition-colors"
-          >
-            {t("profile.cancel")}
-          </Button>
-          <Button
-            type="button"
-            onClick={handleSave}
-            isDisabled={isSaving || !croppedAreaPixels}
-            className="px-4 py-2 rounded-lg bg-first-color text-black font-medium hover:bg-second-color transition-colors disabled:opacity-50"
-          >
-            {isSaving ? (
-              <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-            ) : (
-              t("profile.save")
-            )}
-          </Button>
-        </div>
-      </div>
-    </div>
+          <div className="flex gap-3 justify-end">
+            <Button
+              type="button"
+              onPress={onCancel}
+              isDisabled={isSaving}
+              className="px-4 py-2 rounded-lg border border-white/30 text-white hover:bg-white/10 transition-colors"
+            >
+              {t("profile.cancel")}
+            </Button>
+            <Button
+              type="button"
+              onPress={handleSave}
+              isDisabled={isSaving || !croppedAreaPixels}
+              className="px-4 py-2 rounded-lg bg-first-color text-black font-medium hover:bg-second-color transition-colors disabled:opacity-50"
+            >
+              {isSaving ? (
+                <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+              ) : (
+                t("profile.save")
+              )}
+            </Button>
+          </div>
+        </Dialog>
+      </Modal>
+    </ModalOverlay>
   );
 };
 

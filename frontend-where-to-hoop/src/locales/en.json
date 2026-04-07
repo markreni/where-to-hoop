@@ -421,7 +421,8 @@
     "zoom": "Zoom",
     "cancel": "Cancel",
     "save": "Save",
-    "cropError": "Could not process image. The format may be unsupported."
+    "cropError": "Could not process image. The format may be unsupported.",
+    "cropDialogLabel": "Adjust profile photo"
   },
   "common": {
     "all": "All",

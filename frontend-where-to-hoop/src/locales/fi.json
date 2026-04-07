@@ -421,7 +421,8 @@
     "zoom": "Zoomaus",
     "cancel": "Peruuta",
     "save": "Tallenna",
-    "cropError": "Kuvan käsittely epäonnistui. Tiedostomuotoa ei ehkä tueta."
+    "cropError": "Kuvan käsittely epäonnistui. Tiedostomuotoa ei ehkä tueta.",
+    "cropDialogLabel": "Säädä profiilikuvaa"
   },
   "common": {
     "all": "Kaikki",
