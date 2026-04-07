@@ -71,6 +71,7 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                   name={profile.nickname}
                   imageUrl={profile.profileImage ? getProfileImageUrl(profile.profileImage.imagePath) : undefined}
                   size="xl"
+                  expandable
                 />
                 <div className="flex-1 min-w-0">
                   <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-reverse-black truncate`}>

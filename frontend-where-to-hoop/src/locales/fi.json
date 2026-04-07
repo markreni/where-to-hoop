@@ -422,7 +422,9 @@
     "cancel": "Peruuta",
     "save": "Tallenna",
     "cropError": "Kuvan käsittely epäonnistui. Tiedostomuotoa ei ehkä tueta.",
-    "cropDialogLabel": "Säädä profiilikuvaa"
+    "cropDialogLabel": "Säädä profiilikuvaa",
+    "viewPhotoDialogLabel": "Profiilikuva",
+    "closePhoto": "Sulje"
   },
   "common": {
     "all": "Kaikki",
