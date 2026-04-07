@@ -11,6 +11,10 @@ const MAX_NAME_LENGTH: number = 20;
 const MAX_DESCRIPTION_LENGTH: number = 120;
 const MAX_IMAGE_SIZE_MB: number = 3; // 3 MB
 const MAX_IMAGE_SIZE_BYTES: number = MAX_IMAGE_SIZE_MB * 1024 * 1024;
+// Profile photos are cropped client-side to a 512x512 JPEG (~30-80 KB) before upload,
+// so the pre-crop limit just needs to keep typical phone camera files in and absurd inputs (e.g. 50 MP RAW) out.
+const MAX_PROFILE_IMAGE_SIZE_MB: number = 15;
+const MAX_PROFILE_IMAGE_SIZE_BYTES: number = MAX_PROFILE_IMAGE_SIZE_MB * 1024 * 1024;
 const MAX_IMAGES: number = 3;
 
 const emailDomain: string = "mark.renssi@gmail.com";
@@ -18,4 +22,4 @@ const emailDomain: string = "mark.renssi@gmail.com";
 // Note length constant for adding enrollment
 const MAX_NOTE_LENGTH = 75;
 
-export { centerCoordinates, MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_IMAGES, helsinkiBounds, MAX_NOTE_LENGTH, emailDomain };
+export { centerCoordinates, MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_PROFILE_IMAGE_SIZE_MB, MAX_PROFILE_IMAGE_SIZE_BYTES, MAX_IMAGES, helsinkiBounds, MAX_NOTE_LENGTH, emailDomain };

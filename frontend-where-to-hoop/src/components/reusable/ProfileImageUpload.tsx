@@ -1,10 +1,11 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdCameraAlt } from "react-icons/md";
 import ProfileCircle from "./ProfileCircle";
+import ProfileImageCropper from "./ProfileImageCropper";
 import { uploadProfileImage, removeProfileImage } from "../../services/requests";
 import { useToast } from "../../contexts/ToastContext";
 import { useTranslation } from "../../hooks/useTranslation";
-import { MAX_IMAGE_SIZE_BYTES, MAX_IMAGE_SIZE_MB } from "../../utils/constants";
+import { MAX_PROFILE_IMAGE_SIZE_BYTES, MAX_PROFILE_IMAGE_SIZE_MB } from "../../utils/constants";
 import type { ProfileImage } from "../../types/types";
 import { Button } from "react-aria-components";
 
@@ -18,9 +19,17 @@ interface ProfileImageUploadProps {
 
 const ProfileImageUpload = ({ imageUrl, userName, userId, image, onImageUpdated }: ProfileImageUploadProps) => {
   const [isUploading, setIsUploading] = useState(false);
+  const [cropSrc, setCropSrc] = useState<string | null>(null);
+  const [cropFileName, setCropFileName] = useState<string>("profile.jpg");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { success, error } = useToast();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    return () => {
+      if (cropSrc) URL.revokeObjectURL(cropSrc);
+    };
+  }, [cropSrc]);
 
   const handleClick = () => {
     if (!isUploading) {
@@ -28,23 +37,37 @@ const ProfileImageUpload = ({ imageUrl, userName, userId, image, onImageUpdated 
     }
   };
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file: File | undefined = e.target.files?.[0];
     if (!file) return;
 
     // Reset input so re-selecting the same file triggers onChange
     e.target.value = "";
 
-    if (file.size > MAX_IMAGE_SIZE_BYTES) {
-      error(t("profile.imageTooLarge", { size: String(MAX_IMAGE_SIZE_MB) }));
+    if (file.size > MAX_PROFILE_IMAGE_SIZE_BYTES) {
+      error(t("profile.imageTooLarge", { size: String(MAX_PROFILE_IMAGE_SIZE_MB) }));
       return;
     }
 
+    setCropFileName(file.name);
+    setCropSrc(URL.createObjectURL(file));
+  };
+
+  const handleCropCancel = () => {
+    if (cropSrc) URL.revokeObjectURL(cropSrc);
+    setCropSrc(null);
+  };
+
+  const handleCropSave = async (blob: Blob) => {
     setIsUploading(true);
     try {
-      await uploadProfileImage(userId, file, image);
+      const baseName: string = cropFileName.replace(/\.[^.]+$/, "") || "profile";
+      const croppedFile: File = new File([blob], `${baseName}.jpg`, { type: "image/jpeg" });
+      await uploadProfileImage(userId, croppedFile, image);
       onImageUpdated();
       success(t("profile.uploadSuccess"));
+      if (cropSrc) URL.revokeObjectURL(cropSrc);
+      setCropSrc(null);
     } catch {
       error(t("profile.uploadError"));
     } finally {
@@ -114,6 +137,16 @@ const ProfileImageUpload = ({ imageUrl, userName, userId, image, onImageUpdated 
         className="hidden"
         onChange={handleFileChange}
       />
+
+      {cropSrc && (
+        <ProfileImageCropper
+          imageSrc={cropSrc}
+          onCancel={handleCropCancel}
+          onSave={handleCropSave}
+          onError={() => error(t("profile.cropError"))}
+          isSaving={isUploading}
+        />
+      )}
     </div>
   );
 };

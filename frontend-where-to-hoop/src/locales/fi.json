@@ -417,7 +417,11 @@
     "removeSuccess": "Profiilikuva poistettu",
     "removeError": "Kuvan poisto epäonnistui",
     "removeImage": "Poista kuva",
-    "imageTooLarge": "Kuvan koko saa olla enintään {{size}}MB"
+    "imageTooLarge": "Kuvan koko saa olla enintään {{size}}MB",
+    "zoom": "Zoomaus",
+    "cancel": "Peruuta",
+    "save": "Tallenna",
+    "cropError": "Kuvan käsittely epäonnistui. Tiedostomuotoa ei ehkä tueta."
   },
   "common": {
     "all": "Kaikki",

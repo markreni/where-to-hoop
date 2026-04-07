@@ -417,7 +417,11 @@
     "removeSuccess": "Profile photo removed",
     "removeError": "Failed to remove photo",
     "removeImage": "Remove photo",
-    "imageTooLarge": "Image must be under {{size}}MB"
+    "imageTooLarge": "Image must be under {{size}}MB",
+    "zoom": "Zoom",
+    "cancel": "Cancel",
+    "save": "Save",
+    "cropError": "Could not process image. The format may be unsupported."
   },
   "common": {
     "all": "All",

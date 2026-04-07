@@ -320,7 +320,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center py-16 gap-4">
-                <FaUserPlus size={48} className="text-first-color opacity-40" />
+                <FaUserPlus size={48} className={`${colorModeContext} background-text-reverse opacity-40`} />
                 <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
                   {t('myProfile.noRequests')}
                 </p>
