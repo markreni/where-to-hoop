@@ -51,7 +51,7 @@ const PlayerPanelCard = ({ enrollment, allEnrollments }: PlayerPanelCardProps) =
   const isOwner = !!user && user.id === enrollment.playerId
   const [isJoining, setIsJoining] = useState(false)
 
-  const enrollmentIsToday = isTodayDate(arrivalTime)
+  const enrollmentIsToday: boolean = isTodayDate(arrivalTime)
   const alreadyEnrolled: boolean = !!user && allEnrollments.some(e =>
     e.playerId === user.id &&
     (enrollmentIsToday ? isTodayDate(new Date(e.arrivalTime)) : !isTodayDate(new Date(e.arrivalTime)))
@@ -71,7 +71,10 @@ const PlayerPanelCard = ({ enrollment, allEnrollments }: PlayerPanelCardProps) =
       note: `Joined ${enrollment.playerNickname}`,
     }).then(async () => {
       success(t('hoop.enrollment.success'))
-      await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['enrollments'] }),
+        queryClient.invalidateQueries({ queryKey: ['activeEnrollments', user.id], exact: true }),
+      ])
     }).catch((err: { code?: string }) => {
       if (err.code === '42501') {
         error(t('hoop.enrollment.authError'))
@@ -84,9 +87,13 @@ const PlayerPanelCard = ({ enrollment, allEnrollments }: PlayerPanelCardProps) =
   }
 
   const handleDelete = () => {
+    if (!user) return
     deleteEnrollment(enrollment.id).then(async () => {
       success(t('hoop.playersPanel.deleteSuccess'))
-      await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['enrollments'] }),
+        queryClient.invalidateQueries({ queryKey: ['activeEnrollments', user.id], exact: true }),
+      ])
     }).catch(() => {
       error(t('hoop.playersPanel.deleteError'))
     })

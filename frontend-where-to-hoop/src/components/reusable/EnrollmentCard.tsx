@@ -1,6 +1,13 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Button } from 'react-aria-components'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useColorModeValues } from '../../contexts/ColorModeContext'
 import { useTranslation } from '../../hooks/useTranslation'
+import { useAuth } from '../../contexts/AuthContext'
+import { useToast } from '../../contexts/ToastContext'
+import { fetchActiveEnrollments, insertEnrollment } from '../../services/requests'
+import { isTodayDate } from '../../utils/functions'
 import type { BasketballHoop, ColorMode, PlayerEnrollment } from '../../types/types'
 
 interface EnrollmentCardProps {
@@ -24,6 +31,54 @@ const formatArrival = (date: Date): string =>
 const EnrollmentCard = ({ enrollment, hoops }: EnrollmentCardProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
+  const { user } = useAuth()
+  const { success, error } = useToast()
+  const queryClient = useQueryClient()
+  const [isJoining, setIsJoining] = useState(false)
+
+  const isOwner = !!user && user.id === enrollment.playerId
+  const isOpenToPlay = enrollment.playMode === 'open'
+  const showJoinButton = isOpenToPlay && !isOwner && !!user
+
+  const { data: userEnrollments = [] } = useQuery<PlayerEnrollment[]>({
+    queryKey: ['activeEnrollments', user?.id],
+    queryFn: () => fetchActiveEnrollments(user!.id),
+    enabled: showJoinButton,
+  })
+
+  const enrollmentIsToday: boolean = isTodayDate(new Date(enrollment.arrivalTime))
+  const alreadyEnrolled: boolean = showJoinButton && userEnrollments.some(e =>
+    enrollmentIsToday ? isTodayDate(new Date(e.arrivalTime)) : !isTodayDate(new Date(e.arrivalTime))
+  )
+
+  const handleJoinSubmit = () => {
+    if (!user || alreadyEnrolled) return
+    setIsJoining(true)
+    insertEnrollment({
+      playerId: user.id,
+      playerNickname: user.user_metadata?.nickname ?? '',
+      hoopId: enrollment.hoopId,
+      arrivalTime: enrollment.arrivalTime,
+      duration: enrollment.duration,
+      expired: enrollment.expired,
+      playMode: enrollment.playMode,
+      note: `Joined ${enrollment.playerNickname}`,
+    }).then(async () => {
+      success(t('hoop.enrollment.success'))
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['enrollments'] }),
+        queryClient.invalidateQueries({ queryKey: ['activeEnrollments', user.id], exact: true }),
+      ])
+    }).catch((err: { code?: string }) => {
+      if (err.code === '42501') {
+        error(t('hoop.enrollment.authError'))
+      } else {
+        error(t('hoop.enrollment.error'))
+      }
+    }).finally(() => {
+      setIsJoining(false)
+    })
+  }
 
   const hoopName = enrollment.hoopId
     ? (hoops.find(h => h.id === enrollment.hoopId)?.name ?? t('myProfile.courtUnknown'))
@@ -44,13 +99,27 @@ const EnrollmentCard = ({ enrollment, hoops }: EnrollmentCardProps) => {
             {hoopName}
           </span>
         )}
-        <span className={`shrink-0 text-xs px-2 py-0.5 rounded-full font-medium ${
-          enrollment.playMode === 'open'
-            ? `${colorModeContext} bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400`
-            : `${colorModeContext} bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300`
-        }`}>
-          {enrollment.playMode === 'open' ? t('myProfile.playModeOpen') : t('myProfile.playModeSolo')}
-        </span>
+        {showJoinButton ? (
+          <Button
+            onPress={handleJoinSubmit}
+            isDisabled={isJoining || alreadyEnrolled}
+            className={`shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full text-white transition-colors ${
+              isJoining || alreadyEnrolled
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-green-500 hover:bg-green-600 cursor-pointer'
+            }`}
+          >
+            {t('hoop.playersPanel.joinButton')}
+          </Button>
+        ) : (
+          <span className={`shrink-0 text-xs px-2 py-0.5 rounded-full font-medium ${
+            isOpenToPlay
+              ? `${colorModeContext} bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400`
+              : `${colorModeContext} bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300`
+          }`}>
+            {isOpenToPlay ? t('myProfile.playModeOpen') : t('myProfile.playModeSolo')}
+          </span>
+        )}
       </div>
       <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
         {formatArrival(enrollment.arrivalTime)} - {formatDuration(enrollment.duration)}
