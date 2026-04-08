@@ -12,6 +12,7 @@ import type { BasketballHoop, ColorMode, PlayerEnrollment, PublicProfile } from 
 import { FaLock, FaUsers } from 'react-icons/fa'
 import { ProfileCircle } from '../components/reusable/ProfileCircle'
 import { GiBasketballBasket } from 'react-icons/gi'
+import { Button } from 'react-aria-components'
 
 interface PlayerProfileProps {
   hoops: BasketballHoop[]
@@ -80,7 +81,7 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                   
                 </div>
                 {!isOwnProfile && user && (
-                  <button
+                  <Button
                     onClick={() => toggleFollow(profile.id, profile.public)}
                     className={`${colorModeContext} shrink-0 px-4 py-2 rounded-lg border-2 background-text-reverse-black text-fluid-sm background-reverse-border bg-black/30 hover:bg-black/50 font-medium transition-all dark:bg-white/30 dark:hover:bg-white/50`}>
                     {isFollowing(profile.id)
@@ -88,7 +89,7 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                       : isRequested(profile.id)
                         ? t('myProfile.requested')
                         : t('myProfile.follow')}
-                  </button>
+                  </Button>
                 )}
               </div>
 

@@ -28,20 +28,38 @@ const useFollowing = () => {
   const mutation = useMutation({
     mutationFn: ({ targetId, add, targetIsPublic }: { targetId: string; add: boolean; targetIsPublic: boolean }) =>
       toggleFollowRequest(user!.id, targetId, add, targetIsPublic),
-    onMutate: async ({ targetId, add }) => {
+    onMutate: async ({ targetId, add, targetIsPublic }) => {
       await queryClient.cancelQueries({ queryKey: ['following', user?.id] })
-      const previous = queryClient.getQueryData<string[]>(['following', user?.id])
-      queryClient.setQueryData<string[]>(['following', user?.id], old => {
-        const current = old ?? []
-        return add
-          ? [...new Set([...current, targetId])]
-          : current.filter(id => id !== targetId)
-      })
-      return { previous }
+      await queryClient.cancelQueries({ queryKey: ['followRequests', user?.id] })
+      const previousFollowing = queryClient.getQueryData<string[]>(['following', user?.id])
+      const previousRequested = queryClient.getQueryData<string[]>(['followRequests', user?.id])
+
+      // Only public targets become an immediate follow. Private targets create a
+      // pending follow request — optimistically updating `following` for them would
+      // briefly grant view access (e.g. flashing enrollments on a private profile).
+      if (targetIsPublic) {
+        queryClient.setQueryData<string[]>(['following', user?.id], old => {
+          const current = old ?? []
+          return add
+            ? [...new Set([...current, targetId])]
+            : current.filter(id => id !== targetId)
+        })
+      } else {
+        queryClient.setQueryData<string[]>(['followRequests', user?.id], old => {
+          const current = old ?? []
+          return add
+            ? [...new Set([...current, targetId])]
+            : current.filter(id => id !== targetId)
+        })
+      }
+      return { previousFollowing, previousRequested }
     },
     onError: (_err, _vars, context) => {
-      if (context?.previous !== undefined) {
-        queryClient.setQueryData(['following', user?.id], context.previous)
+      if (context?.previousFollowing !== undefined) {
+        queryClient.setQueryData(['following', user?.id], context.previousFollowing)
+      }
+      if (context?.previousRequested !== undefined) {
+        queryClient.setQueryData(['followRequests', user?.id], context.previousRequested)
       }
     },
     onSettled: () => {
