@@ -204,6 +204,7 @@
     "hoopcardPlayingNow": "Pelaamassa nyt",
     "hoopcardMapButton": "Kartalla",
     "hoopcardReadyToPlayButton": "Valmis pelaamaan",
+    "hoopcardCheckedIn": "Ilmoittautunut",
     "players": {
       "one": "1 pelaaja kentällä",
       "other": "{{count}} pelaajaa kentällä"

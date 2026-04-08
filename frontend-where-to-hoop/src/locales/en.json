@@ -204,6 +204,7 @@
     "hoopcardMapButton": "On Map",
     "hoopcardPlayingNow": "Playing now",
     "hoopcardReadyToPlayButton": "Ready to play",
+    "hoopcardCheckedIn": "Checked in",
     "players": {
       "one": "1 player on court",
       "other": "{{count}} players on court"

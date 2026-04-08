@@ -340,10 +340,10 @@
     @apply flex items-center justify-center px-2 py-0.5 gap-1 text-sm rounded;
   }
   .hoop-card-button-green {
-    @apply bg-green-500 hover:bg-green-600;
+    @apply bg-gradient-to-b from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 border-b-2 border-green-700;
   }
   .hoop-card-button-blue {
-    @apply bg-blue-500 hover:bg-blue-600;
+    @apply bg-gradient-to-b from-blue-400 to-blue-600 hover:from-blue-500 hover:to-blue-700 border-b-2 border-blue-700;
   }
   .form-input {
     @apply w-full p-3 border text-black dark:text-white border-gray-300 rounded-lg text-fluid-sm resize-none focus:outline-none focus:ring-2 focus:ring-first-color;

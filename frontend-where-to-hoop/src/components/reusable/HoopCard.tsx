@@ -6,6 +6,7 @@ import { useLanguage } from "../../contexts/LanguageContext.tsx";
 import { useNavigate } from "react-router-dom";
 import type { FocusableElement } from "@react-types/shared";
 import { useMemo, type MouseEvent } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { MdOutlineFavoriteBorder, MdFavorite } from "react-icons/md";
@@ -13,7 +14,7 @@ import { MdOutlineFavoriteBorder, MdFavorite } from "react-icons/md";
 //import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
-import { getHoopImageUrl } from "../../services/requests.ts";
+import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 import { useAuth } from "../../contexts/AuthContext.tsx";
 import { useFavorites } from "../../hooks/useFavorites.ts";
@@ -64,6 +65,13 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
   );
   const playingNowCount = playingNow.length;
 
+  const { data: userActiveEnrollments = [] } = useQuery<PlayerEnrollment[]>({
+    queryKey: ['activeEnrollments', user?.id],
+    queryFn: () => fetchActiveEnrollments(user!.id),
+    enabled: !!user,
+  });
+  const isCheckedIn = userActiveEnrollments.some(e => e.hoopId === hoop.id);
+
   return (
     <div className={`${colorModeContext} h-1/3 sm:h-full w-full flex flex-col justify-start gap-3 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
       <div className="flex justify-between items-start gap-2">
@@ -85,10 +93,20 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
       </div>
       <div className="flex flex-col gap-3">
         <div className="flex justify-start gap-4">
-          <img className="rounded-md w-full xsm:w-2/3 h-40 object-cover"
-            src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/150'}
-            alt={hoop.name}
-          />
+          <div className="relative w-full xsm:w-2/3">
+            <img className="rounded-md w-full h-40 object-cover"
+              src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/150'}
+              alt={hoop.name}
+            />
+            {isCheckedIn && (
+              <span
+                className="absolute top-0.5 left-0.5 inline-flex items-center text-fluid-xs font-semibold px-2 py-0.5 rounded-sm bg-green-500 text-white shadow-md ring-1 ring-white/30"
+                title={t('hoops.hoopcardCheckedIn')}
+              >
+                {t('hoops.hoopcardCheckedIn')}
+              </span>
+            )}
+          </div>
           <div className="flex-col gap-1 items-start justify-around hidden xsm:flex">
             <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>
             {playingNow.length > 0 && (

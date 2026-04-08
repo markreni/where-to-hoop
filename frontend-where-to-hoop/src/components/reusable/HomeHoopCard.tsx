@@ -2,16 +2,18 @@ import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../..
 import type { FocusableElement } from "@react-types/shared";
 import { useMemo, type Dispatch, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
-import { getHoopImageUrl } from "../../services/requests.ts";
+import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
 //import breakpoints from "../../assets/style.ts";
 //import { useMediaQuery } from "usehooks-ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
+import { useAuth } from "../../contexts/AuthContext.tsx";
 
 interface HomeHoopCardProps {
   hoop: BasketballHoop;
@@ -25,7 +27,15 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
   const userLocationDispatch = useLocationDispatch();
   const navigate = useNavigate();
   const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
+  const { user } = useAuth();
   const imageSrc = hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/300x200';
+
+  const { data: userActiveEnrollments = [] } = useQuery<PlayerEnrollment[]>({
+    queryKey: ['activeEnrollments', user?.id],
+    queryFn: () => fetchActiveEnrollments(user!.id),
+    enabled: !!user,
+  });
+  const isCheckedIn = userActiveEnrollments.some(e => e.hoopId === hoop.id);
   //const xsm: boolean = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
 
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
@@ -59,6 +69,14 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
   return (
     <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full flex-grow-0`}> 
       <div className="relative w-full h-44 xsm:h-52 sm:h-60 md:h-68 lg:h-76 bg-gray-100 dark:bg-gray-800">
+        {isCheckedIn && (
+          <span
+            className="absolute top-2 left-2 z-10 inline-flex items-center text-fluid-xs font-semibold px-2 py-0.5 rounded-sm bg-green-500 text-white shadow-md ring-1 ring-white/30"
+            title={t('hoops.hoopcardCheckedIn')}
+          >
+            {t('hoops.hoopcardCheckedIn')}
+          </span>
+        )}
         <div className="absolute top-2 right-2 z-10 mt-auto">
           <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-base" />
         </div>
