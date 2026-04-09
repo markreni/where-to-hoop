@@ -52,9 +52,24 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
   const isOwnProfile = !!user && !!profile && user.id === profile.id
   const canViewProfile = isOwnProfile || profile?.public || (!!profile && isFollowing(profile.id))
 
+  const followButtonLabel = profile && (
+    isFollowing(profile.id)
+      ? t('myProfile.unfollow')
+      : isRequested(profile.id)
+        ? t('myProfile.requested')
+        : t('myProfile.follow')
+  )
+
   return (
     <div className={`${colorModeContext} padding-for-back-arrow min-h-screen flex flex-col`}>
       <BackArrow />
+      {profile && !isOwnProfile && user && (
+        <Button
+          onClick={() => toggleFollow(profile.id, profile.public)}
+          className={`${colorModeContext} xsm:hidden fixed z-1002 top-20 right-2 px-4 py-2 rounded-lg border-2 background-text-reverse-black text-fluid-sm background-reverse-border bg-black/30 hover:bg-black/50 font-medium transition-all dark:bg-white/30 dark:hover:bg-white/50`}>
+          {followButtonLabel}
+        </Button>
+      )}
       <div className="flex-grow padding-x-for-page padding-b-for-page">
         <div className="max-w-2xl mx-auto">
 
@@ -83,12 +98,8 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                 {!isOwnProfile && user && (
                   <Button
                     onClick={() => toggleFollow(profile.id, profile.public)}
-                    className={`${colorModeContext} shrink-0 px-4 py-2 rounded-lg border-2 background-text-reverse-black text-fluid-sm background-reverse-border bg-black/30 hover:bg-black/50 font-medium transition-all dark:bg-white/30 dark:hover:bg-white/50`}>
-                    {isFollowing(profile.id)
-                      ? t('myProfile.unfollow')
-                      : isRequested(profile.id)
-                        ? t('myProfile.requested')
-                        : t('myProfile.follow')}
+                    className={`${colorModeContext} hidden xsm:inline-flex shrink-0 px-4 py-2 rounded-lg border-2 background-text-reverse-black text-fluid-sm background-reverse-border bg-black/30 hover:bg-black/50 font-medium transition-all dark:bg-white/30 dark:hover:bg-white/50`}>
+                    {followButtonLabel}
                   </Button>
                 )}
               </div>
@@ -119,36 +130,36 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
               ) : (
                 <>
                   {/* Bio */}
-                  <section>
-                  <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
-                    {t('playerProfile.bio')}
-                  </h2>
                   {profile.bio && (
+                  <section>
+                    <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
+                      {t('playerProfile.bio')}
+                    </h2>
                     <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black whitespace-pre-wrap break-words mb-6`}>
                       {profile.bio}
                     </p>
-                  )}
                   </section>
+                  )}
 
                   {/* Upcoming / Ongoing Sessions */}
                   <section>
-                  <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
-                    {t('playerProfile.upcomingSessions')}
-                  </h2>
-                  {isLoadingEnrollments ? (
-                    <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
-                  ) : upcomingEnrollments.length > 0 ? (
-                    <div className="flex flex-col gap-3">
-                      {upcomingEnrollments.map(e => (
-                        <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />
-                      ))}
-                    </div>
-                  ) : (
-                    <p className={`${colorModeContext} text-fluid-sm background-text`}>
-                      {t('playerProfile.noUpcomingSessions')}
-                    </p>
-                  )}
-                </section>
+                    <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
+                      {t('playerProfile.upcomingSessions')}
+                    </h2>
+                    {isLoadingEnrollments ? (
+                      <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
+                    ) : upcomingEnrollments.length > 0 ? (
+                      <div className="flex flex-col gap-3">
+                        {upcomingEnrollments.map(e => (
+                          <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />
+                        ))}
+                      </div>
+                    ) : (
+                      <p className={`${colorModeContext} text-fluid-sm background-text`}>
+                        {t('playerProfile.noUpcomingSessions')}
+                      </p>
+                    )}
+                  </section>
                 </>
               )}
             </>
