@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Navigate, Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
@@ -12,18 +12,20 @@ import { HoopCard } from '../components/reusable/HoopCard'
 import { FollowingPlayerCard } from '../components/reusable/FollowingPlayerCard'
 import { RequestCard } from '../components/reusable/RequestCard'
 import Footer from '../components/Footer'
-import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers, getProfileImageUrl, fetchUserProfileImage } from '../services/requests'
+import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers, getProfileImageUrl, fetchUserProfileImage, fetchUserBio, updateUserBio } from '../services/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { useFollowing } from '../hooks/useFollowing'
 import { groupEnrollmentsByHoop } from '../utils/functions'
+import { MAX_BIO_LENGTH } from '../utils/constants'
 import haversineDistance from '../utils/functions'
 import type { BasketballHoop, ColorMode, Coordinates, FollowRequest, PlayerEnrollment, ProfileImage, PublicProfile } from '../types/types'
 import { ProfileVisibilityToggle } from '../components/reusable/ProfileVisibilityToggle'
 import ProfileImageUpload from '../components/reusable/ProfileImageUpload'
 import FollowersDropdown from '../components/FollowersDropdown'
-import { MdOutlineFavoriteBorder, MdArrowForward } from 'react-icons/md'
+import { MdOutlineFavoriteBorder, MdArrowForward, MdKeyboardArrowDown } from 'react-icons/md'
 import { GiBasketballBasket } from 'react-icons/gi'
 import { FaUserCircle, FaUserPlus } from 'react-icons/fa'
+import { Button } from 'react-aria-components'
 
 interface MyProfileProps {
   hoops: BasketballHoop[]
@@ -41,6 +43,9 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const [activeTab, setActiveTab] = useState<Tab>('enrollments')
   const [isPublic, setIsPublic] = useState<boolean>(user?.user_metadata?.public ?? false)
   const [isSaving, setIsSaving] = useState(false)
+  const [bioInput, setBioInput] = useState('')
+  const [isSavingBio, setIsSavingBio] = useState(false)
+  const [isBioOpen, setIsBioOpen] = useState(false)
   const { data: followers = [] } = useQuery<PublicProfile[]>({
     queryKey: ['followers', user?.id],
     queryFn: () => fetchFollowers(user!.id),
@@ -60,6 +65,16 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
     queryFn: () => fetchUserEnrollments(user!.id),
     enabled: !!user,
   })
+
+  const { data: savedBio = null } = useQuery<string | null>({
+    queryKey: ['userBio', user?.id],
+    queryFn: () => fetchUserBio(user!.id),
+    enabled: !!user,
+  })
+
+  useEffect(() => {
+    setBioInput(savedBio ?? '')
+  }, [savedBio])
 
   const { data: allEnrollments = [] } = useQuery<PlayerEnrollment[]>({
     queryKey: ['allEnrollments'],
@@ -84,6 +99,33 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
     } finally {
       setIsSaving(false)
     }
+  }
+
+  const trimmedBio = bioInput.trim()
+  const isBioDirty = trimmedBio !== (savedBio ?? '')
+  const bioCharsLeft = MAX_BIO_LENGTH - bioInput.length
+
+  const handleBioSave = async () => {
+    if (!user || isSavingBio || !isBioDirty || bioCharsLeft < 0) return
+    setIsSavingBio(true)
+    try {
+      await updateUserBio(user.id, trimmedBio || null)
+      queryClient.invalidateQueries({ queryKey: ['userBio', user.id] })
+      // also invalidate any cached PublicProfile view of this user
+      const ownNickname = user.user_metadata?.nickname
+      if (ownNickname) {
+        queryClient.invalidateQueries({ queryKey: ['player', ownNickname.toLowerCase()] })
+      }
+      success(t('myProfile.bioUpdated'))
+    } catch {
+      error(t('myProfile.bioUpdateFailed'))
+    } finally {
+      setIsSavingBio(false)
+    }
+  }
+
+  const handleBioReset = () => {
+    setBioInput('')
   }
 
   if (!user) return <Navigate to="/signin" replace />
@@ -147,6 +189,69 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               />
             </div>
 
+            {/* Bio editor */}
+            <div className={`${colorModeContext} bg-background/60 rounded-lg border border-black/30 dark:border-white/30 mb-6 overflow-hidden`}>
+              <Button
+                type="button"
+                onPress={() => setIsBioOpen(o => !o)}
+                aria-expanded={isBioOpen}
+                aria-controls="bio-panel"
+                className={`${colorModeContext} flex items-center justify-between w-full p-4 text-fluid-sm background-text cursor-pointer`}
+              >
+                <div className="flex flex-col gap-0.5 text-left">
+                  <span className="font-medium">{t('myProfile.bioLabel')}</span>
+                  <div className="flex items-center justify-between mb-2 gap-3">
+                    <span className={`${colorModeContext} text-fluid-xs text-gray-400 dark:text-gray-500`}>
+                    {t('myProfile.bioModifyHint')}
+                    </span>
+                    {isBioOpen && (
+                      <span className={`${colorModeContext} text-fluid-xs font-medium text-gray-500 dark:text-gray-400`}>
+                        {bioInput.length}/{MAX_BIO_LENGTH}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <MdKeyboardArrowDown
+                  size={20}
+                  className={`transition-transform ${isBioOpen ? 'rotate-180' : ''}`}
+                />
+              </Button>
+              {isBioOpen && (
+                <div id="bio-panel" className="px-4 pb-4">
+                  <textarea
+                    id="bio-input"
+                    value={bioInput}
+                    onChange={(e) => setBioInput(e.target.value)}
+                    maxLength={MAX_BIO_LENGTH}
+                    rows={3}
+                    placeholder={t('myProfile.bioPlaceholder')}
+                    className={`${colorModeContext} form-input w-full resize-y text-fluid-sm border-black/20 dark:border-white/20`}
+                    disabled={isSavingBio}
+                  />
+                  <div className="flex items-center justify-end mt-2 gap-3">
+                    <div className="flex items-center gap-2">
+                      <Button
+                        type="button"
+                        onPress={handleBioReset}
+                        isDisabled={isSavingBio || bioInput.length === 0}
+                        className={`${colorModeContext} px-3 py-1.5 rounded-md text-fluid-xs font-medium background-text border border-black/20 dark:border-white/20 disabled:opacity-40 disabled:cursor-not-allowed ${bioInput.length > 0 ? 'cursor-pointer' : ''}`}
+                      >
+                        {t('myProfile.bioReset')}
+                      </Button>
+                      <Button
+                        type="button"
+                        onPress={handleBioSave}
+                        isDisabled={!isBioDirty || isSavingBio || bioCharsLeft < 0}
+                        className={`${colorModeContext} px-3 py-1.5 rounded-md text-fluid-xs font-medium bg-first-color text-white disabled:opacity-40 disabled:cursor-not-allowed ${bioInput.length > 0 ? 'cursor-pointer' : ''}`}
+                      >
+                        {isSavingBio ? t('myProfile.bioSaving') : t('myProfile.bioSave')}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* View public profile link */}
             <Link
               to={`/players/${nickname.toLowerCase()}`}
@@ -154,14 +259,14 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             >
               <FaUserCircle size={16} />
               {t('myProfile.viewPublicProfile')}
-              <MdArrowForward size={16} className={`${colorModeContext} background-text opacity-0 group-hover:opacity-60 transition-opacity`} />
+              <MdArrowForward size={16} className={`${colorModeContext} background-text opacity-60 sm:opacity-0 sm:group-hover:opacity-60 transition-opacity`} />
             </Link>
           </div>
 
           {/* Tabs */}
           <div className={`${colorModeContext} flex gap-1 p-1 bg-third-color/20 dark:bg-white/10 rounded-lg mb-6`}>
-            <button
-              onClick={() => setActiveTab('enrollments')}
+            <Button
+              onPress={() => setActiveTab('enrollments')}
               className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'enrollments'
                   ? `${colorModeContext} bg-first-color background-text-reverse-black`
@@ -170,9 +275,9 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             >
               <GiBasketballBasket size={16} />
               <span className="text-[10px] sm:text-fluid-sm">{t('myProfile.enrollmentsTab')}</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('favorites')}
+            </Button>
+            <Button
+              onPress={() => setActiveTab('favorites')}
               className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'favorites'
                   ? `${colorModeContext} bg-first-color background-text-reverse-black`
@@ -181,8 +286,8 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             >
               <MdOutlineFavoriteBorder size={16} />
               <span className="text-[10px] sm:text-fluid-sm">{t('myProfile.favoritesTab')}</span>
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setActiveTab('following')}
               className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'following'
@@ -192,10 +297,10 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             >
               <FaUserCircle size={16} />
               <span className="text-[10px] sm:text-fluid-sm">{t('myProfile.followingTab')}</span>
-            </button>
+            </Button>
             {!isPublic && (
-              <button
-                onClick={() => setActiveTab('requests')}
+              <Button
+                onPress={() => setActiveTab('requests')}
                 className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors relative ${
                   activeTab === 'requests'
                     ? `${colorModeContext} bg-first-color background-text-reverse-black`
@@ -209,7 +314,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                     {followRequests.length}
                   </span>
                 )}
-              </button>
+              </Button>
             )}
           </div>
 

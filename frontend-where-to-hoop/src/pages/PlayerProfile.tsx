@@ -21,7 +21,7 @@ interface PlayerProfileProps {
 const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
   const { nickname } = useParams<{ nickname: string }>()
   const { user } = useAuth()
-  const colorModeContext: ColorMode = useColorModeValues()
+  const colorModeContext: ColorMode = useColorModeValues() 
   const { t } = useTranslation()
   const { isFollowing, isRequested, toggleFollow } = useFollowing()
 
@@ -117,8 +117,21 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                   </p>
                 </div>
               ) : (
-                /* Upcoming / Ongoing Sessions */
-                <section>
+                <>
+                  {/* Bio */}
+                  <section>
+                  <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
+                    {t('playerProfile.bio')}
+                  </h2>
+                  {profile.bio && (
+                    <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black whitespace-pre-wrap break-words mb-6`}>
+                      {profile.bio}
+                    </p>
+                  )}
+                  </section>
+
+                  {/* Upcoming / Ongoing Sessions */}
+                  <section>
                   <h2 className={`${colorModeContext} text-fluid-base font-medium background-text-reverse-black mb-3`}>
                     {t('playerProfile.upcomingSessions')}
                   </h2>
@@ -136,6 +149,7 @@ const PlayerProfile = ({ hoops }: PlayerProfileProps) => {
                     </p>
                   )}
                 </section>
+                </>
               )}
             </>
           )}

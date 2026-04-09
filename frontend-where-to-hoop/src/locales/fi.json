@@ -35,7 +35,8 @@
     "followers": "{{count}} seuraajaa",
     "timesPlayed": "{{count}} sessiota pelattu",
     "privateProfile": "Tämä profiili on yksityinen",
-    "privateProfileSub": "Tämä pelaaja on päättänyt pitää profiilinsa yksityisenä."
+    "privateProfileSub": "Tämä pelaaja on päättänyt pitää profiilinsa yksityisenä.",
+    "bio": "Bio"
   },
   "notFound": {
     "message": "Hups! Tätä sivua ei ole olemassa.",
@@ -85,7 +86,7 @@
     "goToProfile": "Siirry profiiliin"
   },
   "myProfile": {
-    "enrollmentsTab": "Ilmoittautumiset",
+    "enrollmentsTab": "Sessiot",
     "favoritesTab": "Suosikit",
     "upcomingEnrollments": "Tulevat",
     "pastEnrollments": "Menneet",
@@ -115,7 +116,15 @@
     "statusPrivate": "Yksityinen — profiili piilotettu + hallitse kuka voi seurata",
     "visibilityUpdated": "Profiilin näkyvyys päivitetty",
     "visibilityUpdateFailed": "Profiilin näkyvyyden päivitys epäonnistui",
-    "viewPublicProfile": "Näytä oma pelaajaprofiili"
+    "viewPublicProfile": "Näytä oma pelaajaprofiili",
+    "bioModifyHint": "Muokkaa julkisessa profiilissasi näkyvää biota",
+    "bioLabel": "Bio",
+    "bioPlaceholder": "Kerro itsestäsi muille...",
+    "bioReset": "Tyhjennä",
+    "bioSave": "Tallenna",
+    "bioSaving": "Tallennetaan...",
+    "bioUpdated": "Bio päivitetty",
+    "bioUpdateFailed": "Bion päivitys epäonnistui"
   },
   "home": {
     "nearestCourts": "Lähimmät kentät",

@@ -558,7 +558,7 @@ const toggleFavoriteRequest = async (userId: string, hoopId: string, add: boolea
 const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, public, profile_image')
+    .select('id, nickname, public, profile_image, bio')
     .eq('public', true)
     .order('nickname', { ascending: true })
 
@@ -567,13 +567,13 @@ const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
     throw error
   }
 
-  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null }))
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null, bio: row.bio ?? null }))
 }
 
 const searchAllPlayersByNickname = async (query: string): Promise<PublicProfile[]> => {
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, public, profile_image')
+    .select('id, nickname, public, profile_image, bio')
     .ilike('nickname', `%${query}%`)
     .order('nickname', { ascending: true })
     .limit(20)
@@ -583,13 +583,13 @@ const searchAllPlayersByNickname = async (query: string): Promise<PublicProfile[
     throw error
   }
 
-  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null }))
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null, bio: row.bio ?? null }))
 }
 
 const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> => {
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, public, profile_image')
+    .select('id, nickname, public, profile_image, bio')
     .ilike('nickname', nickname)
     .single()
 
@@ -598,7 +598,36 @@ const fetchPlayerByNickname = async (nickname: string): Promise<PublicProfile> =
     throw error
   }
 
-  return { id: data.id, nickname: data.nickname, public: data.public, profileImage: data.profile_image ?? null }
+  return { id: data.id, nickname: data.nickname, public: data.public, profileImage: data.profile_image ?? null, bio: data.bio ?? null }
+}
+
+const fetchUserBio = async (userId: string): Promise<string | null> => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('bio')
+    .eq('id', userId)
+    .single()
+
+  if (error) {
+    console.error('Fetch user bio error:', error.message)
+    throw error
+  }
+
+  return data?.bio ?? null
+}
+
+const updateUserBio = async (userId: string, bio: string | null): Promise<void> => {
+  const trimmed = bio?.trim() || null
+
+  const { error } = await supabase
+    .from('users')
+    .update({ bio: trimmed })
+    .eq('id', userId)
+
+  if (error) {
+    console.error('Update user bio error:', error.message)
+    throw error
+  }
 }
 
 const removeFollower = async (userId: string, targetId: string): Promise<void> => {
@@ -650,7 +679,7 @@ const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> 
 
   const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, public, profile_image')
+    .select('id, nickname, public, profile_image, bio')
     .in('id', userIds)
 
   if (error) {
@@ -658,7 +687,7 @@ const fetchPublicProfiles = async (userIds: string[]): Promise<PublicProfile[]> 
     throw error
   }
 
-  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null }))
+  return (data ?? []).map(row => ({ id: row.id, nickname: row.nickname, public: row.public, profileImage: row.profile_image ?? null, bio: row.bio ?? null }))
 }
 
 const sendFollowRequest = async (fromId: string, toId: string): Promise<void> => {
@@ -901,6 +930,6 @@ const toggleHoopVerification = async (id: string, isVerified: boolean): Promise<
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, fetchUserBio, updateUserBio, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
 
 export type { UserWithProfileImage }

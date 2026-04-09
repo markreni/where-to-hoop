@@ -34,15 +34,12 @@ interface User {
   //playModePreference: PlayMode; // Whether they prefer open play or solo hooping
   favouriteHoops: string[]; // IDs of their favorite hoops
   public: boolean; // Whether the profile is publicly visible
+  bio: string | null; // Free-text profile bio, max 280 chars
   //enrolments: PlayerEnrollment[]; // Hoops they are currently enrolled in
 }
 
-interface PublicProfile {
-  id: string;
-  nickname: string;
-  public: boolean;
-  profileImage: ProfileImage | null;
-}
+type PublicProfile = Pick<User, 'id' | 'nickname' | 'public' | 'profileImage' | 'bio'>;
+
 // Player enrollment types
 interface PlayerEnrollment {
   id: string;

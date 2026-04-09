@@ -35,7 +35,8 @@
     "followers": "{{count}} followers",
     "timesPlayed": "{{count}} sessions played",
     "privateProfile": "This profile is private",
-    "privateProfileSub": "This player has chosen to keep their profile private."
+    "privateProfileSub": "This player has chosen to keep their profile private.",
+    "bio": "Bio"
   },
   "notFound": {
     "message": "Oops! This page doesn't exist.",
@@ -85,7 +86,7 @@
     "goToProfile": "Go to profile"
   },
   "myProfile": {
-    "enrollmentsTab": "Enrollments",
+    "enrollmentsTab": "Sessions",
     "favoritesTab": "Favorites",
     "upcomingEnrollments": "Upcoming",
     "pastEnrollments": "Past",
@@ -115,7 +116,15 @@
     "statusPrivate": "Private — profile hidden + control who can follow",
     "visibilityUpdated": "Profile visibility updated",
     "visibilityUpdateFailed": "Failed to update profile visibility",
-    "viewPublicProfile": "View my player profile"
+    "viewPublicProfile": "View my player profile",
+    "bioModifyHint": "Adjust bio that is visible on your public profile",
+    "bioLabel": "Bio",
+    "bioPlaceholder": "Tell others about yourself...",
+    "bioReset": "Reset",
+    "bioSave": "Save",
+    "bioSaving": "Saving...",
+    "bioUpdated": "Bio updated",
+    "bioUpdateFailed": "Failed to update bio"
   },
   "home": {
     "nearestCourts": "Nearest Courts",
