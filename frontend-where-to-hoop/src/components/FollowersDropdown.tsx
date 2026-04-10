@@ -23,7 +23,7 @@ const FollowersDropdown = ({ followers }: FollowersDropdownProps) => {
       <div className="relative" ref={followersRef}>
         <Button
           onClick={() => setFollowersOpen(o => !o)}
-          className={`${colorModeContext} flex items-center gap-1 text-fluid-sm background-text-black hover:text-first-color transition-colors`}
+          className={`${colorModeContext} flex items-center gap-1 text-fluid-sm background-text-reverse-black hover:text-first-color transition-colors`}
           >
             {followersOpen ? <MdExpandLess size={18} /> : <MdExpandMore size={18} />}
             {t('myProfile.followers')} ({followers.length})

@@ -93,6 +93,11 @@
     "noUpcoming": "Ei tulevia sessioita",
     "noPast": "Ei menneitä sessioita vielä",
     "noFavorites": "Ei suosikkikenttiä vielä",
+    "scopeMine": "Omat",
+    "scopeFollowing": "Muiden",
+    "noFollowingPlayers": "Et seuraa ketään vielä",
+    "noFollowingSessions": "Ei tulevia sessioita seuraamiltasi pelaajilta",
+    "findPlayers": "Etsi pelaajia",
     "followingTab": "Seurattavat",
     "noFollowing": "Et seuraa ketään vielä",
     "followers": "Seuraajat",
@@ -137,6 +142,7 @@
       "description2": "WhereHoopz on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja tutustumaan muiden alueesi pelaajien kanssa.",
       "helsinkiNotice": "Tällä hetkellä saatavilla ainoastaan Helsingissä",
       "helsinkiMade": "Paikallinen sovellus, innovoitu Helsingissä",
+      "mobileNotice": "Mobiiliversiota rakennetaan",
       "aboutLink": "Lisää yhteisöstämme ja arvoistamme"
     },
     "hero": {

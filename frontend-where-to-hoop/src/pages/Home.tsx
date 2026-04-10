@@ -15,7 +15,7 @@ import { fetchAllEnrollments } from "../services/requests.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 import useEnrollmentsRealtime from "../hooks/useEnrollmentsRealtime.ts";
 //import baskethoopImg from "../images/baskethoop.png";
-import { MdLocationPin, MdArrowForward } from "react-icons/md";
+import { MdLocationPin, MdArrowForward, MdPhoneIphone, MdPhoneAndroid, MdConstruction } from "react-icons/md";
 import { InteractiveBasketball } from "../components/reusable/InteractiveBasketball.tsx";
 import { useMapViewDispatch } from "../contexts/MapViewContext.tsx";
 import { Button } from "react-aria-components";
@@ -111,8 +111,8 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
       */}
       <div className="flex-grow flex flex-col gap-10 justify-center px-4 sm:px-8 py-8 max-w-4xl mx-auto w-full relative z-10">
         {/* Intro Section */}
-        <section className="text-center py-8 sm:py-12">
-          <div className="flex flex-col items-center mb-8">
+        <section className="flex flex-col items-center py-8 sm:py-12">
+          <div className="flex flex-col items-center text-center mb-8">
             <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black`}>
               {t('home.intro.welcomePrefix')} <span className={`${colorModeContext} background-text-black text-stroke-adaptive`}>{t('home.intro.wherehoops')}</span>
             </h1>
@@ -122,19 +122,28 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
           </div>
         
           <div className="flex flex-col items-center gap-1 gap-3 mb-8">
-            <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto`}>
+            <p className={`${colorModeContext} text-fluid-lg background-text text-center max-w-2xl mx-auto`}>
               {t('home.intro.description')}
             </p>
-            <p className={`${colorModeContext} text-fluid-lg background-text max-w-2xl mx-auto`}>
+            <p className={`${colorModeContext} text-fluid-lg background-text text-center max-w-2xl mx-auto`}>
               {t('home.intro.description2')}
             </p>
           </div>
 
           {/* About Link */}
-          <Link to="/about" className={`${colorModeContext} inline-flex items-center gap-1 background-text-reverse-black font-small text-fluid-sm hover:underline transition-colors mb-8`}>
-            <MdArrowForward size={16} />
+          <Link to="/about" className={`${colorModeContext} inline-flex items-center gap-1 background-text-reverse-black font-small text-fluid-sm hover:underline transition-colors mb-6`}>
             {t('home.intro.aboutLink')}
+            <MdArrowForward size={16} />
           </Link>
+
+          <p className={`${colorModeContext} mt-2 inline-flex items-center gap-1.5 text-fluid-xs background-text-reverse-black opacity-75 italic mb-9`}>
+            <div className="flex gap-0">
+              <MdPhoneIphone size={25} className="" />
+              <MdPhoneAndroid size={25} className="" />
+            </div>
+            {t('home.intro.mobileNotice')}
+            <MdConstruction size={23} className="" />
+          </p>
 
           {/* Hero Section */}
           <div className="flex flex-col items-center gap-8">

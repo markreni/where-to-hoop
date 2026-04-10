@@ -93,6 +93,11 @@
     "noUpcoming": "No upcoming sessions",
     "noPast": "No past sessions yet",
     "noFavorites": "No favorite courts yet",
+    "scopeMine": "Me",
+    "scopeFollowing": "Others",
+    "noFollowingPlayers": "You're not following anyone yet",
+    "noFollowingSessions": "No upcoming sessions from people you follow",
+    "findPlayers": "Find players",
     "followingTab": "Following",
     "noFollowing": "You're not following anyone yet",
     "followers": "Followers",
@@ -137,6 +142,7 @@
       "description2": "WhereHoopz is a community-driven platform that helps you discover basketball courts near you and connect with fellow hoopers in your area.",
       "helsinkiNotice": "Currently only available in Helsinki, Finland",
       "helsinkiMade": "A local app, made in Helsinki",
+      "mobileNotice": "Mobile version is being built",
       "aboutLink": "More on our community and values"
     },
     "hero": {

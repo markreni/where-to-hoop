@@ -12,7 +12,7 @@ import { HoopCard } from '../components/reusable/HoopCard'
 import { FollowingPlayerCard } from '../components/reusable/FollowingPlayerCard'
 import { RequestCard } from '../components/reusable/RequestCard'
 import Footer from '../components/Footer'
-import { fetchUserEnrollments, fetchAllEnrollments, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers, getProfileImageUrl, fetchUserProfileImage, fetchUserBio, updateUserBio } from '../services/requests'
+import { fetchUserEnrollments, fetchAllEnrollments, fetchEnrollmentsForPlayers, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers, getProfileImageUrl, fetchUserProfileImage, fetchUserBio, updateUserBio } from '../services/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { useFollowing } from '../hooks/useFollowing'
 import { groupEnrollmentsByHoop } from '../utils/functions'
@@ -32,6 +32,7 @@ interface MyProfileProps {
 }
 
 type Tab = 'enrollments' | 'favorites' | 'following' | 'requests'
+type SessionScope = 'mine' | 'following'
 
 const MyProfile = ({ hoops }: MyProfileProps) => {
   const { user } = useAuth()
@@ -41,6 +42,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const { success, error } = useToast()
   const userLocation: Coordinates = useLocationValues()
   const [activeTab, setActiveTab] = useState<Tab>('enrollments')
+  const [sessionScope, setSessionScope] = useState<SessionScope>('mine')
   const [isPublic, setIsPublic] = useState<boolean>(user?.user_metadata?.public ?? false)
   const [isSaving, setIsSaving] = useState(false)
   const [bioInput, setBioInput] = useState('')
@@ -52,7 +54,13 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
     enabled: !!user,
   })
   const { favoriteIds } = useFavorites()
-  const { followingProfiles, isLoading: isLoadingFollowing } = useFollowing()
+  const { followingIds, followingProfiles, isLoading: isLoadingFollowing } = useFollowing()
+
+  const { data: followingEnrollments = [], isLoading: isLoadingFollowingEnrollments } = useQuery<PlayerEnrollment[]>({
+    queryKey: ['followingEnrollments', followingIds],
+    queryFn: () => fetchEnrollmentsForPlayers(followingIds),
+    enabled: activeTab === 'enrollments' && sessionScope === 'following' && followingIds.length > 0,
+  })
 
   const { data: followRequests = [], isLoading: isLoadingRequests } = useQuery<FollowRequest[]>({
     queryKey: ['incomingFollowRequests', user?.id],
@@ -164,7 +172,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               />
               {/* Nickname + Email */}
               <div className='flex flex-col items-start gap-0'>
-                <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-black`}>
+                <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text-reverse-black`}>
                   {nickname}
                 </h1>
                  <p className={`${colorModeContext} text-fluid-sm background-text-reverse-black`}>
@@ -174,7 +182,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             </div>
 
             {/* Profile visibility toggle */}
-            <div className="bg-background/60 p-4 rounded-lg border border-black/30 dark:border-white/30 mb-6 relative">
+            <div className={`${colorModeContext} bg-background/60 p-4 rounded-lg border border-black/30 dark:border-white/30 mb-6 relative`}>
             <div className="absolute -top-25 right-0">
               <FollowersDropdown followers={followers} />
             </div>
@@ -255,11 +263,11 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             {/* View public profile link */}
             <Link
               to={`/players/${nickname.toLowerCase()}`}
-              className={`${colorModeContext} group flex items-center justify-center gap-2 w-full py-3 text-fluid-sm font-medium background-text transition-colors rounded-lg border border-black/20 dark:border-white/20`}
+              className={`${colorModeContext} group flex items-center justify-center gap-2 w-full py-3 text-fluid-sm font-medium background-text-reverse transition-colors rounded-lg border border-background/20`}
             >
               <FaUserCircle size={16} />
               {t('myProfile.viewPublicProfile')}
-              <MdArrowForward size={16} className={`${colorModeContext} background-text opacity-60 sm:opacity-0 sm:group-hover:opacity-60 transition-opacity`} />
+              <MdArrowForward size={16} className={`${colorModeContext} background-text-reverse opacity-60 sm:opacity-0 sm:group-hover:opacity-60 transition-opacity`} />
             </Link>
           </div>
 
@@ -269,8 +277,8 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               onPress={() => setActiveTab('enrollments')}
               className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'enrollments'
-                  ? `${colorModeContext} bg-first-color background-text-reverse-black`
-                  : `${colorModeContext} background-text hover:text-first-color`
+                  ? `${colorModeContext} bg-first-color background-text-black`
+                  : `${colorModeContext} background-text-reverse-black hover:text-first-color`
               }`}
             >
               <GiBasketballBasket size={16} />
@@ -280,8 +288,8 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               onPress={() => setActiveTab('favorites')}
               className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'favorites'
-                  ? `${colorModeContext} bg-first-color background-text-reverse-black`
-                  : `${colorModeContext} background-text hover:text-first-color`
+                  ? `${colorModeContext} bg-first-color background-text-black`
+                  : `${colorModeContext} background-text-reverse-black hover:text-first-color`
               }`}
             >
               <MdOutlineFavoriteBorder size={16} />
@@ -291,8 +299,8 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               onClick={() => setActiveTab('following')}
               className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors ${
                 activeTab === 'following'
-                  ? `${colorModeContext} bg-first-color background-text-reverse-black`
-                  : `${colorModeContext} background-text hover:text-first-color`
+                  ? `${colorModeContext} bg-first-color background-text-black`
+                  : `${colorModeContext} background-text-reverse-black hover:text-first-color`
               }`}
             >
               <FaUserCircle size={16} />
@@ -303,8 +311,8 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 onPress={() => setActiveTab('requests')}
                 className={`flex-1 flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 rounded-md font-medium transition-colors relative ${
                   activeTab === 'requests'
-                    ? `${colorModeContext} bg-first-color background-text-reverse-black`
-                    : `${colorModeContext} background-text hover:text-first-color`
+                    ? `${colorModeContext} bg-first-color background-text-black`
+                    : `${colorModeContext} background-text-reverse-black hover:text-first-color`
                 }`}
               >
                 <FaUserPlus size={16} />
@@ -321,39 +329,101 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
           {/* Enrollments Tab */}
           {activeTab === 'enrollments' && (
             <div className="flex flex-col gap-8">
-              <section>
-                <h2 className={`${colorModeContext} text-fluid-sm font-medium background-text mb-3`}>
-                  {t('myProfile.upcomingEnrollments')}
-                </h2>
-                {isLoading ? (
-                  <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
-                ) : upcoming.length > 0 ? (
-                  <div className="flex flex-col gap-3">
-                    {upcoming.map(e => <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />)}
-                  </div>
-                ) : (
-                  <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600`}>
-                    {t('myProfile.noUpcoming')}
-                  </p>
-                )}
-              </section>
+              {/* Scope sub-toggle */}
+              <div className={`${colorModeContext} flex border-1 border-white/80 dark:border-black/70 rounded-lg overflow-hidden mx-8`}>
+                <Button
+                  type="button"
+                  onClick={() => setSessionScope('mine')}
+                  className={`${colorModeContext} flex-1 py-2 px-4 text-fluid-sm font-medium transition-colors cursor-pointer ${
+                    sessionScope === 'mine'
+                      ? `${colorModeContext} bg-background/80 background-text`
+                      : `${colorModeContext} background-text bg-background/60 hover:opacity-70`
+                  }`}
+                >
+                  {t('myProfile.scopeMine')}
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => setSessionScope('following')}
+                  className={`${colorModeContext} flex-1 py-2 px-4 text-fluid-sm font-medium transition-colors cursor-pointer ${
+                    sessionScope === 'following'
+                      ? `${colorModeContext} bg-background/80 background-text`
+                      : `${colorModeContext} background-text bg-background/60 hover:opacity-70`
+                  }`}
+                >
+                  {t('myProfile.scopeFollowing')}
+                </Button>
+              </div>
 
-              <section>
-                <h2 className={`${colorModeContext} text-fluid-sm font-medium background-text mb-3`}>
-                  {t('myProfile.pastEnrollments')}
-                </h2>
-                {isLoading ? (
-                  <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
-                ) : past.length > 0 ? (
-                  <div className="flex flex-col gap-3">
-                    {past.map(e => <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />)}
-                  </div>
-                ) : (
-                  <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600`}>
-                    {t('myProfile.noPast')}
-                  </p>
-                )}
-              </section>
+              {sessionScope === 'mine' && (
+                <>
+                  <section>
+                    <h2 className={`${colorModeContext} text-fluid-sm font-medium background-text-reverse mb-3`}>
+                      {t('myProfile.upcomingEnrollments')}
+                    </h2>
+                    {isLoading ? (
+                      <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
+                    ) : upcoming.length > 0 ? (
+                      <div className="flex flex-col gap-3">
+                        {upcoming.map(e => <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />)}
+                      </div>
+                    ) : (
+                      <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-200`}>
+                        {t('myProfile.noUpcoming')}
+                      </p>
+                    )}
+                  </section>
+
+                  <section>
+                    <h2 className={`${colorModeContext} text-fluid-sm font-medium background-text-reverse mb-3`}>
+                      {t('myProfile.pastEnrollments')}
+                    </h2>
+                    {isLoading ? (
+                      <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
+                    ) : past.length > 0 ? (
+                      <div className="flex flex-col gap-3">
+                        {past.map(e => <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />)}
+                      </div>
+                    ) : (
+                      <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-200`}>
+                        {t('myProfile.noPast')}
+                      </p>
+                    )}
+                  </section>
+                </>
+              )}
+
+              {sessionScope === 'following' && (
+                <section>
+                  <h2 className={`${colorModeContext} text-fluid-sm font-medium background-text-reverse mb-3`}>
+                    {t('myProfile.upcomingEnrollments')}
+                  </h2>
+                  {followingIds.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-12 gap-4">
+                      <FaUserCircle size={48} className="text-first-color opacity-40" />
+                      <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-200 text-center`}>
+                        {t('myProfile.noFollowingPlayers')}
+                      </p>
+                      <Link
+                        to="/search-players"
+                        className={`${colorModeContext} px-4 py-2 rounded-md text-fluid-xs border background-border-reverse font-medium bg-first-color background-text-reverse-black hover:bg-second-color transition-colors`}
+                      >
+                        {t('myProfile.findPlayers')}
+                      </Link>
+                    </div>
+                  ) : isLoadingFollowingEnrollments ? (
+                    <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
+                  ) : followingEnrollments.length > 0 ? (
+                    <div className="flex flex-col gap-3">
+                      {followingEnrollments.map(e => <EnrollmentCard key={e.id} enrollment={e} hoops={hoops} />)}
+                    </div>
+                  ) : (
+                    <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-200`}>
+                      {t('myProfile.noFollowingSessions')}
+                    </p>
+                  )}
+                </section>
+              )}
             </div>
           )}
 

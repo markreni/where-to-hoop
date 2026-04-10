@@ -121,6 +121,14 @@ const EnrollmentCard = ({ enrollment, hoops }: EnrollmentCardProps) => {
           </span>
         )}
       </div>
+      {!isOwner && (
+        <Link
+          to={`/players/${enrollment.playerNickname.toLowerCase()}`}
+          className="text-fluid-xs text-first-color hover:text-second-color w-fit"
+        >
+          @{enrollment.playerNickname}
+        </Link>
+      )}
       <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
         {formatArrival(enrollment.arrivalTime)} - {formatDuration(enrollment.duration)}
       </p>
