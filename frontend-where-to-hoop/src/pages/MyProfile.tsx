@@ -395,12 +395,14 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
 
               {sessionScope === 'following' && (
                 <section>
+                  {followingIds.length !== 0 && (
                   <h2 className={`${colorModeContext} text-fluid-sm font-medium background-text-reverse mb-3`}>
                     {t('myProfile.upcomingEnrollments')}
                   </h2>
+                  )}
                   {followingIds.length === 0 ? (
-                    <div className="flex flex-col items-center justify-center py-12 gap-4">
-                      <FaUserCircle size={48} className="text-first-color opacity-40" />
+                    <div className="flex flex-col items-center justify-center py-3 gap-4">
+                      <FaUserCircle size={48} className={`${colorModeContext} background-text-reverse-black opacity-40`} />
                       <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-200 text-center`}>
                         {t('myProfile.noFollowingPlayers')}
                       </p>
@@ -451,9 +453,9 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 })}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-16 gap-4">
-                <MdOutlineFavoriteBorder size={48} className="text-first-color opacity-40" />
-                <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
+              <div className="flex flex-col items-center justify-center py-6 gap-4">
+                <MdOutlineFavoriteBorder size={48} className={`${colorModeContext} background-text-reverse-black opacity-40`} />
+                <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-200 text-center`}>
                   {t('myProfile.noFavorites')}
                 </p>
               </div>
@@ -471,9 +473,9 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-16 gap-4">
-                <FaUserCircle size={48} className="text-first-color opacity-40" />
-                <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
+              <div className="flex flex-col items-center justify-center py-6 gap-4">
+                <FaUserCircle size={48} className={`${colorModeContext} background-text-reverse-black opacity-40`} />
+                <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-200 text-center`}>
                   {t('myProfile.noFollowing')}
                 </p>
               </div>
@@ -494,9 +496,9 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-16 gap-4">
-                <FaUserPlus size={48} className={`${colorModeContext} background-text-reverse opacity-40`} />
-                <p className={`${colorModeContext} text-fluid-sm text-gray-200 dark:text-gray-600 text-center`}>
+              <div className="flex flex-col items-center justify-center py-6 gap-4">
+                <FaUserPlus size={48} className={`${colorModeContext} background-text-reverse-black opacity-40`} />
+                <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-200 text-center`}>
                   {t('myProfile.noRequests')}
                 </p>
               </div>
