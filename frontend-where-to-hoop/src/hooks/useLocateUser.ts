@@ -14,31 +14,44 @@ export const useLocateUser = (): ((options?: LocateOptions) => void) => {
   return useCallback(
     (options?: LocateOptions) => {
       console.log("Locating user...");
+
+      const onSuccess = (position: GeolocationPosition) => {
+        const { latitude, longitude } = position.coords;
+
+        dispatch({
+          type: 'SET_USER_LOCATION',
+          payload: {
+            latitude,
+            longitude,
+          },
+        });
+
+        if (options?.mapRef?.current) {
+          const map = options.mapRef.current;
+          const targetZoom = options.zoom ?? map.getZoom();
+          map.setView([latitude, longitude], targetZoom);
+        }
+
+        options?.onAdditionForm?.(position.coords);
+      };
+
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-
-          dispatch({
-            type: 'SET_USER_LOCATION',
-            payload: {
-              latitude,
-              longitude,
-            },
-          });
-
-          if (options?.mapRef?.current) {
-            const map = options.mapRef.current;
-            const targetZoom = options.zoom ?? map.getZoom();
-            map.setView([latitude, longitude], targetZoom);
-          }
-
-          options?.onAdditionForm?.(position.coords);
-        },
+        onSuccess,
         (error) => {
-          alert(`Geolocation error: code=${error.code} ${error.message}`); // DEBUG: remove after testing
-          console.error("Error getting user's location:", error);
+          if (error.code === error.TIMEOUT) {
+            // High accuracy timed out, retry with low accuracy
+            navigator.geolocation.getCurrentPosition(
+              onSuccess,
+              (fallbackError) => {
+                console.error("Error getting user's location:", fallbackError);
+              },
+              { enableHighAccuracy: false, timeout: 10000, maximumAge: 30000 }
+            );
+          } else {
+            console.error("Error getting user's location:", error);
+          }
         },
-        { enableHighAccuracy: true }
+        { enableHighAccuracy: true, timeout: 5000, maximumAge: 30000 }
       );
     },
     [dispatch]
