@@ -31,7 +31,7 @@ describe('Home', () => {
 
   it('shows enable location message when location is not available', () => {
     render(<Home hoops={initialHoops} />);
-    expect(screen.getByText('Enable location access to see the nearest courts')).toBeInTheDocument();
+    expect(screen.getByText('Enable location access to see the nearest courts.')).toBeInTheDocument();
   });
 
   it('renders carousel for most active courts', () => {
