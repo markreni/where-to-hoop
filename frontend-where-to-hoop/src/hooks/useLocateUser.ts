@@ -35,6 +35,7 @@ export const useLocateUser = (): ((options?: LocateOptions) => void) => {
           options?.onAdditionForm?.(position.coords);
         },
         (error) => {
+          alert(`Geolocation error: code=${error.code} ${error.message}`); // DEBUG: remove after testing
           console.error("Error getting user's location:", error);
         },
         { enableHighAccuracy: true }

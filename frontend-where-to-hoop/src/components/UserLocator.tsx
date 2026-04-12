@@ -30,7 +30,6 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
   }, [userLocationDispatch]);
 
   const handleLocateUser = () => {
-    alert('Button pressed'); // DEBUG: remove after testing
     locateUser({ mapRef, zoom: 13 });
   };
 
