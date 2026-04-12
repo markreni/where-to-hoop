@@ -30,12 +30,13 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
   }, [userLocationDispatch]);
 
   const handleLocateUser = () => {
+    alert('Button pressed'); // DEBUG: remove after testing
     locateUser({ mapRef, zoom: 13 });
   };
 
   return (
     <Button 
-      className={`${colorModeContext} background-text-reverse-black text-3xl cursor-pointer drop-shadow-[0_1px_2px_gray] pt-5 touch-manipulation`}
+      className={`${colorModeContext} background-text-reverse-black text-3xl cursor-pointer drop-shadow-[0_1px_2px_gray]`}
         onPress={handleLocateUser}
         aria-label="Locate Me"
       >
