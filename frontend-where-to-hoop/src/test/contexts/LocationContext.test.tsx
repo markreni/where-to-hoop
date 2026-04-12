@@ -25,6 +25,16 @@ const localStorageMock = (() => {
 
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
+// Mock navigator.geolocation
+Object.defineProperty(navigator, 'geolocation', {
+  value: {
+    getCurrentPosition: vi.fn((_success, _error) => {}),
+    watchPosition: vi.fn(),
+    clearWatch: vi.fn(),
+  },
+  writable: true,
+});
+
 // Test component that displays location state
 const TestComponent = () => {
   const state = useLocationState();
