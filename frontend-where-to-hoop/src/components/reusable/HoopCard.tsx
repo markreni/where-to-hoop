@@ -76,24 +76,24 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
     <div className={`${colorModeContext} h-1/3 sm:h-full w-full xsm:w-5/6 sm:w-full flex flex-col justify-start gap-3 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
       <div className="flex justify-between items-start gap-2">
         <div className="flex flex-col">
-          <div className="flex items-center justify-start gap-2">
-            <strong className="text-fluid-base">{hoop.name}</strong>
-            {user && (
-              isFavorited(hoop.id)
-                ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={23} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
-                : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={23} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
-            )}
-          </div>
+          <strong className="text-fluid-base">{hoop.name}</strong>
           <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
             <span className="text-fluid-xs font-extralight">{distance.toFixed(1)} km</span>
             <p className="text-fluid-xs">{hoop.address ? shortenAddress(hoop.address) : t("common.noAddress")}</p>
           </div>
         </div>
-        <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>
+         {user && (
+            isFavorited(hoop.id)
+            ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+            : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+          )}
       </div>
       <div className="flex flex-col gap-3">
         <div className="flex justify-start gap-4">
           <div className="relative w-full sm:w-2/3 shrink-0">
+            <div className="absolute top-0.5 right-0.5 z-10">
+              <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>
+            </div>
             <img className="rounded-md w-full h-40 object-cover"
               src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/150'}
               alt={hoop.name}
@@ -140,7 +140,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
               <HoopBadge
                 variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
                 text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
-                showIcon={xsm}
+                showIcon={false}
                 textClassName="responsive-hoopcard-elements-text"
                 tooltip={t('hoops.tooltips.courtType')}
               />
@@ -154,7 +154,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
               <HoopBadge
                 variant={hoop.isPaid ? 'paid' : 'free'}
                 text={hoop.isPaid ? t('common.paid') : t('common.free')}
-                showIcon={xsm}
+                showIcon={false}
                 textClassName="responsive-hoopcard-elements-text"
                 tooltip={t('hoops.tooltips.courtAccess')}
               />
@@ -181,13 +181,13 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
               capitalize={false}
             />
           </div>
-          <div className="hidden sm:flex xmd:hidden">
+          <div className="hidden sm:flex xmd:hidden xl:flex 2xl:hidden">
             <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
           </div>
         </div>
         <p className="sm:hidden font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>   
       </div>
-      <div className="flex flex-col justify-between items-center sm:hidden mt-1 xmd:flex">
+      <div className="flex flex-col justify-between items-center sm:hidden mt-1 xmd:flex xl:hidden 2xl:flex">
         <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
       </div>
     </div>                        

@@ -22,6 +22,8 @@ import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
 import { fetchHoopEnrollments, deleteHoop } from '../services/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { Button } from 'react-aria-components'
+import { useMediaQuery } from 'usehooks-ts'
+import breakpoints from '../assets/style'
 import L from 'leaflet'
 
 interface HoopProps {
@@ -43,6 +45,7 @@ const Hoop = ({ hoop }: HoopProps) => {
   const queryClient = useQueryClient()
   const [deleting, setDeleting] = useState(false)
   const mapRef = useRef<L.Map | null>(null)
+  const md = useMediaQuery(`(min-width: ${breakpoints.md})`)
 
   const { data: enrollments = [] } = useQuery({
     queryKey: ['enrollments', hoop?.id ?? ''],
@@ -127,20 +130,19 @@ const Hoop = ({ hoop }: HoopProps) => {
             {/* Right column - Players and enrollment */}
             <div className="flex flex-col gap-6">
               {/* Left column - Hoop info */}
-              <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
+              <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6 relative`}>
+                <div className="absolute top-3 right-3">
+                  {user && (
+                    isFavorited(hoop.id)
+                    ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={md ? 30 : 26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+                    : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={md ? 30 : 26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+                  )}
+                </div>
                 {/* Header */}
-                <div className="flex justify-between items-start gap-2 mb-4">
-                  <div className="flex flex-col gap-0.5">
-                    <div className="flex items-center gap-3">
-                      <h1 className={`${colorModeContext} text-fluid-xl poppins-bold background-text`}>
-                        {hoop.name}
-                      </h1>
-                      {user && (
-                        isFavorited(hoop.id)
-                          ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
-                          : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
-                      )}
-                    </div>
+                  <div className="flex flex-col gap-0.5 mb-2">
+                    <h1 className={`${colorModeContext} text-fluid-xl poppins-bold background-text`}>
+                      {hoop.name}
+                    </h1>
                      {/* Badges */}
                     <div className="flex flex-wrap gap-2">
                       <HoopBadge
@@ -199,7 +201,6 @@ const Hoop = ({ hoop }: HoopProps) => {
                       </Button>
                     </div>
                   </div>
-                </div>
 
                 <div className="flex flex-col gap-1 mb-3">
                   {/* Image gallery */}
