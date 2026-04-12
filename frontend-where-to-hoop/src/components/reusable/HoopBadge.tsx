@@ -3,6 +3,8 @@ import type { Condition } from "../../types/types.ts";
 import { conditionColorSelector } from "../../utils/options.tsx";
 import { IoSunnyOutline, IoHomeOutline, IoPeopleOutline, IoCheckmarkCircle } from "react-icons/io5";
 import { MdOutlineDateRange, MdMoneyOff, MdAttachMoney } from "react-icons/md";
+import breakpoints from "../../assets/style.ts";
+import { useMediaQuery } from "usehooks-ts";
 
 type BadgeVariant = 'indoor' | 'outdoor' | 'condition' | 'date' | 'players' | 'free' | 'paid' | 'verified';
 
@@ -50,6 +52,8 @@ const HoopBadge = ({
   tooltip,
   capitalize = true,
 }: HoopBadgeProps) => {
+  const xsm: boolean = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
+  
   const conditionClass = variant === 'condition' && condition
     ? conditionColorSelector(condition)
     : '';
@@ -67,7 +71,7 @@ const HoopBadge = ({
     <div className={`hoop-card-icon ${variantStyles[variant]} ${conditionClass}`} title={tooltip}>
       {renderIcon()}
       <span className={`${textClassName} ${capitalize ? 'capitalize' : ''}`}>
-        {text}
+        { text }
       </span>
     </div>
   );

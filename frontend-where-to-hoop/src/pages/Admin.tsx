@@ -145,7 +145,7 @@ const Admin = ({ hoops }: { hoops: BasketballHoop[] }) => {
                           className={`${colorModeContext} border-b border-gray-100 dark:border-gray-800 hover:bg-gray-200/50 dark:hover:bg-gray-700/50 transition-colors`}
                         >
                           {/* Thumbnail */}
-                          <td className="px-4 py-3">
+                          <td className="px-2 py-3">
                             {imageSrc ? (
                               <img
                                 src={imageSrc}

@@ -84,7 +84,7 @@ const List = ({ filteredAndSortedHoops, filters }: ListProps) => {
   return (
     <div className="pt-19 h-[100vh] w-full flex flex-col gap-4 overflow-y-auto padding-b-for-page">
       {/* Filter and Search Bar - Fixed at top */}
-      <div className="sticky top-0 px-3">
+      <div className="sticky top-0 px-3 z-401">
         <div className="flex items-center justify-end gap-1 xsm:gap-2 sm:gap-4 max-w-screen-2xl mx-auto">
           <div className="w-5/9 sm:w-2/3">
             <SearchFilter

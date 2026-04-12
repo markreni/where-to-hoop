@@ -10,8 +10,8 @@ import { useQuery } from "@tanstack/react-query";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { MdOutlineFavoriteBorder, MdFavorite } from "react-icons/md";
-//import { useMediaQuery } from 'usehooks-ts'
-//import breakpoints from "../../assets/style.ts";
+import { useMediaQuery } from 'usehooks-ts'
+import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
@@ -26,7 +26,7 @@ interface HoopCardProps {
   playerEnrollments: PlayerEnrollment[];
 }
 const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
-  //const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
+  const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
   const colorModeContext: ColorMode = useColorModeValues();
   const language = useLanguage();
   const userLocationDispatch = useLocationDispatch();
@@ -73,7 +73,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
   const isCheckedIn = userActiveEnrollments.some(e => e.hoopId === hoop.id);
 
   return (
-    <div className={`${colorModeContext} h-1/3 sm:h-full w-full flex flex-col justify-start gap-3 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
+    <div className={`${colorModeContext} h-1/3 sm:h-full w-full xsm:w-5/6 sm:w-full flex flex-col justify-start gap-3 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
       <div className="flex justify-between items-start gap-2">
         <div className="flex flex-col">
           <div className="flex items-center justify-start gap-2">
@@ -93,7 +93,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
       </div>
       <div className="flex flex-col gap-3">
         <div className="flex justify-start gap-4">
-          <div className="relative w-full xsm:w-2/3">
+          <div className="relative w-full sm:w-2/3 shrink-0">
             <img className="rounded-md w-full h-40 object-cover"
               src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/150'}
               alt={hoop.name}
@@ -107,7 +107,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
               </span>
             )}
           </div>
-          <div className="flex-col gap-1 items-start justify-around hidden xsm:flex">
+          <div className="flex-col gap-1 items-start justify-around hidden sm:flex">
             <p className="w-full font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>
             {playingNow.length > 0 && (
               <div className="flex items-center justify-start gap-x-2 gap-y-1 mt-1 flex-wrap">
@@ -140,7 +140,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
               <HoopBadge
                 variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
                 text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
-                showIcon={true} //showIcon={xsm}
+                showIcon={xsm}
                 textClassName="responsive-hoopcard-elements-text"
                 tooltip={t('hoops.tooltips.courtType')}
               />
@@ -154,7 +154,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
               <HoopBadge
                 variant={hoop.isPaid ? 'paid' : 'free'}
                 text={hoop.isPaid ? t('common.paid') : t('common.free')}
-                showIcon={true}
+                showIcon={xsm}
                 textClassName="responsive-hoopcard-elements-text"
                 tooltip={t('hoops.tooltips.courtAccess')}
               />
@@ -162,7 +162,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
                 <HoopBadge
                   variant="verified"
                   text={t('common.verified')}
-                  showIcon={true}
+                  showIcon={xsm}
                   textClassName="responsive-hoopcard-elements-text"
                   tooltip={t('hoops.tooltips.verified')}
                 />
@@ -181,13 +181,13 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
               capitalize={false}
             />
           </div>
-          <div className="hidden xsm:flex">
+          <div className="hidden sm:flex xmd:hidden">
             <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
           </div>
         </div>
+        <p className="sm:hidden font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>   
       </div>
-      <div className="flex justify-between items-center xsm:hidden gap-2">
-        <p className="w-1/2 font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>   
+      <div className="flex flex-col justify-between items-center sm:hidden mt-1 xmd:flex">
         <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
       </div>
     </div>                        

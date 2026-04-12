@@ -147,11 +147,11 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
 
           {/* Hero Section */}
           <div className="flex flex-col items-center gap-8">
-            <p className={`${colorModeContext} text-fluid-lg background-text max-w-xl mx-auto`}>
+            <p className={`${colorModeContext} text-fluid-lg background-text text-center max-w-xl mx-auto`}>
               {t('home.hero.subtitle')}
             </p>
 
-            <span className={`${colorModeContext} inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-gray-900 border border-first-color/40 text-first-color text-fluid-sm font-medium`}>
+            <span className={`${colorModeContext} inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-center dark:bg-gray-900 border border-first-color/40 text-first-color text-fluid-sm font-medium`}>
               <MdLocationPin size={14} />
               {t('home.intro.helsinkiNotice')}
             </span>

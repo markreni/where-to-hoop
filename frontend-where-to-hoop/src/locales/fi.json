@@ -140,7 +140,7 @@
       "wherehoops": "WhereHoopziin",
       "description": "Koripallon ystäviltä, koripallon ystäville.",
       "description2": "WhereHoopz on yhteisövetoinen alusta, joka auttaa sinua löytämään koripallokenttiä läheltäsi ja tutustumaan muiden alueesi pelaajien kanssa.",
-      "helsinkiNotice": "Tällä hetkellä saatavilla ainoastaan Helsingissä",
+      "helsinkiNotice": "Tällä hetkellä saatavilla vain Helsingissä",
       "helsinkiMade": "Paikallinen sovellus, innovoitu Helsingissä",
       "mobileNotice": "Mobiiliversiota rakennetaan",
       "aboutLink": "Lisää yhteisöstämme ja arvoistamme"
@@ -311,7 +311,7 @@
     "conditionIntro": "Kun lisäät kentän, valitse kunto, joka vastaa parhaiten näkemääsi:",
     "conditions": {
       "excellent": {
-        "title": "Erinomainen",
+        "title": "Loistava",
         "description": "Kuin uusi tai äskettäin kunnostettu. Sileä, halkeamaton pinta. Verkko täydellisessä kunnossa. Selkeät kentän merkinnät. Hyvin hoidettu taustalevy ja rengas."
       },
       "good": {
@@ -444,15 +444,15 @@
   },
   "common": {
     "all": "Kaikki",
-    "indoor": "Sisäkenttä",
-    "outdoor": "Ulkokenttä",
+    "indoor": "Sisällä",
+    "outdoor": "Ulkona",
     "free": "Ilmainen",
     "paid": "Maksullinen",
     "verified": "Vahvistettu",
     "showlist": "Lista",
     "showmap": "Kartta",
     "condition": {
-      "excellent": "Erinomainen",
+      "excellent": "Loistava",
       "good": "Hyvä",
       "fair": "Tyydyttävä",
       "poor": "Huono"

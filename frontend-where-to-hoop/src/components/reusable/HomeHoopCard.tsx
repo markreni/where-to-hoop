@@ -9,8 +9,8 @@ import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { groupEnrollmentsByTime } from "../../utils/functions.ts";
 import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
-//import breakpoints from "../../assets/style.ts";
-//import { useMediaQuery } from "usehooks-ts";
+import breakpoints from "../../assets/style.ts";
+import { useMediaQuery } from "usehooks-ts";
 import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 import { useAuth } from "../../contexts/AuthContext.tsx";
@@ -36,7 +36,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
     enabled: !!user,
   });
   const isCheckedIn = userActiveEnrollments.some(e => e.hoopId === hoop.id);
-  //const xsm: boolean = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
+  const xsm: boolean = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
 
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
@@ -101,7 +101,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
                 variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
                 text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
                 iconSize={12}
-                showIcon={true} //showIcon={xsm}
+                showIcon={xsm}
                 textClassName="responsive-hoopcard-elements-text"
                 tooltip={t('hoops.tooltips.courtType')}
               />
@@ -115,7 +115,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
               <HoopBadge
                 variant={hoop.isPaid ? 'paid' : 'free'}
                 text={hoop.isPaid ? t('common.paid') : t('common.free')}
-                showIcon={true}
+                showIcon={xsm}
                 textClassName="responsive-hoopcard-elements-text"
                 tooltip={t('hoops.tooltips.courtAccess')}
               />
@@ -123,7 +123,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
                 <HoopBadge
                   variant="verified"
                   text={t('common.verified')}
-                  showIcon={true}
+                  showIcon={xsm}
                   textClassName="responsive-hoopcard-elements-text"
                   tooltip={t('hoops.tooltips.verified')}
                 />
