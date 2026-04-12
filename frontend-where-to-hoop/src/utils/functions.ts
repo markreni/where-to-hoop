@@ -108,4 +108,9 @@ export const isTodayDate = (date: Date): boolean => {
   return date.toDateString() === today.toDateString()
 }
 
+export const shortenAddress = (address: string, parts = 2): string => {
+  const segments = address.split(', ');
+  return segments.length <= parts ? address : segments.slice(0, parts).join(', ');
+};
+
 export default haversineDistance;

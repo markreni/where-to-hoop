@@ -213,7 +213,7 @@ const Hoop = ({ hoop }: HoopProps) => {
 
                 <div className='flex flex-col gap-0'>
                   <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
-                    <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address??'No address is specified'}</p>
+                    <p className={`${colorModeContext} background-text-black text-fluid-xs`}>{hoop.address ?? t('common.noAddress')}</p>
                       {distance !== null && (
                     <p className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
                       {distance.toFixed(1)} km

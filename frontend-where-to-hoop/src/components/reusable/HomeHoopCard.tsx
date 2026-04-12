@@ -7,7 +7,7 @@ import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
-import { groupEnrollmentsByTime } from "../../utils/functions.ts";
+import { groupEnrollmentsByTime, shortenAddress } from "../../utils/functions.ts";
 import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
 import breakpoints from "../../assets/style.ts";
 import { useMediaQuery } from "usehooks-ts";
@@ -92,7 +92,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
             <strong className="text-fluid-sm line-clamp-1">{hoop.name}</strong>
             <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
           </div>
-          <span className={`${colorModeContext} text-fluid-xs background-text pr-2 xsm:pr-7`}>{t(`${hoop.address??"No address is specified"}`)}</span>
+          <span className={`${colorModeContext} text-fluid-xs background-text pr-2 xsm:pr-7`}>{hoop.address ? shortenAddress(hoop.address) : t("common.noAddress")}</span>
         </div>
         <div className="flex flex-col xsm:flex-row items-start xsm:items-center justify-between gap-3">
           <div className="flex flex-col gap-2 mb-2">

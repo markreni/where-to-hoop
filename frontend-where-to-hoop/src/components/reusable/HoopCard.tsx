@@ -13,7 +13,7 @@ import { MdOutlineFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
-import { groupEnrollmentsByTime } from "../../utils/functions.ts";
+import { groupEnrollmentsByTime, shortenAddress } from "../../utils/functions.ts";
 import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
 import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 import { useAuth } from "../../contexts/AuthContext.tsx";
@@ -86,7 +86,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
           </div>
           <div className="flex items-center gap-x-4 gap-y-0 flex-wrap">
             <span className="text-fluid-xs font-extralight">{distance.toFixed(1)} km</span>
-            <p className="text-fluid-xs">{hoop.address??"No address is specified"}</p>
+            <p className="text-fluid-xs">{hoop.address ? shortenAddress(hoop.address) : t("common.noAddress")}</p>
           </div>
         </div>
         <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>

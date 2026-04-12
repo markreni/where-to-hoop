@@ -451,6 +451,7 @@
     "verified": "Verified",
     "showlist": "List",
     "showmap": "Map",
+    "noAddress": "No address is specified",
     "condition": {
       "excellent": "Excellent",
       "good": "Good",

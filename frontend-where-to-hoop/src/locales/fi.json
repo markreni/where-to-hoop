@@ -451,6 +451,7 @@
     "verified": "Vahvistettu",
     "showlist": "Lista",
     "showmap": "Kartta",
+    "noAddress": "Osoitetta ei ole määritetty",
     "condition": {
       "excellent": "Loistava",
       "good": "Hyvä",
