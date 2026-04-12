@@ -35,7 +35,7 @@ const UserLocator = ( { mapRef }: { mapRef: React.RefObject<L.Map | null> }) => 
 
   return (
     <Button 
-      className={`${colorModeContext} background-text-reverse-black absolute top-37 right-[11px] z-400 text-3xl cursor-pointer drop-shadow-[0_1px_2px_gray]`}
+      className={`${colorModeContext} background-text-reverse-black absolute top-37 right-[11px] z-1001 text-3xl cursor-pointer drop-shadow-[0_1px_2px_gray]`}
         onPress={handleLocateUser}
         aria-label="Locate Me"
       >

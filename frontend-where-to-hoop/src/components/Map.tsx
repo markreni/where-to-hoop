@@ -26,7 +26,7 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
   const centerPosition: LatLngTuple = (mapCenterValues.latitude && mapCenterValues.longitude) ? [mapCenterValues.latitude!, mapCenterValues.longitude!] : centerCoordinates; 
 
   return (
-    <div>
+    <div className="relative">
       <MapContainer
         className="h-[100vh] w-[100vw]"
         center={centerPosition}

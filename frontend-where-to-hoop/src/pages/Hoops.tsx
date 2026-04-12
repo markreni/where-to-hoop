@@ -79,7 +79,7 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
 
   return (
     <div className="relative h-screen">
-      <div className="absolute top-19 left-[10px] z-401">
+      <div className="absolute top-19 left-[10px] z-402">
         <ListToggle />
       </div>
       { isMapView && (

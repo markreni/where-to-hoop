@@ -183,7 +183,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
 
             {/* Profile visibility toggle */}
             <div className={`${colorModeContext} bg-background/60 p-4 rounded-lg border border-black/30 dark:border-white/30 mb-6 relative`}>
-            <div className="absolute -top-25 right-0">
+            <div className="absolute -top-31 xs:-top-25 right-0">
               <FollowersDropdown followers={followers} />
             </div>
               <ProfileVisibilityToggle
