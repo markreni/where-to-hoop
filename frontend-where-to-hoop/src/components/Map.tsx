@@ -73,7 +73,10 @@ const Map = ({ filteredAndSortedHoops }: { filteredAndSortedHoops: { hoop: Baske
       )}
 
       </MapContainer>
-      <UserLocator mapRef={mapRef} />
+
+      <div className="absolute top-37 right-[11px] z-1002">
+        <UserLocator mapRef={mapRef} />
+      </div>
       
       
     </div>
