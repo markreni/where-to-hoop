@@ -134,7 +134,7 @@
   "home": {
     "nearestCourts": "Nearest Courts",
     "mostActiveCourts": "Most Active Courts",
-    "enableLocation": "Enable location access to see the nearest courts",
+    "enableLocation": "Enable location access to see the nearest courts.",
     "intro": {
       "welcomePrefix": "Welcome to",
       "wherehoops": "WhereHoopz",

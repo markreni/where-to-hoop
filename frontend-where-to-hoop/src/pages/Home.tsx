@@ -15,6 +15,7 @@ import { fetchAllEnrollments } from "../services/requests.ts";
 import useLocateUser from "../hooks/useLocateUser.ts";
 import useEnrollmentsRealtime from "../hooks/useEnrollmentsRealtime.ts";
 //import baskethoopImg from "../images/baskethoop.png";
+// @ts-expect-error -- MdPhoneIphone, MdPhoneAndroid, MdConstruction temporarily unused while mobile notice is commented out
 import { MdLocationPin, MdArrowForward, MdPhoneIphone, MdPhoneAndroid, MdConstruction } from "react-icons/md";
 import { InteractiveBasketball } from "../components/reusable/InteractiveBasketball.tsx";
 import { useMapViewDispatch } from "../contexts/MapViewContext.tsx";
@@ -109,9 +110,9 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         className="absolute top-1/6 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-2xl opacity-6 pointer-events-none select-none"
       />
       */}
-      <div className="flex-grow flex flex-col gap-10 justify-center px-4 sm:px-8 py-8 max-w-4xl mx-auto w-full relative z-10">
+      <div className="flex-grow flex flex-col gap-14 justify-center px-4 sm:px-8 py-8 max-w-4xl mx-auto w-full relative z-10">
         {/* Intro Section */}
-        <section className="flex flex-col items-center py-8 sm:py-12">
+        <section className="flex flex-col items-center pt-8 sm:pt-12">
           <div className="flex flex-col items-center text-center mb-8">
             <h1 className={`${colorModeContext} poppins-bold text-fluid-4xl background-text-reverse-black`}>
               {t('home.intro.welcomePrefix')} <span className={`${colorModeContext} background-text-black text-stroke-adaptive`}>{t('home.intro.wherehoops')}</span>
@@ -131,42 +132,44 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
           </div>
 
           {/* About Link */}
-          <Link to="/about" className={`${colorModeContext} inline-flex items-center gap-1 background-text-reverse-black font-small text-fluid-sm hover:underline transition-colors mb-6`}>
+          <Link to="/about" className={`${colorModeContext} inline-flex items-center gap-1 background-text-reverse-black font-small text-fluid-sm hover:underline transition-colors`}>
             {t('home.intro.aboutLink')}
             <MdArrowForward size={16} />
           </Link>
 
-          <p className={`${colorModeContext} mt-2 inline-flex items-center gap-1.5 text-fluid-xs background-text-reverse-black opacity-75 italic mb-9`}>
-            <div className="flex gap-0">
-              <MdPhoneIphone size={25} className="" />
-              <MdPhoneAndroid size={25} className="" />
-            </div>
-            {t('home.intro.mobileNotice')}
-            <MdConstruction size={23} className="" />
-          </p>
-
-          {/* Hero Section */}
-          <div className="flex flex-col items-center gap-8">
-            <p className={`${colorModeContext} text-fluid-lg background-text text-center max-w-xl mx-auto`}>
-              {t('home.hero.subtitle')}
-            </p>
-
-            <span className={`${colorModeContext} inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-center dark:bg-gray-900 border border-first-color/40 text-first-color text-fluid-sm font-medium`}>
-              <MdLocationPin size={14} />
-              {t('home.intro.helsinkiNotice')}
+          {/* Mobile Notice 
+          <span className={`${colorModeContext} mt-2 inline-flex items-center gap-1.5 text-fluid-xs background-text-reverse-black opacity-75 italic mb-9`}>
+            <span className="flex gap-0">
+              <MdPhoneIphone size={25} />
+              <MdPhoneAndroid size={25} />
             </span>
-
-            <Link to="/hoops">
-              <Button onClick={() => { mapViewDispatch('map') }} 
-                  className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg w-max border-2 shadow-2xl border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
-                <MdLocationPin size={24}/>
-                {t('home.hero.ctaButton')}
-              </Button>
-            </Link>
-          </div>
+            {t('home.intro.mobileNotice')}
+            <MdConstruction size={23} />
+          </span>
+          */}
         </section>
 
-        <div className="space-y-10 w-full">
+        {/* Hero Section */}
+        <section className="flex flex-col items-center gap-8">
+          <p className={`${colorModeContext} text-fluid-lg background-text text-center max-w-xl mx-auto`}>
+            {t('home.hero.subtitle')}
+          </p>
+
+          <span className={`${colorModeContext} inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-center dark:bg-gray-900 border border-first-color/40 text-first-color text-fluid-sm font-medium`}>
+            <MdLocationPin size={14} />
+            {t('home.intro.helsinkiNotice')}
+          </span>
+
+          <Link to="/hoops">
+            <Button onPress={() => { mapViewDispatch('map') }} 
+              className={`${colorModeContext} inline-flex items-center gap-2 px-6 py-3 rounded-lg w-max border-2 shadow-2xl border-white dark:border-black bg-first-color main-color-hover first-color-text font-medium transition-all hover:scale-105`}>
+              <MdLocationPin size={24}/>
+              {t('home.hero.ctaButton')}
+            </Button>
+          </Link>
+        </section>
+
+        <section className="space-y-10 w-full">
           <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-8 text-center`}>
             {t('home.nearestCourts')}
           </h1>
@@ -178,7 +181,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
               ))}
             </Carousel>
           ) : (
-            <div className="text-center background-text text-fluid-base">
+            <div className={`${colorModeContext} text-center background-text text-fluid-base`}>
               <p>{t('home.enableLocation')}</p>
             </div>
           )}
@@ -191,7 +194,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
               <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []} />
             ))}
           </Carousel>
-        </div>
+        </section>
 
         {/* Encouragement Section */}
           <section ref={encouragementRef} className={`${colorModeContext} relative mt-10 p-6 rounded-xl bg-gray-100 dark:bg-black text-center overflow-hidden`}>

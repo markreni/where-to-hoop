@@ -47,6 +47,11 @@ export const useLocateUser = (): ((options?: LocateOptions) => void) => {
               },
               { enableHighAccuracy: false, timeout: 10000, maximumAge: 30000 }
             );
+          } else if (error.code === error.PERMISSION_DENIED) {
+            dispatch({
+              type: 'SET_USER_LOCATION',
+              payload: { latitude: null, longitude: null },
+            });
           } else {
             console.error("Error getting user's location:", error);
           }

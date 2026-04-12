@@ -134,7 +134,7 @@
   "home": {
     "nearestCourts": "Lähimmät kentät",
     "mostActiveCourts": "Aktiivisimmat kentät",
-    "enableLocation": "Salli sijainnin käyttö nähdäksesi lähimmät kentät",
+    "enableLocation": "Salli sijainnin käyttö nähdäksesi lähimmät kentät.",
     "intro": {
       "welcomePrefix": "Tervetuloa",
       "wherehoops": "WhereHoopziin",

@@ -69,6 +69,21 @@ const LocationContext = createContext<LocationContextValue | null>(null);
 export const LocationContextProvider: React.FC<LocationProviderProps> = (props) => {
   const [state, dispatch] = useReducer(locationReducer, initialState, initState)
 
+  // Verify cached location is still accessible on mount
+  useEffect(() => {
+    if (!state.userLocation.latitude && !state.userLocation.longitude) return;
+
+    navigator.geolocation.getCurrentPosition(
+      () => {}, // Location still accessible, nothing to do
+      (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          dispatch({ type: 'SET_USER_LOCATION', payload: { latitude: null, longitude: null } });
+        }
+      },
+      { maximumAge: Infinity, timeout: 0 }
+    );
+  }, []);
+
   useEffect(() => {
       try {
         localStorage.setItem('locationState', JSON.stringify(state));
