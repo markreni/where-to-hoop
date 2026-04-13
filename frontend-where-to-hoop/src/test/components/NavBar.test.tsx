@@ -14,9 +14,9 @@ vi.mock('../../hooks/useLocateUser', () => ({
 }));
 
 describe('NavBar', () => {
-  it('renders logo with WhereH🏀🏀pz text', () => {
+  it('renders logo with WhereHo🏀pz text', () => {
     render(<NavBar />);
-    expect(screen.getByRole('heading', { name: 'WhereH🏀🏀pz' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'WhereHo🏀pz' })).toBeInTheDocument();
   });
 
   it('renders Show Hoops button', () => {
@@ -33,7 +33,7 @@ describe('NavBar', () => {
 
   it('logo links to home page', () => {
     render(<NavBar />);
-    const logoLink = screen.getByRole('heading', { name: 'WhereH🏀🏀pz' }).closest('a');
+    const logoLink = screen.getByRole('heading', { name: 'WhereHo🏀pz' }).closest('a');
     expect(logoLink).toHaveAttribute('href', '/');
   });
 

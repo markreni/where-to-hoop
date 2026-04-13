@@ -3,20 +3,20 @@ import { render, screen } from '../test-utils';
 import { Logo } from '../../components/reusable/Logo';
 
 describe('Logo', () => {
-  it('renders WhereH🏀🏀pz text', () => {
+  it('renders WhereHo🏀pz text', () => {
     render(<Logo />);
-    expect(screen.getByRole('heading', { name: 'WhereH🏀🏀pz' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'WhereHo🏀pz' })).toBeInTheDocument();
   });
 
   it('renders as a heading element', () => {
     render(<Logo />);
-    expect(screen.getByRole('heading', { name: 'WhereH🏀🏀pz' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'WhereHo🏀pz' })).toBeInTheDocument();
   });
 
   it('has correct heading level', () => {
     render(<Logo />);
     const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading).toHaveTextContent('WhereH🏀🏀pz');
+    expect(heading).toHaveTextContent('WhereHo🏀pz');
   });
 
   it('applies styling classes', () => {
