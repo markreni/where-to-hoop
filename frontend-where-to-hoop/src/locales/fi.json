@@ -298,7 +298,7 @@
     },
     "addCourt": {
       "question": "Miten lisään uuden koripallokentän?",
-      "answer": "Paina navigointipalkissa valikkopalkin alta \"Lisää kori\"-valikosta. Täytä kentän nimi, siirrä osoitinta karttalla asettaaksesi sijainnin (tai käytä nykyistä sijaintiasi), lisää kuvaus, valitse kentän kunto, valitse kenttätyyppi (sisä/ulko) ja lataa vähintään yksi kuva. Tähtikuvake näyttää, mikä kuva tulee näkymään pääkuvana."
+      "answer": "Paina navigointipalkissa valikkopalkin alta \"Lisää kori\"-valikosta. Täytä kentän nimi, raahaa merkkiä kartalla asettaaksesi sijainnin (tai käytä nykyistä sijaintiasi), lisää kuvaus, valitse kentän kunto, kenttätyyppi (sisä/ulko) ja kentän saatavuus (ilmainen/maksullinen), ja lataa vähintään yksi kuva. Tähtikuvake näyttää, mikä kuva tulee näkymään pääkuvana. Edistymispalkki yläreunassa näyttää, kuinka monta kuudesta pakollisesta kentästä olet täyttänyt."
     },
     "takePhoto": {
       "question": "Miten otan hyvän kuvan kentästä?",

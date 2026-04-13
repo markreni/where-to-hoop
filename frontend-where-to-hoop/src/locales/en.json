@@ -298,7 +298,7 @@
     },
     "addCourt": {
       "question": "How do I add a new basketball court?",
-      "answer": "Tap \"Add Hoop\" in the navigation under the menu. Fill in the court name, tap the map to set the location (or use your current location), add a description, select the condition and court type (indoor/outdoor), and upload at least one photo. The star icon lets you choose which photo appears as the main profile image."
+      "answer": "Tap \"Add Hoop\" in the navigation under the menu. Fill in the court name, drag the marker on the map to set the location (or use your current location), add a description, select the condition, court type (indoor/outdoor), and court access (gratis/paid), then upload at least one photo. The star icon lets you choose which photo appears as the main profile image. A progress bar at the top tracks how many of the 6 required fields you've completed."
     },
     "takePhoto": {
       "question": "How do I take a good court photo?",
