@@ -170,12 +170,12 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
         aria-roledescription="carousel"
         style={{
           maskImage: `linear-gradient(to right,
-            ${showLeftFade ? 'transparent 0%, black 24px' : 'black 0%'},
-            black calc(100% - 24px),
+            ${showLeftFade ? 'transparent 0%, black 12px' : 'black 0%'},
+            black calc(100% - 12px),
             ${showRightFade ? 'transparent 100%' : 'black 100%'})`,
           WebkitMaskImage: `linear-gradient(to right,
-            ${showLeftFade ? 'transparent 0%, black 24px' : 'black 0%'},
-            black calc(100% - 24px),
+            ${showLeftFade ? 'transparent 0%, black 12px' : 'black 0%'},
+            black calc(100% - 12px),
             ${showRightFade ? 'transparent 100%' : 'black 100%'})`,
         }}
       >
