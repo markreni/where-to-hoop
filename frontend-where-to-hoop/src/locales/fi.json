@@ -78,10 +78,11 @@
     "publicRecommended": "Profiilin näkyvyyden voi muuttaa myöhemmin",
     "submit": "Luo tili",
     "submitting": "Luodaan tiliä…",
-    "alreadyHaveAccount": "Onko sinulla jo tili?",
+    "alreadyHaveAccount": "Onko sinulla jo käyttäjätili?",
     "signIn": "Kirjaudu sisään",
-    "accountCreated": "Tili luotu! Tarkista sähköpostisi vahvistaaksesi tilin.",
+    "accountCreated": "Tarkista sähköpostisi vahvistaaksesi käyttäjätilin!",
     "failed": "Rekisteröityminen epäonnistui.",
+    "emailConfirmed": "Tervetuloa! Tilisi on vahvistettu. Olet valmis!",
     "alreadySignedUp": "Sinulla on jo tili.",
     "goToProfile": "Siirry profiiliin"
   },
@@ -221,6 +222,15 @@
     "hoopcardMapButton": "Kartalla",
     "hoopcardReadyToPlayButton": "Valmis pelaamaan",
     "hoopcardCheckedIn": "Ilmoittautunut",
+    "popupIndoor": "Sisä",
+    "popupOutdoor": "Ulko",
+    "popupText": "{{courtType}}kenttä {{condition}} kunnossa",
+    "popupCondition": {
+      "excellent": "loistavassa",
+      "good": "hyvässä",
+      "fair": "tyydyttävässä",
+      "poor": "huonossa"
+    },
     "players": {
       "one": "1 pelaaja kentällä",
       "other": "{{count}} pelaajaa kentällä"
@@ -282,10 +292,10 @@
     "github": "GitHub",
     "githubDesc": "Ilmoita ongelmista tai osallistu kehitykseen",
     "suggestCourt": "Ehdota kenttää",
-    "suggestCourtText": "Tiedätkö koripallokentän, jota ei ole kartalla? Käytä",
+    "suggestCourtText": "Tiedätkö koripallokentän, jota ei ole yhteisömme kartalla? Käytä",
     "addHoopFeature": "Lisää kori",
     "toAddIt": "-toimintoa lisätäksesi sen!",
-    "MarkTakeCare": "Tarkistan ehdotuksesi ja lisään kuvan paleluun mahdollisimman pian.",
+    "MarkTakeCare": "Tarkistan kenttäehdotuksesi ja lisään vahvistettu-merkin mahdollisimman pian.",
     "HiMark": "Parhaimin terveisin,",
     "Mark": "Mark :)"
   },

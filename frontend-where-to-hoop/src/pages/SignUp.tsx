@@ -41,7 +41,7 @@ const SignUp = () => {
     setIsSubmitting(true);
     try {
       await signUp(email.trim(), password, nickname.trim(), isPublic);
-      success(t('signUp.accountCreated'));
+      success(t('signUp.accountCreated'), 6000);
       navigate("/");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : t('signUp.failed');

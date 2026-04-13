@@ -80,8 +80,9 @@
     "submitting": "Creating account…",
     "alreadyHaveAccount": "Already have an account?",
     "signIn": "Sign in",
-    "accountCreated": "Account created! Check your email to confirm your account.",
+    "accountCreated": "Check your email to complete the sign up process!",
     "failed": "Sign up failed.",
+    "emailConfirmed": "Welcome! Your account has been confirmed. You're all set!",
     "alreadySignedUp": "You already have an account.",
     "goToProfile": "Go to profile"
   },
@@ -221,6 +222,15 @@
     "hoopcardPlayingNow": "Playing now",
     "hoopcardReadyToPlayButton": "Ready to play",
     "hoopcardCheckedIn": "Checked in",
+    "popupIndoor": "Indoor",
+    "popupOutdoor": "Outdoor",
+    "popupText": "{{courtType}} court in a {{condition}} condition",
+    "popupCondition": {
+      "excellent": "excellent",
+      "good": "good",
+      "fair": "fair",
+      "poor": "poor"
+    },
     "players": {
       "one": "1 player on court",
       "other": "{{count}} players on court"
@@ -282,10 +292,10 @@
     "github": "GitHub",
     "githubDesc": "Report issues or contribute",
     "suggestCourt": "Suggest a Court",
-    "suggestCourtText": "Know a basketball court that's not on our map? Use the",
+    "suggestCourtText": "Know a basketball court that's not on our community's map? Use the",
     "addHoopFeature": "Add Hoop",
     "toAddIt": "feature to add it!",
-    "MarkTakeCare": "I will review your suggestion and add the image to the site as soon as possible.",
+    "MarkTakeCare": "I will review your suggestion and add the verification badge as soon as possible.",
     "HiMark": "Best regards,",
     "Mark": "Mark :)"
   },

@@ -33,7 +33,7 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
         maxWidth={sm ? 300 : 160}
         >
         <div>
-          <div className="flex flex-col justify-start items-start sm:justify-between sm:flex-row sm:items-center mb-1.5">
+          <div className="flex flex-col justify-start items-start mb-1">
             <strong className="text-fluid-base">{hoop.name}</strong>
             <span className="text-fluid-xs">{distance.toFixed(1)} km</span>
           </div>
@@ -41,13 +41,16 @@ const MapMarkerPopup = ({ hoop }: { hoop: BasketballHoop }): JSX.Element => {
           <img
             src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/150'}
             alt={hoop.name}
-            className="w-full h-auto mb-2" 
+            className="w-full h-auto mb-1" 
           />
         </div>
   
-        <div className="flex flex-col sm:flex-row justify-between items-start w-full gap-2">
+        <div className="flex flex-col justify-between items-center w-full gap-1.5">
           <div className="text-fluid-sm">
-            {`${hoop.isIndoor ? "Indoor" : "Outdoor"} court in a`} <strong>{hoop.condition}</strong> condition <br /> 
+            {t('hoops.popupText', {
+              courtType: t(hoop.isIndoor ? 'hoops.popupIndoor' : 'hoops.popupOutdoor'),
+              condition: t(`hoops.popupCondition.${hoop.condition}`)
+            })}
             {/* Add later when court details page is ready
             <Link to={`/hoops/${hoop.id}`}>View details</Link>
             */}
