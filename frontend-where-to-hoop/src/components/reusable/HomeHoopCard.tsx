@@ -92,11 +92,11 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
             <strong className="text-fluid-sm line-clamp-1">{hoop.name}</strong>
             <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
           </div>
-          <span className={`${colorModeContext} text-fluid-xs background-text pr-2 xsm:pr-7`}>{hoop.address ? shortenAddress(hoop.address) : t("common.noAddress")}</span>
+          <span className={`${colorModeContext} text-fluid-xs background-text pr-2`}>{hoop.address ? shortenAddress(hoop.address) : t("common.noAddress")}</span>
         </div>
-        <div className="flex flex-col xsm:flex-row items-start xsm:items-center justify-between gap-3">
-          <div className="flex flex-col gap-2 mb-2">
-            <div className="flex items-center gap-2 flex-wrap">
+        <div className="flex flex-col xsm:flex-row items-start xsm:items-center justify-between gap-8">
+          <div className="flex flex-col gap-1 flex-1 mb-0.5 w-full xsm:w-auto">
+            <div className="flex items-center gap-1 flex-wrap w-full [&>*]:flex-1">
               <HoopBadge
                 variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
                 text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
@@ -142,13 +142,13 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
               capitalize={false}
             />
           </div>
-          <div className="hidden xsm:flex">
-          <HoopCardButton
-            actionFunction={readyToPlay}
-            title={t('hoops.hoopcardReadyToPlayButton')}
-            colors="hoop-card-button-green"
-            text="text-fluid-base"
-          />
+          <div className="hidden xsm:flex pr-2">
+            <HoopCardButton
+              actionFunction={readyToPlay}
+              title={t('hoops.hoopcardReadyToPlayButton')}
+              colors="hoop-card-button-green"
+              text="text-fluid-base"
+            />
           </div>
         </div>
         <div className="flex xsm:hidden justify-center">

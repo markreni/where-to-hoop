@@ -5,7 +5,7 @@ import { Logo } from '../../components/reusable/Logo';
 describe('Logo', () => {
   it('renders WhereHoopz text', () => {
     render(<Logo />);
-    expect(screen.getByText('WhereHoopz')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'WhereHoopz' })).toBeInTheDocument();
   });
 
   it('renders as a heading element', () => {

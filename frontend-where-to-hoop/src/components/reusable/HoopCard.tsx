@@ -73,7 +73,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
   const isCheckedIn = userActiveEnrollments.some(e => e.hoopId === hoop.id);
 
   return (
-    <div className={`${colorModeContext} h-1/3 sm:h-full w-full xsm:w-5/6 sm:w-full flex flex-col justify-start gap-3 p-4 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
+    <div className={`${colorModeContext} h-1/3 sm:h-full w-full xsm:w-5/6 sm:w-full flex flex-col justify-start gap-3 px-3 pt-2 pb-3 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
       <div className="flex justify-between items-start gap-2">
         <div className="flex flex-col">
           <strong className="text-fluid-base">{hoop.name}</strong>
@@ -88,7 +88,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
             : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
           )}
       </div>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2">
         <div className="flex justify-start gap-4">
           <div className="relative w-full sm:w-2/3 shrink-0">
             <div className="absolute top-0.5 right-0.5 z-10">
@@ -134,9 +134,9 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
             )}
           </div>
         </div>
-        <div className="flex justify-between items-center gap-2">
-          <div className="flex flex-col gap-2">
-            <div className="flex justify-start flex-wrap gap-2">
+        <div className="flex justify-between items-center gap-11.5">
+          <div className="flex flex-col gap-1 flex-1 w-full xsm:w-auto">
+            <div className="flex justify-start flex-wrap w-full [&>*]:flex-1 gap-1">
               <HoopBadge
                 variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
                 text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
@@ -187,7 +187,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
         </div>
         <p className="sm:hidden font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>   
       </div>
-      <div className="flex flex-col justify-between items-center sm:hidden mt-1 xmd:flex xl:hidden 2xl:flex">
+      <div className="flex flex-col justify-between items-center sm:hidden xmd:flex xl:hidden 2xl:flex">
         <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
       </div>
     </div>                        

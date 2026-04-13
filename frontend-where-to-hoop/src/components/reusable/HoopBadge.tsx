@@ -24,7 +24,7 @@ const variantStyles: Record<BadgeVariant, string> = {
   condition: '',
   date: 'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200',
   players: 'bg-purple-100 text-purple-700',
-  free: 'bg-green-100 text-green-700',
+  free: 'bg-teal-100 text-teal-700',
   paid: 'bg-red-100 text-red-700',
   verified: 'bg-green-100 text-green-700',
 };

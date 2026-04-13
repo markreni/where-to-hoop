@@ -16,7 +16,7 @@ vi.mock('../../hooks/useLocateUser', () => ({
 describe('NavBar', () => {
   it('renders logo with WhereHoopz text', () => {
     render(<NavBar />);
-    expect(screen.getByText('WhereHoopz')).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'WhereHoopz' })).toBeInTheDocument();
   });
 
   it('renders Show Hoops button', () => {
@@ -33,7 +33,7 @@ describe('NavBar', () => {
 
   it('logo links to home page', () => {
     render(<NavBar />);
-    const logoLink = screen.getByText('WhereHoopz').closest('a');
+    const logoLink = screen.getByRole('heading', { name: 'WhereHoopz' }).closest('a');
     expect(logoLink).toHaveAttribute('href', '/');
   });
 

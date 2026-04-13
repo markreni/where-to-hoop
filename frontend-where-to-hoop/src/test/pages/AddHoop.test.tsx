@@ -224,7 +224,7 @@ describe('AddHoop', () => {
     await user.upload(fileInput, file);
 
     // Select court access
-    const freeButton = screen.getByRole('button', { name: /Free/i });
+    const freeButton = screen.getByRole('button', { name: /Gratis/i });
     await user.click(freeButton);
 
     // All 6 fields should be filled
