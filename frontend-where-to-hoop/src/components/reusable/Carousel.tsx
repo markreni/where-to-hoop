@@ -59,12 +59,12 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
         aria-roledescription="carousel"
         style={{
           maskImage: `linear-gradient(to right,
-            ${showLeftFade ? 'transparent 0%, black 12px' : 'black 0%'},
-            black calc(100% - 12px),
+            ${showLeftFade ? 'transparent 0%, black 8px' : 'black 0%'},
+            black calc(100% - 8px),
             ${showRightFade ? 'transparent 100%' : 'black 100%'})`,
           WebkitMaskImage: `linear-gradient(to right,
-            ${showLeftFade ? 'transparent 0%, black 12px' : 'black 0%'},
-            black calc(100% - 12px),
+            ${showLeftFade ? 'transparent 0%, black 8px' : 'black 0%'},
+            black calc(100% - 8px),
             ${showRightFade ? 'transparent 100%' : 'black 100%'})`,
         }}
       >
@@ -78,7 +78,7 @@ export const Carousel = ({ children, className = "" }: CarouselProps) => {
           {children.map((child, index) => (
             <div
               key={index}
-              className="w-full flex-shrink-0 px-2"
+              className="w-full flex-shrink-0 px-0"
               role="group"
               aria-roledescription="slide"
               aria-label={`${index + 1} of ${itemCount}`}
