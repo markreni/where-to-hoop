@@ -1,5 +1,6 @@
 import type { LatLngBoundsExpression } from "leaflet";
 
+const minScreenSize = 340; // Minimum screen width in pixels for the app to be usable, used in CSS and as a constant here for reference.
 const centerCoordinates: [number, number] = [60.1695, 24.9354]; // Default to Helsinki if no location
 // Helsinki greater area bounds: SW corner to NE corner
 const helsinkiBounds: LatLngBoundsExpression = [
@@ -25,4 +26,4 @@ const MAX_NOTE_LENGTH = 75;
 // Bio length constant for user profile
 const MAX_BIO_LENGTH = 280;
 
-export { centerCoordinates, MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_PROFILE_IMAGE_SIZE_MB, MAX_PROFILE_IMAGE_SIZE_BYTES, MAX_IMAGES, helsinkiBounds, MAX_NOTE_LENGTH, MAX_BIO_LENGTH, emailDomain };
+export { minScreenSize, centerCoordinates, MAX_NAME_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_IMAGE_SIZE_MB, MAX_IMAGE_SIZE_BYTES, MAX_PROFILE_IMAGE_SIZE_MB, MAX_PROFILE_IMAGE_SIZE_BYTES, MAX_IMAGES, helsinkiBounds, MAX_NOTE_LENGTH, MAX_BIO_LENGTH, emailDomain };

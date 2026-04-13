@@ -147,7 +147,8 @@
     },
     "hero": {
       "tagline": "Aloitetaan pelit",
-      "subtitle": "Löydä kentät. Katso kuka pelaa. Liity peliin.",
+      "subtitle": "Löydä kentät. Katso kuka pelaa.",
+      "subtitle2": "Liity peliin.",
       "ctaButton": "Tutustu karttaan",
       "weather": {
         "feelsLike": "Tuntuu kuin",

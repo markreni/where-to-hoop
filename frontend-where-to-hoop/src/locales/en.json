@@ -147,7 +147,8 @@
     },
     "hero": {
       "tagline": "Game On",
-      "subtitle": "Find courts. See who's playing. Join the game.",
+      "subtitle": "Find courts. See who's playing.",
+      "subtitle2": "Join the game.",
       "ctaButton": "Explore Map",
       "weather": {
         "feelsLike": "Feels like",

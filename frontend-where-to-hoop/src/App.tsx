@@ -24,7 +24,7 @@ import PlayerProfile from "./pages/PlayerProfile.tsx";
 import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
-import { helsinkiBounds } from "./utils/constants.ts";
+import { helsinkiBounds, minScreenSize } from "./utils/constants.ts";
 import type { BasketballHoop } from "./types/types.ts";
 import { fetchHoops } from "./services/requests.ts";
 
@@ -53,7 +53,7 @@ const App = () => {
 
   if (isLoading) {
     return (
-      <div className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen min-w-[340px] flex items-center justify-center">
+      <div className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen flex items-center justify-center" style={{ minWidth: `${minScreenSize}px` }}>
         <p className="text-2xl text-text animate-bounce">Loading...</p>
       </div>
     );
@@ -61,7 +61,8 @@ const App = () => {
 
   return (
     <div
-      className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen min-w-[340px] overflow-hidden relative"
+      className="poppins-extralight bg-gradient-to-t from-second-color to-first-color min-h-screen overflow-hidden relative"
+      style={{ minWidth: `${minScreenSize}px` }}
     >
       <NavBar />
       <ToastContainer />
