@@ -18,6 +18,7 @@ const { queueTable, storageUpload, storageRemove, supabase } =
 
 beforeEach(() => {
   supabaseMockInstance.reset()
+  supabaseMockInstance.setStrictQueue(true)
   vi.spyOn(console, 'error').mockImplementation(() => {})
 })
 

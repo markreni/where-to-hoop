@@ -51,6 +51,7 @@ const baseHoop: Omit<BasketballHoop, 'id'> = {
 
 beforeEach(() => {
   supabaseMockInstance.reset()
+  supabaseMockInstance.setStrictQueue(true)
   vi.spyOn(console, 'error').mockImplementation(() => {})
   vi.spyOn(console, 'log').mockImplementation(() => {})
 })

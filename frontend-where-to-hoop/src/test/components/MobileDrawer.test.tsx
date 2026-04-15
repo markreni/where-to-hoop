@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import MobileDrawer from '../../components/MobileDrawer';
+import { supabaseMockInstance, MOCK_USER } from '../services/supabaseMock';
 
 // Mock useLocateUser
 const mockLocateUser = vi.fn();
@@ -23,6 +24,7 @@ describe('MobileDrawer', () => {
     mockLocateUser.mockClear();
     mockIsAdmin.isAdmin = false;
     document.body.style.overflow = '';
+    supabaseMockInstance.setSession({ user: MOCK_USER });
   });
 
   // ── Closed state ──
@@ -195,17 +197,7 @@ describe('MobileDrawer', () => {
   // ── Unauthenticated state ──
 
   it('renders Sign In and Sign Up when not authenticated', async () => {
-    // Override Supabase mocks to simulate no session
-    const supabase = await import('../../utils/supabase');
-    const mock = vi.mocked(supabase.default);
-    mock.auth.getSession = vi.fn().mockResolvedValue({
-      data: { session: null },
-      error: null,
-    });
-    mock.auth.onAuthStateChange = vi.fn((cb: any) => {
-      cb('SIGNED_OUT', null);
-      return { data: { subscription: { id: '', callback: vi.fn(), unsubscribe: vi.fn() } } };
-    });
+    supabaseMockInstance.setSession(null);
 
     render(<MobileDrawer isOpen={true} onClose={mockOnClose} />);
     await waitFor(() => {
@@ -219,34 +211,9 @@ describe('MobileDrawer', () => {
     const signUpLink = screen.getByText('Sign Up').closest('a');
     expect(signUpLink).toHaveAttribute('href', '/signup');
 
-    // Should not render authenticated-only items
     expect(screen.queryByText('Add Hoop')).not.toBeInTheDocument();
     expect(screen.queryByText('Find Friend')).not.toBeInTheDocument();
     expect(screen.queryByText('My Account')).not.toBeInTheDocument();
     expect(screen.queryByText('Sign Out')).not.toBeInTheDocument();
-
-    // Restore original mocks
-    mock.auth.getSession = vi.fn().mockResolvedValue({
-      data: {
-        session: {
-          user: {
-            id: 'mock-user-id',
-            email: 'mock@example.com',
-            user_metadata: { nickname: 'MockUser' },
-          },
-        },
-      },
-      error: null,
-    });
-    mock.auth.onAuthStateChange = vi.fn((cb: any) => {
-      cb('SIGNED_IN', {
-        user: {
-          id: 'mock-user-id',
-          email: 'mock@example.com',
-          user_metadata: { nickname: 'MockUser' },
-        },
-      });
-      return { data: { subscription: { id: '', callback: vi.fn(), unsubscribe: vi.fn() } } };
-    });
   });
 });

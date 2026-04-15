@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import { EnrollmentForm } from '../../components/EnrollmentForm';
+import { supabaseMockInstance, MOCK_USER } from '../services/supabaseMock';
 
 describe('EnrollmentForm', () => {
   const fixedNow = new Date('2024-01-15T12:00:00Z');
@@ -9,6 +10,7 @@ describe('EnrollmentForm', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.setSystemTime(fixedNow);
+    supabaseMockInstance.setSession({ user: MOCK_USER });
   });
 
   afterEach(() => {

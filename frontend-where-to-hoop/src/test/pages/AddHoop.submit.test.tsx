@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '../test-utils'
 import userEvent from '@testing-library/user-event'
 import AddHoop from '../../pages/AddHoop'
 import type { BasketballHoop } from '../../types/types'
+import { supabaseMockInstance, MOCK_USER } from '../services/supabaseMock'
 
 // ── Mocks ──
 
@@ -104,6 +105,7 @@ describe('AddHoop — submit (add mode)', () => {
     toastWarnings.length = 0
     toastErrors.length = 0
     toastSuccesses.length = 0
+    supabaseMockInstance.setSession({ user: MOCK_USER })
   })
 
   it('calls insertHoop and navigates on success', async () => {
@@ -249,6 +251,7 @@ describe('AddHoop — edit mode', () => {
     mockNavigate.mockReset()
     toastSuccesses.length = 0
     toastErrors.length = 0
+    supabaseMockInstance.setSession({ user: MOCK_USER })
   })
 
   it('renders edit title and prefills the name field', () => {

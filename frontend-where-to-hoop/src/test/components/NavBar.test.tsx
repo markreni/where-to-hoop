@@ -1,7 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import NavBar from '../../components/NavBar';
+import { supabaseMockInstance, MOCK_USER } from '../services/supabaseMock';
 
 // Mock useMediaQuery
 vi.mock('usehooks-ts', () => ({
@@ -14,6 +15,10 @@ vi.mock('../../hooks/useLocateUser', () => ({
 }));
 
 describe('NavBar', () => {
+  beforeEach(() => {
+    supabaseMockInstance.setSession({ user: MOCK_USER });
+  });
+
   it('renders logo with WhereHo🏀pz text', () => {
     render(<NavBar />);
     expect(screen.getByRole('heading', { name: 'WhereHo🏀pz' })).toBeInTheDocument();

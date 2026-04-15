@@ -3,6 +3,7 @@ import { render, screen } from '../test-utils';
 import userEvent from '@testing-library/user-event';
 import { HoopCard } from '../../components/reusable/HoopCard';
 import type { BasketballHoop, PlayerEnrollment } from '../../types/types';
+import { supabaseMockInstance, MOCK_USER } from '../services/supabaseMock';
 
 const mockHoop: BasketballHoop = {
   id: '11',
@@ -42,6 +43,7 @@ describe('HoopCard', () => {
 
   beforeEach(() => {
     localStorage.clear();
+    supabaseMockInstance.setSession({ user: MOCK_USER });
   });
 
   it('renders hoop name', () => {

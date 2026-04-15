@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '../test-utils'
 import userEvent from '@testing-library/user-event'
 import Hoop from '../../pages/Hoop'
 import type { BasketballHoop } from '../../types/types'
+import { supabaseMockInstance, MOCK_USER } from '../services/supabaseMock'
 
 // ── Mocks ──
 
@@ -136,6 +137,7 @@ describe('Hoop page — favorites', () => {
     mockIsAdmin = false
     mockIsFavorited = false
     mockToggleFavorite.mockReset()
+    supabaseMockInstance.setSession({ user: MOCK_USER })
   })
 
   it('shows outline heart when not favorited, and toggles on click', async () => {

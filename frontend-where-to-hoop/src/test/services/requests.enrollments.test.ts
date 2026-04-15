@@ -34,6 +34,7 @@ const enrollmentRow = (overrides: Record<string, unknown> = {}) => ({
 
 beforeEach(() => {
   supabaseMockInstance.reset()
+  supabaseMockInstance.setStrictQueue(true)
   vi.spyOn(console, 'error').mockImplementation(() => {})
 })
 

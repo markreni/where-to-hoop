@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '../test-utils';
 import Hoop from '../../pages/Hoop';
 import type { BasketballHoop } from '../../types/types';
 import { fetchHoopEnrollments } from '../../services/requests';
+import { supabaseMockInstance, MOCK_USER } from '../services/supabaseMock';
 
 const mockEnrollments = vi.hoisted(() => [
   {
@@ -43,6 +44,7 @@ describe('Hoop Page', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.setSystemTime(fixedNow);
+    supabaseMockInstance.setSession({ user: MOCK_USER });
   });
 
   afterEach(() => {
@@ -102,13 +104,6 @@ describe('Hoop Page', () => {
   it('renders condition badge', () => {
     render(<Hoop hoop={mockHoop} />);
     expect(screen.getByText('Excellent')).toBeInTheDocument();
-  });
-
-  // Date badge is currently commented out in the Hoop page
-  it.skip('renders date badge with formatted date', () => {
-    render(<Hoop hoop={mockHoop} />);
-    const dateBadge = screen.getByText(/Jan 10, 2024|10.*Jan.*2024/);
-    expect(dateBadge).toBeInTheDocument();
   });
 
   it('renders PlayersPanel component', () => {

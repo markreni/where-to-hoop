@@ -41,13 +41,6 @@ describe('Home', () => {
     expect(carousels.length).toBeGreaterThanOrEqual(1);
   });
 
-  // Background image is currently commented out in the component
-  it.skip('renders background image', () => {
-    render(<Home hoops={initialHoops} />);
-    const backgroundImg = document.querySelector('img[aria-hidden="true"]');
-    expect(backgroundImg).toBeInTheDocument();
-  });
-
   it('renders hoop cards in most active courts carousel', () => {
     render(<Home hoops={initialHoops} />);
     // Mock hoops should be rendered

@@ -1,28 +1,31 @@
 import { vi, type Mock } from 'vitest'
 
 /**
- * Shared Supabase mock used by the requests.* test files.
+ * Shared Supabase mock for all tests.
  *
- * Philosophy:
  *  - supabase.from(table) returns a chainable query builder whose chain
- *    methods all return `this` and which resolves (via `.then`) to the
- *    next queued result for that table, or a registered default, or
- *    `{ data: [], error: null }`.
+ *    methods all return `this` and which resolves (via `.then`) to:
+ *      1. the next queued result for the table, or
+ *      2. a registered default for the table, or
+ *      3. in strict mode, throws; otherwise returns { data: [], error: null }.
  *  - Storage and auth are plain vi mocks; tests override per-call with
- *    mockResolvedValueOnce / mockRejectedValueOnce.
- *
- * Usage:
- *   import { supabaseMockInstance } from './supabaseMock'
- *   vi.mock('../../utils/supabase', () => ({ default: supabaseMockInstance.supabase }))
- *   beforeEach(() => supabaseMockInstance.reset())
- *   ...
- *   supabaseMockInstance.queueTable('basketball_hoop', { data: [...], error: null })
+ *    mockResolvedValueOnce / mockRejectedValueOnce or the setSession helper.
+ *  - Default auth state: signed out. Call setSession(...) to opt into signed-in.
  */
 
 export interface QueryResult {
   data?: unknown
   error?: unknown
   count?: number | null
+}
+
+export type MockSession = {
+  user: {
+    id: string
+    email?: string
+    user_metadata?: Record<string, unknown>
+    app_metadata?: Record<string, unknown>
+  }
 }
 
 export interface SupabaseMock {
@@ -44,6 +47,8 @@ export interface SupabaseMock {
   queueTable: (table: string, result: QueryResult) => void
   setTableDefault: (table: string, result: QueryResult) => void
   getBuilder: (table: string, nth?: number) => QueryBuilder
+  setSession: (session: MockSession | null) => void
+  setStrictQueue: (strict: boolean) => void
   storageUpload: Mock
   storageRemove: Mock
   storagePublicUrl: Mock
@@ -58,6 +63,8 @@ function createSupabaseMock(): SupabaseMock {
   const tableQueues = new Map<string, QueryResult[]>()
   const tableDefaults = new Map<string, QueryResult>()
   const buildersByTable = new Map<string, QueryBuilder[]>()
+  let strictQueue = false
+  let currentSession: MockSession | null = null
 
   const chainMethodNames = [
     'select', 'insert', 'update', 'delete', 'upsert',
@@ -78,11 +85,14 @@ function createSupabaseMock(): SupabaseMock {
       }
       const def = tableDefaults.get(table)
       if (def) return Promise.resolve(def).then(onF, onR)
-      throw new Error(
-        `supabaseMock: no queued result for table "${table}". ` +
-          `Call queueTable("${table}", {...}) before the awaited query, ` +
-          `or setTableDefault("${table}", {...}).`,
-      )
+      if (strictQueue) {
+        throw new Error(
+          `supabaseMock: no queued result for table "${table}". ` +
+            `Call queueTable("${table}", {...}) before the awaited query, ` +
+            `or setTableDefault("${table}", {...}).`,
+        )
+      }
+      return Promise.resolve({ data: [], error: null }).then(onF, onR)
     }
     if (!buildersByTable.has(table)) buildersByTable.set(table, [])
     buildersByTable.get(table)!.push(builder)
@@ -94,6 +104,8 @@ function createSupabaseMock(): SupabaseMock {
   const storagePublicUrl = vi.fn((path: string) => ({
     data: { publicUrl: `https://mock-storage/${path}` },
   }))
+
+  const authListeners = new Set<(event: string, session: MockSession | null) => void>()
 
   const supabase = {
     from: vi.fn((table: string) => makeQueryBuilder(table)),
@@ -109,9 +121,27 @@ function createSupabaseMock(): SupabaseMock {
       signUp: vi.fn().mockResolvedValue({ data: {}, error: null }),
       signInWithPassword: vi.fn().mockResolvedValue({ data: {}, error: null }),
       updateUser: vi.fn().mockResolvedValue({ data: {}, error: null }),
-      getSession: vi.fn().mockResolvedValue({ data: { session: null }, error: null }),
-      onAuthStateChange: vi.fn(() => ({ data: { subscription: { unsubscribe: vi.fn() } } })),
-      signOut: vi.fn().mockResolvedValue({ error: null }),
+      getSession: vi.fn(() =>
+        Promise.resolve({ data: { session: currentSession }, error: null }),
+      ),
+      onAuthStateChange: vi.fn(
+        (cb: (event: string, session: MockSession | null) => void) => {
+          authListeners.add(cb)
+          cb(currentSession ? 'SIGNED_IN' : 'SIGNED_OUT', currentSession)
+          return {
+            data: {
+              subscription: {
+                unsubscribe: () => authListeners.delete(cb),
+              },
+            },
+          }
+        },
+      ),
+      signOut: vi.fn().mockImplementation(() => {
+        currentSession = null
+        for (const cb of authListeners) cb('SIGNED_OUT', null)
+        return Promise.resolve({ error: null })
+      }),
     },
     channel: vi.fn(() => ({ on: vi.fn().mockReturnThis(), subscribe: vi.fn() })),
     removeChannel: vi.fn(),
@@ -121,11 +151,19 @@ function createSupabaseMock(): SupabaseMock {
     tableQueues.clear()
     tableDefaults.clear()
     buildersByTable.clear()
+    authListeners.clear()
+    currentSession = null
+    strictQueue = false
     supabase.from.mockClear()
     supabase.rpc.mockReset().mockResolvedValue({ data: null, error: null })
     supabase.auth.signUp.mockReset().mockResolvedValue({ data: {}, error: null })
-    supabase.auth.signInWithPassword.mockReset().mockResolvedValue({ data: {}, error: null })
+    supabase.auth.signInWithPassword
+      .mockReset()
+      .mockResolvedValue({ data: {}, error: null })
     supabase.auth.updateUser.mockReset().mockResolvedValue({ data: {}, error: null })
+    supabase.auth.getSession.mockClear()
+    supabase.auth.onAuthStateChange.mockClear()
+    supabase.auth.signOut.mockClear()
     storageUpload.mockReset().mockResolvedValue({ error: null })
     storageRemove.mockReset().mockResolvedValue({ error: null })
     storagePublicUrl.mockReset().mockImplementation((path: string) => ({
@@ -150,6 +188,15 @@ function createSupabaseMock(): SupabaseMock {
       }
       return list[nth]
     },
+    setSession: (session) => {
+      currentSession = session
+      for (const cb of authListeners) {
+        cb(session ? 'SIGNED_IN' : 'SIGNED_OUT', session)
+      }
+    },
+    setStrictQueue: (v) => {
+      strictQueue = v
+    },
     storageUpload,
     storageRemove,
     storagePublicUrl,
@@ -158,3 +205,9 @@ function createSupabaseMock(): SupabaseMock {
 }
 
 export const supabaseMockInstance = createSupabaseMock()
+
+export const MOCK_USER = {
+  id: 'mock-user-id',
+  email: 'mock@example.com',
+  user_metadata: { nickname: 'MockUser', public: true },
+}
