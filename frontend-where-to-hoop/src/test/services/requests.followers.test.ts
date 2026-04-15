@@ -19,7 +19,7 @@ import {
   toggleFollowRequest,
 } from '../../services/requests'
 
-const { queueTable, supabase } = supabaseMockInstance
+const { queueTable, getBuilder, supabase } = supabaseMockInstance
 
 const publicProfileRow = (overrides: Record<string, unknown> = {}) => ({
   id: 'u-1',
@@ -244,10 +244,7 @@ describe('toggleFollowRequest', () => {
   it('inserts into followers when target is public and add=true', async () => {
     queueTable('followers', { data: null, error: null })
     await toggleFollowRequest('u-1', 't-1', true, true)
-    const builder = supabase.from.mock.results[0].value as {
-      insert: ReturnType<typeof vi.fn>
-    }
-    expect(builder.insert).toHaveBeenCalledWith({
+    expect(getBuilder('followers').insert).toHaveBeenCalledWith({
       follower_id: 'u-1',
       following_id: 't-1',
     })
@@ -266,34 +263,28 @@ describe('toggleFollowRequest', () => {
   it('sends a follow request when target is private and add=true', async () => {
     queueTable('follow_requests', { data: null, error: null })
     await toggleFollowRequest('u-1', 't-1', true /* add */, false /* targetIsPublic */)
-    const calls = supabase.from.mock.calls
-    expect(calls[0][0]).toBe('follow_requests')
+    expect(supabase.from).toHaveBeenCalledWith('follow_requests')
+    expect(supabase.from).not.toHaveBeenCalledWith('followers')
   })
 
   it('calls removeFollower when removing an existing follow', async () => {
-    // Lookup existing follower row
-    queueTable('followers', { data: { id: 'f-1' }, error: null })
-    // removeFollower — delete on followers
-    queueTable('followers', { data: null, error: null })
+    queueTable('followers', { data: { id: 'f-1' }, error: null }) // lookup
+    queueTable('followers', { data: null, error: null }) // delete
 
     await toggleFollowRequest('u-1', 't-1', false, true)
 
-    // Second call should be a delete on followers
-    const calls = supabase.from.mock.calls
-    expect(calls[0][0]).toBe('followers')
-    expect(calls[1][0]).toBe('followers')
+    expect(getBuilder('followers', 0).select).toHaveBeenCalled()
+    expect(getBuilder('followers', 1).delete).toHaveBeenCalled()
+    expect(supabase.from).not.toHaveBeenCalledWith('follow_requests')
   })
 
   it('cancels a pending follow request when no follower row exists', async () => {
-    // Lookup: no existing follow
-    queueTable('followers', { data: null, error: null })
-    // cancelFollowRequest — delete on follow_requests
-    queueTable('follow_requests', { data: null, error: null })
+    queueTable('followers', { data: null, error: null }) // lookup: none
+    queueTable('follow_requests', { data: null, error: null }) // cancel
 
     await toggleFollowRequest('u-1', 't-1', false, true)
 
-    const calls = supabase.from.mock.calls
-    expect(calls[0][0]).toBe('followers')
-    expect(calls[1][0]).toBe('follow_requests')
+    expect(getBuilder('followers').select).toHaveBeenCalled()
+    expect(getBuilder('follow_requests').delete).toHaveBeenCalled()
   })
 })

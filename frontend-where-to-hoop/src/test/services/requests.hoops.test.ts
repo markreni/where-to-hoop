@@ -16,7 +16,7 @@ import {
 } from '../../services/requests'
 import type { BasketballHoop } from '../../types/types'
 
-const { queueTable, storageUpload, storageRemove, storagePublicUrl, supabase } =
+const { queueTable, getBuilder, storageUpload, storageRemove, storagePublicUrl, supabase } =
   supabaseMockInstance
 
 const dbRow = (overrides: Record<string, unknown> = {}) => ({
@@ -197,12 +197,7 @@ describe('updateHoop', () => {
       true, // profileIsNewImage
     )
 
-    // Verify the update chain was invoked with images array new-first.
-    // We inspect the query builder's .update call args.
-    const fromCall = supabase.from.mock.results.find(
-      (r) => r.value && typeof r.value === 'object',
-    )!
-    const builder = fromCall.value as { update: Mock }
+    const builder = getBuilder('basketball_hoop')
     expect(builder.update).toHaveBeenCalledOnce()
     const updatePayload = builder.update.mock.calls[0][0] as { images: { imagePath: string }[] }
     expect(updatePayload.images[0].imagePath).toMatch(/new\.jpg$/)

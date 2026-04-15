@@ -43,15 +43,21 @@ export interface SupabaseMock {
   }
   queueTable: (table: string, result: QueryResult) => void
   setTableDefault: (table: string, result: QueryResult) => void
+  getBuilder: (table: string, nth?: number) => QueryBuilder
   storageUpload: Mock
   storageRemove: Mock
   storagePublicUrl: Mock
   reset: () => void
 }
 
+export type QueryBuilder = Record<string, Mock> & {
+  then: (onF?: (v: QueryResult) => unknown, onR?: (r: unknown) => unknown) => Promise<unknown>
+}
+
 function createSupabaseMock(): SupabaseMock {
   const tableQueues = new Map<string, QueryResult[]>()
   const tableDefaults = new Map<string, QueryResult>()
+  const buildersByTable = new Map<string, QueryBuilder[]>()
 
   const chainMethodNames = [
     'select', 'insert', 'update', 'delete', 'upsert',
@@ -60,18 +66,26 @@ function createSupabaseMock(): SupabaseMock {
     'order', 'limit', 'range', 'single', 'maybeSingle',
   ] as const
 
-  const makeQueryBuilder = (table: string) => {
-    const builder: Record<string, unknown> = {}
+  const makeQueryBuilder = (table: string): QueryBuilder => {
+    const builder = {} as QueryBuilder
     for (const m of chainMethodNames) {
       builder[m] = vi.fn(() => builder)
     }
-    builder.then = (onF: ((v: QueryResult) => unknown) | undefined, onR?: ((r: unknown) => unknown) | undefined) => {
+    builder.then = (onF, onR) => {
       const q = tableQueues.get(table)
-      const next = q && q.length > 0
-        ? q.shift()!
-        : tableDefaults.get(table) ?? { data: [], error: null }
-      return Promise.resolve(next).then(onF, onR)
+      if (q && q.length > 0) {
+        return Promise.resolve(q.shift()!).then(onF, onR)
+      }
+      const def = tableDefaults.get(table)
+      if (def) return Promise.resolve(def).then(onF, onR)
+      throw new Error(
+        `supabaseMock: no queued result for table "${table}". ` +
+          `Call queueTable("${table}", {...}) before the awaited query, ` +
+          `or setTableDefault("${table}", {...}).`,
+      )
     }
+    if (!buildersByTable.has(table)) buildersByTable.set(table, [])
+    buildersByTable.get(table)!.push(builder)
     return builder
   }
 
@@ -106,6 +120,7 @@ function createSupabaseMock(): SupabaseMock {
   const reset = () => {
     tableQueues.clear()
     tableDefaults.clear()
+    buildersByTable.clear()
     supabase.from.mockClear()
     supabase.rpc.mockReset().mockResolvedValue({ data: null, error: null })
     supabase.auth.signUp.mockReset().mockResolvedValue({ data: {}, error: null })
@@ -125,6 +140,16 @@ function createSupabaseMock(): SupabaseMock {
       tableQueues.get(table)!.push(result)
     },
     setTableDefault: (table, result) => tableDefaults.set(table, result),
+    getBuilder: (table, nth = 0) => {
+      const list = buildersByTable.get(table)
+      if (!list || !list[nth]) {
+        throw new Error(
+          `supabaseMock: no builder for table "${table}" at index ${nth}. ` +
+            `Created so far: ${list?.length ?? 0}.`,
+        )
+      }
+      return list[nth]
+    },
     storageUpload,
     storageRemove,
     storagePublicUrl,

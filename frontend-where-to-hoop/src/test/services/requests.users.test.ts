@@ -18,7 +18,7 @@ import {
   fetchUsersWithProfileImages,
 } from '../../services/requests'
 
-const { queueTable, supabase } = supabaseMockInstance
+const { queueTable, getBuilder, supabase } = supabaseMockInstance
 
 const playerRow = (overrides: Record<string, unknown> = {}) => ({
   id: 'u-1',
@@ -63,11 +63,8 @@ describe('toggleFavoriteRequest', () => {
 
     await toggleFavoriteRequest('u-1', 'h-2', true)
 
-    // Inspect the second from() call — it was the update
-    const updateBuilder = supabase.from.mock.results[1].value as {
-      update: ReturnType<typeof vi.fn>
-    }
-    expect(updateBuilder.update).toHaveBeenCalledWith({
+    // Second users builder — the update
+    expect(getBuilder('users', 1).update).toHaveBeenCalledWith({
       favourite_hoops: ['h-1', 'h-2'],
     })
   })
@@ -81,10 +78,7 @@ describe('toggleFavoriteRequest', () => {
 
     await toggleFavoriteRequest('u-1', 'h-1', false)
 
-    const updateBuilder = supabase.from.mock.results[1].value as {
-      update: ReturnType<typeof vi.fn>
-    }
-    expect(updateBuilder.update).toHaveBeenCalledWith({
+    expect(getBuilder('users', 1).update).toHaveBeenCalledWith({
       favourite_hoops: ['h-2'],
     })
   })
@@ -95,10 +89,7 @@ describe('toggleFavoriteRequest', () => {
 
     await toggleFavoriteRequest('u-1', 'h-1', true)
 
-    const updateBuilder = supabase.from.mock.results[1].value as {
-      update: ReturnType<typeof vi.fn>
-    }
-    expect(updateBuilder.update).toHaveBeenCalledWith({
+    expect(getBuilder('users', 1).update).toHaveBeenCalledWith({
       favourite_hoops: ['h-1'],
     })
   })
@@ -180,19 +171,13 @@ describe('updateUserBio', () => {
   it('trims the bio before updating', async () => {
     queueTable('users', { data: null, error: null })
     await updateUserBio('u-1', '  hello  ')
-    const builder = supabase.from.mock.results[0].value as {
-      update: ReturnType<typeof vi.fn>
-    }
-    expect(builder.update).toHaveBeenCalledWith({ bio: 'hello' })
+    expect(getBuilder('users').update).toHaveBeenCalledWith({ bio: 'hello' })
   })
 
   it('sets bio to null when given an empty/whitespace string', async () => {
     queueTable('users', { data: null, error: null })
     await updateUserBio('u-1', '   ')
-    const builder = supabase.from.mock.results[0].value as {
-      update: ReturnType<typeof vi.fn>
-    }
-    expect(builder.update).toHaveBeenCalledWith({ bio: null })
+    expect(getBuilder('users').update).toHaveBeenCalledWith({ bio: null })
   })
 
   it('throws on error', async () => {
@@ -207,10 +192,7 @@ describe('updateProfileVisibility', () => {
 
     await updateProfileVisibility('u-1', true)
 
-    const builder = supabase.from.mock.results[0].value as {
-      update: ReturnType<typeof vi.fn>
-    }
-    expect(builder.update).toHaveBeenCalledWith({ public: true })
+    expect(getBuilder('users').update).toHaveBeenCalledWith({ public: true })
     expect(supabase.auth.updateUser).toHaveBeenCalledWith({
       data: { public: true },
     })
