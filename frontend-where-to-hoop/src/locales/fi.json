@@ -13,7 +13,8 @@
       "explore": "Selaa",
       "community": "Yhteisö",
       "account": "Tili",
-      "admin": "Ylläpito"
+      "admin": "Ylläpito",
+      "adminBadge": "namnam ylläpitäjä ;)"
     }
   },
   "players": {

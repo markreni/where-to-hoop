@@ -92,6 +92,11 @@ const MobileDrawer = ({ isOpen, onClose }: MobileDrawerProps) => {
                 <p className={`${colorModeContext} text-xs text-gray-500 dark:text-gray-400 truncate`}>
                   {email}
                 </p>
+                {isAdmin && (
+                  <p className="text-[10px] text-first-color mt-1">
+                    {t("nav.drawer.adminBadge")}
+                  </p>
+                )}
               </div>
             </div>
           </div>
