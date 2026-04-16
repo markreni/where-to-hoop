@@ -368,7 +368,15 @@
       "deleteSuccess": "Enrollment cancelled",
       "deleteError": "Failed to cancel enrollment",
       "defaultNoteOpen": "Please join me to hoop",
-      "defaultNoteSolo": "Prefer to hoop alone this time"
+      "defaultNoteSolo": "Prefer to hoop alone this time",
+      "verifyButton": "I'm here",
+      "verifiedLabel": "Verified",
+      "unverifiedLabel": "Unverified",
+      "verifySuccess": "Arrival verified!",
+      "verifyOutOfRange": "You're {{distance}}m away — must be within {{range}}m of the hoop.",
+      "verifyGeoDenied": "Location access denied. Enable location in your browser settings to verify arrival.",
+      "verifyGeoDeniedHelp": "How to enable location",
+      "verifyError": "Could not verify arrival. Please try again."
     },
     "enrollment": {
       "title": "Check in and play",

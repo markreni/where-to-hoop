@@ -54,6 +54,10 @@ interface PlayerEnrollment {
   playMode: PlayMode; // Whether open to play or solo hooping
   note?: string; // Optional note to other players
   createdAt: Date;
+  verified?: boolean; // Whether the player has verified arrival at the hoop
+  verifiedAt?: Date;
+  verifiedLat?: number;
+  verifiedLng?: number;
 }
 
 interface BasketballHoop {

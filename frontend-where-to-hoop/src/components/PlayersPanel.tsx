@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { FaUser } from 'react-icons/fa'
-import type { ColorMode, PlayerEnrollment } from '../types/types'
+import type { ColorMode, Coordinates, PlayerEnrollment } from '../types/types'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { PlayerPanelCard } from './reusable/PlayerPanelCard'
@@ -10,9 +10,10 @@ import useEnrollmentsRealtime from '../hooks/useEnrollmentsRealtime'
 // Players panel component
 interface PlayersPanelProps {
   playerEnrollments: PlayerEnrollment[]
+  hoopCoordinates: Coordinates
 }
 
-const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments }: PlayersPanelProps) => {
+const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments, hoopCoordinates }: PlayersPanelProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   useEnrollmentsRealtime()
@@ -47,6 +48,7 @@ const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments }: Player
               key={enrollment.id}
               enrollment={enrollment}
               allEnrollments={playerEnrollments}
+              hoopCoordinates={hoopCoordinates}
             />
           ))}
         </div>

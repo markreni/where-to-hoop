@@ -30,12 +30,12 @@ describe('PlayersPanel', () => {
   });
 
   it('renders the title', () => {
-    render(<PlayersPanel playerEnrollments={[]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[]} />);
     expect(screen.getByText("Who's Playing")).toBeInTheDocument();
   });
 
   it('shows no players message when empty', () => {
-    render(<PlayersPanel playerEnrollments={[]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[]} />);
     expect(screen.getByText('No one here yet. Be the first!')).toBeInTheDocument();
   });
 
@@ -47,7 +47,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel playerEnrollments={[playingNowEnrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[playingNowEnrollment]} />);
     expect(screen.getByText('Playing Now (1)')).toBeInTheDocument();
   });
 
@@ -59,7 +59,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel playerEnrollments={[comingSoonEnrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[comingSoonEnrollment]} />);
     expect(screen.getByText('Coming Soon (1)')).toBeInTheDocument();
   });
 
@@ -71,7 +71,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel playerEnrollments={[comingLaterEnrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[comingLaterEnrollment]} />);
     expect(screen.getByText('Coming Later (1)')).toBeInTheDocument();
   });
 
@@ -103,7 +103,7 @@ describe('PlayersPanel', () => {
       }),
     ];
 
-    render(<PlayersPanel playerEnrollments={enrollments} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={enrollments} />);
     expect(screen.getByText('Playing Now (2)')).toBeInTheDocument();
     expect(screen.getByText('Coming Soon (1)')).toBeInTheDocument();
     expect(screen.getByText('Coming Later (1)')).toBeInTheDocument();
@@ -117,7 +117,7 @@ describe('PlayersPanel', () => {
       duration: 60, // ended 1 hour ago
     });
 
-    render(<PlayersPanel playerEnrollments={[expiredEnrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[expiredEnrollment]} />);
     expect(screen.getByText('No one here yet. Be the first!')).toBeInTheDocument();
   });
 
@@ -128,7 +128,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel playerEnrollments={[enrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
     expect(screen.getByText('A')).toBeInTheDocument();
   });
 
@@ -139,7 +139,7 @@ describe('PlayersPanel', () => {
       duration: 60, // 30 mins remaining
     });
 
-    render(<PlayersPanel playerEnrollments={[enrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
     expect(screen.getByText(/until/)).toBeInTheDocument();
   });
 
@@ -150,7 +150,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel playerEnrollments={[enrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
     expect(screen.getByText(/in 15 min/)).toBeInTheDocument();
   });
 
@@ -164,7 +164,7 @@ describe('PlayersPanel', () => {
         note: 'Looking for 3v3 game!',
       });
 
-      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
       expect(screen.getByText('Looking for 3v3 game!')).toBeInTheDocument();
     });
 
@@ -177,7 +177,7 @@ describe('PlayersPanel', () => {
         note: undefined,
       });
 
-      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
       expect(screen.getByText('Please join me to hoop')).toBeInTheDocument();
     });
 
@@ -190,7 +190,7 @@ describe('PlayersPanel', () => {
         note: undefined,
       });
 
-      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
       expect(screen.getByText('Prefer to hoop alone this time')).toBeInTheDocument();
     });
 
@@ -203,7 +203,7 @@ describe('PlayersPanel', () => {
         note: '',
       });
 
-      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
       expect(screen.getByText('Please join me to hoop')).toBeInTheDocument();
     });
 
@@ -223,7 +223,7 @@ describe('PlayersPanel', () => {
         playMode: 'solo',
       });
 
-      render(<PlayersPanel playerEnrollments={[openEnrollment, soloEnrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[openEnrollment, soloEnrollment]} />);
 
       const joinButtons = screen.getAllByRole('button', { name: /join/i });
       expect(joinButtons).toHaveLength(1);
@@ -237,7 +237,7 @@ describe('PlayersPanel', () => {
         playMode: 'solo',
       });
 
-      render(<PlayersPanel playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
       expect(screen.queryByRole('button', { name: /join/i })).not.toBeInTheDocument();
     });
   });

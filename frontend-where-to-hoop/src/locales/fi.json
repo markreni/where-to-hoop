@@ -368,7 +368,15 @@
       "deleteSuccess": "Ilmoittautuminen peruutettu",
       "deleteError": "Ilmoittautumisen peruuttaminen epäonnistui",
       "defaultNoteOpen": "Tule mukaan pelaamaan",
-      "defaultNoteSolo": "Haluan heitellä yksin tällä kertaa"
+      "defaultNoteSolo": "Haluan heitellä yksin tällä kertaa",
+      "verifyButton": "Olen paikalla",
+      "verifiedLabel": "Vahvistettu",
+      "unverifiedLabel": "Vahvistamaton",
+      "verifySuccess": "Saapuminen vahvistettu!",
+      "verifyOutOfRange": "Olet {{distance}}m päässä — sinun täytyy olla {{range}}m säteellä kentästä.",
+      "verifyGeoDenied": "Sijainti estetty. Salli sijainti selaimen asetuksista vahvistaaksesi saapumisen.",
+      "verifyGeoDeniedHelp": "Näin sallit sijainnin",
+      "verifyError": "Saapumisen vahvistus epäonnistui. Yritä uudelleen."
     },
     "enrollment": {
       "title": "Ilmoittaudu kentälle",

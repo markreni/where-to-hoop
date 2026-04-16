@@ -108,6 +108,16 @@ export const isTodayDate = (date: Date): boolean => {
   return date.toDateString() === today.toDateString()
 }
 
+export const isWithinHoopRange = (
+  userCoords: [number, number],
+  hoopCoords: [number, number],
+  rangeMeters = 100
+): { within: boolean; distance: number } => {
+  const distanceKm = haversineDistance(userCoords, hoopCoords)
+  const distance = distanceKm * 1000
+  return { within: distance <= rangeMeters, distance }
+}
+
 export const shortenAddress = (address: string, parts = 2): string => {
   const segments = address.split(', ');
   return segments.length <= parts ? address : segments.slice(0, parts).join(', ');

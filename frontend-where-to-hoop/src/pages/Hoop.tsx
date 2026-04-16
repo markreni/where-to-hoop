@@ -237,6 +237,7 @@ const Hoop = ({ hoop }: HoopProps) => {
             </div>
             <PlayersPanel
               playerEnrollments={enrollments}
+              hoopCoordinates={hoop.coordinates}
             />
           </div>
         </div>

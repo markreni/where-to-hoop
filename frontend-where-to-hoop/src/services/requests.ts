@@ -225,6 +225,38 @@ const deleteHoop = async (id: string): Promise<BasketballHoop> => {
   }
 }
 
+const mapEnrollmentRow = (row: {
+  id: string
+  player_id: string | null
+  player_nickname: string
+  hoop_id: string | null
+  arrival_time: string
+  duration: number
+  expired: boolean
+  play_mode: 'open' | 'solo'
+  note: string | null
+  created_at: string
+  verified?: boolean | null
+  verified_at?: string | null
+  verified_lat?: number | null
+  verified_lng?: number | null
+}): PlayerEnrollment => ({
+  id: row.id,
+  playerId: row.player_id,
+  playerNickname: row.player_nickname,
+  hoopId: row.hoop_id,
+  arrivalTime: new Date(row.arrival_time),
+  duration: row.duration,
+  expired: row.expired,
+  playMode: row.play_mode,
+  note: row.note ?? undefined,
+  createdAt: new Date(row.created_at),
+  verified: row.verified ?? false,
+  verifiedAt: row.verified_at ? new Date(row.verified_at) : undefined,
+  verifiedLat: row.verified_lat ?? undefined,
+  verifiedLng: row.verified_lng ?? undefined,
+})
+
 const fetchUserEnrollments = async (userId: string): Promise<PlayerEnrollment[]> => {
   const { data, error } = await supabase
     .from('player_enrollment')
@@ -237,18 +269,7 @@ const fetchUserEnrollments = async (userId: string): Promise<PlayerEnrollment[]>
     throw error
   }
 
-  return (data ?? []).map(row => ({
-    id: row.id,
-    playerId: row.player_id,
-    playerNickname: row.player_nickname,
-    hoopId: row.hoop_id,
-    arrivalTime: new Date(row.arrival_time),
-    duration: row.duration,
-    expired: row.expired,
-    playMode: row.play_mode,
-    note: row.note ?? undefined,
-    createdAt: new Date(row.created_at),
-  }))
+  return (data ?? []).map(mapEnrollmentRow)
 }
 
 const fetchAllEnrollments = async (): Promise<PlayerEnrollment[]> => {
@@ -267,18 +288,7 @@ const fetchAllEnrollments = async (): Promise<PlayerEnrollment[]> => {
     throw error
   }
 
-  return (data ?? []).map(row => ({
-    id: row.id,
-    playerId: row.player_id,
-    playerNickname: row.player_nickname,
-    hoopId: row.hoop_id,
-    arrivalTime: new Date(row.arrival_time),
-    duration: row.duration,
-    expired: row.expired,
-    playMode: row.play_mode,
-    note: row.note ?? undefined,
-    createdAt: new Date(row.created_at),
-  }))
+  return (data ?? []).map(mapEnrollmentRow)
 }
 
 const fetchHoopEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]> => {
@@ -293,21 +303,10 @@ const fetchHoopEnrollments = async (hoopId: string): Promise<PlayerEnrollment[]>
     throw error
   }
 
-  return (data ?? []).map(row => ({
-    id: row.id,
-    playerId: row.player_id,
-    playerNickname: row.player_nickname,
-    hoopId: row.hoop_id,
-    arrivalTime: new Date(row.arrival_time),
-    duration: row.duration,
-    expired: row.expired,
-    playMode: row.play_mode,
-    note: row.note ?? undefined,
-    createdAt: new Date(row.created_at),
-  }))
+  return (data ?? []).map(mapEnrollmentRow)
 }
 
-const insertEnrollment = async (enrollment: Omit<PlayerEnrollment, 'id' | 'createdAt' | 'playerEmail' | 'hoopName'>): Promise<PlayerEnrollment> => {
+const insertEnrollment = async (enrollment: Omit<PlayerEnrollment, 'id' | 'createdAt' | 'playerEmail' | 'hoopName' | 'verified' | 'verifiedAt' | 'verifiedLat' | 'verifiedLng'>): Promise<PlayerEnrollment> => {
   const insertPayload = {
     player_id: enrollment.playerId,
     player_nickname: enrollment.playerNickname,
@@ -330,17 +329,26 @@ const insertEnrollment = async (enrollment: Omit<PlayerEnrollment, 'id' | 'creat
     throw error
   }
 
-  return {
-    id: data.id,
-    playerId: data.player_id,
-    playerNickname: data.player_nickname,
-    hoopId: data.hoop_id,
-    arrivalTime: new Date(data.arrival_time),
-    duration: data.duration,
-    expired: data.expired,
-    playMode: data.play_mode,
-    note: data.note ?? undefined,
-    createdAt: new Date(data.created_at),
+  return mapEnrollmentRow(data)
+}
+
+const verifyEnrollment = async (
+  id: string,
+  coords: { lat: number; lng: number }
+): Promise<void> => {
+  const { error } = await supabase
+    .from('player_enrollment')
+    .update({
+      verified: true,
+      verified_at: new Date().toISOString(),
+      verified_lat: coords.lat,
+      verified_lng: coords.lng,
+    })
+    .eq('id', id)
+
+  if (error) {
+    console.error('Verify enrollment error:', error)
+    throw error
   }
 }
 
@@ -841,18 +849,7 @@ const fetchEnrollmentsForPlayers = async (playerIds: string[]): Promise<PlayerEn
     throw error
   }
 
-  return (data ?? []).map(row => ({
-    id: row.id,
-    playerId: row.player_id,
-    playerNickname: row.player_nickname,
-    hoopId: row.hoop_id,
-    arrivalTime: new Date(row.arrival_time),
-    duration: row.duration,
-    expired: row.expired,
-    playMode: row.play_mode,
-    note: row.note ?? undefined,
-    createdAt: new Date(row.created_at),
-  }))
+  return (data ?? []).map(mapEnrollmentRow)
 }
 
 const fetchActiveEnrollments = async (userId: string): Promise<PlayerEnrollment[]> => {
@@ -868,18 +865,7 @@ const fetchActiveEnrollments = async (userId: string): Promise<PlayerEnrollment[
     throw error
   }
 
-  return (data ?? []).map(row => ({
-    id: row.id,
-    playerId: row.player_id,
-    playerNickname: row.player_nickname,
-    hoopId: row.hoop_id,
-    arrivalTime: new Date(row.arrival_time),
-    duration: row.duration,
-    expired: row.expired,
-    playMode: row.play_mode,
-    note: row.note ?? undefined,
-    createdAt: new Date(row.created_at),
-  }))
+  return (data ?? []).map(mapEnrollmentRow)
 }
 
 const fetchUserProfileImage = async (userId: string): Promise<ProfileImage | null> => {
@@ -959,6 +945,6 @@ const toggleHoopVerification = async (id: string, isVerified: boolean): Promise<
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, fetchUserBio, updateUserBio, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchEnrollmentsForPlayers, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, verifyEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, fetchUserBio, updateUserBio, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchEnrollmentsForPlayers, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
 
 export type { UserWithProfileImage }
