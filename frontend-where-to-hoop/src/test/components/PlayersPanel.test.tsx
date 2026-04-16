@@ -3,6 +3,13 @@ import { render, screen } from '../test-utils';
 import { PlayersPanel } from '../../components/PlayersPanel';
 import type { PlayerEnrollment } from '../../types/types';
 
+const mockUser = { id: 'viewer-1', user_metadata: { nickname: 'Viewer' } }
+
+vi.mock('../../contexts/AuthContext.tsx', async () => {
+  const actual = await vi.importActual<typeof import('../../contexts/AuthContext.tsx')>('../../contexts/AuthContext.tsx')
+  return { ...actual, useAuth: () => ({ user: mockUser, signOut: vi.fn() }) }
+})
+
 describe('PlayersPanel', () => {
   // Use fixed date for consistent testing
   const fixedNow = new Date('2024-01-15T12:00:00Z');

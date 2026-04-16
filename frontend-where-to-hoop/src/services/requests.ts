@@ -1,5 +1,37 @@
-import type { BasketballHoop, ObservationImage, PlayerEnrollment, PublicProfile, FollowRequest, ProfileImage } from '../types/types'
+import type { BasketballHoop, Condition, ObservationImage, PlayerEnrollment, PublicProfile, FollowRequest, ProfileImage } from '../types/types'
 import supabase from '../utils/supabase'
+
+const mapHoopRow = (row: {
+  id: string
+  name: string
+  description: { fi: string; en: string }
+  condition: Condition
+  is_indoor: boolean
+  is_paid: boolean
+  is_verified: boolean
+  created_at: string
+  added_by: string
+  address?: string | null
+  images?: ObservationImage[] | null
+  latitude: number
+  longitude: number
+}): BasketballHoop => ({
+  id: row.id,
+  name: row.name,
+  description: row.description,
+  condition: row.condition,
+  isIndoor: row.is_indoor,
+  isPaid: row.is_paid,
+  isVerified: row.is_verified,
+  createdAt: row.created_at,
+  addedBy: row.added_by ?? undefined,
+  address: row.address ?? undefined,
+  images: row.images ?? [],
+  coordinates: {
+    latitude: row.latitude,
+    longitude: row.longitude,
+  },
+})
 
 const fetchHoops = async (): Promise<BasketballHoop[]> => {
   const { data, error } = await supabase
@@ -12,23 +44,7 @@ const fetchHoops = async (): Promise<BasketballHoop[]> => {
     throw error
   }
 
-  return (data ?? []).map(hoop => ({
-    id: hoop.id,
-    name: hoop.name,
-    description: hoop.description,
-    condition: hoop.condition,
-    isIndoor: hoop.is_indoor,
-    isPaid: hoop.is_paid,
-    isVerified: hoop.is_verified,
-    createdAt: hoop.created_at,
-    addedBy: hoop.added_by,
-    address: hoop.address ?? undefined,
-    images: hoop.images ?? [],
-    coordinates: {
-      latitude: hoop.latitude,
-      longitude: hoop.longitude
-    }
-  }))
+  return (data ?? []).map(mapHoopRow)
 }
 
 const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[], userId: string) => {
@@ -83,23 +99,7 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[], 
     throw error
   }
   console.log('Inserted hoop:', data)
-  return {
-    id: data.id,
-    name: data.name,
-    description: data.description,
-    condition: data.condition,
-    isIndoor: data.is_indoor,
-    isPaid: data.is_paid,
-    isVerified: data.is_verified,
-    createdAt: data.created_at,
-    addedBy: data.added_by,
-    address: data.address ?? undefined,
-    images: data.images ?? [],
-    coordinates: {
-      latitude: data.latitude,
-      longitude: data.longitude
-    }
-  }
+  return mapHoopRow(data)
 }
 
 const updateHoop = async (
@@ -171,23 +171,7 @@ const updateHoop = async (
     throw error
   }
 
-  return {
-    id: data.id,
-    name: data.name,
-    description: data.description,
-    condition: data.condition,
-    isIndoor: data.is_indoor,
-    isPaid: data.is_paid,
-    isVerified: data.is_verified,
-    createdAt: data.created_at,
-    addedBy: data.added_by,
-    address: data.address ?? undefined,
-    images: data.images ?? [],
-    coordinates: {
-      latitude: data.latitude,
-      longitude: data.longitude,
-    },
-  }
+  return mapHoopRow(data)
 }
 
 const deleteHoop = async (id: string): Promise<BasketballHoop> => {
@@ -206,23 +190,7 @@ const deleteHoop = async (id: string): Promise<BasketballHoop> => {
     }
   }
 
-  return {
-    id: data.id,
-    name: data.name,
-    description: data.description,
-    condition: data.condition,
-    isIndoor: data.is_indoor,
-    isPaid: data.is_paid,
-    isVerified: data.is_verified,
-    createdAt: data.created_at,
-    addedBy: data.added_by,
-    address: data.address ?? undefined,
-    images: data.images ?? [],
-    coordinates: {
-      latitude: data.latitude,
-      longitude: data.longitude
-    }
-  }
+  return mapHoopRow(data)
 }
 
 const mapEnrollmentRow = (row: {

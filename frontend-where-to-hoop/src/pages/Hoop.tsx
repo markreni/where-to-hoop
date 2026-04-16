@@ -90,7 +90,7 @@ const Hoop = ({ hoop }: HoopProps) => {
     setDeleting(true)
     try {
       await deleteHoop(hoop.id)
-      queryClient.invalidateQueries({ queryKey: ['hoops'] })
+      await queryClient.invalidateQueries({ queryKey: ['hoops'] })
       success('Hoop deleted')
       navigate('/hoops')
     } catch {
