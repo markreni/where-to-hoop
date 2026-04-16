@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Navigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../contexts/AuthContext'
 import { useColorModeValues } from '../contexts/ColorModeContext'
@@ -136,7 +136,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
     setBioInput('')
   }
 
-  if (!user) return <Navigate to="/signin" replace />
+  if (!user) return null
 
   const nickname = user.user_metadata?.nickname ?? "Anonymous"
   const { data: profileImage = null } = useQuery<ProfileImage | null>({
@@ -209,7 +209,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                 <div className="flex flex-col gap-0.5 text-left">
                   <span className="font-medium">{t('myProfile.bioLabel')}</span>
                   <div className="flex items-center justify-between mb-2 gap-3">
-                    <span className={`${colorModeContext} text-fluid-xs text-gray-400 dark:text-gray-500`}>
+                    <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
                     {t('myProfile.bioModifyHint')}
                     </span>
                     {isBioOpen && (

@@ -24,6 +24,7 @@ import PlayerProfile from "./pages/PlayerProfile.tsx";
 import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
+import ProtectedUserRoute from "./components/ProtectedUserRoute.tsx";
 import { helsinkiBounds, minScreenSize } from "./utils/constants.ts";
 import type { BasketballHoop } from "./types/types.ts";
 import { fetchHoops } from "./services/requests.ts";
@@ -71,16 +72,16 @@ const App = () => {
           <Route path="/" element={<Home hoops={filteredHoops} />} />
           <Route path="/hoops" element={<Hoops hoops={filteredHoops} />} />
           <Route path="/hoops/:id" element={<Hoop hoop={hoop} />} />
-          <Route path="/addhoop" element={<AddHoop />} />
+          <Route path="/addhoop" element={<ProtectedUserRoute><AddHoop /></ProtectedUserRoute>} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/faq" element={<Info/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/myprofile" element={<MyProfile hoops={hoops} />} />
+          <Route path="/myprofile" element={<ProtectedUserRoute><MyProfile hoops={hoops} /></ProtectedUserRoute>} />
           <Route path="/players" element={<Players />} />
-          <Route path="/search-players" element={<SearchPlayers />} />
+          <Route path="/search-players" element={<ProtectedUserRoute><SearchPlayers /></ProtectedUserRoute>} />
           <Route path="/players/:nickname" element={<PlayerProfile hoops={hoops} />} />
           <Route path="/admin" element={<ProtectedAdminRoute><Admin hoops={hoops} /></ProtectedAdminRoute>} />
           <Route path="/admin/edit/:id" element={<ProtectedAdminRoute><AddHoop hoop={editHoop} /></ProtectedAdminRoute>} />
