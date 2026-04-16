@@ -407,6 +407,7 @@
       "notePlaceholder": "esim. Etsin avoimia pelejä, en malta odottaa että pääsee kentälle!",
       "optional": "valinnainen",
       "enroll": "Ilmoittaudu pelaamaan",
+      "signInToCheckIn": "Kirjaudu sisään ilmoittautuaksesi",
       "cancel": "Peruuta osallistumiseni",
       "success": "Hienoa! Muut näkevät nyt että olet tulossa.",
       "error": "Ilmoittautuminen epäonnistui. Yritä uudelleen.",

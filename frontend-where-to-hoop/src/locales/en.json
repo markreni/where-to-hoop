@@ -407,6 +407,7 @@
       "notePlaceholder": "e.g., Looking for some open games, can't wait to hoop!",
       "optional": "optional",
       "enroll": "Check in",
+      "signInToCheckIn": "Sign in to check in",
       "cancel": "Cancel my session",
       "success": "You're all set! Others can now see you're coming.",
       "error": "Failed to send enrollment. Please try again.",

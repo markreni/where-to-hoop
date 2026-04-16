@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { insertEnrollment, deleteEnrollment } from '../services/requests'
 import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
@@ -52,6 +53,7 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
   const { user } = useAuth()
   const { success, error } = useToast()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const todayEnrollment: PlayerEnrollment | null =
     localTodayEnrollment ??
@@ -339,17 +341,26 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
             </div>
           </div>
 
-          <Button
-            onPress={handleEnrollSubmit}
-            isDisabled={!isEnrollEnabled}
-            className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
-              isEnrollEnabled
-                ? 'bg-green-500 hover:bg-green-600 cursor-pointer'
-                : 'bg-gray-400 cursor-not-allowed'
-            }`}
-          >
-            {t('hoop.enrollment.enroll')}
-          </Button>
+          {user ? (
+            <Button
+              onPress={handleEnrollSubmit}
+              isDisabled={!isEnrollEnabled}
+              className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
+                isEnrollEnabled
+                  ? 'bg-green-500 hover:bg-green-600 cursor-pointer'
+                  : 'bg-gray-400 cursor-not-allowed'
+              }`}
+            >
+              {t('hoop.enrollment.enroll')}
+            </Button>
+          ) : (
+            <Button
+              onPress={() => navigate('/signin')}
+              className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium bg-first-color hover:bg-second-color transition-colors cursor-pointer`}
+            >
+              {t('hoop.enrollment.signInToCheckIn')}
+            </Button>
+          )}
         </>
       )}
     </div>

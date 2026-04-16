@@ -8,7 +8,7 @@ vi.mock('../../utils/supabase', () => ({
 import {
   fetchFavorites,
   toggleFavoriteRequest,
-  fetchAllPlayers,
+  fetchAllPublicPlayers,
   searchAllPlayersByNickname,
   fetchPlayerByNickname,
   fetchUserBio,
@@ -105,24 +105,24 @@ describe('toggleFavoriteRequest', () => {
   })
 })
 
-describe('fetchAllPlayers', () => {
+describe('fetchAllPublicPlayers', () => {
   it('maps rows to PublicProfile', async () => {
     queueTable('users', {
       data: [playerRow({ bio: 'hi', profile_image: { imagePath: 'x.jpg', uploadedAt: 't' } })],
       error: null,
     })
-    const result = await fetchAllPlayers()
+    const result = await fetchAllPublicPlayers()
     expect(result[0].bio).toBe('hi')
     expect(result[0].profileImage).toEqual({ imagePath: 'x.jpg', uploadedAt: 't' })
   })
 
   it('throws on error', async () => {
     queueTable('users', { data: null, error: { message: 'bad' } })
-    await expect(fetchAllPlayers()).rejects.toBeDefined()
+    await expect(fetchAllPublicPlayers()).rejects.toBeDefined()
   })
 })
 
-describe('searchAllPlayersByNickname', () => {
+describe('searchAllPublicPlayersByNickname', () => {
   it('returns mapped results', async () => {
     queueTable('users', { data: [playerRow()], error: null })
     const result = await searchAllPlayersByNickname('nick')

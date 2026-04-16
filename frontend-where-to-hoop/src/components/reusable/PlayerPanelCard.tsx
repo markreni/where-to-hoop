@@ -13,7 +13,7 @@ import { VERIFY_RANGE_METERS, VERIFY_WINDOW_START_OFFSET_MS, VERIFY_WINDOW_END_O
 
 const getCurrentPositionAsync = (): Promise<GeolocationPosition> =>
   new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
+    if (!navigator.geolocation) { // if the browser doesn't support geolocation at all
       reject(new Error('geolocation-unsupported'))
       return
     }
@@ -225,7 +225,7 @@ const PlayerPanelCard = ({ enrollment, allEnrollments, hoopCoordinates }: Player
           </Button>
         </div>
       ) : (
-        isOpenToPlay && (
+        isOpenToPlay && user && (
           <Button
             onClick={handleJoinSubmit}
             isDisabled={joinDisabled}

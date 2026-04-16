@@ -6,7 +6,7 @@ import { BackArrow } from '../components/reusable/BackArrow'
 import { SearchFilter } from '../components/reusable/SearchFilter'
 import { PublicPlayerCard } from '../components/reusable/PublicPlayerCard'
 import Footer from '../components/Footer'
-import { fetchAllPlayers } from '../services/requests'
+import { fetchAllPublicPlayers } from '../services/requests'
 import type { ColorMode, PublicProfile } from '../types/types'
 import { FaUserCircle } from 'react-icons/fa'
 
@@ -30,7 +30,7 @@ const Players = () => {
 
   const { data: players = [], isLoading } = useQuery<PublicProfile[]>({
     queryKey: ['players'],
-    queryFn: fetchAllPlayers,
+    queryFn: fetchAllPublicPlayers,
   })
 
   const filtered = search.trim()
