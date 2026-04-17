@@ -110,7 +110,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         className="absolute top-1/6 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] max-w-2xl opacity-6 pointer-events-none select-none"
       />
       */}
-      <div className="flex-grow flex flex-col gap-14 justify-center px-4 sm:px-8 py-8 max-w-4xl mx-auto w-full relative z-10">
+      <div className="flex-grow flex flex-col gap-10 justify-center px-4 sm:px-8 py-8 max-w-4xl mx-auto w-full relative z-10">
         {/* Intro Section */}
         <section className="flex flex-col items-center pt-8 sm:pt-12">
           <div className="flex flex-col items-center text-center mb-8">
@@ -171,7 +171,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
         </section>
 
         <section className="space-y-10 w-full">
-          <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-8 text-center`}>
+          <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-6 text-center`}>
             {t('home.nearestCourts')}
           </h1>
 
@@ -187,7 +187,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
             </div>
           )}
 
-          <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-8 text-center`}>
+          <h1 className={`${colorModeContext} poppins-bold text-fluid-3xl background-text-reverse-black mb-6 text-center`}>
             {t('home.mostActiveCourts')}
           </h1>
           <Carousel>
@@ -226,8 +226,15 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
               </span>{' '}
               {t('home.encouragement.onAnyCourtCard')}
             </p>
+            <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto mt-2`}>
+              {t('home.encouragement.checkInFollowUp')}{' '}
+              <span className={`${colorModeContext} inline-flex items-center gap-1 px-2 py-1 rounded bg-first-color/20 text-first-color font-medium`}>
+                {t('home.encouragement.checkInButton')}
+              </span>{' '}
+              {t('home.encouragement.toConfirm')}
+            </p>
           </section>
-      </div>
+        </div>
       <Footer />
     </div>
   );

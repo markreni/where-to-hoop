@@ -130,21 +130,15 @@ const Hoop = ({ hoop }: HoopProps) => {
             {/* Right column - Players and enrollment */}
             <div className="flex flex-col gap-6">
               {/* Left column - Hoop info */}
-              <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6 relative`}>
-                <div className="absolute top-3 right-3">
-                  {user && (
-                    isFavorited(hoop.id)
-                    ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={md ? 30 : 26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
-                    : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={md ? 30 : 26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
-                  )}
-                </div>
+              <div className={`${colorModeContext} bg-background rounded-lg shadow-lg p-4 sm:p-6`}>
                 {/* Header */}
-                  <div className="flex flex-col gap-0.5 mb-2">
-                    <h1 className={`${colorModeContext} text-fluid-xl poppins-bold background-text`}>
+                <div className="flex items-start justify-between gap-3 mb-2">
+                  <div className="flex flex-col gap-0.5 min-w-0 flex-1">
+                    <h1 className={`${colorModeContext} text-fluid-xl poppins-bold leading-tight background-text break-words`}>
                       {hoop.name}
                     </h1>
                      {/* Badges */}
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1">
                       <HoopBadge
                         variant={hoop.isIndoor ? 'indoor' : 'outdoor'}
                         text={hoop.isIndoor ? t('common.indoor') : t('common.outdoor')}
@@ -201,6 +195,14 @@ const Hoop = ({ hoop }: HoopProps) => {
                       </Button>
                     </div>
                   </div>
+                  {user && (
+                    <div className="shrink-0">
+                      {isFavorited(hoop.id)
+                        ? <MdFavorite className="text-red-500 cursor-pointer transition-colors" size={md ? 30 : 26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>
+                        : <MdOutlineFavoriteBorder className="text-gray-400 hover:text-red-500 cursor-pointer transition-colors" size={md ? 30 : 26} onClick={() => toggleFavorite(hoop.id)} aria-label={t('hoops.tooltips.addToFavorites')} title={t('hoops.tooltips.addToFavorites')}/>}
+                    </div>
+                  )}
+                </div>
 
                 <div className="flex flex-col gap-1 mb-3">
                   {/* Image gallery */}

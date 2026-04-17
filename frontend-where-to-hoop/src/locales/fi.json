@@ -73,7 +73,7 @@
     "emailInvalid": "Syötä kelvollinen sähköpostiosoite",
     "passwordTooShort": "Salasanan tulee olla vähintään 6 merkkiä",
     "publicProfile": "Profiilin näkyvyys",
-    "publicProfileHint": "Anna muiden löytää profiilisi ja seurata tulevaa toimintaasi",
+    "publicProfileHint": "Anna kaikkien löytää profiilisi ja seurata tulevaa toimintaasi",
     "statusPublic": "Julkinen — profiili näkyy kaikille + kuka tahansa voi seurata",
     "statusPrivate": "Yksityinen — profiili piilotettu + hallitse kuka voi seurata",
     "publicRecommended": "Profiilin näkyvyyden voi muuttaa myöhemmin",
@@ -169,7 +169,10 @@
       "default": "Jokainen päivä on hyvä päivä koripalloon!",
       "callToAction": "Kerro muille, että olet menossa pelaamaan painamalla",
       "readyToPlayButton": "Valmis pelaamaan",
-      "onAnyCourtCard": "minkä tahansa kentän kortilla."
+      "onAnyCourtCard": "minkä tahansa kentän kortilla.",
+      "checkInFollowUp": "Säädä sitten saapumisaika ja pelin kesto, ja paina",
+      "checkInButton": "Ilmoittaudu pelaamaan",
+      "toConfirm": "vahvistaaksesi."
     }
   },
   "addHoop": {

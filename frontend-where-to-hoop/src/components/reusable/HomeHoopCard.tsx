@@ -67,7 +67,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
   const playingNowCount = playingNow.length
 
   return (
-    <div className={`${colorModeContext} bg-background background-text rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full flex-grow-0`}> 
+    <div className={`${colorModeContext} bg-background background-text shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full flex-grow-0`}> 
       <div className="relative w-full h-44 xsm:h-52 sm:h-60 md:h-68 lg:h-76 bg-gray-100 dark:bg-gray-800">
         {isCheckedIn && (
           <span
@@ -86,13 +86,15 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="p-2 flex flex-col gap-1">
-        <div className="flex items-center justify-between gap-x-7 gap-y-0 flex-wrap">
-          <div className="flex items-center gap-5">
+      <div className="px-2 py-1 flex flex-col gap-1.5">
+        <div className="flex flex-col gap-0">
+          <div className="flex items-center gap-2">
             <strong className="text-fluid-sm line-clamp-1">{hoop.name}</strong>
             <span className={`${colorModeContext} text-fluid-xs background-text`}>{distance.toFixed(1)} km</span>
           </div>
-          <span className={`${colorModeContext} text-fluid-xs background-text pr-2`}>{hoop.address ? shortenAddress(hoop.address) : t("common.noAddress")}</span>
+          <span className={`${colorModeContext} text-fluid-xs background-text line-clamp-1`}>
+            {hoop.address ? shortenAddress(hoop.address) : t("common.noAddress")}
+          </span>
         </div>
         <div className="flex flex-col xsm:flex-row items-start xsm:items-center justify-between gap-8">
           <div className="flex flex-col gap-1 flex-1 mb-0.5 w-full xsm:w-auto">
@@ -153,6 +155,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
         </div>
         <div className="flex xsm:hidden justify-center">
           <HoopCardButton
+              className="mb-1"
               actionFunction={readyToPlay}
               title={t('hoops.hoopcardReadyToPlayButton')}
               colors="hoop-card-button-green"

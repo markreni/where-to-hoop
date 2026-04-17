@@ -50,11 +50,11 @@ const MiniMap = ({ coordinates, onCoordinatesChange, mapRef, readOnly = false }:
       : null
 
   return (
-    <div className="h-50">
+    <div className="h-50 rounded-md overflow-hidden">
       <MapContainer
         center={markerPosition ?? centerPosition}
         zoom={markerPosition ? 14 : 10}
-        className="h-full w-full rounded-lg"
+        className="h-full w-full"
         scrollWheelZoom
       >
         <MapController onMapReady={(map) => { mapRef.current = map }} />

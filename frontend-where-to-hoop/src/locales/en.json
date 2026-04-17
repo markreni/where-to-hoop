@@ -73,7 +73,7 @@
     "emailInvalid": "Please enter a valid email address",
     "passwordTooShort": "Password must be at least 6 characters",
     "publicProfile": "Profile visibility",
-    "publicProfileHint": "Let others find your profile and follow your future activity",
+    "publicProfileHint": "Let everybody find your profile and follow your future activity",
     "statusPublic": "Public — profile visible to everyone + anyone can follow",
     "statusPrivate": "Private — profile hidden + control who can follow",
     "publicRecommended": "Profile visibility can be changed later",
@@ -169,7 +169,10 @@
       "default": "Every day is a good day for basketball!",
       "callToAction": "Let others know you're heading to play by tapping",
       "readyToPlayButton": "Ready to play",
-      "onAnyCourtCard": "on any court card."
+      "onAnyCourtCard": "on any court card.",
+      "checkInFollowUp": "Then set when you'll arrive and how long you'll play, and tap",
+      "checkInButton": "Check in",
+      "toConfirm": "to confirm."
     }
   },
   "addHoop": {

@@ -73,7 +73,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
   const isCheckedIn = userActiveEnrollments.some(e => e.hoopId === hoop.id);
 
   return (
-    <div className={`${colorModeContext} h-1/3 sm:h-full w-full xsm:w-5/6 sm:w-full flex flex-col justify-start gap-3 px-3 pt-2 pb-3 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
+    <div className={`${colorModeContext} h-1/3 sm:h-full w-full xsm:w-5/6 sm:w-full flex flex-col justify-start gap-2 px-3 pt-2 pb-3 rounded-md bg-background background-text shadow-lg transition-shadow cursor-default`}>
       <div className="flex justify-between items-start gap-2">
         <div className="flex flex-col">
           <strong className="text-fluid-base">{hoop.name}</strong>
@@ -188,7 +188,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
         <p className="sm:hidden font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>   
       </div>
       <div className="flex flex-col justify-between items-center sm:hidden xmd:flex xl:hidden 2xl:flex">
-        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
+        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-lg"></HoopCardButton>
       </div>
     </div>                        
   );

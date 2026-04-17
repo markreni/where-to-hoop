@@ -9,13 +9,14 @@ interface HoopCardButtonProps {
   title: string;
   colors: string;
   text: string;
+  className?: string;
 }
-const HoopCardButton = ({ actionFunction, title, colors, text }: HoopCardButtonProps) => {
+const HoopCardButton = ({ actionFunction, title, colors, text, className = '' }: HoopCardButtonProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
 
   return (
-    <Button 
-      className={`${colorModeContext} flex items-center gap-2 text-white padding-y-for-elements px-3.5 shadow-lg ${colors} ${text} rounded-xl font-light transition-colors whitespace-nowrap cursor-pointer`}
+    <Button
+      className={`${colorModeContext} flex items-center gap-2 text-white padding-y-for-elements px-3.5 shadow-lg ${colors} ${text} rounded-xl font-light transition-colors whitespace-nowrap cursor-pointer ${className}`}
         onClick={(e) => actionFunction(e)}
       >
         {/*<IoMapOutline size={16} /> --- IGNORE ---*/}
