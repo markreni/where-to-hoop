@@ -48,6 +48,7 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   const [bioInput, setBioInput] = useState('')
   const [isSavingBio, setIsSavingBio] = useState(false)
   const [isBioOpen, setIsBioOpen] = useState(false)
+  const [isVisibilityOpen, setIsVisibilityOpen] = useState(false)
   const { data: followers = [] } = useQuery<PublicProfile[]>({
     queryKey: ['followers', user?.id],
     queryFn: () => fetchFollowers(user!.id),
@@ -182,19 +183,40 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
             </div>
 
             {/* Profile visibility toggle */}
-            <div className={`${colorModeContext} bg-background/60 p-4 rounded-lg border border-black/30 dark:border-white/30 mb-6 relative`}>
-            <div className="absolute -top-31 xs:-top-25 right-0">
-              <FollowersDropdown followers={followers} />
-            </div>
-              <ProfileVisibilityToggle
-                label={t('myProfile.profileVisibility')}
-                hint={t('myProfile.profileVisibilityHint')}
-                isChecked={!isPublic}
-                onChange={handleVisibilityToggle}
-                disabled={isSaving}
-                statusText={isPublic ? t('myProfile.statusPublic') : t('myProfile.statusPrivate')}
-                statusClassName={isPublic ? 'text-first-color' : 'text-gray-400 dark:text-gray-500'}
-              />
+            <div className={`${colorModeContext} bg-background/60 rounded-lg border border-black/30 dark:border-white/30 mb-6 relative`}>
+              <div className="absolute -top-31 xs:-top-25 right-0">
+                <FollowersDropdown followers={followers} />
+              </div>
+              <Button
+                type="button"
+                onPress={() => setIsVisibilityOpen(o => !o)}
+                aria-expanded={isVisibilityOpen}
+                aria-controls="visibility-panel"
+                className={`${colorModeContext} flex items-center justify-between w-full p-4 text-fluid-sm background-text cursor-pointer`}
+              >
+                <div className="flex flex-col gap-0.5 text-left">
+                  <span className="font-medium">{t('myProfile.profileVisibility')}</span>
+                  <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+                    {t('myProfile.profileVisibilityModifyHint')}
+                  </span>
+                </div>
+                <MdKeyboardArrowDown
+                  size={20}
+                  className={`transition-transform ${isVisibilityOpen ? 'rotate-180' : ''}`}
+                />
+              </Button>
+              {isVisibilityOpen && (
+                <div id="visibility-panel" className="px-4 pb-4">
+                  <ProfileVisibilityToggle
+                    hint={t('myProfile.profileVisibilityHint')}
+                    isChecked={!isPublic}
+                    onChange={handleVisibilityToggle}
+                    disabled={isSaving}
+                    statusText={isPublic ? t('myProfile.statusPublic') : t('myProfile.statusPrivate')}
+                    statusClassName={isPublic ? 'text-first-color' : 'text-gray-400 dark:text-gray-500'}
+                  />
+                </div>
+              )}
             </div>
 
             {/* Bio editor */}
@@ -208,16 +230,9 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
               >
                 <div className="flex flex-col gap-0.5 text-left">
                   <span className="font-medium">{t('myProfile.bioLabel')}</span>
-                  <div className="flex items-center justify-between mb-2 gap-3">
-                    <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+                  <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
                     {t('myProfile.bioModifyHint')}
-                    </span>
-                    {isBioOpen && (
-                      <span className={`${colorModeContext} text-fluid-xs font-medium text-gray-500 dark:text-gray-400`}>
-                        {bioInput.length}/{MAX_BIO_LENGTH}
-                      </span>
-                    )}
-                  </div>
+                  </span>
                 </div>
                 <MdKeyboardArrowDown
                   size={20}
@@ -236,7 +251,20 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
                     className={`${colorModeContext} form-input w-full resize-y text-fluid-sm border-black/20 dark:border-white/20`}
                     disabled={isSavingBio}
                   />
-                  <div className="flex items-center justify-end mt-2 gap-3">
+                  <div className="flex items-center justify-between mt-2 gap-3">
+                    <span
+                      className={`${colorModeContext} text-fluid-xs font-medium ${
+                        bioCharsLeft < 0
+                          ? 'text-red-500'
+                          : bioCharsLeft == MAX_BIO_LENGTH
+                          ? 'text-gray-500 dark:text-gray-400'
+                          : bioCharsLeft < MAX_BIO_LENGTH * 0.1
+                          ? 'text-yellow-500'
+                          : 'text-green-500'
+                      }`}
+                    >
+                      {t('myProfile.bioCharCountLabel')} {bioInput.length}/{MAX_BIO_LENGTH}
+                    </span>
                     <div className="flex items-center gap-2">
                       <Button
                         type="button"

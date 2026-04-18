@@ -14,7 +14,7 @@
       "community": "Community",
       "account": "Account",
       "admin": "Admin",
-      "adminBadge": "Wawawiiwa you're admin! Looky looky!"
+      "adminBadge": "Wawawiiwa you're admin!"
     }
   },
   "players": {
@@ -118,7 +118,8 @@
     "playModeOpen": "Open to play",
     "playModeSolo": "Prefer to hoop alone",
     "profileVisibility": "Profile visibility",
-    "profileVisibilityHint": "Choose who can see player profile details — everyone or only followers",
+    "profileVisibilityModifyHint": "Adjust who can see your profile",
+    "profileVisibilityHint": "Choose who can see player profile details\n— everyone or only followers",
     "statusPublic": "Public — details visible to everyone + anyone can follow",
     "statusPrivate": "Private — details hidden + control who can follow",
     "visibilityUpdated": "Profile visibility updated",
@@ -126,6 +127,7 @@
     "viewPublicProfile": "View player profile",
     "bioModifyHint": "Adjust bio that is visible on your public profile",
     "bioLabel": "Bio",
+    "bioCharCountLabel": "Characters: ",
     "bioPlaceholder": "Tell others about yourself...",
     "bioReset": "Reset",
     "bioSave": "Save",

@@ -2,8 +2,8 @@ import { useColorModeValues } from '../../contexts/ColorModeContext'
 import type { ColorMode } from '../../types/types'
 
 interface ProfileVisibilityToggleProps {
-  label: string
-  hint: string
+  label?: string
+  hint?: string
   isChecked: boolean
   onChange: () => void
   statusText: string
@@ -29,7 +29,7 @@ export const ProfileVisibilityToggle = ({
           <span className={`${colorModeContext} text-fluid-sm font-medium background-text`}>
             {label}
           </span>
-          <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400`}>
+          <span className={`${colorModeContext} text-fluid-xs text-gray-500 dark:text-gray-400 whitespace-pre-line`}>
             {hint}
           </span>
         </div>
