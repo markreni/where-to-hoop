@@ -14,7 +14,7 @@
       "community": "Community",
       "account": "Account",
       "admin": "Admin",
-      "adminBadge": "Wawawiiwa you're admin!"
+      "adminBadge": "Wawawiiwa you're admin ;)"
     }
   },
   "players": {
@@ -269,8 +269,6 @@
     "letOthersKnowDesc": "Heading to a court? Let other hoopers know you'll be there. Find pickup games and never shoot alone again.",
     "connectHoopers": "Connect with Hoopers",
     "connectHoopersDesc": "Meet new basketball buddies in your area. Build your local hooping community and find regular playing partners.",
-    "tip": "Tip:",
-    "tipText": "Enable location services for the best experience. This helps us show you the nearest courts and calculate distances accurately.",
     "valuesTitle": "Our Core Values"
   },
   "privacy": {
@@ -293,7 +291,7 @@
   },
   "contact": {
     "title": "Contact Us",
-    "intro": "Have questions, feedback, or found a bug? We'd love to hear from you!",
+    "intro": "Have questions, feedback, found a bug, or want to contribute to our community?\nI (Mark) would love to hear from you!",
     "email": "Email",
     "github": "GitHub",
     "githubDesc": "Report issues or contribute",
@@ -478,6 +476,8 @@
     "showlist": "List",
     "showmap": "Map",
     "noAddress": "No address is specified",
+    "locationTip": "Tip:",
+    "locationTipText": "Enable location services for the best experience. This helps us show you the nearest courts and calculate distances accurately.",
     "condition": {
       "excellent": "Excellent",
       "good": "Good",

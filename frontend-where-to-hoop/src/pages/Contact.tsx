@@ -4,7 +4,7 @@ import type { ColorMode } from "../types/types";
 import { BackArrow } from "../components/reusable/BackArrow";
 import Footer from "../components/Footer";
 import { MdEmail } from "react-icons/md";
-import { FaGithub } from "react-icons/fa";
+//import { FaGithub } from "react-icons/fa";
 import { emailDomain } from "../utils/constants";
 
 const Contact = () => {
@@ -20,7 +20,7 @@ const Contact = () => {
             {t('contact.title')}
           </h1>
 
-          <p className={`${colorModeContext} text-fluid-base background-text mb-8`}>
+          <p className={`${colorModeContext} text-fluid-base background-text mb-5 whitespace-pre-line xsm:whitespace-normal`}>
             {t('contact.intro')}
           </p>
 
@@ -36,6 +36,7 @@ const Contact = () => {
               </div>
             </a>
 
+            {/*
             <a
               href="https://github.com/markreni/where-to-hoop"
               target="_blank"
@@ -48,6 +49,7 @@ const Contact = () => {
                 <p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>{t('contact.githubDesc')}</p>
               </div>
             </a>
+            */}
           </div>
 
           <div className={`${colorModeContext} mt-8 p-4 rounded-lg border border-gray-200 dark:border-gray-700`}>

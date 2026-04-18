@@ -6,6 +6,7 @@ import Footer from "../components/Footer";
 import { GiBasketballBall } from "react-icons/gi";
 import { FaMapMarkerAlt, FaUsers, FaHandshake, FaBalanceScale, FaHeart } from "react-icons/fa";
 import { ValueCard } from "../components/reusable/ValueCard";
+import { LocationTip } from "../components/reusable/LocationTip";
 
 const About = () => {
   const colorModeContext: ColorMode = useColorModeValues();
@@ -71,11 +72,7 @@ const About = () => {
             </div>
           </section>
 
-          <div className={`${colorModeContext} p-4 rounded-lg border border-gray-200 dark:border-gray-700`}>
-            <p className={`${colorModeContext} text-fluid-sm background-text`}>
-              <strong>{t('about.tip')}</strong> {t('about.tipText')}
-            </p>
-          </div>
+          <LocationTip />
 
           <section>
             <h2 className={`${colorModeContext} text-fluid-lg poppins-semibold background-text mb-4`}>

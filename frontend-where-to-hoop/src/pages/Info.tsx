@@ -6,6 +6,7 @@ import type { ColorMode } from "../types/types"
 import { BackArrow } from "../components/reusable/BackArrow"
 import { FAQItem } from "../components/reusable/FAQItem"
 import { ConditionCard } from "../components/reusable/ConditionCard"
+import { LocationTip } from "../components/reusable/LocationTip"
 import Footer from "../components/Footer"
 import { FaQuestionCircle, FaCamera, FaPlusCircle, FaPlayCircle, FaCheckCircle } from "react-icons/fa"
 
@@ -125,6 +126,11 @@ const Info = () => {
           </div>
           */
           }
+
+          {/* Location tip */}
+          <div className="mb-8">
+            <LocationTip />
+          </div>
 
           {/* Contact Link */}
           <div className={`${colorModeContext} p-4 rounded-lg border border-gray-200 dark:border-gray-700 text-center`}>

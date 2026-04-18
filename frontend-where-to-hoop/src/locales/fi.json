@@ -269,8 +269,6 @@
     "letOthersKnowDesc": "Menossa kentälle? Kerro muille pelaajille, että olet tulossa. Löydä pickup-pelejä äläkä heitä yksin enää koskaan.",
     "connectHoopers": "Yhdisty muihin pelaajiin",
     "connectHoopersDesc": "Tapaa uusia koripallokavereita alueeltasi. Rakenna paikallinen peliyhteisösi ja löydä säännöllisiä pelikavereita.",
-    "tip": "Vinkki:",
-    "tipText": "Ota sijaintipalvelut käyttöön parasta kokemusta varten. Tämä auttaa meitä näyttämään lähimmät kentät ja laskemaan etäisyydet tarkasti.",
     "valuesTitle": "Meidän arvomme"
   },
   "privacy": {
@@ -293,7 +291,7 @@
   },
   "contact": {
     "title": "Ota yhteyttä",
-    "intro": "Onko sinulla kysyttävää, palautetta tai löysitkö bugin? Kuulisimme mielellämme sinusta!",
+    "intro": "Onko sinulla kysyttävää, palautetta, löysitkö bugin tai haluatko osallistua yhteisön kehittämiseen?\nKuulisin (Mark) mielellään sinusta!",
     "email": "Sähköposti",
     "github": "GitHub",
     "githubDesc": "Ilmoita ongelmista tai osallistu kehitykseen",
@@ -478,6 +476,8 @@
     "showlist": "Lista",
     "showmap": "Kartta",
     "noAddress": "Osoitetta ei ole määritetty",
+    "locationTip": "Vinkki:",
+    "locationTipText": "Ota sijaintipalvelut käyttöön parasta kokemusta varten. Tämä auttaa meitä näyttämään lähimmät kentät ja laskemaan etäisyydet tarkasti.",
     "condition": {
       "excellent": "Loistava",
       "good": "Hyvä",

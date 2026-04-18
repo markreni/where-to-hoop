@@ -23,7 +23,7 @@ export const ProfileVisibilityToggle = ({
   const colorModeContext: ColorMode = useColorModeValues()
   
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-2">
       <label className="flex items-center justify-between gap-4">
         <div className="flex flex-col gap-0.5">
           <span className={`${colorModeContext} text-fluid-sm font-medium background-text`}>
