@@ -19,9 +19,17 @@ interface HomeHoopCardProps {
   hoop: BasketballHoop;
   distance: number;
   playerEnrollments: PlayerEnrollment[];
+  roundedSide?: 'left' | 'right' | 'both' | 'none';
 }
 
-export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCardProps) => {
+const roundedClass: Record<NonNullable<HomeHoopCardProps['roundedSide']>, string> = {
+  left: 'rounded-l-xl',
+  right: 'rounded-r-xl',
+  both: 'rounded-xl',
+  none: '',
+};
+
+export const HomeHoopCard = ({ hoop, distance, playerEnrollments, roundedSide = 'none' }: HomeHoopCardProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
   const userLocationDispatch = useLocationDispatch();
@@ -67,7 +75,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments }: HomeHoopCard
   const playingNowCount = playingNow.length
 
   return (
-    <div className={`${colorModeContext} bg-background background-text shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full flex-grow-0`}> 
+    <div className={`${colorModeContext} bg-background background-text shadow-md overflow-hidden transition-shadow hover:shadow-lg w-full flex-grow-0 ${roundedClass[roundedSide]}`}>
       <div className="relative w-full h-44 xsm:h-52 sm:h-60 md:h-68 lg:h-76 bg-gray-100 dark:bg-gray-800">
         {isCheckedIn && (
           <span

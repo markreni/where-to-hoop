@@ -21,6 +21,13 @@ import { InteractiveBasketball } from "../components/reusable/InteractiveBasketb
 import { useMapViewDispatch } from "../contexts/MapViewContext.tsx";
 import { Button } from "react-aria-components";
 
+const getRoundedSide = (index: number, total: number): 'left' | 'right' | 'both' | 'none' => {
+  if (total === 1) return 'both';
+  if (index === 0) return 'left';
+  if (index === total - 1) return 'right';
+  return 'none';
+};
+
 const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
   const colorModeContext: ColorMode = useColorModeValues();
   const mapCenterValues = useLocationValues();
@@ -177,8 +184,14 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
 
           {(mapCenterValues.latitude && mapCenterValues.longitude) ? (
             <Carousel>
-              {sortedHoopsWithDistance.map(({ hoop, distance }) => (
-                <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []} />
+              {sortedHoopsWithDistance.map(({ hoop, distance }, index, arr) => (
+                <HomeHoopCard
+                  key={hoop.id}
+                  hoop={hoop}
+                  distance={distance}
+                  playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []}
+                  roundedSide={getRoundedSide(index, arr.length)}
+                />
               ))}
             </Carousel>
           ) : (
@@ -191,8 +204,14 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
             {t('home.mostActiveCourts')}
           </h1>
           <Carousel>
-            {sortedHoopsWithPlayers.map(({ hoop, distance}) => (
-              <HomeHoopCard key={hoop.id} hoop={hoop} distance={distance} playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []} />
+            {sortedHoopsWithPlayers.map(({ hoop, distance}, index, arr) => (
+              <HomeHoopCard
+                key={hoop.id}
+                hoop={hoop}
+                distance={distance}
+                playerEnrollments={enrollmentsByHoop.get(hoop.id) ?? []}
+                roundedSide={getRoundedSide(index, arr.length)}
+              />
             ))}
           </Carousel>
         </section>
