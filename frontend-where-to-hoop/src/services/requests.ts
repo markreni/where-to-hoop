@@ -531,11 +531,10 @@ const toggleFavoriteRequest = async (userId: string, hoopId: string, add: boolea
   }
 }
 
-const fetchAllPublicPlayers = async (): Promise<PublicProfile[]> => {
+const fetchAllPlayers = async (): Promise<PublicProfile[]> => {
   const { data, error } = await supabase
     .from('users')
     .select('id, nickname, public, profile_image, bio')
-    .eq('public', true)
     .order('nickname', { ascending: true })
 
   if (error) {
@@ -913,6 +912,6 @@ const toggleHoopVerification = async (id: string, isVerified: boolean): Promise<
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, verifyEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPublicPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, fetchUserBio, updateUserBio, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchEnrollmentsForPlayers, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, verifyEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, fetchUserBio, updateUserBio, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchEnrollmentsForPlayers, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
 
 export type { UserWithProfileImage }

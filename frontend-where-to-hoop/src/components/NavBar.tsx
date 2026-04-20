@@ -35,15 +35,15 @@ const NavBar = () => {
   const [playerSearch, setPlayerSearch] = useState('');
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const isOnPlayersPage = location.pathname === '/players';
+  const isOnSearchPlayersPage = location.pathname === '/search-players';
 
   useEffect(() => {
-    if (isOnPlayersPage) setPlayerSearch('');
-  }, [isOnPlayersPage]);
-  const navbarSearchValue = isOnPlayersPage ? (searchParams.get('q') ?? '') : playerSearch;
+    if (isOnSearchPlayersPage) setPlayerSearch('');
+  }, [isOnSearchPlayersPage]);
+  const navbarSearchValue = isOnSearchPlayersPage ? (searchParams.get('q') ?? '') : playerSearch;
 
   const handleNavbarSearchChange = (value: string) => {
-    if (isOnPlayersPage) {
+    if (isOnSearchPlayersPage) {
       setSearchParams(prev => {
         const next = new URLSearchParams(prev);
         if (value.trim()) {
@@ -59,8 +59,8 @@ const NavBar = () => {
   };
 
   const handlePlayerSearchSubmit = (value: string) => {
-    if (!isOnPlayersPage && value.trim()) {
-      navigate(`/players?q=${encodeURIComponent(value.trim())}`)
+    if (!isOnSearchPlayersPage && value.trim()) {
+      navigate(`/search-players?q=${encodeURIComponent(value.trim())}`)
       setPlayerSearch('')
     }
   }

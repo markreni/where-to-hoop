@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
@@ -16,7 +15,20 @@ const SearchPlayers = () => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   const { user } = useAuth()
-  const [findQuery, setFindQuery] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const findQuery = searchParams.get('q') ?? ''
+
+  const setFindQuery = (value: string) => {
+    setSearchParams(prev => {
+      const next = new URLSearchParams(prev)
+      if (value.trim()) {
+        next.set('q', value)
+      } else {
+        next.delete('q')
+      }
+      return next
+    }, { replace: true })
+  }
 
   const { data: findResults = [], isFetching } = useQuery<PublicProfile[]>({
     queryKey: ['searchAllPlayers', findQuery],
