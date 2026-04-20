@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import { useDebounceValue } from 'usehooks-ts'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { useAuth } from '../contexts/AuthContext'
@@ -16,24 +18,30 @@ const SearchPlayers = () => {
   const { t } = useTranslation()
   const { user } = useAuth()
   const [searchParams, setSearchParams] = useSearchParams()
-  const findQuery = searchParams.get('q') ?? ''
+  const queryFromUrl = searchParams.get('q') ?? ''
+  const [inputValue, setInputValue] = useState(queryFromUrl)
+  const [debouncedQuery] = useDebounceValue(inputValue, 300)
 
-  const setFindQuery = (value: string) => {
+  useEffect(() => {
     setSearchParams(prev => {
       const next = new URLSearchParams(prev)
-      if (value.trim()) {
-        next.set('q', value)
+      if (debouncedQuery.trim()) {
+        next.set('q', debouncedQuery)
       } else {
         next.delete('q')
       }
       return next
     }, { replace: true })
-  }
+  }, [debouncedQuery, setSearchParams])
+
+  useEffect(() => {
+    setInputValue(queryFromUrl)
+  }, [queryFromUrl])
 
   const { data: findResults = [], isFetching } = useQuery<PublicProfile[]>({
-    queryKey: ['searchAllPlayers', findQuery],
-    queryFn: () => searchAllPlayersByNickname(findQuery),
-    enabled: !!user && findQuery.trim().length >= 2,
+    queryKey: ['searchAllPlayers', debouncedQuery],
+    queryFn: () => searchAllPlayersByNickname(debouncedQuery),
+    enabled: !!user && debouncedQuery.trim().length >= 2,
   })
 
   return (
@@ -54,14 +62,15 @@ const SearchPlayers = () => {
               <div className="mb-4">
                 <SearchFilter
                   placeholder={t('players.findPlayerPlaceholder')}
-                  value={findQuery}
-                  onChange={setFindQuery}
+                  value={inputValue}
+                  onChange={setInputValue}
+                  autoFocus
                 />
               </div>
 
               {isFetching ? (
                 <p className={`${colorModeContext} text-fluid-xs text-gray-400`}>...</p>
-              ) : findQuery.trim().length >= 2 ? (
+              ) : debouncedQuery.trim().length >= 2 ? (
                 findResults.length > 0 ? (
                   <div className="flex flex-col gap-2">
                     {findResults.map(profile => (
