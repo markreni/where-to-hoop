@@ -247,7 +247,7 @@ const Home = ({ hoops }: { hoops: BasketballHoop[] }) => {
             </p>
             <p className={`${colorModeContext} text-fluid-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto mt-2`}>
               {t('home.encouragement.checkInFollowUp')}{' '}
-              <span className={`${colorModeContext} inline-flex items-center gap-1 px-2 py-1 rounded bg-first-color/20 text-first-color font-medium`}>
+              <span className={`${colorModeContext} inline-flex items-center gap-1 px-2 py-1 rounded bg-first-color/30 text-first-color font-medium`}>
                 {t('home.encouragement.checkInButton')}
               </span>{' '}
               {t('home.encouragement.toConfirm')}

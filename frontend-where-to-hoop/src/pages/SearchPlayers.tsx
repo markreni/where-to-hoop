@@ -18,13 +18,13 @@ const SearchPlayers = () => {
   const { t } = useTranslation()
   const { user } = useAuth()
   const [searchParams, setSearchParams] = useSearchParams()
-  const queryFromUrl = searchParams.get('q') ?? ''
+  const queryFromUrl: string = searchParams.get('q') ?? ''
   const [inputValue, setInputValue] = useState(queryFromUrl)
   const [debouncedQuery] = useDebounceValue(inputValue, 300)
 
   useEffect(() => {
     setSearchParams(prev => {
-      const next = new URLSearchParams(prev)
+      const next: URLSearchParams = new URLSearchParams(prev)
       if (debouncedQuery.trim()) {
         next.set('q', debouncedQuery)
       } else {
@@ -32,7 +32,11 @@ const SearchPlayers = () => {
       }
       return next
     }, { replace: true })
-  }, [debouncedQuery, setSearchParams])
+    // setSearchParams intentionally omitted: its identity changes on every
+    // searchParams change, which would re-fire this effect with a stale
+    // debouncedQuery and clobber concurrent writes (e.g. the navbar input).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedQuery])
 
   useEffect(() => {
     setInputValue(queryFromUrl)
