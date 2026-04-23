@@ -71,9 +71,11 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
   useEffect(() => {
     if (localTodayEnrollmentRef.current && !enrollments.some(e => e.id === localTodayEnrollmentRef.current!.id)) {
       setLocalTodayEnrollment(null)
+      setNote('') 
     }
     if (localLaterEnrollmentRef.current && !enrollments.some(e => e.id === localLaterEnrollmentRef.current!.id)) {
       setLocalLaterEnrollment(null)
+      setNote('') 
     }
   }, [enrollments])
 
@@ -150,6 +152,7 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
       } else {
         setLocalLaterEnrollment(null)
       }
+      setNote('')
       success(t('hoop.playersPanel.deleteSuccess'))
       await queryClient.invalidateQueries({ queryKey: ['enrollments'] })
     }).catch(() => {

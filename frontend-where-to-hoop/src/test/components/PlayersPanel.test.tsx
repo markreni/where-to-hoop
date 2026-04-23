@@ -128,7 +128,7 @@ describe('PlayersPanel', () => {
     expect(screen.getByText('No one here yet. Be the first!')).toBeInTheDocument();
   });
 
-  it('displays player initial in avatar', () => {
+  it('displays player nickname as a link to their profile', () => {
     const enrollment = createEnrollment({
       playerNickname: 'Alice',
       arrivalTime: new Date(fixedNow.getTime() - 5 * 60000),
@@ -136,7 +136,8 @@ describe('PlayersPanel', () => {
     });
 
     render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
-    expect(screen.getByText('A')).toBeInTheDocument();
+    const link = screen.getByRole('link', { name: '@Alice' });
+    expect(link).toHaveAttribute('href', '/players/alice');
   });
 
   it('shows "until" time for playing now players', () => {

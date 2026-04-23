@@ -7,6 +7,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useToast } from '../../contexts/ToastContext'
 import { deleteEnrollment, insertEnrollment, verifyEnrollment } from '../../services/requests'
 import { Button } from 'react-aria-components'
+import { Link } from 'react-router-dom'
 import { isTodayDate, isWithinHoopRange } from '../../utils/functions'
 import { MdCheckCircle, MdHourglassEmpty } from 'react-icons/md'
 import { VERIFY_RANGE_METERS, VERIFY_WINDOW_START_OFFSET_MS, VERIFY_WINDOW_END_OFFSET_MS } from '../../utils/constants'
@@ -170,22 +171,31 @@ const PlayerPanelCard = ({ enrollment, allEnrollments, hoopCoordinates }: Player
   const noteText = enrollment.note || (isOpenToPlay ? t('hoop.playersPanel.defaultNoteOpen') : t('hoop.playersPanel.defaultNoteSolo'))
 
   return (
-    <div className={`${colorModeContext} flex items-start gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800`}>
+    <div className={`${colorModeContext} flex items-center gap-3 p-3 rounded-lg bg-gray-100 dark:bg-gray-800`}>
+      {/*
       <div className="w-8 h-8 shrink-0 rounded-full bg-first-color flex items-center justify-center text-white text-sm font-medium">
         {enrollment.playerNickname.charAt(0).toUpperCase()}
       </div>
-      <div className="flex flex-col flex-1 gap-2 min-w-0">
-        <div className="flex items-start gap-x-2 gap-y-1 flex-wrap">
+      */}
+      <div className="flex flex-col flex-1 gap-1 min-w-0">
+        <Link
+          to={`/players/${enrollment.playerNickname.toLowerCase()}`}
+          title={enrollment.playerNickname}
+          className={`${colorModeContext} text-fluid-sm font-semibold text-first-color hover:text-second-color truncate w-fit max-w-full`}
+        >
+          @{enrollment.playerNickname}
+        </Link>
+        <div className="flex items-start gap-x-2 gap-y-0.5 flex-wrap">
           <b><p className={`${colorModeContext} text-fluid-sm text-gray-500 dark:text-gray-400`}>
             {isPlaying
-              ? `${t('hoop.playersPanel.untilText')} ${formatTime(endTime)}`
+              ? `${t('hoop.playersPanel.untilText')} ${formatTime(endTime)} ${t('hoop.playersPanel.untilText2')}`
               : formatArrivalText(arrivalTime, t)
             }
           </p></b>
           {enrollment.verified ? (
             <span
               title={t('hoop.playersPanel.verifiedLabel')}
-              className={`${colorModeContext} inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-fluid-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400`}
+              className={`${colorModeContext} inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-fluid-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400`}
             >
               <MdCheckCircle size={12} />
               {t('hoop.playersPanel.verifiedLabel')}
@@ -193,7 +203,7 @@ const PlayerPanelCard = ({ enrollment, allEnrollments, hoopCoordinates }: Player
           ) : (
             <span
               title={t('hoop.playersPanel.unverifiedLabel')}
-              className={`${colorModeContext} inline-flex items-center gap-1 px-2 py-0.5 rounded-sm text-fluid-xs font-medium bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300`}
+              className={`${colorModeContext} inline-flex items-center gap-1 px-1.5 py-0.5 rounded-sm text-fluid-xs font-medium bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-300`}
             >
               <MdHourglassEmpty size={12} />
               {t('hoop.playersPanel.unverifiedLabel')}
@@ -205,31 +215,33 @@ const PlayerPanelCard = ({ enrollment, allEnrollments, hoopCoordinates }: Player
         </p>
       </div>
       {isOwner ? (
-        <div className="flex flex-col gap-1 shrink-0">
+        <div className="flex flex-col gap-3.5 shrink-0">
           {verifyWindowOpen && hoopCoordinates && (
             <Button
               onClick={handleVerify}
               isDisabled={isVerifying}
-              className={`px-3 py-1 text-fluid-xs font-medium rounded-full text-white transition-colors ${
+              className={`px-3 py-1 text-fluid-xs font-medium rounded-full text-white transition-all shadow-sm hover:shadow-md active:shadow-none active:scale-95 active:brightness-90 ${
                 isVerifying ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-500 hover:bg-blue-600 cursor-pointer'
               }`}
             >
               {t('hoop.playersPanel.verifyButton')}
             </Button>
           )}
-          <Button
-            onClick={handleDelete}
-            className="px-3 py-1 text-fluid-xs font-medium rounded-full bg-red-500 hover:bg-red-600 text-white transition-colors cursor-pointer"
-          >
-            {t('hoop.playersPanel.deleteButton')}
-          </Button>
+          {!enrollment.verified && (
+            <Button
+              onClick={handleDelete}
+              className="px-3 py-1 text-fluid-xs font-medium rounded-full bg-red-500 hover:bg-red-600 text-white transition-all shadow-sm hover:shadow-md active:shadow-none active:scale-95 active:brightness-90 cursor-pointer"
+            >
+              {t('hoop.playersPanel.deleteButton')}
+            </Button>
+          )}
         </div>
       ) : (
         isOpenToPlay && user && (
           <Button
             onClick={handleJoinSubmit}
             isDisabled={joinDisabled}
-            className={`shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full text-white transition-colors ${
+            className={`shrink-0 px-3 py-1 text-fluid-xs font-medium rounded-full text-white transition-all shadow-sm hover:shadow-md active:shadow-none active:scale-95 active:brightness-90 ${
               joinDisabled
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-green-500 hover:bg-green-600 cursor-pointer'
