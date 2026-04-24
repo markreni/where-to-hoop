@@ -181,7 +181,7 @@
       }
     },
     "encouragement": {
-      "title": "Valmis pelaamaan?",
+      "title": "Let's hoopz?",
       "warm": "Ulkona on lämmintä! Täydellinen sää heittää koreja kavereiden kanssa.",
       "nice": "Loistava sää koripalloon! Suuntaa kentälle ja heitä muutama kori.",
       "cold": "Pukeudu lämpimästi ja kentälle! Kylmässä pelaaminen kasvattaa luonnetta.",
@@ -189,7 +189,7 @@
       "snowy": "Lunta maassa? Aika talvikoripalloon tai etsi sisäkenttä.",
       "default": "Jokainen päivä on hyvä päivä koripalloon!",
       "callToAction": "Kerro muille, että olet menossa pelaamaan painamalla",
-      "readyToPlayButton": "Valmis pelaamaan",
+      "readyToPlayButton": "Let's hoopz",
       "onAnyCourtCard": "minkä tahansa kentän kortilla.",
       "checkInFollowUp": "Säädä sitten saapumisaika ja pelin kesto, ja paina",
       "checkInButton": "Ilmoittaudu pelaamaan",
@@ -245,7 +245,7 @@
     "searchPlaceholder": "Etsi kenttiä...",
     "hoopcardPlayingNow": "Pelaamassa nyt",
     "hoopcardMapButton": "Kartalla",
-    "hoopcardReadyToPlayButton": "Valmis pelaamaan",
+    "hoopcardReadyToPlayButton": "Let's hoopz",
     "hoopcardCheckedIn": "Ilmoittautunut",
     "popupIndoor": "Sisä",
     "popupOutdoor": "Ulko",
@@ -327,7 +327,7 @@
     "intro": "Löydä vastauksia yleisimpiin kysymyksiin WhereHoopzin käytöstä.",
     "readyToPlay": {
       "question": "Miten kerron muille, että olen menossa pelaamaan?",
-      "answer": "Paina minkä tahansa kentän kortilla (etusivulla tai kenttälistassa) vihreää \"Valmis pelaamaan\" -nappia.\nTämä vie sinut kentän sivulle, jossa voit ilmoittautua pelisessioon ilmoittautumislomakkeella.\nValitse saapumisaikasi, peliaika ja\nhaluatko pelata muiden kanssa.\nIlmoittautumisesi näkyy kentän \"Kuka pelaa\" -paneelissa, jotta muut pelaajat tietävät sinun olevan paikalla.\n\nHuom: voit ilmoittautua kerran per kenttä tänään ja kerran tulevalle päivälle."
+      "answer": "Paina minkä tahansa kentän kortilla (etusivulla tai kenttälistassa) vihreää \"Let's hoopz\" -nappia.\nTämä vie sinut kentän sivulle, jossa voit ilmoittautua pelisessioon ilmoittautumislomakkeella.\nValitse saapumisaikasi, peliaika ja\nhaluatko pelata muiden kanssa.\nIlmoittautumisesi näkyy kentän \"Kuka pelaa\" -paneelissa, jotta muut pelaajat tietävät sinun olevan paikalla.\n\nHuom: voit ilmoittautua kerran per kenttä tänään ja kerran tulevalle päivälle."
     },
     "addCourt": {
       "question": "Miten lisään uuden koripallokentän?",

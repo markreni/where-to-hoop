@@ -55,7 +55,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    {/* `Ready to play at hoop ${hoop.name} today at ${new Date().toISOString().split('T')[1]}` */}
+    {/* `Let's hoopz at hoop ${hoop.name} today at ${new Date().toISOString().split('T')[1]}` */}
     navigate(`/hoops/${hoop.id}`);
   };
 

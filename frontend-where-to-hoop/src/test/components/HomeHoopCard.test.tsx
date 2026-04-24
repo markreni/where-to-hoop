@@ -82,14 +82,14 @@ describe('HomeHoopCard', () => {
     expect(screen.getByText(/>99 players on court/)).toBeInTheDocument();
   });
 
-  it('renders Ready to play button', () => {
+  it("renders Let's hoopz button", () => {
     render(<HomeHoopCard {...defaultProps} />);
-    const buttons = screen.getAllByRole('button', { name: /ready/i });
+    const buttons = screen.getAllByRole('button', { name: /let's hoopz/i });
     expect(buttons.length).toBeGreaterThan(0);
   });
 
   /*
-  it('logs message when Ready to play is clicked', async () => {
+  it("logs message when Let's hoopz is clicked", async () => {
     const user = userEvent.setup();
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 
@@ -99,7 +99,7 @@ describe('HomeHoopCard', () => {
     await user.click(readyButton);
 
     expect(consoleSpy).toHaveBeenCalledWith(
-      expect.stringContaining('Ready to play at hoop Test Court')
+      expect.stringContaining("Let's hoopz at hoop Test Court")
     );
 
     consoleSpy.mockRestore();

@@ -181,7 +181,7 @@
       }
     },
     "encouragement": {
-      "title": "Ready to Play?",
+      "title": "Let's hoopz?",
       "warm": "It's warm outside! Perfect weather to shoot some hoops with friends.",
       "nice": "Great weather for basketball! Head to a court and get some shots in.",
       "cold": "Bundle up and hit the court! Cold weather basketball builds character.",
@@ -189,7 +189,7 @@
       "snowy": "Snow on the ground? Time for some winter ball or find an indoor spot.",
       "default": "Every day is a good day for basketball!",
       "callToAction": "Let others know you're heading to play by tapping",
-      "readyToPlayButton": "Ready to play",
+      "readyToPlayButton": "Let's hoopz",
       "onAnyCourtCard": "on any court card.",
       "checkInFollowUp": "Then set when you'll arrive and how long you'll play, and tap",
       "checkInButton": "Check in",
@@ -245,7 +245,7 @@
     "searchPlaceholder": "Find hoops...",
     "hoopcardMapButton": "On Map",
     "hoopcardPlayingNow": "Playing now",
-    "hoopcardReadyToPlayButton": "Ready to play",
+    "hoopcardReadyToPlayButton": "Let's hoopz",
     "hoopcardCheckedIn": "Checked in",
     "popupIndoor": "Indoor",
     "popupOutdoor": "Outdoor",
@@ -327,7 +327,7 @@
     "intro": "Find answers to common questions about using WhereHoopz.",
     "readyToPlay": {
       "question": "How do I let others know I'm going to play?",
-      "answer": "On any court card (on the home page or courts list), tap the green \"Ready to play\" button. This will navigate you to the court's page, then use the enrollment form to sign up for a session. Choose your arrival time, how long you'll play, and whether you're open to playing with others. Your enrollment will appear on the court's \"Who's Playing\" panel, letting other hoopers know you'll be there.\n\nNote: you can have one enrollment per court for today and one for a future date."
+      "answer": "On any court card (on the home page or courts list), tap the green \"Let's hoopz\" button. This will navigate you to the court's page, then use the enrollment form to sign up for a session. Choose your arrival time, how long you'll play, and whether you're open to playing with others. Your enrollment will appear on the court's \"Who's Playing\" panel, letting other hoopers know you'll be there.\n\nNote: you can have one enrollment per court for today and one for a future date."
     },
     "addCourt": {
       "question": "How do I add a new basketball court?",

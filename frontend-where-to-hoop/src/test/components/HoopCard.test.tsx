@@ -116,9 +116,9 @@ describe('HoopCard', () => {
     expect(localStorage.getItem('mapView')).toBe('map');
   });
 
-  it('renders "Ready to play" button', () => {
+  it('renders "Let\'s hoopz" button', () => {
     render(<HoopCard {...defaultProps} />);
-    const buttons = screen.getAllByRole('button', { name: /ready/i });
+    const buttons = screen.getAllByRole('button', { name: /let's hoopz/i });
     expect(buttons.length).toBeGreaterThan(0);
   });
 });
