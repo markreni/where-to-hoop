@@ -23,6 +23,8 @@ import SearchPlayers from "./pages/SearchPlayers.tsx";
 import PlayerProfile from "./pages/PlayerProfile.tsx";
 import Admin from "./pages/Admin.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import AuthCallback from "./pages/AuthCallback.tsx";
+import VerifyExpired from "./pages/VerifyExpired.tsx";
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx";
 import ProtectedUserRoute from "./components/ProtectedUserRoute.tsx";
 import { helsinkiBounds, minScreenSize } from "./utils/constants.ts";
@@ -79,6 +81,8 @@ const App = () => {
           <Route path="/faq" element={<Info/>} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/verify-expired" element={<VerifyExpired />} />
           <Route path="/myprofile" element={<ProtectedUserRoute><MyProfile hoops={hoops} /></ProtectedUserRoute>} />
           <Route path="/players" element={<Players />} />
           <Route path="/search-players" element={<ProtectedUserRoute><SearchPlayers /></ProtectedUserRoute>} />

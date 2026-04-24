@@ -16,7 +16,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   const fetchSession = async () => {
     const { data } = await supabase.auth.getSession();
-    console.log('Fetched session:', data);
+    //console.log('Fetched session:', data);
     setUser(data.session?.user ?? null);
   }
 

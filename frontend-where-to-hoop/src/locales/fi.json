@@ -87,6 +87,25 @@
     "alreadySignedUp": "Sinulla on jo tili.",
     "goToProfile": "Siirry profiiliin"
   },
+  "authCallback": {
+    "verifying": "Vahvistetaan tiliäsi…",
+    "linkInvalid": "Tämä vahvistuslinkki on virheellinen. Rekisteröidy uudelleen.",
+    "alreadyVerified": "Tilisi on jo vahvistettu. Tervetuloa takaisin!"
+  },
+  "verifyExpired": {
+    "title": "Vahvistuslinkki vanhentunut",
+    "message": "Vahvistuslinkkisi on vanhentunut tai jo käytetty. Syötä sähköpostisi saadaksesi uuden linkin.",
+    "emailLabel": "Sähköposti",
+    "emailPlaceholder": "sinun@sahkoposti.fi",
+    "emailHint": "Käytä samaa sähköpostiosoitetta jolla alun perin rekisteröidyit.",
+    "submit": "Lähetä uusi linkki",
+    "submitting": "Lähetetään…",
+    "resendSuccess": "Uusi vahvistussähköposti on matkalla.",
+    "resendFailed": "Uuden vahvistussähköpostin lähettäminen epäonnistui. Yritä uudelleen.",
+    "checkEmail": "Tarkista sähköpostisi uuden vahvistusviestin varalta.",
+    "alreadyVerifiedPrompt": "Oletko jo vahvistanut?",
+    "signInLink": "Kirjaudu sisään"
+  },
   "myProfile": {
     "enrollmentsTab": "Sessiot",
     "favoritesTab": "Suosikit",

@@ -13,7 +13,7 @@ export const useLocateUser = (): ((options?: LocateOptions) => void) => {
 
   return useCallback(
     (options?: LocateOptions) => {
-      console.log("Locating user...");
+      //console.log("Locating user...");
 
       const onSuccess = (position: GeolocationPosition) => {
         const { latitude, longitude } = position.coords;

@@ -98,7 +98,7 @@ const insertHoop = async (hoop: Omit<BasketballHoop, 'id'>, imageFiles: File[], 
     console.error('Insert error:', error)
     throw error
   }
-  console.log('Inserted hoop:', data)
+  //console.log('Inserted hoop:', data)
   return mapHoopRow(data)
 }
 
@@ -379,7 +379,10 @@ const signUp = async (email: string, password: string, nickname: string, isPubli
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { nickname, public: isPublic } },
+    options: {
+      data: { nickname, public: isPublic },
+      emailRedirectTo: `${window.location.origin}/auth/callback`,
+    },
   })
   if (error) {
     console.error('Sign up error:', error.message)
@@ -398,6 +401,21 @@ const signIn = async (email: string, password: string) => {
     throw error
   }
   return data
+}
+
+const resendVerification = async (email: string) => {
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email,
+    options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+  })
+  if (error) {
+    console.error('Resend verification error:', error.message)
+    if (error.status === 429) {
+      throw new Error('Too many attempts. Please wait a moment and try again.')
+    }
+    throw error
+  }
 }
 
 const getHoopImageUrl = (imagePath: string): string => {
@@ -912,6 +930,6 @@ const toggleHoopVerification = async (id: string, isVerified: boolean): Promise<
   }
 }
 
-export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, verifyEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, fetchUserBio, updateUserBio, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchEnrollmentsForPlayers, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
+export { fetchHoops, insertHoop, updateHoop, deleteHoop, toggleHoopVerification, fetchAllEnrollments, fetchUserEnrollments, fetchHoopEnrollments, insertEnrollment, verifyEnrollment, deleteEnrollment, updateProfileVisibility, signUp, signIn, resendVerification, getHoopImageUrl, getProfileImageUrl, uploadProfileImage, removeProfileImage, fetchFavorites, toggleFavoriteRequest, fetchFollowers, fetchFollowing, fetchPublicProfiles, toggleFollowRequest, fetchAllPlayers, searchAllPlayersByNickname, fetchPlayerByNickname, fetchUserBio, updateUserBio, sendFollowRequest, cancelFollowRequest, removeFollower, fetchIncomingFollowRequests, fetchOutgoingFollowRequestIds, acceptFollowRequest, rejectFollowRequest, fetchExpiredEnrollmentCount, fetchActiveEnrollments, fetchEnrollmentsForPlayers, fetchUserProfileImage, fetchUsersWithProfileImages, adminRemoveProfileImage }
 
 export type { UserWithProfileImage }

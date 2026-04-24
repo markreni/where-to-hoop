@@ -5,6 +5,7 @@ import { useColorModeValues } from "../contexts/ColorModeContext";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
 import { BackArrow } from "../components/reusable/BackArrow";
+import { AlreadySignedInCard } from "../components/reusable/AlreadySignedInCard";
 import Footer from "../components/Footer";
 import type { ColorMode } from "../types/types";
 import { signIn } from "../services/requests";
@@ -45,17 +46,7 @@ const SignIn = () => {
       <BackArrow />
       <div className="flex-grow padding-x-for-page padding-b-for-page flex items-center justify-center">
         {user ? (
-          <div className={`${colorModeContext} w-full max-w-md bg-background rounded-lg shadow-xl p-6 sm:p-8 text-center`}>
-            <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text mb-4`}>
-              {t('signIn.alreadySignedIn')}
-            </h1>
-            <Link
-              to="/myprofile"
-              className={`${colorModeContext} inline-block px-4 py-2 rounded-lg bg-first-color first-color-text text-base font-medium main-color-hover transition-colors`}
-            >
-              {t('signIn.goToProfile')}
-            </Link>
-          </div>
+          <AlreadySignedInCard titleKey="signIn.alreadySignedIn" linkKey="signIn.goToProfile" />
         ) : (
           <div className={`${colorModeContext} w-full max-w-md bg-background rounded-lg shadow-xl p-6 sm:p-8`}>
             <h1 className={`${colorModeContext} text-fluid-2xl poppins-semibold background-text mb-6`}>

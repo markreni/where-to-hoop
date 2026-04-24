@@ -87,6 +87,25 @@
     "alreadySignedUp": "You already have an account.",
     "goToProfile": "Go to profile"
   },
+  "authCallback": {
+    "verifying": "Verifying your account…",
+    "linkInvalid": "This verification link is invalid. Please sign up again.",
+    "alreadyVerified": "You've already verified your account. Welcome back!"
+  },
+  "verifyExpired": {
+    "title": "Verification link expired",
+    "message": "Your verification link has expired or has already been used. Enter your email to receive a new link.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "emailHint": "Use the same email address you originally signed up with.",
+    "submit": "Send new link",
+    "submitting": "Sending…",
+    "resendSuccess": "A new verification email is on its way.",
+    "resendFailed": "Could not send a new verification email. Please try again.",
+    "checkEmail": "Check your inbox for the new verification email.",
+    "alreadyVerifiedPrompt": "Already verified?",
+    "signInLink": "Sign in"
+  },
   "myProfile": {
     "enrollmentsTab": "Sessions",
     "favoritesTab": "Favorites",
