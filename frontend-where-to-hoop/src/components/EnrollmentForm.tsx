@@ -348,7 +348,7 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
             <Button
               onPress={handleEnrollSubmit}
               isDisabled={!isEnrollEnabled}
-              className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white font-medium transition-colors ${
+              className={`${colorModeContext} w-full py-3 px-4 rounded-lg text-white fredoka-semibold tracking-wide text-fluid-xl transition-colors ${
                 isEnrollEnabled
                   ? 'bg-green-500 hover:bg-green-600 cursor-pointer'
                   : 'bg-gray-400 cursor-not-allowed'

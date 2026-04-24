@@ -157,7 +157,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments, roundedSide = 
               actionFunction={readyToPlay}
               title={t('hoops.hoopcardReadyToPlayButton')}
               colors="hoop-card-button-green"
-              text="text-fluid-base"
+              text="text-fluid-lg"
             />
           </div>
         </div>
@@ -167,7 +167,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments, roundedSide = 
               actionFunction={readyToPlay}
               title={t('hoops.hoopcardReadyToPlayButton')}
               colors="hoop-card-button-green"
-              text="text-fluid-lg"
+              text="text-fluid-xl"
             />
         </div>
       </div>

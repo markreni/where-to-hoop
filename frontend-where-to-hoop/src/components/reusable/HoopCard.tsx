@@ -182,13 +182,13 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
             />
           </div>
           <div className="hidden sm:flex xmd:hidden xl:flex 2xl:hidden">
-            <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-base"></HoopCardButton>
+            <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-lg"></HoopCardButton>
           </div>
         </div>
         <p className="sm:hidden font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>   
       </div>
       <div className="flex flex-col justify-between items-center sm:hidden xmd:flex xl:hidden 2xl:flex">
-        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-lg"></HoopCardButton>
+        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-xl"></HoopCardButton>
       </div>
     </div>                        
   );

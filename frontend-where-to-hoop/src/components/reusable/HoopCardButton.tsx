@@ -13,10 +13,12 @@ interface HoopCardButtonProps {
 }
 const HoopCardButton = ({ actionFunction, title, colors, text, className = '' }: HoopCardButtonProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
+  const isGreen = colors === 'hoop-card-button-green';
+  const fontStyle = isGreen ? 'fredoka-semibold tracking-wide' : 'font-light';
 
   return (
     <Button
-      className={`${colorModeContext} flex items-center gap-2 text-white padding-y-for-elements px-3.5 shadow-lg ${colors} ${text} rounded-xl font-light transition-colors whitespace-nowrap cursor-pointer ${className}`}
+      className={`${colorModeContext} flex items-center gap-2 text-white padding-y-for-elements px-3.5 shadow-lg ${colors} ${text} rounded-xl ${fontStyle} transition-colors whitespace-nowrap cursor-pointer ${className}`}
         onClick={(e) => actionFunction(e)}
       >
         {/*<IoMapOutline size={16} /> --- IGNORE ---*/}
