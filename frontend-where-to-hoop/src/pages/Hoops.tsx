@@ -4,6 +4,7 @@ import { Map }from "../components/Map";
 import { List } from "../components/List";
 import { ListToggle } from "../components/ListToggle";
 import { MapLabel } from "../components/reusable/MapLabel";
+import { BackArrow } from "../components/reusable/BackArrow";
 import type { BasketballHoop, Condition } from "../types/types";
 import { doorOptions, conditionOptions } from "../utils/options.tsx";
 import haversineDistance from "../utils/functions";
@@ -82,6 +83,7 @@ const Hoops = ({ hoops }: { hoops: BasketballHoop[] }) => {
       <div className="absolute top-19 left-[10px] z-402">
         <ListToggle />
       </div>
+      <BackArrow className="absolute top-32 left-[10px] z-402" />
       { isMapView && (
       <div>
         <div className="absolute bottom-2 right-[10px] z-1001">

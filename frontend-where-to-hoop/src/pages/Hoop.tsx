@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type Dispatch, type MouseEvent } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useColorModeValues } from '../contexts/ColorModeContext'
-import { useLocationValues } from '../contexts/LocationContext'
+import { useLocationValues, useLocationDispatch } from '../contexts/LocationContext'
+import { useMapViewDispatch } from '../contexts/MapViewContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { useLanguage } from '../contexts/LanguageContext'
 import { useAuth } from '../contexts/AuthContext'
@@ -11,13 +12,15 @@ import { useToast } from '../contexts/ToastContext'
 import { BackArrow } from '../components/reusable/BackArrow'
 import Footer from '../components/Footer'
 import { HoopBadge } from '../components/reusable/HoopBadge'
+import { HoopCardButton } from '../components/reusable/HoopCardButton'
 import { EnrollmentForm } from '../components/EnrollmentForm'
 import { PlayersPanel } from '../components/PlayersPanel'
 import { MiniMap } from '../components/MiniMap'
 import { ImageGallery } from '../components/reusable/ImageGallery'
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
 import { MdDeleteOutline, MdEditNote } from 'react-icons/md'
-import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
+import type { FocusableElement } from '@react-types/shared'
+import type { BasketballHoop, ColorMode, Coordinates, MapView } from '../types/types'
 import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
 import { fetchHoopEnrollments, deleteHoop } from '../services/requests'
 import { useFavorites } from '../hooks/useFavorites'
@@ -36,6 +39,8 @@ const Hoop = ({ hoop }: HoopProps) => {
   const { t } = useTranslation()
   const language = useLanguage()
   const userLocation: Coordinates = useLocationValues()
+  const userLocationDispatch = useLocationDispatch()
+  const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch()
   const { hash } = useLocation()
   const navigate = useNavigate()
   const { user } = useAuth()
@@ -59,6 +64,23 @@ const Hoop = ({ hoop }: HoopProps) => {
       el?.scrollIntoView({ behavior: 'smooth' })
     }
   }, [hash])
+
+  const locateHoop = (e: MouseEvent<FocusableElement>) => {
+    e.preventDefault()
+    if (!hoop) return
+    userLocationDispatch({
+      type: 'SET_MAP_CENTER',
+      payload: {
+        coordinates: {
+          latitude: hoop.coordinates.latitude,
+          longitude: hoop.coordinates.longitude,
+        },
+        source: 'hoop',
+      },
+    })
+    mapViewDispatch('map')
+    navigate('/hoops/')
+  }
 
   // Calculate distance
   const distance: number | null = useMemo(() => {
@@ -225,11 +247,16 @@ const Hoop = ({ hoop }: HoopProps) => {
                   </div>
 
                   {/* Location map */}
-                  <MiniMap
-                    coordinates={hoop.coordinates}
-                    mapRef={mapRef}
-                    readOnly
-                  />
+                  <div className="relative">
+                    <div className="absolute top-2 right-2 z-[1000]">
+                      <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-sm" />
+                    </div>
+                    <MiniMap
+                      coordinates={hoop.coordinates}
+                      mapRef={mapRef}
+                      readOnly
+                    />
+                  </div>
                 </div>
               </div>
               <EnrollmentForm

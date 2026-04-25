@@ -86,7 +86,7 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments, roundedSide = 
           </span>
         )}
         <div className="absolute top-2 right-2 z-10 mt-auto">
-          <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-base" />
+          <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-sm" />
         </div>
         <img
           src={imageSrc}

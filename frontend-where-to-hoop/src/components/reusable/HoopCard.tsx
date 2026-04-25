@@ -92,7 +92,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
         <div className="flex justify-start gap-4">
           <div className="relative w-full sm:w-2/3 shrink-0">
             <div className="absolute top-0.5 right-0.5 z-10">
-              <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-fluid-sm"></HoopCardButton>
+              <HoopCardButton actionFunction={locateHoop} title={t('hoops.hoopcardMapButton')} colors="hoop-card-button-blue" text="text-sm"></HoopCardButton>
             </div>
             <img className="rounded-md w-full h-40 object-cover"
               src={hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/150'}
@@ -188,7 +188,7 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
         <p className="sm:hidden font-thin responsive-hoopcard-elements-text">{hoop.description[language] || hoop.description.en || hoop.description.fi}</p>   
       </div>
       <div className="flex flex-col justify-between items-center sm:hidden xmd:flex xl:hidden 2xl:flex">
-        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-xl"></HoopCardButton>
+        <HoopCardButton actionFunction={readyToPlay} title={t('hoops.hoopcardReadyToPlayButton')} colors="hoop-card-button-green" text="text-fluid-lg"></HoopCardButton>
       </div>
     </div>                        
   );
