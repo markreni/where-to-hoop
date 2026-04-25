@@ -1,18 +1,17 @@
-import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../../types/types.ts";
+import type { BasketballHoop, ColorMode, PlayerEnrollment } from "../../types/types.ts";
 import type { FocusableElement } from "@react-types/shared";
-import { useMemo, type Dispatch, type MouseEvent } from "react";
+import { useMemo, type MouseEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { HoopBadge } from "./HoopBadge.tsx";
 import { HoopCardButton } from "./HoopCardButton.tsx";
 import { useTranslation } from "../../hooks/useTranslation.ts";
+import { useLocateHoop } from "../../hooks/useLocateHoop.ts";
 import { groupEnrollmentsByTime, shortenAddress } from "../../utils/functions.ts";
 import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
 import breakpoints from "../../assets/style.ts";
 import { useMediaQuery } from "usehooks-ts";
-import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
-import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 import { useAuth } from "../../contexts/AuthContext.tsx";
 
 interface HomeHoopCardProps {
@@ -32,9 +31,8 @@ const roundedClass: Record<NonNullable<HomeHoopCardProps['roundedSide']>, string
 export const HomeHoopCard = ({ hoop, distance, playerEnrollments, roundedSide = 'none' }: HomeHoopCardProps) => {
   const colorModeContext: ColorMode = useColorModeValues();
   const { t } = useTranslation();
-  const userLocationDispatch = useLocationDispatch();
   const navigate = useNavigate();
-  const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
+  const locateHoop = useLocateHoop(hoop.coordinates);
   const { user } = useAuth();
   const imageSrc = hoop.images.length > 0 ? getHoopImageUrl(hoop.images[0].imagePath) : 'https://via.placeholder.com/300x200';
 
@@ -50,22 +48,6 @@ export const HomeHoopCard = ({ hoop, distance, playerEnrollments, roundedSide = 
     e.preventDefault();
     e.stopPropagation();
     navigate(`/hoops/${hoop.id}`);
-  };
-
-  const locateHoop = (e: MouseEvent<FocusableElement>) => {
-    e.preventDefault();
-    userLocationDispatch({
-      type: 'SET_MAP_CENTER',
-      payload: {
-        coordinates: {
-          latitude: hoop.coordinates.latitude,
-          longitude: hoop.coordinates.longitude,
-        },
-        source: 'hoop',
-      },
-    });
-    mapViewDispatch('map');
-    navigate(`/hoops/`);
   };
 
   const { playingNow } = useMemo(

@@ -1,6 +1,4 @@
-import type { Dispatch } from "react";
-import type { BasketballHoop, ColorMode, MapView, PlayerEnrollment } from "../../types/types.ts";
-import { useLocationDispatch } from "../../contexts/LocationContext.tsx";
+import type { BasketballHoop, ColorMode, PlayerEnrollment } from "../../types/types.ts";
 import { useColorModeValues } from "../../contexts/ColorModeContext.tsx";
 import { useLanguage } from "../../contexts/LanguageContext.tsx";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +11,9 @@ import { MdOutlineFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
+import { useLocateHoop } from "../../hooks/useLocateHoop.ts";
 import { groupEnrollmentsByTime, shortenAddress } from "../../utils/functions.ts";
 import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
-import { useMapViewDispatch } from "../../contexts/MapViewContext.tsx";
 import { useAuth } from "../../contexts/AuthContext.tsx";
 import { useFavorites } from "../../hooks/useFavorites.ts";
 //import { Button } from "react-aria-components";
@@ -29,28 +27,11 @@ const HoopCard = ({ hoop, distance, playerEnrollments }: HoopCardProps) => {
   const xsm = useMediaQuery(`(min-width: ${breakpoints.xsm})`);
   const colorModeContext: ColorMode = useColorModeValues();
   const language = useLanguage();
-  const userLocationDispatch = useLocationDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const mapViewDispatch: Dispatch<MapView> = useMapViewDispatch();
+  const locateHoop = useLocateHoop(hoop.coordinates);
   const { user } = useAuth();
   const { isFavorited, toggleFavorite } = useFavorites();
-
-  const locateHoop = (e: MouseEvent<FocusableElement>) => {
-    e.preventDefault();
-    userLocationDispatch({
-      type: 'SET_MAP_CENTER',
-      payload: {
-        coordinates: {
-          latitude: hoop.coordinates.latitude,
-          longitude: hoop.coordinates.longitude,
-        },
-        source: 'hoop',
-      },
-    });
-    mapViewDispatch('map');
-    navigate('/hoops');
-  };
 
   const readyToPlay = (e: MouseEvent<FocusableElement>) => {
     e.preventDefault();
