@@ -20,8 +20,9 @@ import { ImageGallery } from '../components/reusable/ImageGallery'
 import { MdOutlineFavoriteBorder, MdFavorite } from 'react-icons/md'
 import { MdDeleteOutline, MdEditNote } from 'react-icons/md'
 import type { BasketballHoop, ColorMode, Coordinates } from '../types/types'
-import haversineDistance, { groupEnrollmentsByTime } from '../utils/functions'
-import { fetchHoopEnrollments, deleteHoop } from '../services/requests'
+import haversineDistance from '../utils/functions'
+import { groupEnrollmentsByTime } from '../utils/enrollments'
+import { fetchActiveHoopEnrollments, deleteHoop } from '../services/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { Button } from 'react-aria-components'
 import { useMediaQuery } from 'usehooks-ts'
@@ -50,9 +51,9 @@ const Hoop = ({ hoop }: HoopProps) => {
   const mapRef = useRef<L.Map | null>(null)
   const md = useMediaQuery(`(min-width: ${breakpoints.md})`)
 
-  const { data: enrollments = [] } = useQuery({
+  const { data: hoopEnrollments = [] } = useQuery({
     queryKey: ['enrollments', hoop?.id ?? ''],
-    queryFn: () => fetchHoopEnrollments(hoop?.id ?? ''),
+    queryFn: () => fetchActiveHoopEnrollments(hoop?.id ?? ''),
     enabled: !!hoop,
   })
 
@@ -84,7 +85,7 @@ const Hoop = ({ hoop }: HoopProps) => {
     )
   }
 
-  const { playingNow } = groupEnrollmentsByTime(enrollments)
+  const { playingNow } = groupEnrollmentsByTime(hoopEnrollments)
   const playingNowCount = playingNow.length
 
 
@@ -242,11 +243,11 @@ const Hoop = ({ hoop }: HoopProps) => {
               </div>
               <EnrollmentForm
                 hoopId={hoop.id}
-                enrollments={enrollments}
+                enrollments={hoopEnrollments}
               />
             </div>
             <PlayersPanel
-              playerEnrollments={enrollments}
+              hoopEnrollments={hoopEnrollments}
               hoopCoordinates={hoop.coordinates}
             />
           </div>

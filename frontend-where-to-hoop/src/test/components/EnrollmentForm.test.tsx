@@ -184,10 +184,10 @@ describe('EnrollmentForm', () => {
       expect(getArrivalSlider()).toHaveAttribute('max', '30');
     });
 
-    it('caps max at 720 when more than 12h remain', () => {
-      vi.setSystemTime(new Date(2024, 0, 15, 8, 0, 0)); // 16h remaining
+    it('sets max to 960 at 08:00 (16h remaining)', () => {
+      vi.setSystemTime(new Date(2024, 0, 15, 8, 0, 0));
       render(<EnrollmentForm {...defaultProps} />);
-      expect(getArrivalSlider()).toHaveAttribute('max', '720');
+      expect(getArrivalSlider()).toHaveAttribute('max', '960');
     });
 
     it('shows the dynamic max in the slider end label', () => {

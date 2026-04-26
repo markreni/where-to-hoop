@@ -7,7 +7,7 @@ import { useTranslation } from '../../hooks/useTranslation'
 import { useAuth } from '../../contexts/AuthContext'
 import { useToast } from '../../contexts/ToastContext'
 import { fetchActiveEnrollments, insertEnrollment } from '../../services/requests'
-import { isTodayDate } from '../../utils/functions'
+import { hasEnrollmentInSameDayBucket } from '../../utils/enrollments'
 import type { BasketballHoop, ColorMode, PlayerEnrollment } from '../../types/types'
 
 interface EnrollmentCardProps {
@@ -46,10 +46,7 @@ const EnrollmentCard = ({ enrollment, hoops }: EnrollmentCardProps) => {
     enabled: showJoinButton,
   })
 
-  const enrollmentIsToday: boolean = isTodayDate(new Date(enrollment.arrivalTime))
-  const alreadyEnrolled: boolean = showJoinButton && userEnrollments.some(e =>
-    enrollmentIsToday ? isTodayDate(new Date(e.arrivalTime)) : !isTodayDate(new Date(e.arrivalTime))
-  )
+  const alreadyEnrolled: boolean = !!user && hasEnrollmentInSameDayBucket(userEnrollments, user.id, enrollment)
 
   const handleJoinSubmit = () => {
     if (!user || alreadyEnrolled) return

@@ -8,7 +8,7 @@ vi.mock('../../utils/supabase', () => ({
 import {
   fetchUserEnrollments,
   fetchAllEnrollments,
-  fetchHoopEnrollments,
+  fetchActiveHoopEnrollments,
   insertEnrollment,
   deleteEnrollment,
   fetchExpiredEnrollmentCount,
@@ -82,13 +82,13 @@ describe('fetchAllEnrollments', () => {
   })
 })
 
-describe('fetchHoopEnrollments', () => {
+describe('fetchActiveHoopEnrollments', () => {
   it('passes the note through when present', async () => {
     queueTable('player_enrollment', {
       data: [enrollmentRow({ note: 'bring a ball' })],
       error: null,
     })
-    const result = await fetchHoopEnrollments('h-1')
+    const result = await fetchActiveHoopEnrollments('h-1')
     expect(result[0].note).toBe('bring a ball')
   })
 
@@ -97,7 +97,7 @@ describe('fetchHoopEnrollments', () => {
       data: null,
       error: { message: 'nope' },
     })
-    await expect(fetchHoopEnrollments('h-1')).rejects.toBeDefined()
+    await expect(fetchActiveHoopEnrollments('h-1')).rejects.toBeDefined()
   })
 })
 

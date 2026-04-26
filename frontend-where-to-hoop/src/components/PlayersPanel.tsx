@@ -4,16 +4,16 @@ import type { ColorMode, Coordinates, PlayerEnrollment } from '../types/types'
 import { useColorModeValues } from '../contexts/ColorModeContext'
 import { useTranslation } from '../hooks/useTranslation'
 import { PlayerPanelCard } from './reusable/PlayerPanelCard'
-import { groupEnrollmentsByTime } from '../utils/functions'
+import { groupEnrollmentsByTime } from '../utils/enrollments'
 import useEnrollmentsRealtime from '../hooks/useEnrollmentsRealtime'
   
 // Players panel component
 interface PlayersPanelProps {
-  playerEnrollments: PlayerEnrollment[]
+  hoopEnrollments: PlayerEnrollment[]
   hoopCoordinates: Coordinates
 }
 
-const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments, hoopCoordinates }: PlayersPanelProps) => {
+const PlayersPanel: React.FC<PlayersPanelProps> = ({ hoopEnrollments, hoopCoordinates }: PlayersPanelProps) => {
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
   useEnrollmentsRealtime()
@@ -30,8 +30,8 @@ const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments, hoopCoor
   */
 
   const { playingNow, comingSoon, comingLater } = useMemo(
-    () => groupEnrollmentsByTime(playerEnrollments),
-    [playerEnrollments]
+    () => groupEnrollmentsByTime(hoopEnrollments),
+    [hoopEnrollments]
   )
 
   const renderPlayerGroup = (title: string, enrollments: PlayerEnrollment[]) => {
@@ -47,7 +47,7 @@ const PlayersPanel: React.FC<PlayersPanelProps> = ({ playerEnrollments, hoopCoor
             <PlayerPanelCard
               key={enrollment.id}
               enrollment={enrollment}
-              allEnrollments={playerEnrollments}
+              hoopEnrollments={enrollments}
               hoopCoordinates={hoopCoordinates}
             />
           ))}

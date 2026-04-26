@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor } from '../test-utils';
 import Hoop from '../../pages/Hoop';
 import type { BasketballHoop } from '../../types/types';
-import { fetchHoopEnrollments } from '../../services/requests';
+import { fetchActiveHoopEnrollments } from '../../services/requests';
 import { supabaseMockInstance, MOCK_USER } from '../services/supabaseMock';
 
 const mockEnrollments = vi.hoisted(() => [
@@ -34,7 +34,7 @@ vi.mock('../../services/requests', async (importOriginal) => {
   const actual = await importOriginal<typeof import('../../services/requests')>();
   return {
     ...actual,
-    fetchHoopEnrollments: vi.fn().mockResolvedValue(mockEnrollments),
+    fetchActiveHoopEnrollments: vi.fn().mockResolvedValue(mockEnrollments),
   };
 });
 
@@ -143,7 +143,7 @@ describe('Hoop Page', () => {
     vi.setSystemTime(new Date('2024-06-15T12:00:00'));
     const now = Date.now();
 
-    vi.mocked(fetchHoopEnrollments).mockResolvedValueOnce([
+    vi.mocked(fetchActiveHoopEnrollments).mockResolvedValueOnce([
       {
         id: 'enroll-1',
         playerId: 'user-alice',

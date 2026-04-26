@@ -37,12 +37,12 @@ describe('PlayersPanel', () => {
   });
 
   it('renders the title', () => {
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[]} />);
     expect(screen.getByText("Who's Playing")).toBeInTheDocument();
   });
 
   it('shows no players message when empty', () => {
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[]} />);
     expect(screen.getByText('No one here yet. Be the first!')).toBeInTheDocument();
   });
 
@@ -54,7 +54,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[playingNowEnrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[playingNowEnrollment]} />);
     expect(screen.getByText('Playing Now (1)')).toBeInTheDocument();
   });
 
@@ -66,7 +66,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[comingSoonEnrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[comingSoonEnrollment]} />);
     expect(screen.getByText('Coming Soon (1)')).toBeInTheDocument();
   });
 
@@ -78,7 +78,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[comingLaterEnrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[comingLaterEnrollment]} />);
     expect(screen.getByText('Coming Later (1)')).toBeInTheDocument();
   });
 
@@ -110,22 +110,10 @@ describe('PlayersPanel', () => {
       }),
     ];
 
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={enrollments} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={enrollments} />);
     expect(screen.getByText('Playing Now (2)')).toBeInTheDocument();
     expect(screen.getByText('Coming Soon (1)')).toBeInTheDocument();
     expect(screen.getByText('Coming Later (1)')).toBeInTheDocument();
-  });
-
-  it('excludes expired enrollments from display', () => {
-    const expiredEnrollment = createEnrollment({
-      id: 'expired-1',
-      playerId: 'expired',
-      arrivalTime: new Date(fixedNow.getTime() - 120 * 60000), // 2 hours ago
-      duration: 60, // ended 1 hour ago
-    });
-
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[expiredEnrollment]} />);
-    expect(screen.getByText('No one here yet. Be the first!')).toBeInTheDocument();
   });
 
   it('displays player nickname as a link to their profile', () => {
@@ -135,7 +123,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[enrollment]} />);
     const link = screen.getByRole('link', { name: '@Alice' });
     expect(link).toHaveAttribute('href', '/players/alice');
   });
@@ -147,7 +135,7 @@ describe('PlayersPanel', () => {
       duration: 60, // 30 mins remaining
     });
 
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[enrollment]} />);
     expect(screen.getByText(/until/)).toBeInTheDocument();
   });
 
@@ -158,7 +146,7 @@ describe('PlayersPanel', () => {
       duration: 60,
     });
 
-    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
+    render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[enrollment]} />);
     expect(screen.getByText(/in 15 min/)).toBeInTheDocument();
   });
 
@@ -172,7 +160,7 @@ describe('PlayersPanel', () => {
         note: 'Looking for 3v3 game!',
       });
 
-      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[enrollment]} />);
       expect(screen.getByText('Looking for 3v3 game!')).toBeInTheDocument();
     });
 
@@ -185,7 +173,7 @@ describe('PlayersPanel', () => {
         note: undefined,
       });
 
-      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[enrollment]} />);
       expect(screen.getByText('Please join me to hoop')).toBeInTheDocument();
     });
 
@@ -198,7 +186,7 @@ describe('PlayersPanel', () => {
         note: undefined,
       });
 
-      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[enrollment]} />);
       expect(screen.getByText('Prefer to hoop alone this time')).toBeInTheDocument();
     });
 
@@ -211,7 +199,7 @@ describe('PlayersPanel', () => {
         note: '',
       });
 
-      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[enrollment]} />);
       expect(screen.getByText('Please join me to hoop')).toBeInTheDocument();
     });
 
@@ -231,7 +219,7 @@ describe('PlayersPanel', () => {
         playMode: 'solo',
       });
 
-      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[openEnrollment, soloEnrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[openEnrollment, soloEnrollment]} />);
 
       const joinButtons = screen.getAllByRole('button', { name: /join/i });
       expect(joinButtons).toHaveLength(1);
@@ -245,7 +233,7 @@ describe('PlayersPanel', () => {
         playMode: 'solo',
       });
 
-      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} playerEnrollments={[enrollment]} />);
+      render(<PlayersPanel hoopCoordinates={{ latitude: 60.17, longitude: 24.94 }} hoopEnrollments={[enrollment]} />);
       expect(screen.queryByRole('button', { name: /join/i })).not.toBeInTheDocument();
     });
   });

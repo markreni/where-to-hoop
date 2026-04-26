@@ -1,6 +1,3 @@
-import { TIME_SLOTS } from "../components/reusable/TimeSlotPicker";
-import type { TimeSlot, PlayerEnrollment } from "../types/types";
-
 const haversineDistance = ([lat1, lon1]: [number, number], [lat2, lon2]: [number, number], isMiles = false) => {
       const toRadian = (angle: number) => (Math.PI / 180) * angle;
       const distance = (a: number, b: number) => (Math.PI / 180) * (a - b);
@@ -27,64 +24,6 @@ const haversineDistance = ([lat1, lon1]: [number, number], [lat2, lon2]: [number
       return finalDistance;
     };
 
-    // Helper to get the start hour for a time slot
-export const getTimeSlotStartHour = (slot: TimeSlot): number => {
-  const slotConfig = TIME_SLOTS.find(s => s.id === slot)
-  return slotConfig?.startHour ?? 12
-}
-
-
-
-// Group enrollments by time status
-export const groupEnrollmentsByTime = (enrollments: PlayerEnrollment[] = []): {
-  playingNow: PlayerEnrollment[]
-  comingSoon: PlayerEnrollment[] // Coming later today
-  comingLater: PlayerEnrollment[] // Coming on a future day
-} => {
-  const now = new Date()
-
-  // Get end of today (midnight)
-  const endOfToday = new Date(now)
-  endOfToday.setHours(23, 59, 59, 999)
-
-  const playingNow: PlayerEnrollment[] = []
-  const comingSoon: PlayerEnrollment[] = []
-  const comingLater: PlayerEnrollment[] = []
-
-  enrollments.forEach(enrollment => {
-    const arrivalTime = new Date(enrollment.arrivalTime)
-    const endTime = new Date(arrivalTime.getTime() + enrollment.duration * 60 * 1000)
-
-    if (arrivalTime <= now && endTime > now) {
-      // Currently at the court
-      playingNow.push(enrollment)
-    } else if (arrivalTime > now && arrivalTime <= endOfToday) {
-      // Arriving later today
-      comingSoon.push(enrollment)
-    } else if (arrivalTime > endOfToday) {
-      // Arriving on a future day
-      comingLater.push(enrollment)
-    }
-  })
-
-  // Sort each group by arrival time
-  playingNow.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
-  comingSoon.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
-  comingLater.sort((a, b) => new Date(a.arrivalTime).getTime() - new Date(b.arrivalTime).getTime())
-
-  return { playingNow, comingSoon, comingLater }
-}
-
-export const groupEnrollmentsByHoop = (enrollments: PlayerEnrollment[]): Map<string, PlayerEnrollment[]> => {
-  const map = new Map<string, PlayerEnrollment[]>()
-  for (const enrollment of enrollments) {
-    if (!enrollment.hoopId) continue
-    const existing = map.get(enrollment.hoopId) ?? []
-    map.set(enrollment.hoopId, [...existing, enrollment])
-  }
-  return map
-}
-
 export const reverseGeocode = async (lat: number, lng: number): Promise<string | null> => {
   try {
     const response = await fetch(
@@ -102,11 +41,6 @@ export const reverseGeocode = async (lat: number, lng: number): Promise<string |
     return null;
   }
 };
-
-export const isTodayDate = (date: Date): boolean => {
-  const today = new Date()
-  return date.toDateString() === today.toDateString()
-}
 
 export const isWithinHoopRange = (
   userCoords: [number, number],

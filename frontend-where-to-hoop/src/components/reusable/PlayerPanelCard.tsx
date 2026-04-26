@@ -8,7 +8,9 @@ import { useToast } from '../../contexts/ToastContext'
 import { deleteEnrollment, insertEnrollment, verifyEnrollment } from '../../services/requests'
 import { Button } from 'react-aria-components'
 import { Link } from 'react-router-dom'
-import { isTodayDate, isWithinHoopRange } from '../../utils/functions'
+import { isWithinHoopRange } from '../../utils/functions'
+import { getSessionEndTime } from '../../utils/time'
+import { hasEnrollmentInSameDayBucket } from '../../utils/enrollments'
 import { MdCheckCircle, MdHourglassEmpty } from 'react-icons/md'
 import { VERIFY_RANGE_METERS, VERIFY_WINDOW_START_OFFSET_MS, VERIFY_WINDOW_END_OFFSET_MS } from '../../utils/constants'
 
@@ -49,15 +51,15 @@ const formatArrivalText = (arrivalTime: Date, t: (key: string) => string): strin
 
 interface PlayerPanelCardProps {
   enrollment: PlayerEnrollment
-  allEnrollments: PlayerEnrollment[]
+  hoopEnrollments: PlayerEnrollment[]
   hoopCoordinates: Coordinates
 }
 
-const PlayerPanelCard = ({ enrollment, allEnrollments, hoopCoordinates }: PlayerPanelCardProps) => {
-  const arrivalTime = new Date(enrollment.arrivalTime)
-  const endTime = new Date(arrivalTime.getTime() + enrollment.duration * 60 * 1000)
-  const now = new Date()
-  const isPlaying = arrivalTime <= now
+const PlayerPanelCard = ({ enrollment, hoopEnrollments, hoopCoordinates }: PlayerPanelCardProps) => {
+  const arrivalTime: Date = new Date(enrollment.arrivalTime)
+  const endTime: Date = getSessionEndTime(arrivalTime, enrollment.duration)
+  const now: Date = new Date()
+  const isPlaying: boolean = arrivalTime <= now
   const isOpenToPlay = enrollment.playMode === 'open'
   const colorModeContext: ColorMode = useColorModeValues()
   const { t } = useTranslation()
@@ -119,11 +121,7 @@ const PlayerPanelCard = ({ enrollment, allEnrollments, hoopCoordinates }: Player
     }
   }
 
-  const enrollmentIsToday: boolean = isTodayDate(arrivalTime)
-  const alreadyEnrolled: boolean = !!user && allEnrollments.some(e =>
-    e.playerId === user.id &&
-    (enrollmentIsToday ? isTodayDate(new Date(e.arrivalTime)) : !isTodayDate(new Date(e.arrivalTime)))
-  )
+  const alreadyEnrolled: boolean = !!user && hasEnrollmentInSameDayBucket(hoopEnrollments, user.id, enrollment)
   const joinDisabled: boolean = !user || isJoining || alreadyEnrolled
 
   const handleJoinSubmit = () => {

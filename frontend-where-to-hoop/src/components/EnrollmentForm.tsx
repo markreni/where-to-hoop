@@ -14,25 +14,16 @@ import { MAX_NOTE_LENGTH } from '../utils/constants'
 import { EnrollmentCalendar } from './reusable/EnrollmentCalendar'
 import InfoLink from './reusable/InfoLink'
 import { TimeSlotPicker } from './reusable/TimeSlotPicker'
-import { getLocalTimeZone } from '@internationalized/date'
-import { getTimeSlotStartHour, isTodayDate } from '../utils/functions'
-
-type WhenMode = 'today' | 'later'
+import { calculateArrivalTime, getMaxArrivalMinutes, isTodayDate, type WhenMode } from '../utils/time'
 
 interface EnrollmentFormProps {
   hoopId: string
   enrollments: PlayerEnrollment[]
 }
 
-const getMaxArrivalMinutes = (): number => {
-  const now = new Date()
-  const minutesUntilMidnight = (23 - now.getHours()) * 60 + (60 - now.getMinutes())
-  return Math.min(Math.floor(minutesUntilMidnight / 30) * 30, 720)
-}
-
 const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
   const [whenMode, setWhenMode] = useState<WhenMode>('today')
-  const maxArrivalMinutes = getMaxArrivalMinutes()
+  const maxArrivalMinutes: number = getMaxArrivalMinutes()
   const [arrivalMinutes, setArrivalMinutes] = useState(0) // 0-maxArrivalMinutes in 30 min increments
   const [selectedDate, setSelectedDate] = useState<DateValue | null>(null)
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<TimeSlot | null>(null)
@@ -93,31 +84,13 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
     return `${hours}${t('hoop.enrollment.hours')} ${mins}${t('hoop.enrollment.minutes')}`
   }
 
-  const calculateArrivalTime = (): Date => {
-    const now = new Date()
-
-    if (whenMode === 'today') {
-      return new Date(now.getTime() + arrivalMinutes * 60 * 1000)
-    } else {
-      // "Later" mode - use selected date and time slot
-      if (!selectedDate || !selectedTimeSlot) {
-        return now // Fallback, shouldn't happen if form validation works
-      }
-
-      const arrivalDate = selectedDate.toDate(getLocalTimeZone())
-      const startHour = getTimeSlotStartHour(selectedTimeSlot)
-      arrivalDate.setHours(startHour, 0, 0, 0)
-      return arrivalDate
-    }
-  }
-
   const handleEnrollSubmit = () => {
     setIsSubmitting(true)
     insertEnrollment({
       playerId: user!.id,
       playerNickname: user!.user_metadata?.nickname ?? '',
       hoopId,
-      arrivalTime: calculateArrivalTime(),
+      arrivalTime: calculateArrivalTime(whenMode, arrivalMinutes, selectedDate, selectedTimeSlot),
       duration: durationMinutes,
       expired: false,
       playMode,

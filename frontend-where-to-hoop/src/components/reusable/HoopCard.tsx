@@ -12,7 +12,8 @@ import { useMediaQuery } from 'usehooks-ts'
 import breakpoints from "../../assets/style.ts";
 import { useTranslation } from "../../hooks/useTranslation.ts";
 import { useLocateHoop } from "../../hooks/useLocateHoop.ts";
-import { groupEnrollmentsByTime, shortenAddress } from "../../utils/functions.ts";
+import { shortenAddress } from "../../utils/functions.ts";
+import { groupEnrollmentsByTime } from "../../utils/enrollments.ts";
 import { fetchActiveEnrollments, getHoopImageUrl } from "../../services/requests.ts";
 import { useAuth } from "../../contexts/AuthContext.tsx";
 import { useFavorites } from "../../hooks/useFavorites.ts";

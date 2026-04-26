@@ -1,12 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import haversineDistance, {
-  getTimeSlotStartHour,
-  groupEnrollmentsByTime,
-  groupEnrollmentsByHoop,
   reverseGeocode,
-  isTodayDate,
   shortenAddress,
 } from '../../utils/functions'
+import { groupEnrollmentsByTime, groupEnrollmentsByHoop } from '../../utils/enrollments'
+import { getTimeSlotStartHour, isTodayDate } from '../../utils/time'
 import type { PlayerEnrollment } from '../../types/types'
 
 const makeEnrollment = (
@@ -99,18 +97,6 @@ describe('groupEnrollmentsByTime', () => {
     })
     const result = groupEnrollmentsByTime([e])
     expect(result.comingLater).toEqual([e])
-  })
-
-  it('excludes enrollments whose session already ended', () => {
-    const e = makeEnrollment({
-      id: 'e1',
-      arrivalTime: new Date('2026-04-15T09:00:00Z'),
-      duration: 60, // ended 2 hours ago
-    })
-    const result = groupEnrollmentsByTime([e])
-    expect(result.playingNow).toHaveLength(0)
-    expect(result.comingSoon).toHaveLength(0)
-    expect(result.comingLater).toHaveLength(0)
   })
 
   it('sorts each group by arrival time ascending', () => {

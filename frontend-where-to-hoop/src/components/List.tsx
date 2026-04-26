@@ -15,7 +15,7 @@ import { conditionOptions, doorOptions } from "../utils/options";
 import { Button } from "react-aria-components";
 import Footer from "./Footer";
 import { fetchAllEnrollments } from "../services/requests";
-import { groupEnrollmentsByHoop } from "../utils/functions";
+import { groupEnrollmentsByHoop } from "../utils/enrollments";
 import useEnrollmentsRealtime from "../hooks/useEnrollmentsRealtime";
 
 interface FilterState {

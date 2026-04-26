@@ -15,7 +15,7 @@ import Footer from '../components/Footer'
 import { fetchUserEnrollments, fetchAllEnrollments, fetchEnrollmentsForPlayers, updateProfileVisibility, fetchIncomingFollowRequests, fetchFollowers, getProfileImageUrl, fetchUserProfileImage, fetchUserBio, updateUserBio } from '../services/requests'
 import { useFavorites } from '../hooks/useFavorites'
 import { useFollowing } from '../hooks/useFollowing'
-import { groupEnrollmentsByHoop } from '../utils/functions'
+import { groupEnrollmentsByHoop } from '../utils/enrollments'
 import { MAX_BIO_LENGTH } from '../utils/constants'
 import haversineDistance from '../utils/functions'
 import type { BasketballHoop, ColorMode, Coordinates, FollowRequest, PlayerEnrollment, ProfileImage, PublicProfile } from '../types/types'
@@ -147,12 +147,12 @@ const MyProfile = ({ hoops }: MyProfileProps) => {
   // const profileImage: ProfileImage | null = user.user_metadata?.profile_image ?? null <- this was used before implementing admin profile image deletion, leaving it here in case we want to revert back to using metadata for profile images
   const profileImageUrl = profileImage ? getProfileImageUrl(profileImage.imagePath) : undefined
 
-  const now = new Date()
+  // const now = new Date()
   const upcoming: PlayerEnrollment[] = enrollments
-    .filter(e => e.arrivalTime >= now)
+    .filter(e => !e.expired)
     .sort((a, b) => a.arrivalTime.getTime() - b.arrivalTime.getTime())
   const past: PlayerEnrollment[] = enrollments
-    .filter(e => e.arrivalTime < now)
+    .filter(e => e.expired)
     .sort((a, b) => b.arrivalTime.getTime() - a.arrivalTime.getTime())
 
   return (
