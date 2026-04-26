@@ -9,7 +9,7 @@ import { deleteEnrollment, insertEnrollment, verifyEnrollment } from '../../serv
 import { Button } from 'react-aria-components'
 import { Link } from 'react-router-dom'
 import { isWithinHoopRange } from '../../utils/functions'
-import { getSessionEndTime } from '../../utils/time'
+import { getSessionEndTime, isWithinWindow } from '../../utils/time'
 import { hasEnrollmentInSameDayBucket } from '../../utils/enrollments'
 import { MdCheckCircle, MdHourglassEmpty } from 'react-icons/md'
 import { VERIFY_RANGE_METERS, VERIFY_WINDOW_START_OFFSET_MS, VERIFY_WINDOW_END_OFFSET_MS } from '../../utils/constants'
@@ -71,12 +71,9 @@ const PlayerPanelCard = ({ enrollment, hoopEnrollments, hoopCoordinates }: Playe
   const [isJoining, setIsJoining] = useState(false)
   const [isVerifying, setIsVerifying] = useState(false)
 
-  const nowMs: number = now.getTime()
-  const arrivalMs: number = arrivalTime.getTime()
   const verifyWindowOpen: boolean =
     !enrollment.verified &&
-    nowMs >= arrivalMs - VERIFY_WINDOW_START_OFFSET_MS &&
-    nowMs <= arrivalMs + VERIFY_WINDOW_END_OFFSET_MS
+    isWithinWindow(arrivalTime, VERIFY_WINDOW_START_OFFSET_MS, VERIFY_WINDOW_END_OFFSET_MS)
 
   const handleVerify = async () => {
     if (!hoopCoordinates || !hoopCoordinates.latitude || !hoopCoordinates.longitude) return
@@ -235,7 +232,7 @@ const PlayerPanelCard = ({ enrollment, hoopEnrollments, hoopCoordinates }: Playe
           )}
         </div>
       ) : (
-        isOpenToPlay && user && (
+        isOpenToPlay && !joinDisabled && (
           <Button
             onClick={handleJoinSubmit}
             isDisabled={joinDisabled}

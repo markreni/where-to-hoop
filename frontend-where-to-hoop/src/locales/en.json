@@ -327,7 +327,7 @@
     "intro": "Find answers to common questions about using WhereHoopz.",
     "readyToPlay": {
       "question": "How do I let others know I'm going to play?",
-      "answer": "On any court card (on the home page or courts list), tap the green \"Let's hoopz\" button. This will navigate you to the court's page, then use the enrollment form to sign up for a session. Choose your arrival time, how long you'll play, and whether you're open to playing with others. Your enrollment will appear on the court's \"Who's Playing\" panel, letting other hoopers know you'll be there.\n\nNote: you can have one enrollment per court for today and one for a future date."
+      "answer": "On any court card (on the home page or courts list), tap the green \"Let's hoopz\" button. This will navigate you to the court's page, then use the check-in form to sign up for a session. Choose your arrival time, how long you'll play, and whether you're open to playing with others. Your check-in will appear on the court's \"Who's Playing\" panel, letting other hoopers know you'll be there. Once you arrive at the court, tap the \"I'm here\" button on your check-in card to confirm you're on the court.\n\nNote: you can have one enrollment per court for today and one for a future date."
     },
     "addCourt": {
       "question": "How do I add a new basketball court?",
@@ -437,7 +437,9 @@
       "error": "Failed to send enrollment. Please try again.",
       "authError": "You must be signed in to enroll.",
       "courtsOpenNote": "Please note that courts are open to all",
-      "enrollmentLimitNote": "You can have one enrollment per court for today and one for a future date"
+      "enrollmentLimitNote": "You can have one enrollment per court for today and one for a future date",
+      "todayCheckInNote": "Only one \"Today\" check-in can be active per court at a time",
+      "laterCheckInNote": "Only one \"Later\" check-in can be active per court at a time"
     }
   },
   "admin": {

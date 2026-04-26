@@ -24,6 +24,16 @@ const isTodayDate = (date: Date): boolean => {
 const getSessionEndTime = (arrival: Date, durationMinutes: number): Date =>
   new Date(arrival.getTime() + durationMinutes * 60_000)
 
+const isWithinWindow = (
+  target: Date,
+  startOffsetMs: number,
+  endOffsetMs: number,
+): boolean => {
+  const targetMs = target.getTime()
+  const nowMs = new Date().getTime()
+  return nowMs >= targetMs - startOffsetMs && nowMs <= targetMs + endOffsetMs
+}
+
 const calculateArrivalTime = (
   whenMode: WhenMode,
   arrivalMinutes: number,
@@ -46,4 +56,4 @@ const calculateArrivalTime = (
   return arrivalDate
 }
 
-export { getMaxArrivalMinutes, getTimeSlotStartHour, isTodayDate, getSessionEndTime, calculateArrivalTime }
+export { getMaxArrivalMinutes, getTimeSlotStartHour, isTodayDate, getSessionEndTime, isWithinWindow, calculateArrivalTime }

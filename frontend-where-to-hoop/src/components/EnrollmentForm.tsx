@@ -203,6 +203,10 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
           {whenMode === 'today' ? (
             /* Arrival time slider - Today mode */
             <div>
+              <div className="flex items-center gap-1.5 mb-4 text-gray-500 dark:text-gray-400">
+                <FaExclamationCircle size={12} />
+                <span className="text-fluid-xs">{t('hoop.enrollment.todayCheckInNote')}</span>
+              </div>
               <div>
                 <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
                   {t('hoop.enrollment.arriveIn')}: <span className="text-first-color">{formatSliderValue(arrivalMinutes, true)}</span>
@@ -245,6 +249,10 @@ const EnrollmentForm = ({ hoopId, enrollments }: EnrollmentFormProps) => {
           ) : (
             /* Calendar and time slot - Later mode */
             <div>
+              <div className="flex items-center gap-1.5 mb-4 text-gray-500 dark:text-gray-400">
+                <FaExclamationCircle size={12} />
+                <span className="text-fluid-xs">{t('hoop.enrollment.laterCheckInNote')}</span>
+              </div>
               <div>
                 <label className={`${colorModeContext} block text-fluid-sm font-medium background-text mb-2`}>
                   {t('hoop.enrollment.selectDate')}
